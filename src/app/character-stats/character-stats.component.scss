@@ -1,0 +1,49 @@
+/* Styles for Primary/Secondary stats moved from character-card.component.scss */
+
+.stats-row {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.stat-box {
+  width: 96px;
+  padding: 14px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.stat-box--small {
+  min-width: 48px;
+  padding: 0.25rem 0.5rem;
+}
+
+.stat-box .label {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+
+.stat-box .value {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+@media (max-width: 800px) {
+  .stat-box {
+    width: 76px;
+    padding: 10px;
+  }
+
+  .stat-box .value {
+    font-size: 22px;
+  }
+}

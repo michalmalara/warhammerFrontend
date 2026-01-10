@@ -20,59 +20,36 @@
             </div>
             <div class="xp-numbers">{{ xpCurrent }} / {{ xpMax }} XP</div>
           </div>
-
-          <!-- Dodany panel: Wounds (Angular Material) -->
-          <mat-card class="wounds-panel">
-            <mat-card-header>
-              <div class="wounds-header muted">Wounds</div>
-            </mat-card-header>
-            <mat-card-content class="wounds-body">
-              <div class="wounds-display">
-                <div class="wounds-value" aria-live="polite">{{ woundsDisplay }}</div>
-                <div class="wounds-current-label">CURRENT</div>
-              </div>
-
-              <div class="wounds-controls">
-                <button mat-icon-button color="primary" (click)="decWounds()" aria-label="Decrease wounds" [disabled]="woundsCurrent <= 0">
-                  <mat-icon>remove</mat-icon>
-                </button>
-                <div class="wounds-max">Max: <span class="wounds-max-value">{{ woundsMax }}</span></div>
-                <button mat-icon-button color="primary" (click)="incWounds()" aria-label="Increase wounds" [disabled]="woundsCurrent >= woundsMax">
-                  <mat-icon>add</mat-icon>
-                </button>
-              </div>
-
-              <div class="wounds-note muted">{{ woundsStatus }}</div>
-            </mat-card-content>
-          </mat-card>
         </div>
       </header>
 
       <section class="content">
-        <h2 class="section-title">Primary Characteristics</h2>
-        <div class="stats-row">
-
-          @for (s of [34,31,35,38,32,29,36,30]; track s) {
-            <div class="stat-box">
-              <div class="label muted">WS</div>
-              <div class="value">{{ s }}%</div>
+        <character-stats [primaryStats]="primaryStats" [secondaryStats]="secondaryStats"></character-stats>
+        <!-- Wounds panel remains here (kept in character-card) -->
+        <mat-card class="wounds-panel"
+                  [ngClass]="{ 'wounds-critical': isCritical, 'wounds-wounded': isWounded, 'wounds-healthy': isHealthy }">
+          <mat-card-header>
+            <div class="wounds-header muted">Wounds</div>
+          </mat-card-header>
+          <mat-card-content class="wounds-body">
+            <div class="wounds-display">
+              <div class="wounds-value" aria-live="polite">{{ woundsDisplay }}</div>
+              <div class="wounds-current-label">CURRENT</div>
             </div>
-          }
 
-        </div>
-
-        <!-- Dodana sekcja: Secondary Characteristics -->
-        <h2 class="section-title">Secondary Characteristics</h2>
-        <div class="stats-row stats-row--secondary">
-
-          @for (sc of [{label:'A',value:1},{label:'W',value:12},{label:'SB',value:3},{label:'TB',value:3},{label:'M',value:4},{label:'MAG',value:0},{label:'IP',value:2},{label:'FP',value:3}]; track sc) {
-            <div class="stat-box stat-box--small">
-              <div class="label muted">{{ sc.label }}</div>
-              <div class="value">{{ sc.value }}</div>
+            <div class="wounds-controls">
+              <button mat-icon-button color="primary" (click)="decWounds()" aria-label="Decrease wounds" [disabled]="woundsCurrent <= 0">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <div class="wounds-max">Max: <span class="wounds-max-value">{{ woundsMax }}</span></div>
+              <button mat-icon-button color="primary" (click)="incWounds()" aria-label="Increase wounds" [disabled]="woundsCurrent >= woundsMax">
+                <mat-icon>add</mat-icon>
+              </button>
             </div>
-          }
 
-        </div>
+            <div class="wounds-note muted">{{ woundsStatus }}</div>
+          </mat-card-content>
+        </mat-card>
 
         <h2 class="section-title">Combat Equipment</h2>
 

@@ -1,0 +1,22 @@
+<h2 class="section-title">Primary Characteristics</h2>
+<div class="stats-row-wrapper">
+  <div class="stats-row">
+    @for (s of primaryStats; track s) {
+      <div class="stat-box">
+        <div class="label muted">WS</div>
+        <div class="value">{{ s }}%</div>
+      </div>
+    }
+  </div>
+</div>
+
+<h2 class="section-title">Secondary Characteristics</h2>
+<div class="stats-row stats-row--secondary">
+  @for (sc of secondaryStats; track sc) {
+    <div class="stat-box stat-box--small">
+      <div class="label muted">{{ sc.label }}</div>
+      <div class="value">{{ sc.value }}</div>
+    </div>
+  }
+</div>
+
