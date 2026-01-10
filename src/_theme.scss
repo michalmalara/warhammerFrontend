@@ -1,5 +1,4 @@
 @use 'sass:color';
-
 // Theme partial generated from provided mockup
 // - defines CSS variables for colors and typography
 // - provides a mixin `apply-theme` which sets global colors and a few helper classes
@@ -53,6 +52,18 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
 
     /* simple elevation/shadow colors */
     --shadow-dark: rgba(0,0,0,0.6);
+
+    /* Tab-specific theme variables (used by global tab overrides) */
+    /* - inactive uses the global muted text for consistent tone */
+    --mat-tab-inactive-hover-label-text-color: var(--color-text-muted);
+    --mat-tab-active-label-text-color: #ffffff;
+    /* subtle dark fill for the active label to match mockup panel */
+    --mat-tab-active-bg: rgba(255,255,255,0.02);
+    --mat-tab-active-outline: rgba(225,27,48,0.12);
+    /* hover uses a slightly stronger warm tint */
+    --mat-tab-hover-bg: rgba(225,27,48,0.06);
+    /* ink bar (strong red that matches mockup accent) */
+    --mat-tab-ink-color: #e11b2b;
   }
 
   html, body {
@@ -155,6 +166,80 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
       .dashboard-left .title { font-size: 1.6rem; }
     }
   }
+
+  /* Global tab overrides (Material-like, targets classic and MDC implementations) */
+  .mat-tab-group, .mat-mdc-tab-group {
+    display: block;
+    margin-top: 12px;
+  }
+
+  .mat-tab-header, .mat-mdc-tab-header {
+    padding: 0;
+    border-bottom: 1px solid var(--color-panel-border);
+    margin-bottom: 8px;
+    background: transparent;
+  }
+
+  .mat-tab-labels, .mat-mdc-tab-bar {
+    align-items: center;
+  }
+
+  .mat-tab-label, .mat-mdc-tab-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--tab-inactive-color);
+    padding: 8px 12px;
+    margin-right: 10px;
+    transition: color .16s ease, background-color .12s ease;
+    background: transparent;
+    border-radius: 4px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mat-tab-label:hover, .mat-mdc-tab-label:hover {
+    color: var(--color-text);
+    background: rgba(255,255,255,0.02);
+  }
+
+  /* Active label: keep flat (no translate/shadow) and rely on the ink-bar for emphasis */
+  .mat-tab-label.mat-tab-label-active, .mat-mdc-tab-label.mat-mdc-tab-label--active {
+    color: var(--tab-active-color) !important;
+    background: transparent;
+    font-weight: 700;
+  }
+
+  /* Disabled labels */
+  .mat-tab-label.mat-tab-disabled, .mat-mdc-tab-label.mat-mdc-tab-label--disabled {
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* Ink bar / indicator */
+  .mat-ink-bar, .mat-mdc-ink-bar, .mat-mdc-tab-indicator {
+    height: 3px;
+    background: var(--tab-ink-color);
+    border-radius: 3px;
+    transition: left .18s cubic-bezier(.35,0,.25,1), width .18s cubic-bezier(.35,0,.25,1);
+  }
+
+  /* Keyboard focus */
+  .mat-tab-label:focus-visible, .mat-mdc-tab-label:focus-visible {
+    outline: 2px solid rgba(225,27,48,0.12);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .mat-tab-body, .mat-mdc-tab-body { padding: 0; }
+
+  .mat-tab-group .tab-content-card, .mat-mdc-tab-group .tab-content-card { margin-top: 6px; }
+
+  /* End of global tab overrides */
 
   /* Card / panel */
   .card {

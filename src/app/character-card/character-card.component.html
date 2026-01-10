@@ -26,47 +26,37 @@
       <section class="content">
         <div class="content-columns" style="display:flex; gap:1rem; align-items:flex-start;">
 
-          <!-- Left column: stats + equipment table -->
+          <!-- Left column: stats + equipment table moved into tabs -->
           <div class="left-column" style="flex:1; min-width:260px;">
             <character-stats [primaryStats]="primaryStats" [secondaryStats]="secondaryStats"></character-stats>
 
-            <h2 class="section-title">Combat Equipment</h2>
+            <!-- Angular Material Tabs: Combat / Inventory -->
+            <mat-tab-group>
+              <mat-tab label="Skills">
+                <div class="skills-tab card" style="padding:1rem;">
+                  <!-- TODO: replace with real skills component when available -->
+                  <p class="muted">Skills panel (overview) — replace with actual skills list component.</p>
+                </div>
+              </mat-tab>
 
-            <div class="equipment-table mat-elevation-z1">
-              <table mat-table [dataSource]="dataSource" class="mat-table equipment-table__table">
+              <mat-tab label="Talents">
+                <div class="talents-tab card" style="padding:1rem;">
+                  <!-- TODO: replace with real talents component when available -->
+                  <p class="muted">Talents panel — placeholder for talents/talents list.</p>
+                </div>
+              </mat-tab>
 
-                <thead class="equipment-table__head">
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                </thead>
+              <mat-tab label="Combat">
+                <equipment-table></equipment-table>
+              </mat-tab>
 
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef class="table-header"> Weapon / Gear </th>
-                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="enc">
-                  <th mat-header-cell *matHeaderCellDef class="table-header"> Enc </th>
-                  <td mat-cell *matCellDef="let element"> {{element.enc}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="dmg">
-                  <th mat-header-cell *matHeaderCellDef class="table-header"> Dmg </th>
-                  <td mat-cell *matCellDef="let element"> {{element.dmg}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="range">
-                  <th mat-header-cell *matHeaderCellDef class="table-header"> Range </th>
-                  <td mat-cell *matCellDef="let element"> {{element.range}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="qualities">
-                  <th mat-header-cell *matHeaderCellDef class="table-header"> Qualities </th>
-                  <td mat-cell *matCellDef="let element"> {{element.qualities}} </td>
-                </ng-container>
-
-                <tr mat-row *matRowDef="let _row; columns: displayedColumns"></tr>
-              </table>
-            </div>
+              <mat-tab label="Inventory">
+                <!-- Placeholder / future inventory content -->
+                <div class="inventory-placeholder card" style="padding:1rem;">
+                  <p class="muted">Inventory view is under construction — move or copy items here as needed.</p>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
 
           </div>
 

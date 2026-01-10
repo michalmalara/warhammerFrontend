@@ -4,13 +4,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 import { CharacterStatsComponent } from '../character-stats/character-stats.component';
 import { WoundsPanelComponent } from '../wounds-panel/wounds-panel.component';
+import { EquipmentTableComponent } from '../equipment-table/equipment-table.component';
 
 @Component({
   selector: 'character-card',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatTableModule, MatCardModule, MatIconModule, CharacterStatsComponent, WoundsPanelComponent],
+  imports: [CommonModule, MatButtonModule, MatTableModule, MatCardModule, MatIconModule, MatTabsModule, CharacterStatsComponent, WoundsPanelComponent, EquipmentTableComponent],
   templateUrl: './character-card.component.html',
   styleUrls: ['./character-card.component.scss']
 })
@@ -48,15 +50,7 @@ export class CharacterCardComponent {
     return Math.round((this.xpCurrent / this.xpMax) * 100);
   }
 
-  // Equipment for the material table
-  equipment = [
-    { name: 'Broadsword', enc: 50, dmg: 'SB', range: '--', qualities: 'Standard' },
-    { name: 'Crossbow', enc: 120, dmg: '4', range: '30/60', qualities: 'Reload (full)' },
-    { name: 'Mail Shirt', enc: 80, dmg: '--', range: '--', qualities: 'Armour (1) Body' }
-  ];
-
-  displayedColumns: string[] = ['name', 'enc', 'dmg', 'range', 'qualities'];
-  dataSource = this.equipment;
+  // equipment moved to EquipmentTableComponent
 
   // Wound-state getters moved to WoundsPanelComponent
 }
