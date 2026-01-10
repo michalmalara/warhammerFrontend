@@ -1,0 +1,24 @@
+<aside class="app-sidebar">
+  <div class="brand">
+    <div class="avatar"><img src="/assets/avatar-placeholder.png" alt="avatar"/></div>
+    <div class="brand-meta">
+      <div class="name">Gottfried von Hollen</div>
+      <div class="role muted">Roadwarden</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    @for (item of nav; track item) {
+      <button mat-button class="nav-item">{{ item.label }}</button>
+    }
+  </nav>
+
+  <div class="bottom">
+    <div class="encumbrance muted">Encumbrance</div>
+    <div class="bar">
+      <div class="fill" style="width: 60%"></div>
+    </div>
+    <button class="btn-primary">Rest & Recover</button>
+  </div>
+</aside>
+

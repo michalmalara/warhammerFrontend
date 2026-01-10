@@ -1,0 +1,266 @@
+@use 'sass:color';
+
+// Theme partial generated from provided mockup
+// - defines CSS variables for colors and typography
+// - provides a mixin `apply-theme` which sets global colors and a few helper classes
+
+// SCSS palette (used for computed shades)
+$bg: #1b1414; // very dark maroon
+$surface: #2b1c1c; // panel surfaces
+$muted-surface: #341f1f;
+$panel-border: rgba(255,255,255,0.04);
+$accent: #c73b3b; // deep red accent
+$accent-2: #8f2b2b;
+$text: #f6efe9; // off-white
+$text-muted: #b99d97; // muted text
+$highlight: #e9bdb6;
+
+// Suggested table palette (hex codes taken from mockup)
+// - table header: deep muted maroon
+// - row backgrounds: subtle dark maroons for contrast
+// - borders/text: soft off-white / muted
+$table-header-bg: #3a2626; // header background
+$table-row-bg: #241414; // odd rows
+$table-row-alt-bg: #2a1a1a; // even rows
+$table-border-hex: #212020; // thin line color (very dark)
+$table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
+
+@function hover-accent($color) {
+  @return color.adjust($color, $lightness: -8%);
+}
+
+@mixin apply-theme() {
+  :root {
+    --color-bg: #{$bg};
+    --color-surface: #{$surface};
+    --color-muted-surface: #{$muted-surface};
+    --color-accent: #{$accent};
+    --color-accent-2: #{$accent-2};
+    --color-text: #{$text};
+    --color-text-muted: #{$text-muted};
+    --color-panel-border: #{$panel-border};
+    --color-highlight: #{$highlight};
+
+    /* Table-specific variables (from mockup) */
+    --table-header-bg: #{$table-header-bg};
+    --table-row-bg: #{$table-row-bg};
+    --table-row-alt-bg: #{$table-row-alt-bg};
+    --table-border: #{$table-border-hex};
+    --table-cell-text: #{$table-cell-text-hex};
+    --table-row-hover: rgba(0,0,0,0.25);
+
+    /* simple elevation/shadow colors */
+    --shadow-dark: rgba(0,0,0,0.6);
+  }
+
+  html, body {
+    height: 100%;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Layout helpers */
+  .app-sidebar {
+    background: linear-gradient(180deg, var(--color-surface), var(--color-muted-surface));
+    color: var(--color-text);
+    border-right: 1px solid var(--color-panel-border);
+  }
+
+  .dashboard-header {
+    display: flex;
+    align-items: center; /* vertically center columns for tighter visual alignment */
+    justify-content: space-between;
+    gap: 1rem; /* slightly smaller gap */
+    padding: 0.5rem 0 1rem 0; /* reduce top padding, keep bottom separation */
+    border-bottom: 1px solid var(--color-panel-border);
+
+    .dashboard-left {
+      flex: 1 1 auto;
+      min-width: 0;
+
+      .subtitle {
+        font-size: 0.85rem;
+        color: var(--color-text-muted);
+        margin-bottom: 0.125rem; /* tighter gap to title */
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 600;
+      }
+
+      .title {
+        font-family: "Playfair Display", Georgia, serif;
+        font-weight: 700;
+        font-size: 2.6rem; /* larger, closer to mockup */
+        margin: 0 0 0.25rem 0; /* tighter bottom margin */
+        color: var(--color-text);
+        line-height: 1; /* denser heading */
+      }
+
+      .title-tags {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.08rem; /* very close to title */
+
+        .tag {
+          display: inline-block;
+          background: rgba(255,255,255,0.02);
+          color: var(--color-text-muted);
+          padding: 0.2rem 0.45rem; /* slightly smaller pills */
+          border-radius: 4px;
+          border: 1px solid rgba(255,255,255,0.03);
+          font-size: 0.72rem;
+        }
+      }
+    }
+
+    .dashboard-right {
+      width: 320px; /* fixed panel width to match mockup proportion */
+      flex: 0 0 320px;
+
+      .xp-panel {
+        padding: 0.6rem 0.9rem; /* slightly tighter padding */
+        background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
+        border: 1px solid rgba(255,255,255,0.03);
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* vertically center content inside panel */
+
+        .xp-label { font-size: 0.78rem; color: var(--color-text-muted); margin-bottom: 0.35rem; }
+        .xp-numbers { font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.45rem; text-align: right; }
+      }
+    }
+
+    .xp-bar {
+      background: rgba(255,255,255,0.03);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      .fill { background: var(--color-accent); height: 100%; }
+    }
+
+    /* responsive: stack on small screens */
+    @media (max-width: 800px) {
+      flex-direction: column;
+      .dashboard-right { width: 100%; flex: 0 0 auto; margin-top: 0.6rem; }
+      .dashboard-left .title { font-size: 1.6rem; }
+    }
+  }
+
+  /* Card / panel */
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-panel-border);
+    padding: 1rem;
+    border-radius: 6px;
+  }
+
+  /* Primary statistic box (e.g., WS 34%) */
+  .stat-box {
+    display: inline-block;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.03);
+    padding: 0.7rem 0.9rem;
+    min-width: 72px;
+    text-align: center;
+    border-radius: 4px;
+
+    .value {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--color-text);
+    }
+    .label {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+  }
+
+  /* Wounds counter (large rounded square) */
+  .wounds-panel {
+    .counter {
+      background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.0));
+      border: 3px solid var(--color-accent);
+      color: var(--color-text);
+      font-weight: 700;
+      font-size: 2.2rem;
+      width: 96px;
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      box-shadow: 0 0 0 8px rgba(199,59,59,0.04) inset;
+    }
+
+    .label { color: var(--color-text-muted); font-size: 0.85rem; margin-top: 0.5rem; }
+  }
+
+  /* Fate points (small circular dots) */
+  .fate-points {
+    display: flex;
+    gap: 0.5rem;
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.03);
+
+      &.active { background: var(--color-accent); box-shadow: 0 0 0 3px rgba(199,59,59,0.06) inset; }
+    }
+  }
+
+  /* Table styles for equipment */
+  .equipment-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: transparent; /* table sits on panel surface */
+
+    th, td {
+      padding: 0.65rem 0.8rem;
+      border-bottom: 1px solid var(--table-border);
+      color: var(--table-cell-text);
+    }
+
+    th {
+      text-align: left;
+      font-size: 0.85rem;
+      color: var(--color-text);
+      background: var(--table-header-bg);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* alternating row backgrounds to match mockup */
+    tr { background: var(--table-row-bg); }
+    tr:nth-child(even) { background: var(--table-row-alt-bg); }
+    tr { &:hover { background: var(--table-row-hover); } }
+  }
+
+  /* Buttons */
+  .btn-primary {
+    display: inline-block;
+    background: $accent;
+    color: #fff;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    border: none;
+    cursor: pointer;
+
+    &:hover { background: hover-accent($accent); }
+    &:active { transform: translateY(1px); }
+  }
+
+  /* small utilities */
+  .muted { color: var(--color-text-muted); }
+  .accent { color: var(--color-accent); }
+}
+
+/* End of theme partial */
+

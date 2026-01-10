@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CharacterCardComponent } from './character-card/character-card.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [CharacterCardComponent, SidebarComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

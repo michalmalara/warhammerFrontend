@@ -1,0 +1,260 @@
+/* Styles for character card component - header/table tweaks to match mockup */
+
+.equipment-table__head {
+  th.table-header,
+  .mat-header-cell.table-header,
+  th.mat-header-cell.table-header {
+    background: var(--table-header-bg); /* use central table header background */
+    color: var(--color-text-muted); /* muted text pulled from theme */
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 14px 16px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(255,255,255,0.04); /* subtle divider consistent with theme */
+  }
+
+  /* make sure header row doesn't inherit material table default background */
+  tr.mat-header-row {
+    background: transparent;
+  }
+}
+
+/* Fallback selector if Angular Material renders header cells outside thead */
+.table-header {
+  background: var(--table-header-bg);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+/* Hide Material ripple inside header cells (if present) */
+.mat-header-cell .mat-ripple-element,
+.mat-header-cell .mat-ripple {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* Small tweak for table body cells to keep spacing consistent */
+.equipment-table__table td.mat-cell,
+.equipment-table__table td {
+  padding: 12px 16px;
+  color: var(--table-cell-text);
+}
+
+/* slightly dim the separator lines inside the table body to match mockup tone */
+.equipment-table__table tr.mat-row td {
+  border-bottom: 1px solid var(--table-border);
+}
+
+/* ------------------------------------------------------------------ */
+/* Header / section title color and spacing adjustments to match mockup */
+/* Use clearer size hierarchy: very large main title, small uppercase subtitle,
+   compact section titles, and prominent stat values. */
+
+/* Main page title (the large name at top) */
+h1.title,
+.title {
+  color: var(--color-text); /* central text color */
+  font-weight: 800;
+  line-height: 1.02;
+  font-size: 56px; /* prominent large title */
+  margin: 6px 0 8px 0;
+  letter-spacing: -1px;
+}
+
+/* Smaller subtitle under the title */
+.subtitle,
+.subtitle.muted {
+  color: var(--color-text-muted); /* muted text from theme */
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* Small tag chips next to title */
+.title-tags .tag {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  background: rgba(255,255,255,0.02);
+  padding: 6px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  text-transform: none;
+}
+
+/* Section titles (e.g. "Primary Characteristics", "Combat Equipment") */
+.section-title {
+  color: var(--color-text); /* use central heading color */
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 18px 0;
+}
+
+/* Stats row and stat boxes */
+.stats-row {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.stat-box {
+  width: 96px;
+  padding: 14px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.03);
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.stat-box .label {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+
+.stat-box .value {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+/* Slightly larger table body text for readability */
+.equipment-table__table td.mat-cell,
+.equipment-table__table td {
+  padding: 12px 16px;
+  color: var(--table-cell-text);
+  font-size: 14px;
+}
+
+/* Ensure the small headers keep their compact look but maintain spacing */
+.table-header {
+  padding: 10px 16px;
+  font-size: 12px;
+}
+
+/* Responsive tweak: scale title down on narrow screens */
+@media (max-width: 800px) {
+  h1.title,
+  .title {
+    font-size: 34px;
+  }
+
+  .stat-box {
+    width: 76px;
+    padding: 10px;
+  }
+
+  .stat-box .value {
+    font-size: 22px;
+  }
+}
+
+/* Styles for the Wounds panel (small, self-contained) */
+.wounds-panel {
+  width: 180px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.03);
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.wounds-panel .wounds-header {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  color: var(--color-text-muted);
+}
+
+.wounds-panel .wounds-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.wounds-display {
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  border: 3px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.01);
+  /* Inner dark panel with subtle red glow to match mockup */
+  box-shadow: inset 0 0 0 3px rgba(255,0,0,0.06), 0 0 18px rgba(255,0,0,0.06);
+}
+
+.wounds-value {
+  font-size: 44px;
+  font-weight: 900;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.wounds-current-label {
+  font-size: 11px;
+  color: #fff;
+  margin-top: 8px;
+  background: var(--color-accent);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.wounds-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wounds-controls button[mat-icon-button] {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 6px;
+  border: 2px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.15);
+  color: var(--color-text);
+}
+
+.wounds-controls button[mat-icon-button] mat-icon {
+  font-size: 20px;
+}
+
+.wounds-controls button[mat-icon-button]:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 2px 8px rgba(255,0,0,0.08);
+}
+
+.wounds-max {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.wounds-note {
+  font-size: 12px;
+  color: var(--color-danger);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

@@ -1,0 +1,8 @@
+@use '../_theme' as theme;
+
+.app-layout { display: flex; min-height: 100vh; }
+.app-main { flex: 1; padding: 1.5rem; background: var(--color-bg); }
+
+/* Ensure global body uses theme variables */
+:root { }
+
