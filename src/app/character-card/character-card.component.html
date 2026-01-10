@@ -24,69 +24,57 @@
       </header>
 
       <section class="content">
-        <character-stats [primaryStats]="primaryStats" [secondaryStats]="secondaryStats"></character-stats>
-        <!-- Wounds panel remains here (kept in character-card) -->
-        <mat-card class="wounds-panel"
-                  [ngClass]="{ 'wounds-critical': isCritical, 'wounds-wounded': isWounded, 'wounds-healthy': isHealthy }">
-          <mat-card-header>
-            <div class="wounds-header muted">Wounds</div>
-          </mat-card-header>
-          <mat-card-content class="wounds-body">
-            <div class="wounds-display">
-              <div class="wounds-value" aria-live="polite">{{ woundsDisplay }}</div>
-              <div class="wounds-current-label">CURRENT</div>
+        <div class="content-columns" style="display:flex; gap:1rem; align-items:flex-start;">
+
+          <!-- Left column: stats + equipment table -->
+          <div class="left-column" style="flex:1; min-width:260px;">
+            <character-stats [primaryStats]="primaryStats" [secondaryStats]="secondaryStats"></character-stats>
+
+            <h2 class="section-title">Combat Equipment</h2>
+
+            <div class="equipment-table mat-elevation-z1">
+              <table mat-table [dataSource]="dataSource" class="mat-table equipment-table__table">
+
+                <thead class="equipment-table__head">
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                </thead>
+
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef class="table-header"> Weapon / Gear </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="enc">
+                  <th mat-header-cell *matHeaderCellDef class="table-header"> Enc </th>
+                  <td mat-cell *matCellDef="let element"> {{element.enc}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="dmg">
+                  <th mat-header-cell *matHeaderCellDef class="table-header"> Dmg </th>
+                  <td mat-cell *matCellDef="let element"> {{element.dmg}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="range">
+                  <th mat-header-cell *matHeaderCellDef class="table-header"> Range </th>
+                  <td mat-cell *matCellDef="let element"> {{element.range}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="qualities">
+                  <th mat-header-cell *matHeaderCellDef class="table-header"> Qualities </th>
+                  <td mat-cell *matCellDef="let element"> {{element.qualities}} </td>
+                </ng-container>
+
+                <tr mat-row *matRowDef="let _row; columns: displayedColumns"></tr>
+              </table>
             </div>
 
-            <div class="wounds-controls">
-              <button mat-icon-button color="primary" (click)="decWounds()" aria-label="Decrease wounds" [disabled]="woundsCurrent <= 0">
-                <mat-icon>remove</mat-icon>
-              </button>
-              <div class="wounds-max">Max: <span class="wounds-max-value">{{ woundsMax }}</span></div>
-              <button mat-icon-button color="primary" (click)="incWounds()" aria-label="Increase wounds" [disabled]="woundsCurrent >= woundsMax">
-                <mat-icon>add</mat-icon>
-              </button>
-            </div>
+          </div>
 
-            <div class="wounds-note muted">{{ woundsStatus }}</div>
-          </mat-card-content>
-        </mat-card>
+          <!-- Right column: wounds card -->
+          <aside class="right-column" style="flex:0 0 320px; max-width:360px;">
+            <wounds-panel [(woundsCurrent)]="woundsCurrent" [woundsMax]="woundsMax"></wounds-panel>
+          </aside>
 
-        <h2 class="section-title">Combat Equipment</h2>
-
-        <div class="equipment-table mat-elevation-z1">
-          <table mat-table [dataSource]="dataSource" class="mat-table equipment-table__table">
-
-            <thead class="equipment-table__head">
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            </thead>
-
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef class="table-header"> Weapon / Gear </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="enc">
-              <th mat-header-cell *matHeaderCellDef class="table-header"> Enc </th>
-              <td mat-cell *matCellDef="let element"> {{element.enc}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="dmg">
-              <th mat-header-cell *matHeaderCellDef class="table-header"> Dmg </th>
-              <td mat-cell *matCellDef="let element"> {{element.dmg}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="range">
-              <th mat-header-cell *matHeaderCellDef class="table-header"> Range </th>
-              <td mat-cell *matCellDef="let element"> {{element.range}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="qualities">
-              <th mat-header-cell *matHeaderCellDef class="table-header"> Qualities </th>
-              <td mat-cell *matCellDef="let element"> {{element.qualities}} </td>
-            </ng-container>
-
-            <tr mat-row *matRowDef="let _row; columns: displayedColumns"></tr>
-          </table>
         </div>
 
       </section>

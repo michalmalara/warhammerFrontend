@@ -3,8 +3,8 @@
   <div class="stats-row">
     @for (s of primaryStats; track s) {
       <div class="stat-box">
-        <div class="label muted">WS</div>
-        <div class="value">{{ s }}%</div>
+        <div class="label muted">{{ s.label }}</div>
+        <div class="value">{{ s.value }}%</div>
       </div>
     }
   </div>
@@ -19,4 +19,3 @@
     </div>
   }
 </div>
-

@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./character-stats.component.scss']
 })
 export class CharacterStatsComponent {
-  @Input() primaryStats: number[] = [];
+  @Input() primaryStats: { label: string; value: number }[] = [];
   @Input() secondaryStats: { label: string; value: number }[] = [];
 }
-
