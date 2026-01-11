@@ -32,7 +32,7 @@ h1.title,
   display: inline-block;
   font-size: 11px;
   color: var(--color-text-muted);
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
   padding: 6px 8px;
   border-radius: 4px;
   margin-right: 8px;
@@ -80,8 +80,10 @@ h1.title,
 .content-columns .right-column {
   margin-top: 18px; /* matches .section-title's bottom margin */
   display: flex; /* make the column a flex container so we can center its contents */
-  justify-content: center; /* center the wounds card horizontally within the column */
-  align-items: flex-start; /* keep vertical alignment controlled by margin-top */
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: center; /* center cards in the column */
   padding-left: 8px; /* small horizontal padding so card doesn't touch column edge */
   padding-right: 8px;
 }
@@ -118,7 +120,7 @@ h1.title,
 :host ::ng-deep .mat-tab-header {
   padding: 0 4px 8px 4px;
   margin-bottom: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 :host ::ng-deep .mat-tab-labels {
@@ -127,7 +129,7 @@ h1.title,
 }
 
 :host ::ng-deep .mat-tab-label {
-  color: rgba(255,255,255,0.62);
+  color: rgba(255, 255, 255, 0.62);
   padding: 10px 14px;
   font-weight: 600;
   text-transform: uppercase;

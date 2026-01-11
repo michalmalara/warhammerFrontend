@@ -12,11 +12,12 @@ import {SkillsComponent} from '../skills/skills.component';
 import {CharacterSkill} from '../skills/skills.types';
 import {TalentsComponent} from '../talents/talents.component';
 import {Talent} from '../talents/talents.types';
+import {FatePointsComponent} from '../fate-points/fate-points.component';
 
 @Component({
   selector: 'character-card',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatTableModule, MatCardModule, MatIconModule, MatTabsModule, CharacterStatsComponent, WoundsPanelComponent, EquipmentTableComponent, SkillsComponent, TalentsComponent],
+  imports: [CommonModule, MatButtonModule, MatTableModule, MatCardModule, MatIconModule, MatTabsModule, CharacterStatsComponent, WoundsPanelComponent, EquipmentTableComponent, SkillsComponent, TalentsComponent, FatePointsComponent],
   templateUrl: './character-card.component.html',
   styleUrls: ['./character-card.component.scss']
 })
@@ -160,4 +161,9 @@ export class CharacterCardComponent {
       description: 'You reload ranged weapons faster than normal.'
     }
   ];
+
+  /** Fate/Fortune – mock pod kartę Fate Points (zgodnie z mockupem). */
+  fateMax = 4;
+  fateCurrent = 3;
+  fortuneCurrent = 2;
 }

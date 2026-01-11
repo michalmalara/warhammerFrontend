@@ -1,0 +1,24 @@
+<mat-card class="fate-card">
+  <div class="title muted">Fate Points</div>
+
+  <div class="dots" role="img" [attr.aria-label]="'Fate points: ' + clampedFateCurrent + ' of ' + fateMax">
+    @for (i of dots(); track i) {
+      <span class="dot" [class.filled]="isFilledDot(i)"></span>
+    }
+  </div>
+
+  <div class="counts">
+    <div class="col">
+      <div class="label muted">Fate</div>
+      <div class="value">{{ clampedFateCurrent }}</div>
+    </div>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="col">
+      <div class="label muted">Fortune</div>
+      <div class="value accent">{{ fortuneCurrent }}</div>
+    </div>
+  </div>
+</mat-card>
+

@@ -57,6 +57,12 @@
           <!-- Right column: wounds card -->
           <aside class="right-column" style="flex:0 0 320px; max-width:360px;">
             <wounds-panel [(woundsCurrent)]="woundsCurrent" [woundsMax]="woundsMax"></wounds-panel>
+
+            <fate-points
+              [fateMax]="fateMax"
+              [fateCurrent]="fateCurrent"
+              [fortuneCurrent]="fortuneCurrent"
+            ></fate-points>
           </aside>
 
         </div>
