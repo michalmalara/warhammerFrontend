@@ -1,0 +1,80 @@
+:host {
+  display: block;
+}
+
+.xp-panel {
+  padding: 1rem;
+  min-width: 16.5rem; /* prevents early wrapping */
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0.375rem;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+.xp-label {
+  margin-bottom: 0.625rem; /* 10px */
+  text-align: center;
+  font-size: 0.9375rem; /* matches Profession History header */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09375rem;
+  color: var(--color-text);
+}
+
+.xp-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem; /* 12px */
+  margin-bottom: 0.75rem; /* 12px */
+}
+
+.xp-metric-label {
+  font-size: 0.6875rem; /* 11px */
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.xp-metric-value {
+  margin-top: 0.125rem; /* 2px */
+  font-size: 1.25rem; /* 20px */
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.xp-progress-label {
+  margin-bottom: 0.375rem; /* 6px */
+  font-size: 0.6875rem; /* 11px */
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.xp-bar {
+  height: 0.5rem; /* 8px */
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.xp-bar .fill {
+  height: 100%;
+  background: #c81f2e; /* consistent with app accent */
+  border-radius: 999px;
+}
+
+.xp-numbers {
+  margin-top: 0.5rem; /* 8px */
+  font-size: 0.8125rem; /* 13px */
+  color: var(--color-text);
+}
+
+@media (max-width: 800px) {
+  .xp-panel {
+    min-width: auto;
+  }
+
+  .xp-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+

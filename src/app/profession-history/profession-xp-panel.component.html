@@ -1,0 +1,30 @@
+<mat-card class="xp-panel">
+  <div class="xp-label muted">Experience</div>
+
+  <div class="xp-metrics">
+    <div class="xp-metric">
+      <div class="xp-metric-label muted">To spend</div>
+      <div class="xp-metric-value">{{ xpToSpend }}</div>
+    </div>
+
+    <div class="xp-metric">
+      <div class="xp-metric-label muted">Total earned</div>
+      <div class="xp-metric-value">{{ xpTotalEarned }}</div>
+    </div>
+  </div>
+
+  <div class="xp-progress-label muted">To next profession</div>
+  <div
+    class="xp-bar"
+    role="progressbar"
+    [attr.aria-valuenow]="xpCurrent"
+    [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="xpMax"
+  >
+    <div class="fill" [style.width]="xpPercent + '%'" aria-hidden="true"></div>
+  </div>
+
+  <div class="xp-numbers">
+    {{ xpCurrent }} / {{ xpMax }} XP • <span class="muted">(remaining {{ xpMissingToProfession }})</span>
+  </div>
+</mat-card>

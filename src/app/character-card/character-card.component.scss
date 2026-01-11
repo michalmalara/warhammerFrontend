@@ -214,6 +214,24 @@ h1.title,
   }
 }
 
+/* Header right: two cards side-by-side (Experience + Profession History) */
+.header-right-panels {
+  display: flex;
+  align-items: stretch;
+  gap: 0.75rem; /* 12px */
+}
+
+/* ensure both cards align nicely and keep consistent width */
+.header-right-panels .header-panel {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .header-right-panels {
+    flex-wrap: wrap;
+  }
+}
+
 /* Tabs styling moved to global theme (_theme.scss) to keep consistent look across the app.
    If you need component-specific overrides, add them below. */
 
@@ -266,8 +284,4 @@ h1.title,
   padding-top: 0.5rem; /* 8px */
 }
 
-/* Example component-scoped overrides (commented out) - enable only if necessary
-:host ::ng-deep .mat-tab-label {
-  // color: var(--tab-inactive-color);
-}
-*/
+/* ------------------------------------------------------------------ */

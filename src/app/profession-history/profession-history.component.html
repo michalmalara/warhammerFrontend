@@ -1,4 +1,12 @@
 <mat-card class="ph-card">
+  <profession-xp-panel
+    class="xp-section"
+    [xpCurrent]="xpCurrent"
+    [xpMax]="xpMax"
+    [xpToSpend]="xpToSpend"
+    [xpTotalEarned]="xpTotalEarned"
+  ></profession-xp-panel>
+
   <div class="ph-title muted">Profession History</div>
 
   @if (entries.length > 0) {
@@ -17,15 +25,11 @@
                 <div class="date muted">{{ entry.dateLabel }}</div>
               }
             </div>
-
-            @if (entry.note) {
-              <div class="note muted">{{ entry.note }}</div>
-            }
           </div>
         </li>
       }
     </ol>
   } @else {
-    <div class="empty muted">Brak wpisów historii profesji.</div>
+    <div class="empty muted">No profession history entries.</div>
   }
 </mat-card>

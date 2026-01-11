@@ -27,14 +27,15 @@
           </div>
         </div>
 
-        <div class="dashboard-right">
-          <div class="xp-panel card">
-            <div class="xp-label muted">Experience Points</div>
-            <div class="xp-bar">
-              <div class="fill" [style.width]="xpPercent + '%'" aria-hidden="true"></div>
-            </div>
-            <div class="xp-numbers">{{ xpCurrent }} / {{ xpMax }} XP</div>
-          </div>
+        <div class="dashboard-right header-right-panels">
+          <profession-history
+            class="header-panel"
+            [entries]="professionHistory"
+            [xpCurrent]="xpCurrent"
+            [xpMax]="xpMax"
+            [xpToSpend]="xpToSpend"
+            [xpTotalEarned]="xpTotalEarned"
+          ></profession-history>
         </div>
       </header>
 
@@ -78,8 +79,6 @@
               [fateCurrent]="fateCurrent"
               [fortuneCurrent]="fortuneCurrent"
             ></fate-points>
-
-            <profession-history [entries]="professionHistory"></profession-history>
           </aside>
 
         </div>

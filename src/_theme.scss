@@ -117,7 +117,7 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     display: flex;
     align-items: center; /* vertically center columns for tighter visual alignment */
     justify-content: space-between;
-    gap: 1rem; /* slightly smaller gap */
+    gap: 0.5rem; /* tighter gap so the header fits more easily */
     padding: 0.5rem 0 1rem 0; /* reduce top padding, keep bottom separation */
     border-bottom: 1px solid var(--color-panel-border);
 
@@ -161,8 +161,9 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     }
 
     .dashboard-right {
-      width: 320px; /* fixed panel width to match mockup proportion */
-      flex: 0 0 320px;
+      width: auto; /* allow the right side to size to content */
+      flex: 0 1 auto;
+      min-width: 0;
 
       .xp-panel {
         padding: 0.6rem 0.9rem; /* slightly tighter padding */

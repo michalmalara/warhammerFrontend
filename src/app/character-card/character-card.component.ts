@@ -32,6 +32,12 @@ export class CharacterCardComponent {
   @Input() xpCurrent = 450;
   @Input() xpMax = 1000;
 
+  /** Punkty doświadczenia dostępne do wydania (niewydane). */
+  @Input() xpToSpend = 120;
+
+  /** Suma wszystkich zdobytych punktów doświadczenia (łącznie). */
+  @Input() xpTotalEarned = 1870;
+
   /**
    * Wsteczna kompatybilność (używane też w sidebarze). Jeśli nie podasz `portraitUrl`,
    * komponent spróbuje użyć `avatarUrl`.
@@ -55,24 +61,20 @@ export class CharacterCardComponent {
   }
 
   /** Historia profesji (mock) – docelowo do podpięcia pod backend. */
-  professionHistory: ProfessionHistoryEntry[] = [
-    {
-      id: 'ph-3',
-      profession: 'Roadwarden',
-      dateLabel: 'Current',
-      note: 'Assigned to patrol the Altdorf–Bogenhafen road. Keeps records of incidents and tolls.'
-    },
+  professionHistory: ProfessionHistoryEntry[] = [{
+    id: 'ph-3',
+    profession: 'Toll Keeper',
+    note: 'Worked at a river crossing collecting tolls and negotiating with stubborn travellers.'
+  },
     {
       id: 'ph-2',
       profession: 'Watchman',
-      dateLabel: 'Earlier',
       note: 'Served in the city watch. Learned to spot trouble and keep order.'
     },
     {
       id: 'ph-1',
       profession: 'Recruit',
-      dateLabel: 'Past',
-      note: 'First steps in the militia.'
+      note: 'First steps in the militia.',
     }
   ];
 
@@ -101,11 +103,6 @@ export class CharacterCardComponent {
   // Wounds state (kept as simple fields so parent can persist/observe value)
   woundsMax = 15;
   woundsCurrent = this.woundsMax;
-
-  get xpPercent() {
-    if (!this.xpMax) return 0;
-    return Math.round((this.xpCurrent / this.xpMax) * 100);
-  }
 
   // equipment moved to EquipmentTableComponent
 
