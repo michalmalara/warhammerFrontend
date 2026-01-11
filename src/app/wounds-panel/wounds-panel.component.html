@@ -1,21 +1,24 @@
 <mat-card class="wounds-panel"
           [ngClass]="{ 'wounds-critical': isCritical, 'wounds-critical-zero': isCriticalZero, 'wounds-wounded': isWounded, 'wounds-healthy': isHealthy, 'wounds-slightly': isSlightlyWounded }">
   <mat-card-header>
-    <div class="wounds-header muted">Wounds</div>
+    <div class="wounds-header muted" i18n="Nagłówek panelu ran@@wounds.title">Wounds</div>
   </mat-card-header>
   <mat-card-content class="wounds-body">
     <div class="wounds-display">
       <div class="wounds-value" aria-live="polite">{{ woundsDisplay }}</div>
-      <div class="wounds-current-label">HP</div>
+      <div class="wounds-current-label" i18n="Etykieta aktualnych punktów życia (HP)@@wounds.hpLabel">HP</div>
     </div>
 
     <div class="wounds-controls">
-      <button mat-icon-button color="primary" (click)="decWounds()" aria-label="Decrease wounds"
+      <button mat-icon-button color="primary" (click)="decWounds()"
+              i18n-aria-label="ARIA: zmniejsz rany@@wounds.decAria" aria-label="Decrease wounds"
               [disabled]="woundsCurrent <= 0">
         <mat-icon>remove</mat-icon>
       </button>
-      <div class="wounds-max">Max: <span class="wounds-max-value">{{ woundsMax }}</span></div>
-      <button mat-icon-button color="primary" (click)="incWounds()" aria-label="Increase wounds"
+      <div class="wounds-max"><span i18n="Etykieta maksymalnych ran@@wounds.maxLabel">Max:</span> <span
+        class="wounds-max-value">{{ woundsMax }}</span></div>
+      <button mat-icon-button color="primary" (click)="incWounds()" i18n-aria-label="ARIA: zwiększ rany@@wounds.incAria"
+              aria-label="Increase wounds"
               [disabled]="woundsCurrent >= woundsMax">
         <mat-icon>add</mat-icon>
       </button>

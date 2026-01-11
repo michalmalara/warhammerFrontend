@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" target-language="pl" datatype="plaintext" original="ng2.template">
+    <body>
+      <!-- Character card tags -->
+      <trans-unit id="character.tags.race" datatype="html">
+        <source>Human</source>
+        <target> Człowiek </target>
+      </trans-unit>
+      <trans-unit id="character.tags.heritage" datatype="html">
+        <source>Empire Heritage</source>
+        <target> Dziedzictwo Imperium </target>
+      </trans-unit>
+
+      <!-- Tabs -->
+      <trans-unit id="tabs.skills" datatype="html">
+        <source>Skills</source>
+        <target> Umiejętności </target>
+      </trans-unit>
+      <trans-unit id="tabs.talents" datatype="html">
+        <source>Talents</source>
+        <target> Talenty </target>
+      </trans-unit>
+      <trans-unit id="tabs.combat" datatype="html">
+        <source>Combat</source>
+        <target> Walka </target>
+      </trans-unit>
+      <trans-unit id="tabs.inventory" datatype="html">
+        <source>Inventory</source>
+        <target> Ekwipunek </target>
+      </trans-unit>
+
+      <!-- Inventory placeholder -->
+      <trans-unit id="inventory.placeholder" datatype="html">
+        <source> Inventory view is under construction  move or copy items here as needed.</source>
+        <target> Widok ekwipunku jest w trakcie tworzenia — przenieś lub skopiuj tu przedmioty wedle potrzeb. </target>
+      </trans-unit>
+
+      <!-- Stats -->
+      <trans-unit id="stats.primaryHeader" datatype="html">
+        <source>Primary Characteristics</source>
+        <target> Cechy główne </target>
+      </trans-unit>
+      <trans-unit id="stats.secondaryHeader" datatype="html">
+        <source>Secondary Characteristics</source>
+        <target> Cechy drugorzędne </target>
+      </trans-unit>
+      <trans-unit id="stats.baseLabel" datatype="html">
+        <source>Base:</source>
+        <target> Baza:</target>
+      </trans-unit>
+      <trans-unit id="stats.advLabel" datatype="html">
+        <source>Adv:</source>
+        <target> Rozw.:</target>
+      </trans-unit>
+
+      <!-- Equipment table -->
+      <trans-unit id="equipment.col.name" datatype="html">
+        <source> Weapon / Gear </source>
+        <target> Broń / Sprzęt </target>
+      </trans-unit>
+      <trans-unit id="equipment.col.enc" datatype="html">
+        <source> Enc </source>
+        <target> Obc. </target>
+      </trans-unit>
+      <trans-unit id="equipment.col.dmg" datatype="html">
+        <source> Dmg </source>
+        <target> Obr. </target>
+      </trans-unit>
+      <trans-unit id="equipment.col.range" datatype="html">
+        <source> Range </source>
+        <target> Zasięg </target>
+      </trans-unit>
+      <trans-unit id="equipment.col.qualities" datatype="html">
+        <source> Qualities </source>
+        <target> Cechy </target>
+      </trans-unit>
+
+      <!-- Fate points -->
+      <trans-unit id="fatePoints.title" datatype="html">
+        <source>Fate Points</source>
+        <target> Punkty Losu </target>
+      </trans-unit>
+      <trans-unit id="fatePoints.aria" datatype="html">
+        <source>Fate points</source>
+        <target> Punkty Losu </target>
+      </trans-unit>
+      <trans-unit id="fatePoints.fateLabel" datatype="html">
+        <source>Fate</source>
+        <target> Los </target>
+      </trans-unit>
+      <trans-unit id="fatePoints.fortuneLabel" datatype="html">
+        <source>Fortune</source>
+        <target> Fortuna </target>
+      </trans-unit>
+
+      <!-- Experience panel -->
+      <trans-unit id="xp.title" datatype="html">
+        <source>Experience</source>
+        <target> Doświadczenie </target>
+      </trans-unit>
+      <trans-unit id="xp.currentProfessionLabel" datatype="html">
+        <source> Current profession </source>
+        <target> Aktualna profesja </target>
+      </trans-unit>
+      <trans-unit id="xp.toSpendLabel" datatype="html">
+        <source>To spend</source>
+        <target> Do wydania </target>
+      </trans-unit>
+      <trans-unit id="xp.totalEarnedLabel" datatype="html">
+        <source>Total earned </source>
+        <target> Łącznie zdobyto </target>
+      </trans-unit>
+      <trans-unit id="xp.toNextProfession" datatype="html">
+        <source>To next profession </source>
+        <target> Do następnej profesji </target>
+      </trans-unit>
+      <trans-unit id="xp.unit" datatype="html">
+        <source>XP</source>
+        <target> PD </target>
+      </trans-unit>
+      <trans-unit id="xp.remaining" datatype="html">
+        <source>remaining</source>
+        <target> pozostało </target>
+      </trans-unit>
+
+      <!-- Sidebar -->
+      <trans-unit id="sidebar.avatarAlt" datatype="html">
+        <source>avatar</source>
+        <target> awatar </target>
+      </trans-unit>
+      <trans-unit id="sidebar.characterName" datatype="html">
+        <source>Gottfried von Hollen</source>
+        <target> Gottfried von Hollen </target>
+      </trans-unit>
+      <trans-unit id="sidebar.characterRole" datatype="html">
+        <source>Roadwarden</source>
+        <target> Drogowy strażnik </target>
+      </trans-unit>
+      <trans-unit id="sidebar.encumbranceLabel" datatype="html">
+        <source>Encumbrance</source>
+        <target> Obciążenie </target>
+      </trans-unit>
+      <trans-unit id="sidebar.restRecover" datatype="html">
+        <source>Rest &amp; Recover</source>
+        <target> Odpoczynek i regeneracja </target>
+      </trans-unit>
+
+      <!-- Skills -->
+      <trans-unit id="skills.controlsAriaLabel" datatype="html">
+        <source>Skill controls</source>
+        <target> Kontrolki umiejętności </target>
+      </trans-unit>
+      <trans-unit id="skills.taken" datatype="html">
+        <source>TAKEN</source>
+        <target> WYBRANE </target>
+      </trans-unit>
+      <trans-unit id="skills.viewAll" datatype="html">
+        <source>VIEW ALL SKILLS (<x id="INTERPOLATION" equiv-text="{{ skills.length }}"/>) </source>
+        <target> POKAŻ WSZYSTKIE UMIEJĘTNOŚCI (<x id="INTERPOLATION" equiv-text="{{ skills.length }}"/>) </target>
+      </trans-unit>
+
+      <!-- Talents -->
+      <trans-unit id="talents.empty" datatype="html">
+        <source>Brak talentów.</source>
+        <target> Brak talentów. </target>
+      </trans-unit>
+
+      <!-- Wounds -->
+      <trans-unit id="wounds.title" datatype="html">
+        <source>Wounds</source>
+        <target> Rany </target>
+      </trans-unit>
+      <trans-unit id="wounds.hpLabel" datatype="html">
+        <source>HP</source>
+        <target> PŻ </target>
+      </trans-unit>
+      <trans-unit id="wounds.decAria" datatype="html">
+        <source>Decrease wounds</source>
+        <target> Zmniejsz rany </target>
+      </trans-unit>
+      <trans-unit id="wounds.maxLabel" datatype="html">
+        <source>Max:</source>
+        <target> Maks.:</target>
+      </trans-unit>
+      <trans-unit id="wounds.incAria" datatype="html">
+        <source>Increase wounds</source>
+        <target> Zwiększ rany </target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
+

@@ -1,26 +1,30 @@
 <mat-card class="xp-panel">
-  <div class="xp-label muted">Experience</div>
+  <div class="xp-label muted" i18n="Nagłówek panelu doświadczenia@@xp.title">Experience</div>
 
   <div class="xp-top-row">
     <div *ngIf="currentProfession" class="xp-current-profession">
-      <div class="xp-current-profession-label muted">Current profession</div>
+      <div class="xp-current-profession-label muted" i18n="Etykieta: aktualna profesja@@xp.currentProfessionLabel">
+        Current profession
+      </div>
       <div class="xp-current-profession-value">{{ currentProfession }}</div>
     </div>
 
     <div class="xp-metrics">
       <div class="xp-metric">
-        <div class="xp-metric-label muted">To spend</div>
+        <div class="xp-metric-label muted" i18n="Etykieta: punkty do wydania@@xp.toSpendLabel">To spend</div>
         <div class="xp-metric-value">{{ xpToSpend }}</div>
       </div>
 
       <div class="xp-metric">
-        <div class="xp-metric-label muted">Total earned</div>
+        <div class="xp-metric-label muted" i18n="Etykieta: suma zdobytych punktów@@xp.totalEarnedLabel">Total earned
+        </div>
         <div class="xp-metric-value">{{ xpTotalEarned }}</div>
       </div>
     </div>
   </div>
 
-  <div class="xp-progress-label muted">To next profession</div>
+  <div class="xp-progress-label muted" i18n="Etykieta: do następnej profesji@@xp.toNextProfession">To next profession
+  </div>
   <div
     class="xp-bar"
     role="progressbar"
@@ -32,6 +36,7 @@
   </div>
 
   <div class="xp-numbers">
-    {{ xpCurrent }} / {{ xpMax }} XP • <span class="muted">(remaining {{ xpMissingToProfession }})</span>
+    {{ xpCurrent }} / {{ xpMax }} <span i18n="Skrót jednostki XP@@xp.unit">XP</span> • <span class="muted">(<span
+    i18n="Etykieta: pozostało@@xp.remaining">remaining</span> {{ xpMissingToProfession }})</span>
   </div>
 </mat-card>

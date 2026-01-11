@@ -1,9 +1,11 @@
 <aside class="app-sidebar">
   <div class="brand">
-    <div class="avatar"><img src="/assets/avatar-placeholder.png" alt="avatar"/></div>
+    <div class="avatar"><img src="/assets/avatar-placeholder.png"
+                             i18n-alt="Opis alternatywny awatara|Alt tekst dla obrazka postaci@@sidebar.avatarAlt"
+                             alt="avatar"/></div>
     <div class="brand-meta">
-      <div class="name">Gottfried von Hollen</div>
-      <div class="role muted">Roadwarden</div>
+      <div class="name" i18n="Nazwa postaci wyświetlana w sidebarze@@sidebar.characterName">Gottfried von Hollen</div>
+      <div class="role muted" i18n="Profesja/rola postaci w sidebarze@@sidebar.characterRole">Roadwarden</div>
     </div>
   </div>
 
@@ -14,11 +16,10 @@
   </nav>
 
   <div class="bottom">
-    <div class="encumbrance muted">Encumbrance</div>
+    <div class="encumbrance muted" i18n="Etykieta obciążenia w sidebarze@@sidebar.encumbranceLabel">Encumbrance</div>
     <div class="bar">
       <div class="fill" style="width: 60%"></div>
     </div>
-    <button class="btn-primary">Rest & Recover</button>
+    <button class="btn-primary" i18n="Przycisk odpoczynku i regeneracji@@sidebar.restRecover">Rest & Recover</button>
   </div>
 </aside>
-

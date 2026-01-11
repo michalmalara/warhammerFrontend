@@ -19,8 +19,8 @@
               <h1 class="title">{{ name }}</h1>
 
               <div class="title-tags">
-                <span class="tag muted">Human</span>
-                <span class="tag muted">Empire Heritage</span>
+                <span class="tag muted" i18n="Tag rasy@@character.tags.race">Human</span>
+                <span class="tag muted" i18n="Tag pochodzenia/kultury@@character.tags.heritage">Empire Heritage</span>
               </div>
             </div>
           </div>
@@ -49,22 +49,23 @@
 
             <!-- Angular Material Tabs: Combat / Inventory -->
             <mat-tab-group>
-              <mat-tab label="Skills">
+              <mat-tab i18n-label="Etykieta zakładki umiejętności@@tabs.skills" label="Skills">
                 <skills [skills]="skills"></skills>
               </mat-tab>
 
-              <mat-tab label="Talents">
+              <mat-tab i18n-label="Etykieta zakładki talentów@@tabs.talents" label="Talents">
                 <talents [talents]="talents"></talents>
               </mat-tab>
 
-              <mat-tab label="Combat">
+              <mat-tab i18n-label="Etykieta zakładki walki@@tabs.combat" label="Combat">
                 <equipment-table></equipment-table>
               </mat-tab>
 
-              <mat-tab label="Inventory">
+              <mat-tab i18n-label="Etykieta zakładki ekwipunku@@tabs.inventory" label="Inventory">
                 <!-- Placeholder / future inventory content -->
                 <div class="inventory-placeholder card">
-                  <p class="muted">Inventory view is under construction — move or copy items here as needed.</p>
+                  <p class="muted" i18n="Komunikat o braku widoku ekwipunku (placeholder)@@inventory.placeholder">
+                    Inventory view is under construction — move or copy items here as needed.</p>
                 </div>
               </mat-tab>
             </mat-tab-group>

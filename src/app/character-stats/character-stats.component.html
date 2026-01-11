@@ -1,4 +1,4 @@
-<h2 class="section-title">Primary Characteristics</h2>
+<h2 class="section-title" i18n="Nagłówek sekcji cech głównych@@stats.primaryHeader">Primary Characteristics</h2>
 <div class="stats-row-wrapper">
   <div class="stats-row">
     @for (s of primaryStats; track s) {
@@ -9,15 +9,17 @@
         </div>
 
         <div class="sub-values muted">
-          <span class="sub sub-base">Base: <strong>{{ s.base ?? statTotal(s, 'primary') }}</strong></span>
-          <span class="sub sub-adv">Adv: <strong>{{ s.adv ?? 0 }}</strong></span>
+          <span class="sub sub-base"><span
+            i18n="Etykieta bazowej wartości statystyki@@stats.baseLabel">Base:</span> <strong>{{ s.base ?? statTotal(s, 'primary') }}</strong></span>
+          <span class="sub sub-adv"><span i18n="Etykieta rozwinięcia (advances) statystyki@@stats.advLabel">Adv:</span> <strong>{{ s.adv ?? 0 }}</strong></span>
         </div>
       </div>
     }
   </div>
 </div>
 
-<h2 class="section-title">Secondary Characteristics</h2>
+<h2 class="section-title" i18n="Nagłówek sekcji cech drugorzędnych@@stats.secondaryHeader">Secondary
+  Characteristics</h2>
 <div class="stats-row">
   @for (sc of secondaryStats; track sc) {
     <div class="stat-box">
@@ -27,8 +29,10 @@
       </div>
 
       <div class="sub-values muted">
-        <span class="sub sub-base">Base: <strong>{{ sc.base ?? statTotal(sc, 'secondary') }}</strong></span>
-        <span class="sub sub-adv">Adv: <strong>{{ sc.adv ?? 0 }}</strong></span>
+        <span class="sub sub-base"><span
+          i18n="Etykieta bazowej wartości statystyki@@stats.baseLabel">Base:</span> <strong>{{ sc.base ?? statTotal(sc, 'secondary') }}</strong></span>
+        <span class="sub sub-adv"><span
+          i18n="Etykieta rozwinięcia (advances) statystyki@@stats.advLabel">Adv:</span> <strong>{{ sc.adv ?? 0 }}</strong></span>
       </div>
     </div>
   }
