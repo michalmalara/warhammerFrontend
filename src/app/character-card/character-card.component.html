@@ -3,12 +3,27 @@
     <main class="main">
       <header class="dashboard-header">
         <div class="dashboard-left">
-          <div class="subtitle muted">{{ subtitle }}</div>
-          <h1 class="title">{{ name }}</h1>
+          <div class="name-row">
+            <div class="portrait" aria-hidden="false">
+              <img
+                src="/assets/avatar-placeholder.png"
+                [src]="effectivePortraitUrl"
+                [alt]="effectivePortraitAlt"
+                loading="lazy"
+                (error)="onPortraitError($event)"
+              />
+            </div>
 
-          <div class="title-tags">
-            <span class="tag muted">Human</span>
-            <span class="tag muted">Empire Heritage</span>
+            <div class="name-meta">
+              <div class="subtitle muted">{{ subtitle }}</div>
+              <h1 class="title">{{ name }}</h1>
+              <div class="profession muted">{{ title }}</div>
+
+              <div class="title-tags">
+                <span class="tag muted">Human</span>
+                <span class="tag muted">Empire Heritage</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -63,6 +78,8 @@
               [fateCurrent]="fateCurrent"
               [fortuneCurrent]="fortuneCurrent"
             ></fate-points>
+
+            <profession-history [entries]="professionHistory"></profession-history>
           </aside>
 
         </div>

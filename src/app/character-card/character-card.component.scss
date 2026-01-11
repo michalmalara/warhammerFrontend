@@ -112,6 +112,9 @@ h1.title,
   flex-direction: column;
   align-items: center;
 
+  /* odstęp między kartami (Fate Points / Profession History) */
+  gap: 14px;
+
   /* odstęp od separatora */
   padding-left: 16px;
 
@@ -124,8 +127,44 @@ h1.title,
   padding: 1rem;
 }
 
+/* Portret + imię w jednej linii */
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.portrait {
+  width: 96px;
+  height: 96px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.22);
+  flex: 0 0 auto;
+}
+
+.portrait img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.name-meta {
+  min-width: 0; /* pozwala zawijać/ucinać teksty w flexboxie */
+}
+
 /* Responsive tweak: scale title down on narrow screens */
 @media (max-width: 800px) {
+  .portrait {
+    width: 68px;
+    height: 68px;
+    border-radius: 8px;
+  }
+
   h1.title,
   .title {
     font-size: 34px;
@@ -137,6 +176,16 @@ h1.title,
 
 /* Stack stats + wounds on narrow screens */
 @media (max-width: 720px) {
+  .name-row {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .portrait {
+    width: 56px;
+    height: 56px;
+  }
+
   .stats-and-wounds-row {
     flex-direction: column;
     gap: 12px;
@@ -222,4 +271,3 @@ h1.title,
   // color: var(--tab-inactive-color);
 }
 */
-

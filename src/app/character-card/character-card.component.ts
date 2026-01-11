@@ -13,11 +13,13 @@ import {CharacterSkill} from '../skills/skills.types';
 import {TalentsComponent} from '../talents/talents.component';
 import {Talent} from '../talents/talents.types';
 import {FatePointsComponent} from '../fate-points/fate-points.component';
+import {ProfessionHistoryComponent} from '../profession-history/profession-history.component';
+import {ProfessionHistoryEntry} from '../profession-history/profession-history.types';
 
 @Component({
   selector: 'character-card',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatTableModule, MatCardModule, MatIconModule, MatTabsModule, CharacterStatsComponent, WoundsPanelComponent, EquipmentTableComponent, SkillsComponent, TalentsComponent, FatePointsComponent],
+  imports: [CommonModule, MatButtonModule, MatTableModule, MatCardModule, MatIconModule, MatTabsModule, CharacterStatsComponent, WoundsPanelComponent, EquipmentTableComponent, SkillsComponent, TalentsComponent, FatePointsComponent, ProfessionHistoryComponent],
   templateUrl: './character-card.component.html',
   styleUrls: ['./character-card.component.scss']
 })
@@ -29,7 +31,50 @@ export class CharacterCardComponent {
   @Input() subtitle = 'CHARACTER DASHBOARD';
   @Input() xpCurrent = 450;
   @Input() xpMax = 1000;
+
+  /**
+   * Wsteczna kompatybilność (używane też w sidebarze). Jeśli nie podasz `portraitUrl`,
+   * komponent spróbuje użyć `avatarUrl`.
+   */
   @Input() avatarUrl = '/assets/avatar-placeholder.png';
+
+  /** URL portretu postaci do wyświetlenia obok imienia. */
+  @Input() portraitUrl?: string;
+
+  /** Tekst alternatywny dla portretu (dostępność / screenreadery). */
+  @Input() portraitAlt?: string;
+
+  get effectivePortraitUrl(): string {
+    const url = (this.portraitUrl ?? '').trim() || (this.avatarUrl ?? '').trim();
+    return url || '/assets/avatar-placeholder.png';
+  }
+
+  get effectivePortraitAlt(): string {
+    const alt = (this.portraitAlt ?? '').trim();
+    return alt || `Portret: ${this.name}`;
+  }
+
+  /** Historia profesji (mock) – docelowo do podpięcia pod backend. */
+  professionHistory: ProfessionHistoryEntry[] = [
+    {
+      id: 'ph-3',
+      profession: 'Roadwarden',
+      dateLabel: 'Current',
+      note: 'Assigned to patrol the Altdorf–Bogenhafen road. Keeps records of incidents and tolls.'
+    },
+    {
+      id: 'ph-2',
+      profession: 'Watchman',
+      dateLabel: 'Earlier',
+      note: 'Served in the city watch. Learned to spot trouble and keep order.'
+    },
+    {
+      id: 'ph-1',
+      profession: 'Recruit',
+      dateLabel: 'Past',
+      note: 'First steps in the militia.'
+    }
+  ];
 
   // Primary / Secondary stats moved to a separate component
   primaryStats: { label: string; base: number; adv: number }[] = [
@@ -170,4 +215,13 @@ export class CharacterCardComponent {
   fateMax = 4;
   fateCurrent = 3;
   fortuneCurrent = 2;
+
+  onPortraitError(event: Event): void {
+    const img = event.target as HTMLImageElement | null;
+    if (!img) return;
+
+    // unikamy pętli, jeśli placeholder też byłby niedostępny
+    if (img.src.endsWith('/assets/avatar-placeholder.png')) return;
+    img.src = '/assets/avatar-placeholder.png';
+  }
 }
