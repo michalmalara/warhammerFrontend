@@ -1,5 +1,5 @@
 <mat-card class="wounds-panel"
-          [ngClass]="{ 'wounds-critical': isCritical, 'wounds-wounded': isWounded, 'wounds-healthy': isHealthy, 'wounds-slightly': isSlightlyWounded }">
+          [ngClass]="{ 'wounds-critical': isCritical, 'wounds-critical-zero': isCriticalZero, 'wounds-wounded': isWounded, 'wounds-healthy': isHealthy, 'wounds-slightly': isSlightlyWounded }">
   <mat-card-header>
     <div class="wounds-header muted">Wounds</div>
   </mat-card-header>
@@ -10,11 +10,13 @@
     </div>
 
     <div class="wounds-controls">
-      <button mat-icon-button color="primary" (click)="decWounds()" aria-label="Decrease wounds" [disabled]="woundsCurrent <= 0">
+      <button mat-icon-button color="primary" (click)="decWounds()" aria-label="Decrease wounds"
+              [disabled]="woundsCurrent <= 0">
         <mat-icon>remove</mat-icon>
       </button>
       <div class="wounds-max">Max: <span class="wounds-max-value">{{ woundsMax }}</span></div>
-      <button mat-icon-button color="primary" (click)="incWounds()" aria-label="Increase wounds" [disabled]="woundsCurrent >= woundsMax">
+      <button mat-icon-button color="primary" (click)="incWounds()" aria-label="Increase wounds"
+              [disabled]="woundsCurrent >= woundsMax">
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -22,4 +24,3 @@
     <div class="wounds-note muted">{{ woundsStatus }}</div>
   </mat-card-content>
 </mat-card>
-

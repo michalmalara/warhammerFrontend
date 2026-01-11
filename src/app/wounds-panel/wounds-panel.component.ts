@@ -66,6 +66,11 @@ export class WoundsPanelComponent {
     return this.woundsFraction <= this._criticalThreshold;
   }
 
+  /** True only for the literal 'Critical' case (0 HP). */
+  get isCriticalZero(): boolean {
+    return this.woundsCurrent === 0;
+  }
+
   get isWounded(): boolean {
     return this.woundsFraction > this._criticalThreshold && this.woundsFraction < this._slightlyThreshold;
   }
