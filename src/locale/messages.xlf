@@ -8,7 +8,7 @@
           <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
           <context context-type="linenumber">22,23</context>
         </context-group>
-        <note priority="1" from="description">Tag rasy</note>
+        <note priority="1" from="description">Race tag</note>
       </trans-unit>
       <trans-unit id="character.tags.heritage" datatype="html">
         <source>Empire Heritage</source>
@@ -16,7 +16,7 @@
           <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
           <context context-type="linenumber">23,26</context>
         </context-group>
-        <note priority="1" from="description">Tag pochodzenia/kultury</note>
+        <note priority="1" from="description">Heritage / culture tag</note>
       </trans-unit>
       <trans-unit id="tabs.skills" datatype="html">
         <source>Skills</source>
@@ -24,7 +24,7 @@
           <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
           <context context-type="linenumber">52,53</context>
         </context-group>
-        <note priority="1" from="description">Etykieta zakładki umiejętności</note>
+        <note priority="1" from="description">Skills tab label</note>
       </trans-unit>
       <trans-unit id="tabs.talents" datatype="html">
         <source>Talents</source>
@@ -32,7 +32,7 @@
           <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
           <context context-type="linenumber">56,57</context>
         </context-group>
-        <note priority="1" from="description">Etykieta zakładki talentów</note>
+        <note priority="1" from="description">Talents tab label</note>
       </trans-unit>
       <trans-unit id="tabs.combat" datatype="html">
         <source>Combat</source>
@@ -40,7 +40,7 @@
           <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
           <context context-type="linenumber">60,61</context>
         </context-group>
-        <note priority="1" from="description">Etykieta zakładki walki</note>
+        <note priority="1" from="description">Combat tab label</note>
       </trans-unit>
       <trans-unit id="tabs.inventory" datatype="html">
         <source>Inventory</source>
@@ -48,7 +48,7 @@
           <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
           <context context-type="linenumber">64,65</context>
         </context-group>
-        <note priority="1" from="description">Etykieta zakładki ekwipunku</note>
+        <note priority="1" from="description">Inventory tab label</note>
       </trans-unit>
       <trans-unit id="inventory.placeholder" datatype="html">
         <source> Inventory view is under construction — move or copy items here as needed.</source>
@@ -56,7 +56,7 @@
           <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
           <context context-type="linenumber">68,71</context>
         </context-group>
-        <note priority="1" from="description">Komunikat o braku widoku ekwipunku (placeholder)</note>
+        <note priority="1" from="description">Inventory placeholder message</note>
       </trans-unit>
       <trans-unit id="stats.primaryHeader" datatype="html">
         <source>Primary Characteristics</source>
@@ -64,7 +64,7 @@
           <context context-type="sourcefile">src/app/character-stats/character-stats.component.html</context>
           <context context-type="linenumber">1,3</context>
         </context-group>
-        <note priority="1" from="description">Nagłówek sekcji cech głównych</note>
+        <note priority="1" from="description">Primary characteristics section header</note>
       </trans-unit>
       <trans-unit id="stats.baseLabel" datatype="html">
         <source>Base:</source>
@@ -76,7 +76,7 @@
           <context context-type="sourcefile">src/app/character-stats/character-stats.component.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
-        <note priority="1" from="description">Etykieta bazowej wartości statystyki</note>
+        <note priority="1" from="description">Base statistic label</note>
       </trans-unit>
       <trans-unit id="stats.advLabel" datatype="html">
         <source>Adv:</source>
@@ -88,7 +88,7 @@
           <context context-type="sourcefile">src/app/character-stats/character-stats.component.html</context>
           <context context-type="linenumber">35,37</context>
         </context-group>
-        <note priority="1" from="description">Etykieta rozwinięcia (advances) statystyki</note>
+        <note priority="1" from="description">Statistic advances label</note>
       </trans-unit>
       <trans-unit id="stats.secondaryHeader" datatype="html">
         <source>Secondary Characteristics</source>
@@ -96,7 +96,7 @@
           <context context-type="sourcefile">src/app/character-stats/character-stats.component.html</context>
           <context context-type="linenumber">21,24</context>
         </context-group>
-        <note priority="1" from="description">Nagłówek sekcji cech drugorzędnych</note>
+        <note priority="1" from="description">Secondary characteristics section header</note>
       </trans-unit>
       <trans-unit id="equipment.col.name" datatype="html">
         <source> Weapon / Gear </source>
@@ -104,7 +104,7 @@
           <context context-type="sourcefile">src/app/equipment-table/equipment-table.component.html</context>
           <context context-type="linenumber">10,12</context>
         </context-group>
-        <note priority="1" from="description">Nagłówek kolumny: nazwa broni/ekwipunku</note>
+        <note priority="1" from="description">Table header: weapon / gear name</note>
       </trans-unit>
       <trans-unit id="equipment.col.enc" datatype="html">
         <source> Enc </source>
@@ -112,7 +112,7 @@
           <context context-type="sourcefile">src/app/equipment-table/equipment-table.component.html</context>
           <context context-type="linenumber">17,19</context>
         </context-group>
-        <note priority="1" from="description">Nagłówek kolumny: obciążenie</note>
+        <note priority="1" from="description">Table header: encumbrance</note>
       </trans-unit>
       <trans-unit id="equipment.col.dmg" datatype="html">
         <source> Dmg </source>
@@ -120,7 +120,7 @@
           <context context-type="sourcefile">src/app/equipment-table/equipment-table.component.html</context>
           <context context-type="linenumber">24,26</context>
         </context-group>
-        <note priority="1" from="description">Nagłówek kolumny: obrażenia</note>
+        <note priority="1" from="description">Table header: damage</note>
       </trans-unit>
       <trans-unit id="equipment.col.range" datatype="html">
         <source> Range </source>
@@ -128,7 +128,7 @@
           <context context-type="sourcefile">src/app/equipment-table/equipment-table.component.html</context>
           <context context-type="linenumber">31,33</context>
         </context-group>
-        <note priority="1" from="description">Nagłówek kolumny: zasięg</note>
+        <note priority="1" from="description">Table header: range</note>
       </trans-unit>
       <trans-unit id="equipment.col.qualities" datatype="html">
         <source> Qualities </source>
@@ -136,7 +136,7 @@
           <context context-type="sourcefile">src/app/equipment-table/equipment-table.component.html</context>
           <context context-type="linenumber">38,40</context>
         </context-group>
-        <note priority="1" from="description">Nagłówek kolumny: cechy/jakości</note>
+        <note priority="1" from="description">Table header: qualities</note>
       </trans-unit>
       <trans-unit id="fatePoints.title" datatype="html">
         <source>Fate Points</source>
@@ -144,7 +144,7 @@
           <context context-type="sourcefile">src/app/fate-points/fate-points.component.html</context>
           <context context-type="linenumber">2,7</context>
         </context-group>
-        <note priority="1" from="description">Nagłówek panelu punktów losu</note>
+        <note priority="1" from="description">Fate points panel title</note>
       </trans-unit>
       <trans-unit id="fatePoints.aria" datatype="html">
         <source>Fate points</source>
@@ -152,7 +152,7 @@
           <context context-type="sourcefile">src/app/fate-points/fate-points.component.html</context>
           <context context-type="linenumber">8,11</context>
         </context-group>
-        <note priority="1" from="description">Etykieta dostępności dla wskaźnika punktów losu</note>
+        <note priority="1" from="description">Accessibility label for the fate points indicator</note>
       </trans-unit>
       <trans-unit id="fatePoints.fateLabel" datatype="html">
         <source>Fate</source>
@@ -160,7 +160,7 @@
           <context context-type="sourcefile">src/app/fate-points/fate-points.component.html</context>
           <context context-type="linenumber">17,18</context>
         </context-group>
-        <note priority="1" from="description">Etykieta kolumny: Fate</note>
+        <note priority="1" from="description">Column label: Fate</note>
       </trans-unit>
       <trans-unit id="fatePoints.fortuneLabel" datatype="html">
         <source>Fortune</source>
@@ -168,7 +168,7 @@
           <context context-type="sourcefile">src/app/fate-points/fate-points.component.html</context>
           <context context-type="linenumber">24,25</context>
         </context-group>
-        <note priority="1" from="description">Etykieta kolumny: Fortune</note>
+        <note priority="1" from="description">Column label: Fortune</note>
       </trans-unit>
       <trans-unit id="xp.title" datatype="html">
         <source>Experience</source>
@@ -176,7 +176,7 @@
           <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
           <context context-type="linenumber">2,5</context>
         </context-group>
-        <note priority="1" from="description">Nagłówek panelu doświadczenia</note>
+        <note priority="1" from="description">Experience panel title</note>
       </trans-unit>
       <trans-unit id="xp.currentProfessionLabel" datatype="html">
         <source> Current profession </source>
@@ -184,7 +184,7 @@
           <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
           <context context-type="linenumber">7,9</context>
         </context-group>
-        <note priority="1" from="description">Etykieta: aktualna profesja</note>
+        <note priority="1" from="description">Label: current profession</note>
       </trans-unit>
       <trans-unit id="xp.toSpendLabel" datatype="html">
         <source>To spend</source>
@@ -192,7 +192,7 @@
           <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
           <context context-type="linenumber">14,15</context>
         </context-group>
-        <note priority="1" from="description">Etykieta: punkty do wydania</note>
+        <note priority="1" from="description">Label: XP to spend</note>
       </trans-unit>
       <trans-unit id="xp.totalEarnedLabel" datatype="html">
         <source>Total earned </source>
@@ -200,7 +200,7 @@
           <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
           <context context-type="linenumber">19,21</context>
         </context-group>
-        <note priority="1" from="description">Etykieta: suma zdobytych punktów</note>
+        <note priority="1" from="description">Label: total earned XP</note>
       </trans-unit>
       <trans-unit id="xp.toNextProfession" datatype="html">
         <source>To next profession </source>
@@ -208,7 +208,7 @@
           <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
           <context context-type="linenumber">26,31</context>
         </context-group>
-        <note priority="1" from="description">Etykieta: do następnej profesji</note>
+        <note priority="1" from="description">Label: to next profession</note>
       </trans-unit>
       <trans-unit id="xp.unit" datatype="html">
         <source>XP</source>
@@ -216,7 +216,7 @@
           <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
           <context context-type="linenumber">39,40</context>
         </context-group>
-        <note priority="1" from="description">Skrót jednostki XP</note>
+        <note priority="1" from="description">XP unit abbreviation</note>
       </trans-unit>
       <trans-unit id="xp.remaining" datatype="html">
         <source>remaining</source>
@@ -224,7 +224,7 @@
           <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
           <context context-type="linenumber">40,41</context>
         </context-group>
-        <note priority="1" from="description">Etykieta: pozostało</note>
+        <note priority="1" from="description">Label: remaining</note>
       </trans-unit>
       <trans-unit id="sidebar.avatarAlt" datatype="html">
         <source>avatar</source>
@@ -232,8 +232,8 @@
           <context context-type="sourcefile">src/app/sidebar/sidebar.component.html</context>
           <context context-type="linenumber">5,7</context>
         </context-group>
-        <note priority="1" from="description">Alt tekst dla obrazka postaci</note>
-        <note priority="1" from="meaning">Opis alternatywny awatara</note>
+        <note priority="1" from="description">Alt text for the character image</note>
+        <note priority="1" from="meaning">Avatar alternative description</note>
       </trans-unit>
       <trans-unit id="sidebar.characterName" datatype="html">
         <source>Gottfried von Hollen</source>
@@ -241,7 +241,7 @@
           <context context-type="sourcefile">src/app/sidebar/sidebar.component.html</context>
           <context context-type="linenumber">7,8</context>
         </context-group>
-        <note priority="1" from="description">Nazwa postaci wyświetlana w sidebarze</note>
+        <note priority="1" from="description">Character name displayed in the sidebar</note>
       </trans-unit>
       <trans-unit id="sidebar.characterRole" datatype="html">
         <source>Roadwarden</source>
@@ -249,7 +249,7 @@
           <context context-type="sourcefile">src/app/sidebar/sidebar.component.html</context>
           <context context-type="linenumber">8,13</context>
         </context-group>
-        <note priority="1" from="description">Profesja/rola postaci w sidebarze</note>
+        <note priority="1" from="description">Character profession/role displayed in the sidebar</note>
       </trans-unit>
       <trans-unit id="sidebar.encumbranceLabel" datatype="html">
         <source>Encumbrance</source>
@@ -257,7 +257,7 @@
           <context context-type="sourcefile">src/app/sidebar/sidebar.component.html</context>
           <context context-type="linenumber">19,21</context>
         </context-group>
-        <note priority="1" from="description">Etykieta obciążenia w sidebarze</note>
+        <note priority="1" from="description">Encumbrance label in the sidebar</note>
       </trans-unit>
       <trans-unit id="sidebar.restRecover" datatype="html">
         <source>Rest &amp; Recover</source>
@@ -265,15 +265,15 @@
           <context context-type="sourcefile">src/app/sidebar/sidebar.component.html</context>
           <context context-type="linenumber">23,26</context>
         </context-group>
-        <note priority="1" from="description">Przycisk odpoczynku i regeneracji</note>
+        <note priority="1" from="description">Rest and recovery button</note>
       </trans-unit>
       <trans-unit id="skills.controlsAriaLabel" datatype="html">
         <source>Skill controls</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/skills/skills.component.html</context>
-          <context context-type="linenumber">14,18</context>
+          <context context-type="linenumber">14,17</context>
         </context-group>
-        <note priority="1" from="description">Etykieta dostępności: kontrolki umiejętności</note>
+        <note priority="1" from="description">Accessible label: skill controls</note>
       </trans-unit>
       <trans-unit id="skills.taken" datatype="html">
         <source>TAKEN</source>
@@ -281,7 +281,7 @@
           <context context-type="sourcefile">src/app/skills/skills.component.html</context>
           <context context-type="linenumber">26,30</context>
         </context-group>
-        <note priority="1" from="description">Etykieta przycisku: umiejętność zabrana/wybrana</note>
+        <note priority="1" from="description">Button label: skill taken/selected</note>
       </trans-unit>
       <trans-unit id="skills.viewAll" datatype="html">
         <source>VIEW ALL SKILLS (<x id="INTERPOLATION" equiv-text="{{ skills.length }}"/>) </source>
@@ -289,15 +289,15 @@
           <context context-type="sourcefile">src/app/skills/skills.component.html</context>
           <context context-type="linenumber">62,65</context>
         </context-group>
-        <note priority="1" from="description">Przycisk: pokaż wszystkie umiejętności</note>
+        <note priority="1" from="description">Button: view all skills</note>
       </trans-unit>
       <trans-unit id="talents.empty" datatype="html">
-        <source>Brak talentów.</source>
+        <source>No talents.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/talents/talents.component.html</context>
           <context context-type="linenumber">12,15</context>
         </context-group>
-        <note priority="1" from="description">Komunikat, gdy postać nie ma talentów</note>
+        <note priority="1" from="description">Message shown when the character has no talents</note>
       </trans-unit>
       <trans-unit id="wounds.title" datatype="html">
         <source>Wounds</source>
@@ -305,7 +305,7 @@
           <context context-type="sourcefile">src/app/wounds-panel/wounds-panel.component.html</context>
           <context context-type="linenumber">4,6</context>
         </context-group>
-        <note priority="1" from="description">Nagłówek panelu ran</note>
+        <note priority="1" from="description">Wounds panel title</note>
       </trans-unit>
       <trans-unit id="wounds.hpLabel" datatype="html">
         <source>HP</source>
@@ -313,15 +313,15 @@
           <context context-type="sourcefile">src/app/wounds-panel/wounds-panel.component.html</context>
           <context context-type="linenumber">9,13</context>
         </context-group>
-        <note priority="1" from="description">Etykieta aktualnych punktów życia (HP)</note>
+        <note priority="1" from="description">Current hit points label (HP)</note>
       </trans-unit>
       <trans-unit id="wounds.decAria" datatype="html">
         <source>Decrease wounds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wounds-panel/wounds-panel.component.html</context>
-          <context context-type="linenumber">14,15</context>
+          <context context-type="linenumber">14,16</context>
         </context-group>
-        <note priority="1" from="description">ARIA: zmniejsz rany</note>
+        <note priority="1" from="description">ARIA: decrease wounds</note>
       </trans-unit>
       <trans-unit id="wounds.maxLabel" datatype="html">
         <source>Max:</source>
@@ -329,15 +329,15 @@
           <context context-type="sourcefile">src/app/wounds-panel/wounds-panel.component.html</context>
           <context context-type="linenumber">18,19</context>
         </context-group>
-        <note priority="1" from="description">Etykieta maksymalnych ran</note>
+        <note priority="1" from="description">Maximum wounds label</note>
       </trans-unit>
       <trans-unit id="wounds.incAria" datatype="html">
         <source>Increase wounds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wounds-panel/wounds-panel.component.html</context>
-          <context context-type="linenumber">21,22</context>
+          <context context-type="linenumber">22,23</context>
         </context-group>
-        <note priority="1" from="description">ARIA: zwiększ rany</note>
+        <note priority="1" from="description">ARIA: increase wounds</note>
       </trans-unit>
     </body>
   </file>

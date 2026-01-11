@@ -10,7 +10,7 @@
         <div class="meta muted">{{ s.skill.characteristic }}</div>
 
         <div class="controls" role="group"
-             i18n-aria-label="Etykieta dostępności: kontrolki umiejętności@@skills.controlsAriaLabel"
+             i18n-aria-label="Accessible label: skill controls@@skills.controlsAriaLabel"
              aria-label="Skill controls">
           <button
             type="button"
@@ -23,7 +23,7 @@
             [attr.aria-pressed]="s.taken"
           >
             <span class="box" aria-hidden="true"></span>
-            <span class="label" i18n="Etykieta przycisku: umiejętność zabrana/wybrana@@skills.taken">TAKEN</span>
+            <span class="label" i18n="Button label: skill taken/selected@@skills.taken">TAKEN</span>
           </button>
 
           <button
@@ -59,7 +59,7 @@
   </div>
 
   <div class="footer">
-    <button type="button" class="view-all muted" i18n="Przycisk: pokaż wszystkie umiejętności@@skills.viewAll">VIEW ALL
+    <button type="button" class="view-all muted" i18n="Button: view all skills@@skills.viewAll">VIEW ALL
       SKILLS ({{ skills.length }})
     </button>
   </div>

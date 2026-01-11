@@ -232,10 +232,10 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
   }
 
   /*
-    Tła tabów (mockup): taby są "płaskie".
-    - nieaktywny: transparent
-    - aktywny: transparent (wyróżnienie robi underline)
-    - hover/focus: bardzo subtelne podbicie
+    Tab backgrounds (mockup): tabs are "flat".
+    - inactive: transparent
+    - active: transparent (underline indicates active state)
+    - hover/focus: very subtle highlight
   */
   .mat-mdc-tab {
     background: transparent;
@@ -264,7 +264,7 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     transition: color .16s ease;
   }
 
-  /* Legacy + fallback (jeśli kiedyś wróci mat-tab-label) */
+  /* Legacy + fallback (in case mat-tab-label ever comes back) */
   .mat-tab-label, .mat-mdc-tab-label {
     font-size: 13px;
     font-weight: 600;

@@ -31,7 +31,6 @@ describe('TalentsComponent', () => {
     fixture.detectChanges();
 
     const empty = fixture.debugElement.query(By.css('.empty'))?.nativeElement?.textContent;
-    expect(empty).toContain('Brak talentów');
+    expect(empty).toContain('No talents');
   });
 });
-

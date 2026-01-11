@@ -32,7 +32,7 @@
 
       <!-- Inventory placeholder -->
       <trans-unit id="inventory.placeholder" datatype="html">
-        <source> Inventory view is under construction  move or copy items here as needed.</source>
+        <source> Inventory view is under construction — move or copy items here as needed.</source>
         <target> Widok ekwipunku jest w trakcie tworzenia — przenieś lub skopiuj tu przedmioty wedle potrzeb. </target>
       </trans-unit>
 
@@ -162,7 +162,7 @@
 
       <!-- Talents -->
       <trans-unit id="talents.empty" datatype="html">
-        <source>Brak talentów.</source>
+        <source>No talents.</source>
         <target> Brak talentów. </target>
       </trans-unit>
 

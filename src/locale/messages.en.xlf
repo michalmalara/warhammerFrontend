@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <!--
+    Optional explicit EN translations.
+    The EN source of truth is `messages.xlf` (source-language="en-US").
+    This file can be used as an explicit target-language build if you want parity with other locales.
+  -->
+  <file source-language="en-US" target-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <!-- Intentionally left empty. -->
+    </body>
+  </file>
+</xliff>
+
