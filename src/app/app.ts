@@ -1,10 +1,9 @@
-import { Component, signal } from '@angular/core';
-import { CharacterCardComponent } from './character-card/character-card.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import {Component, signal} from '@angular/core';
+import {CharacterCardComponent} from './character-card/character-card.component';
 
 @Component({
   selector: 'app-root',
-  imports: [CharacterCardComponent, SidebarComponent],
+  imports: [CharacterCardComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
