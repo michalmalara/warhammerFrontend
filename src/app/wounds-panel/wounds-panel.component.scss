@@ -1,51 +1,61 @@
 /* Styles for the Wounds panel (moved from character-card.component.scss) */
 .wounds-panel {
-  width: 220px; /* increased so 'Max: 12' fits on one line */
-  padding: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  background: transparent;
-  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+
+  /* State variables (overridden by classes below) */
+  --wounds-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+  --wounds-border: rgba(255, 255, 255, 0.03);
+  --wounds-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+  --wounds-label-bg: var(--color-accent);
+  --wounds-label-color: #fff;
+  --wounds-note-color: var(--color-danger);
+
+  /* Display (inner box) state variables */
+  --wounds-display-border: rgba(255, 255, 255, 0.06);
+  --wounds-display-shadow: inset 0 0 0 3px rgba(255, 0, 0, 0.06), 0 0 18px rgba(255, 0, 0, 0.06);
+  --wounds-display-animation: none;
+
+  background: var(--wounds-bg);
+  border: 1px solid var(--wounds-border);
+  box-shadow: var(--wounds-shadow);
+
+  transition: background 220ms cubic-bezier(.2, .9, .2, 1),
+  border-color 200ms ease,
+  box-shadow 260ms cubic-bezier(.2, .9, .2, 1);
 }
 
-.wounds-panel .wounds-header {
-  /* Increased size and centered to stand out */
-  font-size: 15px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin: 0 0 12px 0;
-  color: var(--color-text);
-  text-align: center;
-  width: 100%;
+/* Overlay used for Critical (0 HP) background pulse */
+.wounds-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(180deg, rgba(255, 82, 82, 0.20), rgba(120, 0, 0, 0.14));
 }
 
-/* Ensure the mat-card header content is centered inside the wounds panel */
-.wounds-panel mat-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 0 8px 0; /* keep a small gap under the header */
-}
-
-.wounds-panel .wounds-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
+/* layout styles moved to src/styles.scss */
 
 .wounds-display {
   width: 96px;
   height: 96px;
   border-radius: 8px;
-  border: 3px solid rgba(255, 255, 255, 0.06);
+  border: 3px solid var(--wounds-display-border);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.01);
-  /* Inner dark panel with subtle red glow to match mockup */
-  box-shadow: inset 0 0 0 3px rgba(255, 0, 0, 0.06), 0 0 18px rgba(255, 0, 0, 0.06);
+  box-shadow: var(--wounds-display-shadow);
+  animation: var(--wounds-display-animation);
+  position: relative;
+
+  /* ensure base display also transitions for when variables change */
+  transition: border-color 200ms ease,
+  box-shadow 260ms cubic-bezier(.2, .9, .2, 1),
+  background 220ms ease,
+  transform 240ms ease;
 }
 
 .wounds-value {
@@ -57,256 +67,108 @@
 
 .wounds-current-label {
   font-size: 11px;
-  color: #fff;
   margin-top: 8px;
-  background: var(--color-accent);
   padding: 4px 8px;
   border-radius: 6px;
   font-weight: 700;
   letter-spacing: 1px;
-}
 
-/* New: when healthy, make the CURRENT label use the same brighter green as the healthy note */
-.wounds-panel.wounds-healthy .wounds-current-label {
-  background: rgba(76, 175, 80, 1); /* match slightly darker green */
-  color: #ffffff; /* keep label text readable */
-  transition: background 200ms ease, color 180ms ease;
-}
-
-.wounds-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.wounds-controls button[mat-icon-button] {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border-radius: 6px;
-  border: 2px solid rgba(255, 255, 255, 0.06);
-  background: rgba(0, 0, 0, 0.15);
-  color: var(--color-text);
-  /* Center the icon horizontally and vertically */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.wounds-controls button[mat-icon-button] mat-icon {
-  display: block; /* remove inline alignment quirks */
-  font-size: 20px;
-  line-height: 20px; /* ensure vertical centering to match icon height */
-  height: 20px;
-  width: 20px;
-  text-align: center;
-}
-
-.wounds-controls button[mat-icon-button]:hover {
-  border-color: var(--color-accent);
-  box-shadow: 0 2px 8px rgba(255, 0, 0, 0.08);
-}
-
-.wounds-max {
-  font-size: 12px;
-  color: var(--color-text-muted);
-  white-space: nowrap; /* prevent 'Max: 12' from wrapping */
+  background: var(--wounds-label-bg);
+  color: var(--wounds-label-color);
+  transition: background 200ms ease, color 180ms ease, transform 180ms ease;
 }
 
 .wounds-note {
   font-size: 12px;
-  color: var(--color-danger);
   text-transform: uppercase;
   letter-spacing: 1px;
-}
 
-/* State-specific color treatments for Wounds panel */
-.wounds-panel {
-  --wounds-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-  --wounds-border: rgba(255, 255, 255, 0.03);
-  --wounds-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
-}
-
-.wounds-panel.wounds-wounded {
-  --wounds-bg: linear-gradient(180deg, rgba(255, 165, 0, 0.08), rgba(255, 140, 0, 0.06)); /* warm orange */
-  --wounds-border: rgba(255, 140, 0, 0.25);
-  --wounds-shadow: 0 6px 18px rgba(255, 140, 0, 0.10);
-  box-shadow: var(--wounds-shadow);
-}
-
-.wounds-panel.wounds-healthy {
-  --wounds-bg: linear-gradient(180deg, rgba(220, 255, 220, 0.04), rgba(200, 255, 200, 0.02)); /* subtle green */
-  --wounds-border: rgba(120, 220, 120, 0.18);
-  --wounds-shadow: 0 6px 14px rgba(120, 220, 120, 0.04);
-  box-shadow: var(--wounds-shadow);
-}
-
-/* New: Slightly wounded state (for woundsCurrent between 6 and 10) */
-.wounds-panel.wounds-slightly {
-  --wounds-bg: linear-gradient(180deg, rgba(255, 240, 220, 0.03), rgba(255, 220, 180, 0.02)); /* very subtle amber */
-  --wounds-border: rgba(255, 200, 120, 0.12);
-  box-shadow: 0 3px 10px rgba(255, 200, 120, 0.04);
-}
-
-.wounds-panel.wounds-slightly .wounds-display {
-  border-color: rgba(255, 200, 120, 0.22);
-  box-shadow: inset 0 0 0 3px rgba(255, 200, 120, 0.04), 0 0 12px rgba(255, 200, 120, 0.04);
-  transition: border-color 200ms ease, box-shadow 260ms cubic-bezier(.2, .9, .2, 1), transform 240ms ease;
-}
-
-.wounds-panel.wounds-slightly .wounds-current-label {
-  background: #ffd59a; /* soft amber */
-  color: #3e2a00;
-  transition: background 200ms ease, color 180ms ease;
-}
-
-.wounds-panel.wounds-slightly .wounds-note {
-  color: #ffb84d; /* match amber tone */
+  color: var(--wounds-note-color);
   transition: color 180ms ease;
 }
 
-/* Apply the variables to the visible elements */
-.wounds-panel {
-  background: var(--wounds-bg);
-  border: 1px solid var(--wounds-border);
-  box-shadow: var(--wounds-shadow);
-  /* Smooth transitions for state changes */
-  transition: background 220ms cubic-bezier(.2, .9, .2, 1),
-  border-color 200ms ease,
-  box-shadow 260ms cubic-bezier(.2, .9, .2, 1);
+/* State-specific overrides */
+.wounds-panel.wounds-wounded {
+  --wounds-bg: linear-gradient(180deg, rgba(255, 165, 0, 0.08), rgba(255, 140, 0, 0.06));
+  --wounds-border: rgba(255, 140, 0, 0.25);
+  --wounds-shadow: 0 6px 18px rgba(255, 140, 0, 0.10);
+  --wounds-label-bg: #ffb74d;
+  --wounds-label-color: #3a2200;
+  --wounds-note-color: #ffb74d;
+  --wounds-display-border: rgba(255, 140, 0, 0.35);
+  --wounds-display-shadow: inset 0 0 0 3px rgba(255, 140, 0, 0.08), 0 0 18px rgba(255, 140, 0, 0.06);
 }
 
-.wounds-panel.wounds-wounded .wounds-display {
-  border-color: rgba(255, 140, 0, 0.35);
-  box-shadow: inset 0 0 0 3px rgba(255, 140, 0, 0.08), 0 0 18px rgba(255, 140, 0, 0.06);
-  transition: border-color 200ms ease, box-shadow 260ms cubic-bezier(.2, .9, .2, 1), transform 240ms ease;
+.wounds-panel.wounds-slightly {
+  --wounds-bg: linear-gradient(180deg, rgba(255, 240, 220, 0.03), rgba(255, 220, 180, 0.02));
+  --wounds-border: rgba(255, 200, 120, 0.12);
+  --wounds-shadow: 0 3px 10px rgba(255, 200, 120, 0.04);
+  --wounds-label-bg: #ffd59a;
+  --wounds-label-color: #3e2a00;
+  --wounds-note-color: #ffb84d;
+  --wounds-display-border: rgba(255, 200, 120, 0.22);
+  --wounds-display-shadow: inset 0 0 0 3px rgba(255, 200, 120, 0.04), 0 0 12px rgba(255, 200, 120, 0.04);
 }
 
-.wounds-panel.wounds-critical .wounds-display {
-  border-color: rgba(200, 40, 40, 0.45);
-  box-shadow: inset 0 0 0 3px rgba(200, 40, 40, 0.12), 0 0 22px rgba(200, 40, 40, 0.12);
-  transition: border-color 200ms ease, box-shadow 260ms cubic-bezier(.2, .9, .2, 1), transform 240ms ease;
-  /* Pulsing shadow to emphasize critical state */
-  animation: wounds-pulse 1600ms infinite ease-in-out;
+.wounds-panel.wounds-healthy {
+  --wounds-bg: linear-gradient(180deg, rgba(220, 255, 220, 0.04), rgba(200, 255, 200, 0.02));
+  --wounds-border: rgba(120, 220, 120, 0.18);
+  --wounds-shadow: 0 6px 14px rgba(120, 220, 120, 0.04);
+  --wounds-label-bg: rgba(76, 175, 80, 1);
+  --wounds-label-color: #ffffff;
+  --wounds-note-color: rgba(76, 175, 80, 1);
 }
 
-/* Heavy/critical wounds: add distinct card background + stronger shadow */
 .wounds-panel.wounds-critical {
   /* Covers both: HEAVILY WOUNDED (frac <= 3/12) and Critical (0 HP) */
   --wounds-bg: linear-gradient(180deg, rgba(255, 82, 82, 0.14), rgba(80, 0, 0, 0.10));
   --wounds-border: rgba(255, 82, 82, 0.32);
   --wounds-shadow: 0 10px 26px rgba(255, 82, 82, 0.12), 0 10px 22px rgba(0, 0, 0, 0.34);
-  box-shadow: var(--wounds-shadow);
+  --wounds-label-bg: #ff5252;
+  --wounds-label-color: #330000;
+  --wounds-note-color: #ff5252;
+  --wounds-display-border: rgba(200, 40, 40, 0.45);
+  --wounds-display-shadow: inset 0 0 0 3px rgba(200, 40, 40, 0.12), 0 0 22px rgba(200, 40, 40, 0.12);
+  --wounds-display-animation: wounds-display-scale 1600ms infinite ease-in-out;
+}
+
+@keyframes wounds-display-scale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
 }
 
 /* Critical (0 HP): softly pulse the *card background* */
-.wounds-panel.wounds-critical-zero {
+.wounds-panel.wounds-critical-zero::before {
+  opacity: 1;
   animation: wounds-card-pulse 2400ms ease-in-out infinite;
 }
 
 @keyframes wounds-card-pulse {
   0%, 100% {
-    background: linear-gradient(180deg, rgba(255, 82, 82, 0.12), rgba(80, 0, 0, 0.08));
+    opacity: 0.35;
   }
   50% {
-    background: linear-gradient(180deg, rgba(255, 82, 82, 0.20), rgba(120, 0, 0, 0.14));
-  }
-}
-
-/* Pulse animation: increases outer shadow and slightly scales the display */
-@keyframes wounds-pulse {
-  0% {
-    box-shadow: inset 0 0 0 3px rgba(200, 40, 40, 0.12), 0 0 18px rgba(200, 40, 40, 0.10);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: inset 0 0 0 3px rgba(200, 40, 40, 0.12), 0 0 30px rgba(200, 40, 40, 0.20);
-    transform: scale(1.03);
-  }
-  100% {
-    box-shadow: inset 0 0 0 3px rgba(200, 40, 40, 0.12), 0 0 18px rgba(200, 40, 40, 0.10);
-    transform: scale(1);
+    opacity: 0.85;
   }
 }
 
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  .wounds-panel.wounds-critical .wounds-display {
-    animation: none !important;
-    transform: none !important;
-    box-shadow: inset 0 0 0 3px rgba(200, 40, 40, 0.12), 0 0 18px rgba(200, 40, 40, 0.10) !important;
-  }
-
-  .wounds-panel.wounds-critical-zero {
-    animation: none !important;
-  }
-}
-
-.wounds-display {
-  /* ensure base display also transitions for when variables change */
-  transition: border-color 200ms ease, box-shadow 260ms cubic-bezier(.2, .9, .2, 1), background 220ms ease, transform 240ms ease;
-}
-
-.wounds-panel.wounds-wounded .wounds-current-label {
-  background: #ffb74d; /* lighter orange */
-  color: #3a2200;
-  transition: background 200ms ease, color 180ms ease;
-}
-
-.wounds-panel.wounds-critical .wounds-current-label {
-  background: #ff5252; /* vivid red */
-  color: #330000;
-  transition: background 200ms ease, color 180ms ease;
-}
-
-.wounds-current-label {
-  transition: background 200ms ease, color 180ms ease, transform 180ms ease;
-}
-
-.wounds-panel.wounds-wounded .wounds-note {
-  color: #ffb74d;
-  transition: color 180ms ease;
-}
-
-.wounds-panel.wounds-critical .wounds-note {
-  color: #ff5252;
-  transition: color 180ms ease;
-}
-
-/* New: healthy state note color (green) */
-.wounds-panel.wounds-healthy .wounds-note {
-  /* Slightly darker green for better contrast */
-  color: rgba(76, 175, 80, 1); /* #4CAF50 */
-  transition: color 180ms ease;
-}
-
-.wounds-note {
-  transition: color 180ms ease;
-}
-
-.wounds-controls button[mat-icon-button] {
-  transition: border-color 180ms ease, box-shadow 200ms ease, background 180ms ease, transform 160ms ease;
-}
-
-.wounds-value {
-  transition: color 180ms ease, transform 220ms cubic-bezier(.2, .9, .2, 1);
-}
-
-/* Small interactive tweak: subtle pop on state change */
-.wounds-panel.wounds-wounded .wounds-display,
-.wounds-panel.wounds-critical .wounds-display {
-  will-change: box-shadow, border-color, transform;
-}
-
-/* Respect user's reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
   .wounds-panel,
   .wounds-display,
   .wounds-current-label,
   .wounds-note,
-  .wounds-controls button[mat-icon-button],
-  .wounds-value {
+  .wounds-value,
+  .wounds-panel::before {
     transition: none !important;
     animation: none !important;
+  }
+
+  .wounds-panel::before {
+    opacity: 0 !important;
   }
 }
