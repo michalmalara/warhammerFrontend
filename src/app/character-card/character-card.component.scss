@@ -59,21 +59,17 @@ h1.title,
   font-size: 0.75rem; /* 12px */
 }
 
-/* Layout: Characteristics + Wounds in one row (above tabs) */
+/* Layout: Characteristics + (previously) Wounds in one row (above tabs) */
 .stats-and-wounds-row {
   display: flex;
-  /* wyśrodkuj wounds względem sekcji Characteristics w pionie */
-  align-items: center;
+  align-items: flex-start;
 }
 
-/* Keep wounds panel from stretching weirdly and align it nicely next to stats */
-.stats-and-wounds-row > wounds-panel {
-  /* wyśrodkuj w poziomie w swoim obszarze */
-  margin-left: auto;
-  margin-right: auto;
-
-  /* centrowanie w pionie jest robione przez align-items na kontenerze */
-  margin-top: 0;
+/* Make stats expand to full available width */
+.stats-and-wounds-row > character-stats {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 /* Two-column layout wrapper (left content + right sidebar) */
@@ -81,8 +77,8 @@ h1.title,
   display: flex;
   align-items: flex-start;
 
-  /* dawniej inline: gap:1rem; teraz odstęp kontrolujemy paddingami kolumn */
-  gap: 0;
+  /* przywracamy czytelny odstęp między kolumnami */
+  gap: 1rem; /* 16px */
 }
 
 /* Left column: content (stats + tabs) */
@@ -91,11 +87,11 @@ h1.title,
   flex: 1;
   min-width: 16.25rem; /* 260px */
 
-  /* separator między kolumnami jako prawa krawędź lewej kolumny */
+  /* separator między kolumnami */
   border-right: 1px solid rgba(255, 255, 255, 0.06);
 
-  /* równy odstęp od separatora */
-  padding-right: 1rem; /* 16px */
+  /* trochę więcej "oddechu" od separatora */
+  padding-right: 1.25rem; /* 20px */
 }
 
 /* Right column: Fate/Fortune */
@@ -113,10 +109,10 @@ h1.title,
   align-items: center;
 
   /* odstęp między kartami (Fate Points / Profession History) */
-  gap: 0.875rem; /* 14px */
+  gap: 1rem; /* 16px */
 
   /* odstęp od separatora */
-  padding-left: 1rem; /* 16px */
+  padding-left: 1.25rem; /* 20px */
 
   /* separator jest na lewej kolumnie (border-right), więc tu nic nie rysujemy */
   border-left: 0;
@@ -169,9 +165,6 @@ h1.title,
   .title {
     font-size: 2.125rem; /* 34px */
   }
-
-  /* If the layout is narrow, keep wounds panel narrower to avoid overflow */
-  /* wounds-panel sizing moved to its own component scss */
 }
 
 /* Stack stats + wounds on narrow screens */
@@ -191,17 +184,11 @@ h1.title,
     gap: 0.75rem; /* 12px */
   }
 
-  .stats-and-wounds-row > wounds-panel {
-    flex-basis: auto;
-    width: 100%;
-    max-width: 22.5rem; /* 360px */
-    align-self: center;
-
-    /* na mobile trzymamy mniejszy odstęp */
-    margin-top: 0.5rem; /* 8px */
-    margin-left: auto;
-    margin-right: auto;
+  .content-columns {
+    gap: 0;
   }
+
+  /* wounds-panel moved to right column; mobile sizing handled by sidebar/card defaults */
 
   /* separator nie ma sensu w układzie mobilnym */
   .left-column {

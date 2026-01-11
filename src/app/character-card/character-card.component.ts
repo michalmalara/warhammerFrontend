@@ -13,13 +13,12 @@ import {CharacterSkill} from '../skills/skills.types';
 import {TalentsComponent} from '../talents/talents.component';
 import {Talent} from '../talents/talents.types';
 import {FatePointsComponent} from '../fate-points/fate-points.component';
-import {ProfessionHistoryComponent} from '../profession-history/profession-history.component';
-import {ProfessionHistoryEntry} from '../profession-history/profession-history.types';
+import {ProfessionXpPanelComponent} from '../profession-history/profession-xp-panel.component';
 
 @Component({
   selector: 'character-card',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatTableModule, MatCardModule, MatIconModule, MatTabsModule, CharacterStatsComponent, WoundsPanelComponent, EquipmentTableComponent, SkillsComponent, TalentsComponent, FatePointsComponent, ProfessionHistoryComponent],
+  imports: [CommonModule, MatButtonModule, MatTableModule, MatCardModule, MatIconModule, MatTabsModule, CharacterStatsComponent, WoundsPanelComponent, EquipmentTableComponent, SkillsComponent, TalentsComponent, FatePointsComponent, ProfessionXpPanelComponent],
   templateUrl: './character-card.component.html',
   styleUrls: ['./character-card.component.scss']
 })
@@ -31,6 +30,9 @@ export class CharacterCardComponent {
   @Input() subtitle = 'CHARACTER DASHBOARD';
   @Input() xpCurrent = 450;
   @Input() xpMax = 1000;
+
+  /** Aktualna profesja postaci (wyświetlana w karcie Experience). */
+  @Input() currentProfession = this.title;
 
   /** Punkty doświadczenia dostępne do wydania (niewydane). */
   @Input() xpToSpend = 120;
@@ -59,24 +61,6 @@ export class CharacterCardComponent {
     const alt = (this.portraitAlt ?? '').trim();
     return alt || `Portret: ${this.name}`;
   }
-
-  /** Historia profesji (mock) – docelowo do podpięcia pod backend. */
-  professionHistory: ProfessionHistoryEntry[] = [{
-    id: 'ph-3',
-    profession: 'Toll Keeper',
-    note: 'Worked at a river crossing collecting tolls and negotiating with stubborn travellers.'
-  },
-    {
-      id: 'ph-2',
-      profession: 'Watchman',
-      note: 'Served in the city watch. Learned to spot trouble and keep order.'
-    },
-    {
-      id: 'ph-1',
-      profession: 'Recruit',
-      note: 'First steps in the militia.',
-    }
-  ];
 
   // Primary / Secondary stats moved to a separate component
   primaryStats: { label: string; base: number; adv: number }[] = [

@@ -1,14 +1,21 @@
 /* Styles for Primary/Secondary stats moved from character-card.component.scss */
+:host {
+  display: block;
+}
+
 .stats-row {
   display: flex;
-  gap: 1.125rem;
+  gap: 1rem;
   flex-wrap: wrap;
-  align-items: flex-start;
-  margin-bottom: 1.375rem;
+  align-items: stretch;
+  margin-bottom: 1.25rem;
 }
 
 .stat-box {
-  width: 6rem;
+  /* zamiast stałej szerokości: wypełnia dostępne miejsce i równo się układa */
+  flex: 1 1 6.5rem;
+  min-width: 6.5rem;
+
   padding: 0.875rem;
   text-align: center;
 
@@ -62,18 +69,29 @@
 .stat-box .sub-values {
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   line-height: 1.2;
   opacity: 0.85;
   border-top: 1px dashed rgba(255, 255, 255, 0.10);
 
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.375rem;
 
-  /* stop layout jump when data differs */
-  min-height: 2.1rem;
+  /* stabilna wysokość, ale bez wymuszania 2 linii */
+  min-height: 1.6rem;
+}
+
+.stat-box .sub-values .sub {
+  white-space: nowrap;
+}
+
+.stat-box .sub-values .sub-base {
+  text-align: left;
+}
+
+.stat-box .sub-values .sub-adv {
+  text-align: right;
 }
 
 .stat-box .sub-values strong {
@@ -81,9 +99,22 @@
   font-weight: 700;
 }
 
+/* Na węższych ekranach Base i Adv mają być jeden pod drugim (2 rzędy) */
+@media (max-width: 1750px) {
+  .stat-box .sub-values {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-box .sub-values .sub-base,
+  .stat-box .sub-values .sub-adv {
+    text-align: left;
+  }
+}
+
 @media (max-width: 800px) {
   .stat-box {
-    width: 4.75rem;
+    flex-basis: 5.25rem;
+    min-width: 5.25rem;
     padding: 0.625rem;
   }
 

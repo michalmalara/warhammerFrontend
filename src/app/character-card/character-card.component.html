@@ -17,7 +17,6 @@
             <div class="name-meta">
               <div class="subtitle muted">{{ subtitle }}</div>
               <h1 class="title">{{ name }}</h1>
-              <div class="profession muted">{{ title }}</div>
 
               <div class="title-tags">
                 <span class="tag muted">Human</span>
@@ -28,14 +27,14 @@
         </div>
 
         <div class="dashboard-right header-right-panels">
-          <profession-history
+          <profession-xp-panel
             class="header-panel"
-            [entries]="professionHistory"
+            [currentProfession]="currentProfession"
             [xpCurrent]="xpCurrent"
             [xpMax]="xpMax"
             [xpToSpend]="xpToSpend"
             [xpTotalEarned]="xpTotalEarned"
-          ></profession-history>
+          ></profession-xp-panel>
         </div>
       </header>
 
@@ -45,7 +44,7 @@
           <div class="left-column">
             <div class="stats-and-wounds-row">
               <character-stats [primaryStats]="primaryStats" [secondaryStats]="secondaryStats"></character-stats>
-              <wounds-panel [(woundsCurrent)]="woundsCurrent" [woundsMax]="woundsMax"></wounds-panel>
+              <!-- wounds-panel moved to right column -->
             </div>
 
             <!-- Angular Material Tabs: Combat / Inventory -->
@@ -74,6 +73,7 @@
 
           <!-- Right column: fate/fortune -->
           <aside class="right-column">
+            <wounds-panel [(woundsCurrent)]="woundsCurrent" [woundsMax]="woundsMax"></wounds-panel>
             <fate-points
               [fateMax]="fateMax"
               [fateCurrent]="fateCurrent"

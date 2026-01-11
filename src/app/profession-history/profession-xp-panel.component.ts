@@ -10,6 +10,9 @@ import {MatCardModule} from '@angular/material/card';
   styleUrl: './profession-xp-panel.component.scss'
 })
 export class ProfessionXpPanelComponent {
+  /** Aktualna profesja (wyświetlana w karcie Experience). */
+  @Input() currentProfession = '';
+
   @Input() xpCurrent = 0;
   @Input() xpMax = 0;
 
@@ -30,4 +33,3 @@ export class ProfessionXpPanelComponent {
     return Math.max(0, (this.xpMax ?? 0) - (this.xpCurrent ?? 0));
   }
 }
-

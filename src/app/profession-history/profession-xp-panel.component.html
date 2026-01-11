@@ -1,15 +1,22 @@
 <mat-card class="xp-panel">
   <div class="xp-label muted">Experience</div>
 
-  <div class="xp-metrics">
-    <div class="xp-metric">
-      <div class="xp-metric-label muted">To spend</div>
-      <div class="xp-metric-value">{{ xpToSpend }}</div>
+  <div class="xp-top-row">
+    <div *ngIf="currentProfession" class="xp-current-profession">
+      <div class="xp-current-profession-label muted">Current profession</div>
+      <div class="xp-current-profession-value">{{ currentProfession }}</div>
     </div>
 
-    <div class="xp-metric">
-      <div class="xp-metric-label muted">Total earned</div>
-      <div class="xp-metric-value">{{ xpTotalEarned }}</div>
+    <div class="xp-metrics">
+      <div class="xp-metric">
+        <div class="xp-metric-label muted">To spend</div>
+        <div class="xp-metric-value">{{ xpToSpend }}</div>
+      </div>
+
+      <div class="xp-metric">
+        <div class="xp-metric-label muted">Total earned</div>
+        <div class="xp-metric-value">{{ xpTotalEarned }}</div>
+      </div>
     </div>
   </div>
 

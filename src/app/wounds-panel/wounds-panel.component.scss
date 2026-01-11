@@ -1,4 +1,8 @@
 /* Styles for the Wounds panel (moved from character-card.component.scss) */
+:host {
+  display: block;
+}
+
 .wounds-panel {
   position: relative;
   overflow: hidden;
@@ -23,6 +27,10 @@
   transition: background 220ms cubic-bezier(.2, .9, .2, 1),
   border-color 200ms ease,
   box-shadow 260ms cubic-bezier(.2, .9, .2, 1);
+
+  /* sidebar alignment: match Fate Points card width */
+  width: 13.75rem;
+  box-sizing: border-box;
 }
 
 /* Overlay used for Critical (0 HP) background pulse */
