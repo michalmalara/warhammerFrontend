@@ -1,4 +1,6 @@
 @use 'sass:color';
+@use '@angular/material' as mat;
+
 // Theme partial generated from provided mockup
 // - defines CSS variables for colors and typography
 // - provides a mixin `apply-theme` which sets global colors and a few helper classes
@@ -7,7 +9,7 @@
 $bg: #1b1414; // very dark maroon
 $surface: #2b1c1c; // panel surfaces
 $muted-surface: #341f1f;
-$panel-border: rgba(255,255,255,0.04);
+$panel-border: rgba(255, 255, 255, 0.04);
 $accent: #c73b3b; // deep red accent
 $accent-2: #8f2b2b;
 $text: #f6efe9; // off-white
@@ -42,28 +44,34 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     --color-panel-border: #{$panel-border};
     --color-highlight: #{$highlight};
 
+    /* Tabs (mockup): jasny tekst + czerwony akcent */
+    --tab-inactive-color: rgba(246, 239, 233, 0.65);
+    --tab-active-color: var(--color-text);
+    --tab-ink-color: var(--color-accent);
+
     /* Table-specific variables (from mockup) */
     --table-header-bg: #{$table-header-bg};
     --table-row-bg: #{$table-row-bg};
     --table-row-alt-bg: #{$table-row-alt-bg};
     --table-border: #{$table-border-hex};
     --table-cell-text: #{$table-cell-text-hex};
-    --table-row-hover: rgba(0,0,0,0.25);
+    --table-row-hover: rgba(0, 0, 0, 0.25);
 
     /* simple elevation/shadow colors */
-    --shadow-dark: rgba(0,0,0,0.6);
+    --shadow-dark: rgba(0, 0, 0, 0.6);
 
-    /* Tab-specific theme variables (used by global tab overrides) */
-    /* - inactive uses the global muted text for consistent tone */
-    --mat-tab-inactive-hover-label-text-color: var(--color-text-muted);
-    --mat-tab-active-label-text-color: #ffffff;
-    /* subtle dark fill for the active label to match mockup panel */
-    --mat-tab-active-bg: rgba(255,255,255,0.02);
-    --mat-tab-active-outline: rgba(225,27,48,0.12);
-    /* hover uses a slightly stronger warm tint */
-    --mat-tab-hover-bg: rgba(225,27,48,0.06);
-    /* ink bar (strong red that matches mockup accent) */
-    --mat-tab-ink-color: #e11b2b;
+    /* Angular Material (MDC) - Tabs token overrides przez CSS variables */
+    @include mat.tabs-overrides((
+      active-indicator-color: var(--tab-ink-color),
+      active-focus-indicator-color: var(--tab-ink-color),
+      active-hover-indicator-color: var(--tab-ink-color),
+      inactive-label-text-color: var(--tab-inactive-color),
+      active-label-text-color: var(--tab-active-color),
+      inactive-hover-label-text-color: var(--tab-active-color),
+      active-hover-label-text-color: var(--tab-active-color),
+      divider-color: var(--color-panel-border)
+    ));
+
   }
 
   html, body {
@@ -124,11 +132,11 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
 
         .tag {
           display: inline-block;
-          background: rgba(255,255,255,0.02);
+          background: rgba(255, 255, 255, 0.02);
           color: var(--color-text-muted);
           padding: 0.2rem 0.45rem; /* slightly smaller pills */
           border-radius: 4px;
-          border: 1px solid rgba(255,255,255,0.03);
+          border: 1px solid rgba(255, 255, 255, 0.03);
           font-size: 0.72rem;
         }
       }
@@ -140,30 +148,50 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
 
       .xp-panel {
         padding: 0.6rem 0.9rem; /* slightly tighter padding */
-        background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
-        border: 1px solid rgba(255,255,255,0.03);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(0, 0, 0, 0.02));
+        border: 1px solid rgba(255, 255, 255, 0.03);
         display: flex;
         flex-direction: column;
         justify-content: center; /* vertically center content inside panel */
 
-        .xp-label { font-size: 0.78rem; color: var(--color-text-muted); margin-bottom: 0.35rem; }
-        .xp-numbers { font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.45rem; text-align: right; }
+        .xp-label {
+          font-size: 0.78rem;
+          color: var(--color-text-muted);
+          margin-bottom: 0.35rem;
+        }
+
+        .xp-numbers {
+          font-size: 0.85rem;
+          color: var(--color-text-muted);
+          margin-top: 0.45rem;
+          text-align: right;
+        }
       }
     }
 
     .xp-bar {
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       height: 8px;
       border-radius: 4px;
       overflow: hidden;
-      .fill { background: var(--color-accent); height: 100%; }
+
+      .fill {
+        background: var(--color-accent);
+        height: 100%;
+      }
     }
 
     /* responsive: stack on small screens */
     @media (max-width: 800px) {
       flex-direction: column;
-      .dashboard-right { width: 100%; flex: 0 0 auto; margin-top: 0.6rem; }
-      .dashboard-left .title { font-size: 1.6rem; }
+      .dashboard-right {
+        width: 100%;
+        flex: 0 0 auto;
+        margin-top: 0.6rem;
+      }
+      .dashboard-left .title {
+        font-size: 1.6rem;
+      }
     }
   }
 
@@ -175,7 +203,7 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
 
   .mat-tab-header, .mat-mdc-tab-header {
     padding: 0;
-    border-bottom: 1px solid var(--color-panel-border);
+    border-bottom: 1px solid #543b3f;
     margin-bottom: 8px;
     background: transparent;
   }
@@ -184,6 +212,40 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     align-items: center;
   }
 
+  /*
+    Tła tabów (mockup): taby są "płaskie".
+    - nieaktywny: transparent
+    - aktywny: transparent (wyróżnienie robi underline)
+    - hover/focus: bardzo subtelne podbicie
+  */
+  .mat-mdc-tab {
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .mat-mdc-tab.mdc-tab--active {
+    background: transparent;
+  }
+
+  .mat-mdc-tab:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .mat-mdc-tab:focus-visible {
+    background: rgba(199, 59, 59, 0.05);
+  }
+
+  /* MDC tab button text */
+  .mat-mdc-tab .mdc-tab__text-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--tab-inactive-color);
+    transition: color .16s ease;
+  }
+
+  /* Legacy + fallback (jeśli kiedyś wróci mat-tab-label) */
   .mat-tab-label, .mat-mdc-tab-label {
     font-size: 13px;
     font-weight: 600;
@@ -201,43 +263,54 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     justify-content: center;
   }
 
+  /* Hover */
+  .mat-mdc-tab:hover .mdc-tab__text-label,
   .mat-tab-label:hover, .mat-mdc-tab-label:hover {
-    color: var(--color-text);
-    background: rgba(255,255,255,0.02);
+    color: var(--tab-active-color);
   }
 
-  /* Active label: keep flat (no translate/shadow) and rely on the ink-bar for emphasis */
-  .mat-tab-label.mat-tab-label-active, .mat-mdc-tab-label.mat-mdc-tab-label--active {
+  .mat-tab-label:hover, .mat-mdc-tab-label:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  /* Active label */
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label,
+  .mat-tab-label.mat-tab-label-active,
+  .mat-mdc-tab-label.mat-mdc-tab-label--active {
     color: var(--tab-active-color) !important;
-    background: transparent;
     font-weight: 700;
+    background: transparent;
   }
 
-  /* Disabled labels */
-  .mat-tab-label.mat-tab-disabled, .mat-mdc-tab-label.mat-mdc-tab-label--disabled {
-    color: var(--color-text-muted);
-    opacity: 0.6;
-    pointer-events: none;
+  /* Ink bar / underline */
+  .mat-mdc-tab-group .mat-mdc-tab-indicator .mat-mdc-tab-indicator__content--underline {
+    border-color: var(--tab-ink-color);
+    border-top-width: 3px;
+    border-radius: 3px;
   }
 
-  /* Ink bar / indicator */
   .mat-ink-bar, .mat-mdc-ink-bar, .mat-mdc-tab-indicator {
     height: 3px;
     background: var(--tab-ink-color);
     border-radius: 3px;
-    transition: left .18s cubic-bezier(.35,0,.25,1), width .18s cubic-bezier(.35,0,.25,1);
+    transition: left .18s cubic-bezier(.35, 0, .25, 1), width .18s cubic-bezier(.35, 0, .25, 1);
   }
 
   /* Keyboard focus */
+  .mat-mdc-tab:focus-visible,
   .mat-tab-label:focus-visible, .mat-mdc-tab-label:focus-visible {
-    outline: 2px solid rgba(225,27,48,0.12);
+    outline: 2px solid rgba(199, 59, 59, 0.25);
     outline-offset: 3px;
     border-radius: 6px;
   }
 
-  .mat-tab-body, .mat-mdc-tab-body { padding: 0; }
+  .mat-tab-body, .mat-mdc-tab-body {
+    padding: 0;
+  }
 
-  .mat-tab-group .tab-content-card, .mat-mdc-tab-group .tab-content-card { margin-top: 6px; }
+  .mat-tab-group .tab-content-card, .mat-mdc-tab-group .tab-content-card {
+    margin-top: 6px;
+  }
 
   /* End of global tab overrides */
 
@@ -252,8 +325,8 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
   /* Primary statistic box (e.g., WS 34%) */
   .stat-box {
     display: inline-block;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.03);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.03);
     padding: 0.7rem 0.9rem;
     min-width: 72px;
     text-align: center;
@@ -264,6 +337,7 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
       font-size: 1.2rem;
       color: var(--color-text);
     }
+
     .label {
       font-size: 0.75rem;
       color: var(--color-text-muted);
@@ -273,7 +347,7 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
   /* Wounds counter (large rounded square) */
   .wounds-panel {
     .counter {
-      background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.0));
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.0));
       border: 3px solid var(--color-accent);
       color: var(--color-text);
       font-weight: 700;
@@ -284,10 +358,14 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
       align-items: center;
       justify-content: center;
       border-radius: 8px;
-      box-shadow: 0 0 0 8px rgba(199,59,59,0.04) inset;
+      box-shadow: 0 0 0 8px rgba(199, 59, 59, 0.04) inset;
     }
 
-    .label { color: var(--color-text-muted); font-size: 0.85rem; margin-top: 0.5rem; }
+    .label {
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
   }
 
   /* Fate points (small circular dots) */
@@ -299,10 +377,13 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.03);
 
-      &.active { background: var(--color-accent); box-shadow: 0 0 0 3px rgba(199,59,59,0.06) inset; }
+      &.active {
+        background: var(--color-accent);
+        box-shadow: 0 0 0 3px rgba(199, 59, 59, 0.06) inset;
+      }
     }
   }
 
@@ -323,13 +404,23 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
       font-size: 0.85rem;
       color: var(--color-text);
       background: var(--table-header-bg);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     /* alternating row backgrounds to match mockup */
-    tr { background: var(--table-row-bg); }
-    tr:nth-child(even) { background: var(--table-row-alt-bg); }
-    tr { &:hover { background: var(--table-row-hover); } }
+    tr {
+      background: var(--table-row-bg);
+    }
+
+    tr:nth-child(even) {
+      background: var(--table-row-alt-bg);
+    }
+
+    tr {
+      &:hover {
+        background: var(--table-row-hover);
+      }
+    }
   }
 
   /* Buttons */
@@ -345,13 +436,22 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     border: none;
     cursor: pointer;
 
-    &:hover { background: hover-accent($accent); }
-    &:active { transform: translateY(1px); }
+    &:hover {
+      background: hover-accent($accent);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
   }
 
   /* small utilities */
-  .muted { color: var(--color-text-muted); }
-  .accent { color: var(--color-accent); }
+  .muted {
+    color: var(--color-text-muted);
+  }
+  .accent {
+    color: var(--color-accent);
+  }
 }
 
 /* End of theme partial */
