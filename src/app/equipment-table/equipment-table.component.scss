@@ -13,12 +13,12 @@
     padding: 14px 16px;
     text-align: left;
     vertical-align: middle;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   }
+}
 
-  tr.mat-header-row {
-    background: transparent;
-  }
+.mat-mdc-header-row:hover {
+  background: var(--table-header-bg);
 }
 
 .table-header {
@@ -29,7 +29,7 @@
   text-transform: uppercase;
   letter-spacing: 1.5px;
   padding: 14px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .mat-header-cell .mat-ripple-element,

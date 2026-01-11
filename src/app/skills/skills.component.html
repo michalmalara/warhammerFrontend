@@ -1,0 +1,62 @@
+<section class="skills card">
+  <div class="skills-grid">
+    @for (s of skills; track s.id) {
+      <article class="skill-tile">
+        <header class="tile-header">
+          <div class="name">{{ s.skill.name }}</div>
+          <div class="percent">{{ displayPercent(s) }}%</div>
+        </header>
+
+        <div class="meta muted">{{ s.skill.characteristic }}</div>
+
+        <div class="controls" role="group" aria-label="Skill controls">
+          <button
+            type="button"
+            class="chip"
+            [class.active]="s.taken"
+            [class.is-disabled]="disabled"
+            [disabled]="disabled"
+            [attr.aria-disabled]="disabled"
+            (click)="toggleTaken(s, !s.taken)"
+            [attr.aria-pressed]="s.taken"
+          >
+            <span class="box" aria-hidden="true"></span>
+            <span class="label">TAKEN</span>
+          </button>
+
+          <button
+            type="button"
+            class="chip"
+            [class.active]="s.advPlus10"
+            [class.is-disabled]="disabled"
+            [disabled]="disabled"
+            [attr.aria-disabled]="disabled"
+            (click)="toggleBonus(s, 10)"
+            [attr.aria-pressed]="s.advPlus10"
+          >
+            <span class="box" aria-hidden="true"></span>
+            <span class="label">+10%</span>
+          </button>
+
+          <button
+            type="button"
+            class="chip"
+            [class.active]="s.advPlus20"
+            [class.is-disabled]="disabled"
+            [disabled]="disabled"
+            [attr.aria-disabled]="disabled"
+            (click)="toggleBonus(s, 20)"
+            [attr.aria-pressed]="s.advPlus20"
+          >
+            <span class="box" aria-hidden="true"></span>
+            <span class="label">+20%</span>
+          </button>
+        </div>
+      </article>
+    }
+  </div>
+
+  <div class="footer">
+    <button type="button" class="view-all muted">VIEW ALL SKILLS ({{ skills.length }})</button>
+  </div>
+</section>

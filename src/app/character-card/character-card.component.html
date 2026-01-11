@@ -33,17 +33,11 @@
             <!-- Angular Material Tabs: Combat / Inventory -->
             <mat-tab-group>
               <mat-tab label="Skills">
-                <div class="skills-tab card" style="padding:1rem;">
-                  <!-- TODO: replace with real skills component when available -->
-                  <p class="muted">Skills panel (overview) — replace with actual skills list component.</p>
-                </div>
+                <skills [skills]="skills"></skills>
               </mat-tab>
 
               <mat-tab label="Talents">
-                <div class="talents-tab card" style="padding:1rem;">
-                  <!-- TODO: replace with real talents component when available -->
-                  <p class="muted">Talents panel — placeholder for talents/talents list.</p>
-                </div>
+                <talents [talents]="talents"></talents>
               </mat-tab>
 
               <mat-tab label="Combat">
