@@ -49,7 +49,7 @@ export class CharacterCardComponent {
   ];
 
   // Wounds state (kept as simple fields so parent can persist/observe value)
-  woundsMax = 12;
+  woundsMax = 15;
   woundsCurrent = this.woundsMax;
 
   get xpPercent() {

@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'wounds-panel',
@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class WoundsPanelComponent {
   // Inputs/Outputs
-  @Input() woundsMax: number = 12;
+  @Input() woundsMax: number = 15;
   @Input() woundsCurrent: number = 12;
   @Output() woundsCurrentChange = new EventEmitter<number>();
 
