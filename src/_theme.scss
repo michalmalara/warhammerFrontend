@@ -60,20 +60,6 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     /* simple elevation/shadow colors */
     --shadow-dark: rgba(0, 0, 0, 0.6);
 
-    /* Responsywna typografia:
-      - Domyślne rozmiary są bezpieczne dla mobile.
-      - Na dużych ekranach font rośnie płynnie dzięki clamp().
-      - Breakpointy >1200/1600/1920 pozwalają lekko "podbić" skalę.
-    */
-    --fs-body: clamp(15px, 0.85vw + 9px, 19px);
-    --fs-small: clamp(11px, 0.32vw + 8.5px, 13px);
-    --fs-label: clamp(11px, 0.40vw + 8.5px, 14px);
-
-    --fs-h1: clamp(26px, 1.7vw + 13px, 40px);
-    --fs-h2: clamp(20px, 1.25vw + 11px, 31px);
-    --fs-h3: clamp(17px, 0.95vw + 10px, 26px);
-
-    --lh-body: 1.45;
 
     /* Angular Material (MDC) - Tabs token overrides przez CSS variables */
     @include mat.tabs-overrides((
@@ -87,30 +73,6 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
       divider-color: var(--color-panel-border)
     ));
 
-  }
-
-  @media (min-width: 1200px) {
-    :root {
-      --fs-body: clamp(16px, 0.70vw + 8.5px, 20px);
-      --fs-small: clamp(11px, 0.28vw + 8.5px, 13px);
-      --fs-label: clamp(12px, 0.32vw + 8.5px, 14px);
-    }
-  }
-
-  @media (min-width: 1600px) {
-    :root {
-      --fs-body: clamp(17px, 0.60vw + 8.5px, 21px);
-      --fs-small: clamp(12px, 0.26vw + 8.5px, 14px);
-      --fs-label: clamp(12px, 0.30vw + 8.5px, 15px);
-    }
-  }
-
-  @media (min-width: 1920px) {
-    :root {
-      --fs-body: clamp(17px, 0.52vw + 9px, 22px);
-      --fs-small: clamp(12px, 0.24vw + 8.5px, 15px);
-      --fs-label: clamp(13px, 0.26vw + 8.5px, 16px);
-    }
   }
 
   html, body {
