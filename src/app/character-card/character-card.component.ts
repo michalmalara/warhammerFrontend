@@ -32,21 +32,25 @@ export class CharacterCardComponent {
   @Input() avatarUrl = '/assets/avatar-placeholder.png';
 
   // Primary / Secondary stats moved to a separate component
-  primaryStats: { label: string; value: number }[] = [
-    {label: 'WS', value: 34},
-    {label: 'BS', value: 31},
-    {label: 'S', value: 35},
-    {label: 'T', value: 38},
-    {label: 'A', value: 32},
-    {label: 'Int', value: 29},
-    {label: 'WP', value: 36},
-    {label: 'Fel', value: 30}
+  primaryStats: { label: string; base: number; adv: number }[] = [
+    {label: 'WS', base: 31, adv: 3},
+    {label: 'BS', base: 26, adv: 5},
+    {label: 'S', base: 35, adv: 0},
+    {label: 'T', base: 33, adv: 5},
+    {label: 'A', base: 27, adv: 5},
+    {label: 'Int', base: 29, adv: 0},
+    {label: 'WP', base: 31, adv: 5},
+    {label: 'Fel', base: 30, adv: 0}
   ];
-  secondaryStats: { label: string; value: number }[] = [
-    {label: 'A', value: 1}, {label: 'W', value: 12}, {label: 'SB', value: 3}, {label: 'TB', value: 3}, {
-      label: 'M',
-      value: 4
-    }, {label: 'MAG', value: 0}, {label: 'IP', value: 2}, {label: 'FP', value: 3}
+  secondaryStats: { label: string; base: number; adv: number }[] = [
+    {label: 'A', base: 1, adv: 1},
+    {label: 'W', base: 12, adv: 3},
+    {label: 'SB', base: 3, adv: 0},
+    {label: 'TB', base: 3, adv: 0},
+    {label: 'M', base: 4, adv: 0},
+    {label: 'MAG', base: 0, adv: 0},
+    {label: 'IP', base: 2, adv: 0},
+    {label: 'FP', base: 3, adv: 0}
   ];
 
   // Wounds state (kept as simple fields so parent can persist/observe value)

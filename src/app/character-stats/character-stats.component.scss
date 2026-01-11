@@ -12,14 +12,31 @@
   width: 96px;
   padding: 14px;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  background: transparent;
+
+  /* Outer (dark) frame like in the mock */
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 4px;
   box-sizing: border-box;
+
+  /* Slight panel fill */
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03),
+      rgba(0, 0, 0, 0.06)
+  );
+
+  /* Inner (lighter) frame + subtle inner shading */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+  0 0 0 3px rgba(0, 0, 0, 0.22) inset;
 }
 
+/* Keep small variant available for other uses (if any) */
 .stat-box--small {
   min-width: 48px;
   padding: 0.25rem 0.5rem;
+
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+  0 0 0 2px rgba(0, 0, 0, 0.22) inset;
 }
 
 .stat-box .label {
@@ -35,6 +52,34 @@
   font-weight: 800;
   color: var(--color-text);
   line-height: 1;
+}
+
+.stat-box .value .suffix {
+  font-size: 0.7em;
+  opacity: 0.95;
+}
+
+/* Base / Adv row like in mockup */
+.stat-box .sub-values {
+  margin-top: 8px;
+  padding-top: 8px;
+  font-size: 10px;
+  line-height: 1.2;
+  opacity: 0.85;
+  border-top: 1px dashed rgba(255, 255, 255, 0.10);
+
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  /* stop layout jump when data differs */
+  min-height: 24px;
+}
+
+.stat-box .sub-values strong {
+  color: var(--color-text);
+  font-weight: 700;
 }
 
 @media (max-width: 800px) {

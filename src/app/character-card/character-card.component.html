@@ -24,11 +24,13 @@
       </header>
 
       <section class="content">
-        <div class="content-columns" style="display:flex; gap:1rem; align-items:flex-start;">
-
-          <!-- Left column: stats + equipment table moved into tabs -->
-          <div class="left-column" style="flex:1; min-width:260px;">
-            <character-stats [primaryStats]="primaryStats" [secondaryStats]="secondaryStats"></character-stats>
+        <div class="content-columns">
+          <!-- Left column: stats + wounds moved above tabs -->
+          <div class="left-column">
+            <div class="stats-and-wounds-row">
+              <character-stats [primaryStats]="primaryStats" [secondaryStats]="secondaryStats"></character-stats>
+              <wounds-panel [(woundsCurrent)]="woundsCurrent" [woundsMax]="woundsMax"></wounds-panel>
+            </div>
 
             <!-- Angular Material Tabs: Combat / Inventory -->
             <mat-tab-group>
@@ -46,7 +48,7 @@
 
               <mat-tab label="Inventory">
                 <!-- Placeholder / future inventory content -->
-                <div class="inventory-placeholder card" style="padding:1rem;">
+                <div class="inventory-placeholder card">
                   <p class="muted">Inventory view is under construction — move or copy items here as needed.</p>
                 </div>
               </mat-tab>
@@ -54,10 +56,8 @@
 
           </div>
 
-          <!-- Right column: wounds card -->
-          <aside class="right-column" style="flex:0 0 320px; max-width:360px;">
-            <wounds-panel [(woundsCurrent)]="woundsCurrent" [woundsMax]="woundsMax"></wounds-panel>
-
+          <!-- Right column: fate/fortune -->
+          <aside class="right-column">
             <fate-points
               [fateMax]="fateMax"
               [fateCurrent]="fateCurrent"
@@ -71,5 +71,4 @@
     </main>
   </div>
 </section>
-
 

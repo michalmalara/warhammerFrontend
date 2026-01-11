@@ -4,18 +4,32 @@
     @for (s of primaryStats; track s) {
       <div class="stat-box">
         <div class="label muted">{{ s.label }}</div>
-        <div class="value">{{ s.value }}%</div>
+        <div class="value">
+          {{ statTotal(s, 'primary') }}<span class="suffix" *ngIf="isPercent(s, true)">% </span>
+        </div>
+
+        <div class="sub-values muted">
+          <span class="sub">Base: <strong>{{ s.base ?? statTotal(s, 'primary') }}</strong></span>
+          <span class="sub">Adv: <strong>{{ s.adv ?? 0 }}</strong></span>
+        </div>
       </div>
     }
   </div>
 </div>
 
 <h2 class="section-title">Secondary Characteristics</h2>
-<div class="stats-row stats-row--secondary">
+<div class="stats-row">
   @for (sc of secondaryStats; track sc) {
-    <div class="stat-box stat-box--small">
+    <div class="stat-box">
       <div class="label muted">{{ sc.label }}</div>
-      <div class="value">{{ sc.value }}</div>
+      <div class="value">
+        {{ statTotal(sc, 'secondary') }}<span class="suffix" *ngIf="isPercent(sc, false)">% </span>
+      </div>
+
+      <div class="sub-values muted">
+        <span class="sub">Base: <strong>{{ sc.base ?? statTotal(sc, 'secondary') }}</strong></span>
+        <span class="sub">Adv: <strong>{{ sc.adv ?? 0 }}</strong></span>
+      </div>
     </div>
   }
 </div>

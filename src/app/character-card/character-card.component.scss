@@ -59,6 +59,71 @@ h1.title,
   font-size: 12px;
 }
 
+/* Layout: Characteristics + Wounds in one row (above tabs) */
+.stats-and-wounds-row {
+  display: flex;
+  /* wyśrodkuj wounds względem sekcji Characteristics w pionie */
+  align-items: center;
+}
+
+/* Keep wounds panel from stretching weirdly and align it nicely next to stats */
+.stats-and-wounds-row > wounds-panel {
+  /* wyśrodkuj w poziomie w swoim obszarze */
+  margin-left: auto;
+  margin-right: auto;
+
+  /* centrowanie w pionie jest robione przez align-items na kontenerze */
+  margin-top: 0;
+}
+
+/* Two-column layout wrapper (left content + right sidebar) */
+.content-columns {
+  display: flex;
+  align-items: flex-start;
+
+  /* dawniej inline: gap:1rem; teraz odstęp kontrolujemy paddingami kolumn */
+  gap: 0;
+}
+
+/* Left column: content (stats + tabs) */
+.left-column {
+  /* z HTML inline */
+  flex: 1;
+  min-width: 260px;
+
+  /* separator między kolumnami jako prawa krawędź lewej kolumny */
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+
+  /* równy odstęp od separatora */
+  padding-right: 16px;
+}
+
+/* Right column: Fate/Fortune */
+.right-column {
+  /* zachowujemy dotychczasowy rozmiar z inline */
+  flex: 0 0 320px;
+  max-width: 360px;
+
+  /* prośba: padding od góry */
+  padding-top: 18px;
+
+  /* prośba: wyśrodkowanie zawartości w poziomie */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* odstęp od separatora */
+  padding-left: 16px;
+
+  /* separator jest na lewej kolumnie (border-right), więc tu nic nie rysujemy */
+  border-left: 0;
+}
+
+/* Placeholder card inside Inventory tab */
+.inventory-placeholder {
+  padding: 1rem;
+}
+
 /* Responsive tweak: scale title down on narrow screens */
 @media (max-width: 800px) {
   h1.title,
@@ -70,41 +135,33 @@ h1.title,
   /* wounds-panel sizing moved to its own component scss */
 }
 
-/* Layout wrapper to place wounds panel side-by-side remains here */
-.stats-row-wrapper .wounds-panel {
-  flex: 0 0 auto; /* maintain width set on .wounds-panel */
-}
-
-/* Add top margin to the right column so the Wounds card aligns visually
-   with the spacing used around the "Primary Characteristics" section title. */
-.content-columns .right-column {
-  margin-top: 18px; /* matches .section-title's bottom margin */
-  display: flex; /* make the column a flex container so we can center its contents */
-  flex-direction: column;
-  gap: 16px;
-  justify-content: flex-start;
-  align-items: center; /* center cards in the column */
-  padding-left: 8px; /* small horizontal padding so card doesn't touch column edge */
-  padding-right: 8px;
-}
-
-/* On narrow screens (where columns stack) remove the extra top margin */
+/* Stack stats + wounds on narrow screens */
 @media (max-width: 720px) {
-  .content-columns .right-column {
-    margin-top: 0;
-    justify-content: center; /* keep card centered when stacked vertically */
-  }
-}
-
-/* On narrow screens stack vertically */
-@media (max-width: 720px) {
-  .stats-row-wrapper {
+  .stats-and-wounds-row {
     flex-direction: column;
     gap: 12px;
   }
-  .stats-row-wrapper .wounds-panel {
-    width: 180px; /* ensure it fits mobile layout */
+
+  .stats-and-wounds-row > wounds-panel {
+    flex-basis: auto;
+    width: 100%;
+    max-width: 360px;
     align-self: center;
+
+    /* na mobile trzymamy mniejszy odstęp */
+    margin-top: 8px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* separator nie ma sensu w układzie mobilnym */
+  .left-column {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .right-column {
+    padding-left: 0;
   }
 }
 
@@ -123,7 +180,7 @@ h1.title,
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-:host ::ng-deep .mat-tab-labels {
+:host ::ng-deep .mat-tab_labels {
   gap: 12px;
   padding-left: 6px;
 }
@@ -165,3 +222,4 @@ h1.title,
   // color: var(--tab-inactive-color);
 }
 */
+
