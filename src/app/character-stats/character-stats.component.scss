@@ -1,21 +1,25 @@
 /* Styles for Primary/Secondary stats moved from character-card.component.scss */
 
+:host {
+  font-size: 1.3rem;
+}
+
 .stats-row {
   display: flex;
-  gap: 18px;
+  gap: 1.125rem;
   flex-wrap: wrap;
   align-items: flex-start;
-  margin-bottom: 22px;
+  margin-bottom: 1.375rem;
 }
 
 .stat-box {
-  width: 96px;
-  padding: 14px;
+  width: 6rem;
+  padding: 0.875rem;
   text-align: center;
 
   /* Outer (dark) frame like in the mock */
   border: 1px solid rgba(255, 255, 255, 0.10);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   box-sizing: border-box;
 
   /* Slight panel fill */
@@ -32,7 +36,7 @@
 
 /* Keep small variant available for other uses (if any) */
 .stat-box--small {
-  min-width: 48px;
+  min-width: 3rem;
   padding: 0.25rem 0.5rem;
 
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset,
@@ -40,15 +44,15 @@
 }
 
 .stat-box .label {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 6px;
+  letter-spacing: 0.09375rem;
+  margin-bottom: 0.375rem;
 }
 
 .stat-box .value {
-  font-size: 30px;
+  font-size: 1.875rem;
   font-weight: 800;
   color: var(--color-text);
   line-height: 1;
@@ -61,20 +65,20 @@
 
 /* Base / Adv row like in mockup */
 .stat-box .sub-values {
-  margin-top: 8px;
-  padding-top: 8px;
-  font-size: 10px;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  font-size: 0.85rem;
   line-height: 1.2;
   opacity: 0.85;
   border-top: 1px dashed rgba(255, 255, 255, 0.10);
 
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 0.5rem;
   flex-wrap: wrap;
 
   /* stop layout jump when data differs */
-  min-height: 24px;
+  min-height: 2.1rem;
 }
 
 .stat-box .sub-values strong {
@@ -84,11 +88,11 @@
 
 @media (max-width: 800px) {
   .stat-box {
-    width: 76px;
-    padding: 10px;
+    width: 4.75rem;
+    padding: 0.625rem;
   }
 
   .stat-box .value {
-    font-size: 22px;
+    font-size: 1.375rem;
   }
 }

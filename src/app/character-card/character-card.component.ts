@@ -134,7 +134,7 @@ export class CharacterCardComponent {
       skill: {id: 'search', name: 'Search', characteristic: 'INT'},
       basePercent: 29,
       taken: true,
-      advPlus10: false,
+      advPlus10: true,
       advPlus20: true
     },
     {
