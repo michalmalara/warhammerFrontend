@@ -1,0 +1,90 @@
+<section class="character-card card">
+  <div class="card-inner">
+    <main class="main">
+      <header class="dashboard-header">
+        <div class="dashboard-left">
+          <div class="name-row">
+            <div class="portrait" aria-hidden="false">
+              <img
+                src="/assets/avatar-placeholder.png"
+                [src]="effectivePortraitUrl"
+                [alt]="effectivePortraitAlt"
+                loading="lazy"
+                (error)="onPortraitError($event)"
+              />
+            </div>
+
+            <div class="name-meta">
+              <div class="subtitle muted">{{ subtitle }}</div>
+              <h1 class="title">{{ name }}</h1>
+
+              <div class="title-tags">
+                <span class="tag muted" i18n="Tag rasy@@character.tags.race">Human</span>
+                <span class="tag muted" i18n="Tag pochodzenia/kultury@@character.tags.heritage">Empire Heritage</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-right header-right-panels">
+          <profession-xp-panel
+            class="header-panel"
+            [currentProfession]="currentProfession"
+            [xpCurrent]="xpCurrent"
+            [xpMax]="xpMax"
+            [xpToSpend]="xpToSpend"
+            [xpTotalEarned]="xpTotalEarned"
+          ></profession-xp-panel>
+        </div>
+      </header>
+
+      <section class="content">
+        <div class="content-columns">
+          <!-- Left column: stats + wounds moved above tabs -->
+          <div class="left-column">
+            <div class="stats-and-wounds-row">
+              <character-stats [primaryStats]="primaryStats" [secondaryStats]="secondaryStats"></character-stats>
+              <!-- wounds-panel moved to right column -->
+            </div>
+
+            <!-- Angular Material Tabs: Combat / Inventory -->
+            <mat-tab-group>
+              <mat-tab i18n-label="Etykieta zakładki umiejętności@@tabs.skills" label="Skills">
+                <skills [skills]="skills"></skills>
+              </mat-tab>
+
+              <mat-tab i18n-label="Etykieta zakładki talentów@@tabs.talents" label="Talents">
+                <talents [talents]="talents"></talents>
+              </mat-tab>
+
+              <mat-tab i18n-label="Etykieta zakładki walki@@tabs.combat" label="Combat">
+                <equipment-table></equipment-table>
+              </mat-tab>
+
+              <mat-tab i18n-label="Etykieta zakładki ekwipunku@@tabs.inventory" label="Inventory">
+                <!-- Placeholder / future inventory content -->
+                <div class="inventory-placeholder card">
+                  <p class="muted" i18n="Komunikat o braku widoku ekwipunku (placeholder)@@inventory.placeholder">
+                    Inventory view is under construction — move or copy items here as needed.</p>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+
+          </div>
+
+          <!-- Right column: fate/fortune -->
+          <aside class="right-column">
+            <wounds-panel [(woundsCurrent)]="woundsCurrent" [woundsMax]="woundsMax"></wounds-panel>
+            <fate-points
+              [fateMax]="fateMax"
+              [fateCurrent]="fateCurrent"
+              [fortuneCurrent]="fortuneCurrent"
+            ></fate-points>
+          </aside>
+
+        </div>
+
+      </section>
+    </main>
+  </div>
+</section>

@@ -1,0 +1,16 @@
+<!-- przeniesione 1:1 z app/talents -->
+<section class="talents card">
+  @if (talents.length) {
+    <div class="talents-grid">
+      @for (t of talents; track t.id) {
+        <mat-card class="talent-card">
+          <mat-card-title class="name">{{ t.name }}</mat-card-title>
+          <mat-card-content class="description muted">{{ t.description }}</mat-card-content>
+        </mat-card>
+      }
+    </div>
+  } @else {
+    <div class="empty muted" i18n="Message shown when the character has no talents@@talents.empty">No talents.</div>
+  }
+</section>
+

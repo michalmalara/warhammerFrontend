@@ -1,0 +1,261 @@
+/* Style przeniesione 1:1 z app/character-card */
+
+/* Styles for character card component - header/table tweaks to match mockup */
+
+/* ------------------------------------------------------------------ */
+/* Header / section title color and spacing adjustments to match mockup */
+/* Use clearer size hierarchy: very large main title, small uppercase subtitle,
+   compact section titles, and prominent stat values. */
+
+/* Main page title (the large name at top) */
+h1.title,
+.title {
+  color: var(--color-text); /* central text color */
+  font-weight: 800;
+  line-height: 1.02;
+  font-size: 3.5rem; /* 56px */
+  margin: 0.375rem 0 0.5rem 0; /* 6px 0 8px 0 */
+  letter-spacing: -0.0625rem; /* -1px */
+}
+
+/* Smaller subtitle under the title */
+.subtitle,
+.subtitle.muted {
+  color: var(--color-text-muted); /* muted text from theme */
+  font-size: 0.75rem; /* 12px */
+  text-transform: uppercase;
+  letter-spacing: 0.125rem; /* 2px */
+  font-weight: 600;
+  margin-bottom: 0.375rem; /* 6px */
+}
+
+/* Small tag chips next to title */
+.title-tags .tag {
+  display: inline-block;
+  font-size: 0.6875rem; /* 11px */
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.375rem 0.5rem; /* 6px 8px */
+  border-radius: 0.25rem; /* 4px */
+  margin-right: 0.5rem; /* 8px */
+  text-transform: none;
+}
+
+/* Section titles (e.g. "Primary Characteristics", "Combat Equipment") */
+.section-title {
+  color: var(--color-text); /* use central heading color */
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 700;
+  letter-spacing: 0.125rem; /* 2px */
+  text-transform: uppercase;
+  margin: 0 0 1.125rem 0; /* 18px */
+}
+
+/* NOTE: .stats-row and .stat-box styles moved to `character-stats.component.scss` */
+
+/* Slightly larger table body text for readability */
+
+/* Ensure the small headers keep their compact look but maintain spacing */
+.table-header {
+  padding: 0.625rem 1rem; /* 10px 16px */
+  font-size: 0.75rem; /* 12px */
+}
+
+/* Layout: Characteristics + (previously) Wounds in one row (above tabs) */
+.stats-and-wounds-row {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Make stats expand to full available width */
+.stats-and-wounds-row > character-stats {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Two-column layout wrapper (left content + right sidebar) */
+.content-columns {
+  display: flex;
+  align-items: flex-start;
+
+  /* przywracamy czytelny odstęp między kolumnami */
+  gap: 1rem; /* 16px */
+}
+
+/* Left column: content (stats + tabs) */
+.left-column {
+  /* z HTML inline */
+  flex: 1;
+  min-width: 16.25rem; /* 260px */
+
+  /* separator między kolumnami */
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+
+  /* trochę więcej "oddechu" od separatora */
+  padding-right: 1.25rem; /* 20px */
+}
+
+/* Right column: Fate/Fortune */
+.right-column {
+  /* zachowujemy dotychczasowy rozmiar z inline */
+  flex: 0 0 20rem; /* 320px */
+  max-width: 22.5rem; /* 360px */
+
+  /* prośba: padding od góry */
+  padding-top: 1.125rem; /* 18px */
+
+  /* prośba: wyśrodkowanie zawartości w poziomie */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* odstęp między kartami (Fate Points / Profession History) */
+  gap: 1rem; /* 16px */
+
+  /* odstęp od separatora */
+  padding-left: 1.25rem; /* 20px */
+
+  /* separator jest na lewej kolumnie (border-right), więc tu nic nie rysujemy */
+  border-left: 0;
+}
+
+/* Placeholder card inside Inventory tab */
+.inventory-placeholder {
+  padding: 1rem;
+}
+
+/* Portret + imię w jednej linii */
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* 16px */
+}
+
+.portrait {
+  width: 6rem; /* 96px */
+  height: 6rem; /* 96px */
+  border-radius: 0.625rem; /* 10px */
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0.625rem 1.125rem rgba(0, 0, 0, 0.22); /* 0 10px 18px */
+  flex: 0 0 auto;
+}
+
+.portrait img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.name-meta {
+  min-width: 0; /* pozwala zawijać/ucinać teksty w flexboxie */
+}
+
+/* Responsive tweak: scale title down on narrow screens */
+@media (max-width: 800px) {
+  .portrait {
+    width: 4.25rem; /* 68px */
+    height: 4.25rem; /* 68px */
+    border-radius: 0.5rem; /* 8px */
+  }
+
+  h1.title,
+  .title {
+    font-size: 2.125rem; /* 34px */
+  }
+}
+
+/* Stack stats + wounds on narrow screens */
+@media (max-width: 720px) {
+  .name-row {
+    align-items: flex-start;
+    gap: 0.75rem; /* 12px */
+  }
+
+  .portrait {
+    width: 3.5rem; /* 56px */
+    height: 3.5rem; /* 56px */
+  }
+
+  .stats-and-wounds-row {
+    flex-direction: column;
+    gap: 0.75rem; /* 12px */
+  }
+
+  .content-columns {
+    gap: 0;
+  }
+
+  /* separator nie ma sensu w układzie mobilnym */
+  .left-column {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .right-column {
+    padding-left: 0;
+  }
+}
+
+/* Header right: two cards side-by-side (Experience + Profession History) */
+.header-right-panels {
+  display: flex;
+  align-items: stretch;
+  gap: 0.75rem; /* 12px */
+}
+
+/* ensure both cards align nicely and keep consistent width */
+.header-right-panels .header-panel {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .header-right-panels {
+    flex-wrap: wrap;
+  }
+}
+
+/* Tabs styling moved to global theme (_theme.scss) to keep consistent look across the app.
+   If you need component-specific overrides, add them below. */
+
+/* Component-scoped overrides for Angular Material tabs to match mockup */
+:host ::ng-deep .mat-tab-group {
+  /* keep transparent so card background shows through, but ensure spacing */
+  background: transparent;
+}
+
+:host ::ng-deep .mat-tab-header {
+  padding: 0 0.25rem 0.5rem 0.25rem; /* 0 4px 8px 4px */
+  margin-bottom: 0.75rem; /* 12px */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+:host ::ng-deep .mat-tab_labels {
+  gap: 0.75rem; /* 12px */
+  padding-left: 0.375rem; /* 6px */
+}
+
+:host ::ng-deep .mat-tab-label {
+  color: rgba(255, 255, 255, 0.62);
+  padding: 0.625rem 0.875rem; /* 10px 14px */
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8125rem; /* 13px */
+  letter-spacing: 0.0625rem; /* 1px */
+  border-radius: 0.25rem 0.25rem 0 0; /* 4px */
+}
+
+:host ::ng-deep .mat-tab-label.mat-tab-label-active {
+  color: #ffffff;
+  font-weight: 800;
+}
+
+:host ::ng-deep .mat-tab-label:hover {
+  color: #ffffff;
+}
+
+/* Active indicator (ink bar) styled as a short, rounded red bar matching mockup */

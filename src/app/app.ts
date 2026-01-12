@@ -1,5 +1,5 @@
 import {Component, signal} from '@angular/core';
-import {CharacterCardComponent} from './character-card/character-card.component';
+import {CharacterCardComponent} from './features/character/components/character-card/character-card.component';
 
 @Component({
   selector: 'app-root',
