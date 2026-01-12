@@ -1,0 +1,32 @@
+<mat-card>
+  <mat-card-title>Professions</mat-card-title>
+  <mat-card-subtitle>Overview and creation of professions</mat-card-subtitle>
+
+  <mat-card-content>
+    <div class="actions">
+      <a mat-raised-button color="primary" [routerLink]="['/professions/new']" aria-label="Create new profession">
+        <mat-icon>add</mat-icon>
+        Add profession
+      </a>
+    </div>
+
+    @if (professions$ | async; as professions) {
+      @if (professions.length === 0) {
+        <p>No professions available.</p>
+      } @else {
+        <mat-nav-list>
+          @for (p of professions; track trackById($index, p)) {
+            <a mat-list-item [routerLink]="['/professions', p.id]" aria-label="Open profession {{ p.name }}">
+              <div matListItemTitle>{{ p.name }}</div>
+              <div matListItemLine>{{ p.description }}</div>
+            </a>
+          }
+        </mat-nav-list>
+      }
+    } @else {
+      <div class="loading">
+        <mat-spinner diameter="32"></mat-spinner>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,151 @@
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.row {
+  display: grid;
+}
+
+.full {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Theme-aware */
+:host {
+  display: block;
+}
+
+mat-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-panel-border);
+  color: var(--color-text);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-card-title {
+  color: var(--header-text);
+}
+
+.actions a[mat-stroked-button] {
+  color: var(--color-text);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.actions button[mat-raised-button] {
+  background: var(--color-accent) !important;
+  color: #fff !important;
+}
+
+/* Stat control styles */
+.stat-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-control > label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.stat button[mat-icon-button] {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.stat button[mat-icon-button]:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.stat .value {
+  min-width: 40px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Slight accent for add button */
+.stat button[mat-icon-button] mat-icon {
+  font-size: 18px;
+}
+
+.stat button[mat-icon-button].accent {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+/* Pulse animation for stat change */
+.stat.pulse {
+  border-color: var(--color-accent);
+  animation: stat-pulse 300ms cubic-bezier(.16, .8, .3, 1);
+}
+
+@keyframes stat-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(199, 59, 59, 0);
+  }
+  40% {
+    transform: scale(1.06);
+    box-shadow: 0 10px 30px rgba(199, 59, 59, 0.12);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(199, 59, 59, 0);
+  }
+}
+
+.stat.pulse .value {
+  color: var(--color-accent);
+  transition: color 220ms ease;
+}
+
+/* Responsive tweak */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+  .stat .value {
+    min-width: 36px;
+    font-size: 0.95rem;
+  }
+}
