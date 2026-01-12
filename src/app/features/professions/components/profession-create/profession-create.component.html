@@ -40,9 +40,10 @@
                   aria-label="Profession name"
                   i18n-aria-label="Input aria-label|Profession name aria@@profession.create.name.aria"
                 />
-                <mat-error *ngIf="form.controls.name.touched && form.controls.name.invalid"
-                           i18n="Validation|Name required message@@profession.create.name.required">Name is required
-                </mat-error>
+                @if (form.controls.name.touched && form.controls.name.invalid) {
+                  <mat-error i18n="Validation|Name required message@@profession.create.name.required">Name is required
+                  </mat-error>
+                }
               </mat-form-field>
             </div>
 
@@ -79,10 +80,11 @@
                 aria-label="Profession description"
                 i18n-aria-label="Input aria-label|Profession description aria@@profession.create.description.aria"
               ></textarea>
-              <mat-error *ngIf="form.controls.description.touched && form.controls.description.invalid"
-                         i18n="Validation|Description required message@@profession.create.description.required">
-                Description is required
-              </mat-error>
+              @if (form.controls.description.touched && form.controls.description.invalid) {
+                <mat-error i18n="Validation|Description required message@@profession.create.description.required">
+                  Description is required
+                </mat-error>
+              }
             </mat-form-field>
           </div>
         </div>
@@ -554,14 +556,13 @@
       </a>
 
       <button mat-raised-button color="primary" type="submit" [disabled]="isSaving" aria-label="Save profession">
-        <ng-container *ngIf="!isSaving; else savingTpl">
+        @if (!isSaving) {
           <mat-icon>save</mat-icon>
           Save
-        </ng-container>
-        <ng-template #savingTpl>
+        } @else {
           <mat-spinner diameter="18"></mat-spinner>
           Saving
-        </ng-template>
+        }
       </button>
     </div>
   </form>
