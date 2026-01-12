@@ -1,10 +1,14 @@
 import {TestBed} from '@angular/core/testing';
+import {provideRouter} from '@angular/router';
+
 import {App} from './app';
+import {routes} from './app.routes';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [provideRouter(routes)],
     }).compileComponents();
   });
 
@@ -14,13 +18,15 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render main layout', async () => {
+  it('should render main layout with top navbar', async () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.app-layout')).toBeTruthy();
+    expect(compiled.querySelector('app-top-navbar')).toBeTruthy();
     expect(compiled.querySelector('main.app-main')).toBeTruthy();
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });

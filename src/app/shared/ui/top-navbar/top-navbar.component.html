@@ -1,0 +1,21 @@
+<mat-toolbar class="top-navbar" role="banner">
+  <a mat-button class="top-navbar__brand" [routerLink]="'/'" aria-label="Strona główna">
+    <span class="top-navbar__title">{{ title }}</span>
+  </a>
+
+  <span class="top-navbar__spacer"></span>
+
+  <nav class="top-navbar__nav" aria-label="Nawigacja główna">
+    @for (link of links; track link.path) {
+      <a
+        mat-button
+        class="top-navbar__link"
+        [routerLink]="link.path"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ link.label }}
+      </a>
+    }
+  </nav>
+</mat-toolbar>

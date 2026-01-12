@@ -1,7 +1,8 @@
 <div class="app-layout">
-  <!--  <app-sidebar></app-sidebar>-->
+  <app-top-navbar [links]="navLinks" title="Warhammer"></app-top-navbar>
+
   <main class="app-main">
-    <character-card></character-card>
+    <router-outlet></router-outlet>
   </main>
 </div>
 

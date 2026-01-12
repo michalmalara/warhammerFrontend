@@ -1,0 +1,55 @@
+@use '../../../../_theme' as theme;
+
+.top-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--color-surface);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+
+  /* MatToolbar/MatButton biorą kolory z tokenów; tutaj wymuszamy kontrast na naszym ciemnym tle */
+  color: var(--color-text);
+}
+
+.top-navbar__brand {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  /* <a mat-button> domyślnie ma kolor z Materiala; nadpisujemy na kontrastowy */
+  color: var(--color-text) !important;
+}
+
+.top-navbar__title {
+  color: inherit;
+}
+
+.top-navbar__spacer {
+  flex: 1;
+}
+
+.top-navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.top-navbar__link {
+  /* przy mat-button nie zawsze da się polegać na kolorze odziedziczonym */
+  color: var(--color-text-muted) !important;
+  text-decoration: none;
+}
+
+.top-navbar__link:hover {
+  color: var(--color-text) !important;
+}
+
+.top-navbar__link.is-active {
+  color: var(--color-text) !important;
+
+  /* MatButton ma własne style, więc robimy lekki akcent na aktywnym linku */
+  box-shadow: 0 0 0 1px rgba(255, 0, 0, 0.22) inset;
+  border-radius: 6px;
+}
