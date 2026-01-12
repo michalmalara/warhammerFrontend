@@ -118,3 +118,107 @@ body {
   color: var(--color-text-muted);
   white-space: nowrap;
 }
+
+/* Placeholder color: match regular text color across inputs/textareas
+   and keep full opacity so it looks like normal text */
+input::placeholder,
+textarea::placeholder,
+select::placeholder,
+.mat-form-field input::placeholder,
+.mat-form-field textarea::placeholder {
+  color: var(--color-text) !important;
+  opacity: 1 !important;
+}
+
+/* Vendor-prefixed fallbacks for older browsers */
+input::-webkit-input-placeholder {
+  color: var(--color-text) !important;
+  opacity: 1 !important;
+}
+
+input::-moz-placeholder {
+  color: var(--color-text) !important;
+  opacity: 1 !important;
+}
+
+input:-ms-input-placeholder {
+  color: var(--color-text) !important;
+  opacity: 1 !important;
+}
+
+textarea::-webkit-input-placeholder {
+  color: var(--color-text) !important;
+  opacity: 1 !important;
+}
+
+textarea::-moz-placeholder {
+  color: var(--color-text) !important;
+  opacity: 1 !important;
+}
+
+textarea:-ms-input-placeholder {
+  color: var(--color-text) !important;
+  opacity: 1 !important;
+}
+
+/* Floating labels / mat-label: make them use the same color as normal text
+   Covers MDC-based and legacy mat-form-field class names */
+.mat-form-field .mat-form-field-label,
+.mat-form-field .mat-mdc-floating-label,
+.mat-mdc-form-field .mat-mdc-floating-label,
+.mat-mdc-form-field .mat-form-field-label,
+.mat-mdc-form-field .mat-mdc-form-field-label,
+.mat-mdc-form-field .mdc-floating-label,
+.mat-form-field-label,
+.mat-mdc-floating-label,
+.mdc-floating-label {
+  color: var(--color-text) !important;
+  opacity: 1 !important;
+}
+
+/* Also ensure the outline appearance label (when not floating) uses the same color */
+.mat-form-field-appearance-outline .mat-form-field-label,
+.mat-mdc-form-field--appearance-outline .mat-mdc-form-field-label {
+  color: var(--color-text) !important;
+  opacity: 1 !important;
+}
+
+/* Profession-specific placeholder color: name and description fields */
+input[formControlName="name"]::placeholder,
+.mat-form-field input[formControlName="name"]::placeholder,
+.mat-mdc-form-field input[formControlName="name"]::placeholder,
+textarea[formControlName="description"]::placeholder,
+.mat-form-field textarea[formControlName="description"]::placeholder,
+.mat-mdc-form-field textarea[formControlName="description"]::placeholder {
+  color: var(--color-text-muted) !important;
+  opacity: 1 !important;
+}
+
+/* Vendor-prefixed fallbacks for profession fields */
+input[formControlName="name"]::-webkit-input-placeholder,
+.mat-form-field input[formControlName="name"]::-webkit-input-placeholder,
+textarea[formControlName="description"]::-webkit-input-placeholder,
+.mat-form-field textarea[formControlName="description"]::-webkit-input-placeholder {
+  color: var(--color-text-muted) !important;
+  opacity: 1 !important;
+}
+
+input[formControlName="name"]::-moz-placeholder,
+.mat-form-field input[formControlName="name"]::-moz-placeholder,
+textarea[formControlName="description"]::-moz-placeholder,
+.mat-form-field textarea[formControlName="description"]::-moz-placeholder {
+  color: var(--color-text-muted) !important;
+  opacity: 1 !important;
+}
+
+input[formControlName="name"]:-ms-input-placeholder,
+.mat-form-field input[formControlName="name"]:-ms-input-placeholder,
+textarea[formControlName="description"]:-ms-input-placeholder,
+.mat-form-field textarea[formControlName="description"]:-ms-input-placeholder {
+  color: var(--color-text-muted) !important;
+  opacity: 1 !important;
+}
+
+
+
+

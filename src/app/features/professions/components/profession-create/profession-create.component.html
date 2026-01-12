@@ -27,37 +27,64 @@
       </mat-card-subtitle>
 
       <mat-card-content>
-        <div class="row">
-          <mat-form-field appearance="outline" class="full">
-            <mat-label i18n="Label|Name field label@@profession.create.name.label">Name</mat-label>
-            <input
-              matInput
-              formControlName="name"
-              aria-label="Profession name"
-              i18n-aria-label="Input aria-label|Profession name aria@@profession.create.name.aria"
-            />
-            <mat-error *ngIf="form.controls.name.touched && form.controls.name.invalid"
-                       i18n="Validation|Name required message@@profession.create.name.required">Name is required
-            </mat-error>
-          </mat-form-field>
-        </div>
+        <!-- Two-column layout: left = name + type, right = description -->
+        <div style="display:flex; gap:24px; align-items:flex-start;">
+          <!-- Left column: name and type -->
+          <div style="flex:1; min-width:220px;">
+            <div class="row">
+              <mat-form-field appearance="outline" class="full">
+                <mat-label i18n="Label|Name field label@@profession.create.name.label">Name</mat-label>
+                <input
+                  matInput
+                  formControlName="name"
+                  aria-label="Profession name"
+                  i18n-aria-label="Input aria-label|Profession name aria@@profession.create.name.aria"
+                />
+                <mat-error *ngIf="form.controls.name.touched && form.controls.name.invalid"
+                           i18n="Validation|Name required message@@profession.create.name.required">Name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
 
-        <div class="row">
-          <mat-form-field appearance="outline" class="full">
-            <mat-label i18n="Label|Description field label@@profession.create.description.label">Description</mat-label>
-            <textarea
-              matInput
-              rows="4"
-              formControlName="description"
-              aria-label="Profession description"
-              i18n-aria-label="Input aria-label|Profession description aria@@profession.create.description.aria"
-            ></textarea>
-            <mat-error *ngIf="form.controls.description.touched && form.controls.description.invalid"
-                       i18n="Validation|Description required message@@profession.create.description.required">
-              Description
-              is required
-            </mat-error>
-          </mat-form-field>
+            <!-- Profession type toggle placed under the name (mat-button-toggle-group) -->
+            <div class="row" style="margin-top: 8px;">
+              <mat-button-toggle-group class="type-toggle-group"
+                                       [value]="form.controls.isAdvanced.value"
+                                       (change)="form.controls.isAdvanced.setValue($event.value)"
+                                       aria-label="Profession type">
+
+                <mat-button-toggle class="type-toggle-btn" [value]="false" aria-label="Podstawowa">
+                  <mat-icon class="type-icon">person_search</mat-icon>
+                  <span class="type-label">Podstawowa</span>
+                </mat-button-toggle>
+
+                <mat-button-toggle class="type-toggle-btn" [value]="true" aria-label="Zaawansowana">
+                  <mat-icon class="type-icon">military_tech</mat-icon>
+                  <span class="type-label">Zaawansowana</span>
+                </mat-button-toggle>
+
+              </mat-button-toggle-group>
+            </div>
+          </div>
+
+          <!-- Right column: description -->
+          <div style="flex:2; min-width:300px;">
+            <mat-form-field appearance="outline" class="full">
+              <mat-label i18n="Label|Description field label@@profession.create.description.label">Description
+              </mat-label>
+              <textarea
+                matInput
+                rows="4"
+                formControlName="description"
+                aria-label="Profession description"
+                i18n-aria-label="Input aria-label|Profession description aria@@profession.create.description.aria"
+              ></textarea>
+              <mat-error *ngIf="form.controls.description.touched && form.controls.description.invalid"
+                         i18n="Validation|Description required message@@profession.create.description.required">
+                Description is required
+              </mat-error>
+            </mat-form-field>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>
@@ -71,7 +98,7 @@
           <div class="search-input">
             <mat-form-field appearance="outline" class="full">
               <mat-chip-grid #skillList aria-label="Skills">
-                <mat-chip *ngFor="let s of skills.controls; let i = index" selectable="true" removable="true"
+                <mat-chip *ngFor="let s of skills.controls; let i = index" [removable]="true"
                           (removed)="removeSkill(i)">
                   {{ s.value }}
                   <mat-icon matChipRemove>close</mat-icon>
@@ -96,7 +123,7 @@
           <div class="search-input">
             <mat-form-field appearance="outline" class="full">
               <mat-chip-grid #talentList aria-label="Talents">
-                <mat-chip *ngFor="let t of talents.controls; let i = index" selectable="true" removable="true"
+                <mat-chip *ngFor="let t of talents.controls; let i = index" [removable]="true"
                           (removed)="removeTalent(i)">
                   {{ t.value }}
                   <mat-icon matChipRemove>close</mat-icon>
@@ -133,7 +160,7 @@
                 type="button"
                 aria-label="Decrease Weapon Skill development"
                 i18n-aria-label="Button aria|Decrease Weapon Skill development@@profession.create.ws.dec"
-                (click)="decrement('weaponSkillsDevelopment', 5)"
+                (click)="decrement('weaponSkillsDevelopment')"
               >
                 <mat-icon>remove</mat-icon>
               </button>
@@ -143,7 +170,7 @@
                 type="button"
                 aria-label="Increase Weapon Skill development"
                 i18n-aria-label="Button aria|Increase Weapon Skill development@@profession.create.ws.inc"
-                (click)="increment('weaponSkillsDevelopment', 5)"
+                (click)="increment('weaponSkillsDevelopment')"
               >
                 <mat-icon>add</mat-icon>
               </button>
@@ -160,7 +187,7 @@
                 type="button"
                 aria-label="Decrease Ballistic Skill development"
                 i18n-aria-label="Button aria|Decrease Ballistic Skill development@@profession.create.bs.dec"
-                (click)="decrement('ballisticSkillsDevelopment', 5)"
+                (click)="decrement('ballisticSkillsDevelopment')"
               >
                 <mat-icon>remove</mat-icon>
               </button>
@@ -170,7 +197,7 @@
                 type="button"
                 aria-label="Increase Ballistic Skill development"
                 i18n-aria-label="Button aria|Increase Ballistic Skill development@@profession.create.bs.inc"
-                (click)="increment('ballisticSkillsDevelopment', 5)"
+                (click)="increment('ballisticSkillsDevelopment')"
               >
                 <mat-icon>add</mat-icon>
               </button>
@@ -474,12 +501,46 @@
     <!-- Trappings -->
     <mat-card class="character-card card">
       <mat-card-content>
-        <h3 class="section-title">Trappings</h3>
+        <h3 class="section-title">Equipment</h3>
         <div class="row">
           <mat-form-field appearance="outline" class="full">
-            <mat-label>Trappings</mat-label>
+            <mat-label>Equipment</mat-label>
             <textarea matInput rows="6" formControlName="trappings"
-                      placeholder="Starting gear, items, money..."></textarea>
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Career Exits -->
+    <mat-card class="character-card card">
+      <mat-card-content>
+        <h3 class="section-title">Career Exits</h3>
+
+        <div class="search-input">
+          <mat-form-field appearance="outline" class="full">
+            <mat-chip-grid #exitList aria-label="Career Exits">
+              <mat-chip *ngFor="let e of exits.controls; let i = index" [removable]="true"
+                        (removed)="removeExit(i)">
+                {{ (e.value && (e.value.name || e.value)) }}
+                <mat-icon matChipRemove>close</mat-icon>
+              </mat-chip>
+              <input
+                matInput
+                [formControl]="exitSearchControl"
+                [matAutocomplete]="auto"
+                placeholder="Search careers..."
+                [matChipInputFor]="exitList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="addExitFromChip($event)"
+              />
+            </mat-chip-grid>
+
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectExit($event)">
+              <mat-option *ngFor="let o of exitsOptions$ | async" [value]="o">
+                {{ o.name }}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
         </div>
       </mat-card-content>

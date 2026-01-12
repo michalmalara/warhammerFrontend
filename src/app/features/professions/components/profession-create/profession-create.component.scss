@@ -248,12 +248,12 @@ mat-card-title {
 /* Slightly stronger visual styling for inner "character-card" mat-cards
    so they match the appearance used by the `character-card` component */
 .character-card {
-  /* match global .card exactly for pixel-consistent appearance */
-  background: var(--color-surface);
-  border: 1px solid var(--color-panel-border);
+  /* match .skill-tile background + border for visual consistency */
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   color: var(--color-text);
   padding: 1rem;
-  border-radius: 6px;
+  border-radius: 0.375rem; /* match .skill-tile radius */
 }
 
 .character-card mat-card-title {
@@ -266,9 +266,49 @@ mat-card-title {
   font-size: 0.85rem;
 }
 
-.character-card .mat-card-content,
-.character-card mat-card-content {
-  padding: 0.6rem 0.75rem;
+/* Profession type toggle styles (match mockup */
+.type-toggle-group {
+  display: inline-flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.01);
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.type-toggle-btn {
+  height: 40px;
+  min-width: 120px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border-radius: 0; /* rectangular */
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--color-text);
+  background: transparent;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.type-toggle-btn .type-icon {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+/* Active state uses Angular Material 'warn' color. Also add a fallback style in case theme doesn't apply */
+.type-toggle-btn.mat-button-toggle-checked {
+  background: linear-gradient(180deg, rgba(189, 15, 44, 0.12), rgba(189, 15, 44, 0.08));
+  border-color: rgba(189, 15, 44, 0.6);
+  color: #fff;
+}
+
+.type-toggle-btn.mat-button-toggle-checked .type-icon {
+  color: #ffdfe0;
+}
+
+.type-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
 /* ensure small title sizing matches character card on mobile */

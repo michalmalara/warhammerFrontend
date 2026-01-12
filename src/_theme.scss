@@ -62,17 +62,27 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
 
     /* Angular Material (MDC) - Tabs token overrides przez CSS variables */
     @include mat.tabs-overrides(
-      (
-        active-indicator-color: var(--tab-ink-color),
-        active-focus-indicator-color: var(--tab-ink-color),
-        active-hover-indicator-color: var(--tab-ink-color),
-        inactive-label-text-color: var(--tab-inactive-color),
-        active-label-text-color: var(--tab-active-color),
-        inactive-hover-label-text-color: var(--tab-active-color),
-        active-hover-label-text-color: var(--tab-active-color),
-        divider-color: var(--color-panel-border),
-      )
+        (
+          active-indicator-color: var(--tab-ink-color),
+          active-focus-indicator-color: var(--tab-ink-color),
+          active-hover-indicator-color: var(--tab-ink-color),
+          inactive-label-text-color: var(--tab-inactive-color),
+          active-label-text-color: var(--tab-active-color),
+          inactive-hover-label-text-color: var(--tab-active-color),
+          active-hover-label-text-color: var(--tab-active-color),
+          divider-color: var(--color-panel-border),
+        )
     );
+
+    @include mat.form-field-overrides((
+      outlined-focus-outline-color: var(--color-accent),
+      outlined-hover-outline-color: var(--color-accent-2),
+      outlined-input-text-color: var(--color-text),
+    ));
+
+    @include mat.chips-overrides((
+      label-text-color: var(--color-text),
+    ))
   }
 
   html,
@@ -284,9 +294,8 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     color: var(--tab-inactive-color);
     padding: 8px 12px;
     margin-right: 10px;
-    transition:
-      color 0.16s ease,
-      background-color 0.12s ease;
+    transition: color 0.16s ease,
+    background-color 0.12s ease;
     background: transparent;
     border-radius: 4px;
     line-height: 1;
@@ -329,9 +338,8 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     height: 3px;
     background: var(--tab-ink-color);
     border-radius: 3px;
-    transition:
-      left 0.18s cubic-bezier(0.35, 0, 0.25, 1),
-      width 0.18s cubic-bezier(0.35, 0, 0.25, 1);
+    transition: left 0.18s cubic-bezier(0.35, 0, 0.25, 1),
+    width 0.18s cubic-bezier(0.35, 0, 0.25, 1);
   }
 
   /* Keyboard focus */

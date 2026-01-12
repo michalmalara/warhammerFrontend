@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {booleanAttribute, Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
@@ -11,10 +11,14 @@ import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatOptionModule} from '@angular/material/core';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 import {finalize} from 'rxjs/operators';
+import {catchError, debounceTime, distinctUntilChanged, of, startWith, switchMap} from 'rxjs';
 
 import {ProfessionsApiService} from '../../services/professions-api.service';
 import {CreateProfessionPayload} from '../../models/profession.models';
@@ -34,6 +38,9 @@ import {CreateProfessionPayload} from '../../models/profession.models';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatChipsModule,
+    MatAutocompleteModule,
+    MatOptionModule,
+    MatButtonToggleModule,
   ],
   templateUrl: './profession-create.component.html',
   styleUrls: ['./profession-create.component.scss'],
@@ -52,6 +59,15 @@ export class ProfessionCreateComponent {
 
   // separator keys for mat-chip input
   readonly separatorKeysCodes = [ENTER, COMMA];
+
+  // search control + options for autocomplate
+  readonly exitSearchControl = new FormControl('');
+  exitsOptions$ = this.exitSearchControl.valueChanges.pipe(
+    startWith(''),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((q) => this.api.search(q || '').pipe(catchError(() => of([]))))
+  );
 
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(120)]],
@@ -75,6 +91,10 @@ export class ProfessionCreateComponent {
     skills: this.fb.array([]),
     talents: this.fb.array([]),
     trappings: ['', [Validators.maxLength(2000)]],
+
+    // career exits (chips) - can contain numbers, strings or objects { id, name }
+    exitProfessions: this.fb.array([]),
+    isAdvanced: booleanAttribute(false)
   });
 
   // convenience getters for template
@@ -84,6 +104,11 @@ export class ProfessionCreateComponent {
 
   get talents(): FormArray {
     return this.form.get('talents') as FormArray;
+  }
+
+  // getter for exits FormArray used by template
+  get exits(): FormArray {
+    return this.form.get('exitProfessions') as FormArray;
   }
 
   save() {
@@ -145,6 +170,18 @@ export class ProfessionCreateComponent {
       if (!Number.isNaN(n) && Number.isFinite(n)) talentsIds.push(n);
     }
     if (talentsIds.length) payload.talents = talentsIds;
+
+    // map exit professions: support objects with `id`, numeric strings, and numbers
+    const exitIds: number[] = [];
+    for (const e of (v.exitProfessions || [])) {
+      if (e && typeof e === 'object' && 'id' in e && typeof (e as any).id === 'number') {
+        exitIds.push((e as any).id);
+        continue;
+      }
+      const n = Number(e);
+      if (!Number.isNaN(n) && Number.isFinite(n)) exitIds.push(n);
+    }
+    if (exitIds.length) payload.exitProfessions = exitIds;
 
     return payload;
   }
@@ -212,5 +249,33 @@ export class ProfessionCreateComponent {
   removeTalent(index: number) {
     if (index < 0 || index >= this.talents.length) return;
     this.talents.removeAt(index);
+  }
+
+  // Career exits helpers (mat-chip)
+  addExitFromChip(event: MatChipInputEvent) {
+    const value = (event.value || '').trim();
+    if (value) {
+      // add plain text entry (keeps previous behavior)
+      this.exits.push(new FormControl(value));
+    }
+    if (event.chipInput) {
+      event.chipInput.clear();
+    }
+    // also clear search control
+    this.exitSearchControl.setValue('');
+  }
+
+  removeExit(index: number) {
+    if (index < 0 || index >= this.exits.length) return;
+    this.exits.removeAt(index);
+  }
+
+  selectExit(event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as { id: number; name: string };
+    if (opt && opt.id) {
+      this.exits.push(new FormControl({id: opt.id, name: opt.name}));
+    }
+    // clear input
+    this.exitSearchControl.setValue('');
   }
 }

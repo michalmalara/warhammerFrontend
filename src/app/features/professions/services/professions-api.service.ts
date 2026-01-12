@@ -39,4 +39,13 @@ export class ProfessionsApiService {
   delete(id: number) {
     return this.crud.delete(ProfessionsApiService.PATH, id);
   }
+
+  /**
+   * Wyszukiwanie profesji (autocomplete). Zwraca listę `ProfessionSummary`.
+   * Używa parametru query `search` (dostosuj jeśli backend oczekuje innego parametru, np. `q`).
+   */
+  search(query: string) {
+    const params = query ? {search: query} : undefined;
+    return this.crud.list<ProfessionSummary[]>(ProfessionsApiService.PATH, params);
+  }
 }
