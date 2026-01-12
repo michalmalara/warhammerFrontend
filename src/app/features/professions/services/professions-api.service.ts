@@ -1,9 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 
-import { CrudApiService } from '../../../shared/services/crud-api.service';
-import { Profession, ProfessionSummary } from '../models/profession.models';
+import {CrudApiService} from '../../../shared/services/crud-api.service';
+import {CreateProfessionPayload, Profession, ProfessionSummary} from '../models/profession.models';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class ProfessionsApiService {
   private readonly crud = inject(CrudApiService);
 
@@ -24,8 +24,8 @@ export class ProfessionsApiService {
     return this.crud.detail<Profession>(ProfessionsApiService.PATH, id);
   }
 
-  create(body: Partial<Profession>) {
-    return this.crud.create<Profession, Partial<Profession>>(ProfessionsApiService.PATH, body);
+  create(body: CreateProfessionPayload) {
+    return this.crud.create<Profession, CreateProfessionPayload>(ProfessionsApiService.PATH, body);
   }
 
   update(id: number, body: Partial<Profession>) {

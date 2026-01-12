@@ -13,14 +13,14 @@
 html {
   height: 100%;
   @include mat.theme(
-    (
-      color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
+      (
+        color: (
+          primary: mat.$azure-palette,
+          tertiary: mat.$blue-palette,
+        ),
+        typography: Roboto,
+        density: 0,
+      )
   );
 }
 
@@ -93,11 +93,10 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition:
-    border-color 180ms ease,
-    box-shadow 200ms ease,
-    background 180ms ease,
-    transform 160ms ease;
+  transition: border-color 180ms ease,
+  box-shadow 200ms ease,
+  background 180ms ease,
+  transform 160ms ease;
 }
 
 .wounds-panel .wounds-controls button[mat-icon-button] mat-icon {

@@ -65,3 +65,30 @@ export interface Profession {
   entryProfessions: ProfessionSummary[];
   exitProfessions: ProfessionSummary[];
 }
+
+// Payload used when creating a Profession: backend expects lists of IDs for relations
+export interface CreateProfessionPayload {
+  name: string;
+  description: string;
+
+  weaponSkillsDevelopment?: number;
+  ballisticSkillsDevelopment?: number;
+  strengthDevelopment?: number;
+  toughnessDevelopment?: number;
+  agilityDevelopment?: number;
+  intelligenceDevelopment?: number;
+  willpowerDevelopment?: number;
+  fellowshipDevelopment?: number;
+
+  attacksDevelopment?: number;
+  woundsDevelopment?: number;
+  movementDevelopment?: number;
+  magicDevelopment?: number;
+
+  talents?: number[]; // ProfessionTalent IDs
+  skills?: number[]; // ProfessionSkill IDs
+  entryProfessions?: number[]; // Profession IDs
+  exitProfessions?: number[]; // Profession IDs
+
+  trappings?: string;
+}
