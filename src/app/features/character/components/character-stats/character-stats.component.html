@@ -6,7 +6,10 @@
       <div class="stat-box">
         <div class="label muted">{{ s.label }}</div>
         <div class="value">
-          {{ statTotal(s, 'primary') }}<span class="suffix" *ngIf="isPercent(s, true)">% </span>
+          {{ statTotal(s, 'primary') }}
+          @if (isPercent(s, true)) {
+            <span class="suffix">% </span>
+          }
         </div>
 
         <div class="sub-values muted">
@@ -26,7 +29,10 @@
     <div class="stat-box">
       <div class="label muted">{{ sc.label }}</div>
       <div class="value">
-        {{ statTotal(sc, 'secondary') }}<span class="suffix" *ngIf="isPercent(sc, false)">% </span>
+        {{ statTotal(sc, 'secondary') }}
+        @if (isPercent(sc, false)) {
+          <span class="suffix">% </span>
+        }
       </div>
 
       <div class="sub-values muted">
