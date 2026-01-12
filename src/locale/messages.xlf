@@ -5,337 +5,296 @@
       <trans-unit id="character.tags.race" datatype="html">
         <source>Human</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
           <context context-type="linenumber">22,23</context>
         </context-group>
-        <note priority="1" from="description">Race tag</note>
+        <note priority="1" from="description">Tag rasy</note>
       </trans-unit>
       <trans-unit id="character.tags.heritage" datatype="html">
         <source>Empire Heritage</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
           <context context-type="linenumber">23,26</context>
         </context-group>
-        <note priority="1" from="description">Heritage / culture tag</note>
+        <note priority="1" from="description">Tag pochodzenia/kultury</note>
       </trans-unit>
       <trans-unit id="tabs.skills" datatype="html">
         <source>Skills</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
           <context context-type="linenumber">52,53</context>
         </context-group>
-        <note priority="1" from="description">Skills tab label</note>
+        <note priority="1" from="description">Etykieta zakładki umiejętności</note>
       </trans-unit>
       <trans-unit id="tabs.talents" datatype="html">
         <source>Talents</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
           <context context-type="linenumber">56,57</context>
         </context-group>
-        <note priority="1" from="description">Talents tab label</note>
+        <note priority="1" from="description">Etykieta zakładki talentów</note>
       </trans-unit>
       <trans-unit id="tabs.combat" datatype="html">
         <source>Combat</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
           <context context-type="linenumber">60,61</context>
         </context-group>
-        <note priority="1" from="description">Combat tab label</note>
+        <note priority="1" from="description">Etykieta zakładki walki</note>
       </trans-unit>
       <trans-unit id="tabs.inventory" datatype="html">
         <source>Inventory</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
           <context context-type="linenumber">64,65</context>
         </context-group>
-        <note priority="1" from="description">Inventory tab label</note>
+        <note priority="1" from="description">Etykieta zakładki ekwipunku</note>
       </trans-unit>
       <trans-unit id="inventory.placeholder" datatype="html">
         <source> Inventory view is under construction — move or copy items here as needed.</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-card/character-card.component.html</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
           <context context-type="linenumber">68,71</context>
         </context-group>
-        <note priority="1" from="description">Inventory placeholder message</note>
+        <note priority="1" from="description">Komunikat o braku widoku ekwipunku (placeholder)</note>
       </trans-unit>
       <trans-unit id="stats.primaryHeader" datatype="html">
         <source>Primary Characteristics</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-stats/character-stats.component.html</context>
-          <context context-type="linenumber">1,3</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">2,4</context>
         </context-group>
-        <note priority="1" from="description">Primary characteristics section header</note>
+        <note priority="1" from="description">Nagłówek sekcji cech głównych</note>
       </trans-unit>
       <trans-unit id="stats.baseLabel" datatype="html">
         <source>Base:</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-stats/character-stats.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-stats/character-stats.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">40</context>
         </context-group>
-        <note priority="1" from="description">Base statistic label</note>
+        <note priority="1" from="description">Etykieta bazowej wartości statystyki</note>
       </trans-unit>
       <trans-unit id="stats.advLabel" datatype="html">
         <source>Adv:</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-stats/character-stats.component.html</context>
-          <context context-type="linenumber">14,16</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">18,20</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-stats/character-stats.component.html</context>
-          <context context-type="linenumber">35,37</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">42,44</context>
         </context-group>
-        <note priority="1" from="description">Statistic advances label</note>
+        <note priority="1" from="description">Etykieta rozwinięcia (advances) statystyki</note>
       </trans-unit>
       <trans-unit id="stats.secondaryHeader" datatype="html">
         <source>Secondary Characteristics</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/character-stats/character-stats.component.html</context>
-          <context context-type="linenumber">21,24</context>
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">25,28</context>
         </context-group>
-        <note priority="1" from="description">Secondary characteristics section header</note>
+        <note priority="1" from="description">Nagłówek sekcji cech drugorzędnych</note>
       </trans-unit>
       <trans-unit id="equipment.col.name" datatype="html">
         <source> Weapon / Gear </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/equipment-table/equipment-table.component.html</context>
-          <context context-type="linenumber">10,12</context>
+          <context context-type="sourcefile">src/app/features/character/components/equipment-table/equipment-table.component.html</context>
+          <context context-type="linenumber">11,13</context>
         </context-group>
-        <note priority="1" from="description">Table header: weapon / gear name</note>
+        <note priority="1" from="description">Nagłówek kolumny: nazwa broni/ekwipunku</note>
       </trans-unit>
       <trans-unit id="equipment.col.enc" datatype="html">
         <source> Enc </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/equipment-table/equipment-table.component.html</context>
-          <context context-type="linenumber">17,19</context>
+          <context context-type="sourcefile">src/app/features/character/components/equipment-table/equipment-table.component.html</context>
+          <context context-type="linenumber">18,20</context>
         </context-group>
-        <note priority="1" from="description">Table header: encumbrance</note>
+        <note priority="1" from="description">Nagłówek kolumny: obciążenie</note>
       </trans-unit>
       <trans-unit id="equipment.col.dmg" datatype="html">
         <source> Dmg </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/equipment-table/equipment-table.component.html</context>
-          <context context-type="linenumber">24,26</context>
+          <context context-type="sourcefile">src/app/features/character/components/equipment-table/equipment-table.component.html</context>
+          <context context-type="linenumber">25,27</context>
         </context-group>
-        <note priority="1" from="description">Table header: damage</note>
+        <note priority="1" from="description">Nagłówek kolumny: obrażenia</note>
       </trans-unit>
       <trans-unit id="equipment.col.range" datatype="html">
         <source> Range </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/equipment-table/equipment-table.component.html</context>
-          <context context-type="linenumber">31,33</context>
+          <context context-type="sourcefile">src/app/features/character/components/equipment-table/equipment-table.component.html</context>
+          <context context-type="linenumber">32,34</context>
         </context-group>
-        <note priority="1" from="description">Table header: range</note>
+        <note priority="1" from="description">Nagłówek kolumny: zasięg</note>
       </trans-unit>
       <trans-unit id="equipment.col.qualities" datatype="html">
         <source> Qualities </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/equipment-table/equipment-table.component.html</context>
-          <context context-type="linenumber">38,40</context>
+          <context context-type="sourcefile">src/app/features/character/components/equipment-table/equipment-table.component.html</context>
+          <context context-type="linenumber">39,41</context>
         </context-group>
-        <note priority="1" from="description">Table header: qualities</note>
+        <note priority="1" from="description">Nagłówek kolumny: cechy/jakości</note>
       </trans-unit>
       <trans-unit id="fatePoints.title" datatype="html">
         <source>Fate Points</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/fate-points/fate-points.component.html</context>
-          <context context-type="linenumber">2,7</context>
+          <context context-type="sourcefile">src/app/features/character/components/fate-points/fate-points.component.html</context>
+          <context context-type="linenumber">4,9</context>
         </context-group>
-        <note priority="1" from="description">Fate points panel title</note>
+        <note priority="1" from="description">Nagłówek panelu punktów losu</note>
       </trans-unit>
       <trans-unit id="fatePoints.aria" datatype="html">
         <source>Fate points</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/fate-points/fate-points.component.html</context>
-          <context context-type="linenumber">8,11</context>
+          <context context-type="sourcefile">src/app/features/character/components/fate-points/fate-points.component.html</context>
+          <context context-type="linenumber">10,13</context>
         </context-group>
-        <note priority="1" from="description">Accessibility label for the fate points indicator</note>
+        <note priority="1" from="description">Etykieta dostępności dla wskaźnika punktów losu</note>
       </trans-unit>
       <trans-unit id="fatePoints.fateLabel" datatype="html">
         <source>Fate</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/fate-points/fate-points.component.html</context>
-          <context context-type="linenumber">17,18</context>
+          <context context-type="sourcefile">src/app/features/character/components/fate-points/fate-points.component.html</context>
+          <context context-type="linenumber">19,20</context>
         </context-group>
-        <note priority="1" from="description">Column label: Fate</note>
+        <note priority="1" from="description">Etykieta kolumny: Fate</note>
       </trans-unit>
       <trans-unit id="fatePoints.fortuneLabel" datatype="html">
         <source>Fortune</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/fate-points/fate-points.component.html</context>
-          <context context-type="linenumber">24,25</context>
+          <context context-type="sourcefile">src/app/features/character/components/fate-points/fate-points.component.html</context>
+          <context context-type="linenumber">26,27</context>
         </context-group>
-        <note priority="1" from="description">Column label: Fortune</note>
+        <note priority="1" from="description">Etykieta kolumny: Fortune</note>
       </trans-unit>
       <trans-unit id="xp.title" datatype="html">
         <source>Experience</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
-          <context context-type="linenumber">2,5</context>
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">4,7</context>
         </context-group>
-        <note priority="1" from="description">Experience panel title</note>
+        <note priority="1" from="description">Nagłówek panelu doświadczenia</note>
       </trans-unit>
       <trans-unit id="xp.currentProfessionLabel" datatype="html">
         <source> Current profession </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
-          <context context-type="linenumber">7,9</context>
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">10,12</context>
         </context-group>
-        <note priority="1" from="description">Label: current profession</note>
+        <note priority="1" from="description">Etykieta: aktualna profesja</note>
       </trans-unit>
       <trans-unit id="xp.toSpendLabel" datatype="html">
         <source>To spend</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
-          <context context-type="linenumber">14,15</context>
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">18,19</context>
         </context-group>
-        <note priority="1" from="description">Label: XP to spend</note>
+        <note priority="1" from="description">Etykieta: punkty do wydania</note>
       </trans-unit>
       <trans-unit id="xp.totalEarnedLabel" datatype="html">
         <source>Total earned </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
-          <context context-type="linenumber">19,21</context>
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">23,25</context>
         </context-group>
-        <note priority="1" from="description">Label: total earned XP</note>
+        <note priority="1" from="description">Etykieta: suma zdobytych punktów</note>
       </trans-unit>
       <trans-unit id="xp.toNextProfession" datatype="html">
         <source>To next profession </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
-          <context context-type="linenumber">26,31</context>
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">30,35</context>
         </context-group>
-        <note priority="1" from="description">Label: to next profession</note>
+        <note priority="1" from="description">Etykieta: do następnej profesji</note>
       </trans-unit>
       <trans-unit id="xp.unit" datatype="html">
         <source>XP</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
-          <context context-type="linenumber">39,40</context>
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">43,44</context>
         </context-group>
-        <note priority="1" from="description">XP unit abbreviation</note>
+        <note priority="1" from="description">Skrót jednostki XP</note>
       </trans-unit>
       <trans-unit id="xp.remaining" datatype="html">
         <source>remaining</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/profession-history/profession-xp-panel.component.html</context>
-          <context context-type="linenumber">40,41</context>
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">44,45</context>
         </context-group>
-        <note priority="1" from="description">Label: remaining</note>
-      </trans-unit>
-      <trans-unit id="sidebar.avatarAlt" datatype="html">
-        <source>avatar</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sidebar/sidebar.component.html</context>
-          <context context-type="linenumber">5,7</context>
-        </context-group>
-        <note priority="1" from="description">Alt text for the character image</note>
-        <note priority="1" from="meaning">Avatar alternative description</note>
-      </trans-unit>
-      <trans-unit id="sidebar.characterName" datatype="html">
-        <source>Gottfried von Hollen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sidebar/sidebar.component.html</context>
-          <context context-type="linenumber">7,8</context>
-        </context-group>
-        <note priority="1" from="description">Character name displayed in the sidebar</note>
-      </trans-unit>
-      <trans-unit id="sidebar.characterRole" datatype="html">
-        <source>Roadwarden</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sidebar/sidebar.component.html</context>
-          <context context-type="linenumber">8,13</context>
-        </context-group>
-        <note priority="1" from="description">Character profession/role displayed in the sidebar</note>
-      </trans-unit>
-      <trans-unit id="sidebar.encumbranceLabel" datatype="html">
-        <source>Encumbrance</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sidebar/sidebar.component.html</context>
-          <context context-type="linenumber">19,21</context>
-        </context-group>
-        <note priority="1" from="description">Encumbrance label in the sidebar</note>
-      </trans-unit>
-      <trans-unit id="sidebar.restRecover" datatype="html">
-        <source>Rest &amp; Recover</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sidebar/sidebar.component.html</context>
-          <context context-type="linenumber">23,26</context>
-        </context-group>
-        <note priority="1" from="description">Rest and recovery button</note>
+        <note priority="1" from="description">Etykieta: pozostało</note>
       </trans-unit>
       <trans-unit id="skills.controlsAriaLabel" datatype="html">
         <source>Skill controls</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/skills/skills.component.html</context>
-          <context context-type="linenumber">14,17</context>
+          <context context-type="sourcefile">src/app/features/character/components/skills/skills.component.html</context>
+          <context context-type="linenumber">15,18</context>
         </context-group>
         <note priority="1" from="description">Accessible label: skill controls</note>
       </trans-unit>
       <trans-unit id="skills.taken" datatype="html">
         <source>TAKEN</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/skills/skills.component.html</context>
-          <context context-type="linenumber">26,30</context>
+          <context context-type="sourcefile">src/app/features/character/components/skills/skills.component.html</context>
+          <context context-type="linenumber">27,31</context>
         </context-group>
         <note priority="1" from="description">Button label: skill taken/selected</note>
       </trans-unit>
       <trans-unit id="skills.viewAll" datatype="html">
         <source>VIEW ALL SKILLS (<x id="INTERPOLATION" equiv-text="{{ skills.length }}"/>) </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/skills/skills.component.html</context>
-          <context context-type="linenumber">62,65</context>
+          <context context-type="sourcefile">src/app/features/character/components/skills/skills.component.html</context>
+          <context context-type="linenumber">63,66</context>
         </context-group>
         <note priority="1" from="description">Button: view all skills</note>
       </trans-unit>
       <trans-unit id="talents.empty" datatype="html">
         <source>No talents.</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/talents/talents.component.html</context>
-          <context context-type="linenumber">12,15</context>
+          <context context-type="sourcefile">src/app/features/character/components/talents/talents.component.html</context>
+          <context context-type="linenumber">13,17</context>
         </context-group>
         <note priority="1" from="description">Message shown when the character has no talents</note>
       </trans-unit>
       <trans-unit id="wounds.title" datatype="html">
         <source>Wounds</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wounds-panel/wounds-panel.component.html</context>
-          <context context-type="linenumber">4,6</context>
+          <context context-type="sourcefile">src/app/features/character/components/wounds-panel/wounds-panel.component.html</context>
+          <context context-type="linenumber">5,7</context>
         </context-group>
         <note priority="1" from="description">Wounds panel title</note>
       </trans-unit>
       <trans-unit id="wounds.hpLabel" datatype="html">
         <source>HP</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wounds-panel/wounds-panel.component.html</context>
-          <context context-type="linenumber">9,13</context>
+          <context context-type="sourcefile">src/app/features/character/components/wounds-panel/wounds-panel.component.html</context>
+          <context context-type="linenumber">10,14</context>
         </context-group>
         <note priority="1" from="description">Current hit points label (HP)</note>
       </trans-unit>
       <trans-unit id="wounds.decAria" datatype="html">
         <source>Decrease wounds</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wounds-panel/wounds-panel.component.html</context>
-          <context context-type="linenumber">14,16</context>
+          <context context-type="sourcefile">src/app/features/character/components/wounds-panel/wounds-panel.component.html</context>
+          <context context-type="linenumber">15,17</context>
         </context-group>
         <note priority="1" from="description">ARIA: decrease wounds</note>
       </trans-unit>
       <trans-unit id="wounds.maxLabel" datatype="html">
         <source>Max:</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wounds-panel/wounds-panel.component.html</context>
-          <context context-type="linenumber">18,19</context>
+          <context context-type="sourcefile">src/app/features/character/components/wounds-panel/wounds-panel.component.html</context>
+          <context context-type="linenumber">19,20</context>
         </context-group>
         <note priority="1" from="description">Maximum wounds label</note>
       </trans-unit>
       <trans-unit id="wounds.incAria" datatype="html">
         <source>Increase wounds</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wounds-panel/wounds-panel.component.html</context>
-          <context context-type="linenumber">22,23</context>
+          <context context-type="sourcefile">src/app/features/character/components/wounds-panel/wounds-panel.component.html</context>
+          <context context-type="linenumber">23,24</context>
         </context-group>
         <note priority="1" from="description">ARIA: increase wounds</note>
       </trans-unit>

@@ -19,6 +19,9 @@
       "i18n": {
         "sourceLocale": "en-US",
         "locales": {
+          "en": {
+            "translation": "src/locale/messages.en.xlf"
+          },
           "pl": {
             "translation": "src/locale/messages.pl.xlf"
           }
@@ -65,6 +68,11 @@
               "extractLicenses": false,
               "sourceMap": true
             },
+            "en": {
+              "localize": [
+                "en"
+              ]
+            },
             "pl": {
               "localize": [
                 "pl"
@@ -81,6 +89,9 @@
             },
             "development": {
               "buildTarget": "frontend:build:development"
+            },
+            "en": {
+              "buildTarget": "frontend:build:en"
             },
             "pl": {
               "buildTarget": "frontend:build:pl"
