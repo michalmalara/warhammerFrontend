@@ -15,3 +15,18 @@
 /* Ensure global body uses theme variables */
 :root {
 }
+
+/* Two-cards grid for side-by-side cards */
+.grid.two-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+/* Stack on small screens */
+@media (max-width: 720px) {
+  .grid.two-cards {
+    grid-template-columns: 1fr;
+  }
+}

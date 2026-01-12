@@ -245,7 +245,33 @@ mat-card-title {
   }
 }
 
-/* Responsive tweak */
+/* Slightly stronger visual styling for inner "character-card" mat-cards
+   so they match the appearance used by the `character-card` component */
+.character-card {
+  /* match global .card exactly for pixel-consistent appearance */
+  background: var(--color-surface);
+  border: 1px solid var(--color-panel-border);
+  color: var(--color-text);
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.character-card mat-card-title {
+  color: var(--header-text);
+  font-weight: 700;
+}
+
+.character-card mat-card-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.character-card .mat-card-content,
+.character-card mat-card-content {
+  padding: 0.6rem 0.75rem;
+}
+
+/* ensure small title sizing matches character card on mobile */
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));

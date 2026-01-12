@@ -1,4 +1,4 @@
-<div class="profession-editor">
+<mat-card class="profession-editor">
   <header class="hero">
     <div>
       <h1 class="title" i18n="Hero title|Profession create hero@@profession.create.hero.title">Create Profession</h1>
@@ -62,58 +62,58 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- Skills & Talents card -->
-    <mat-card class="character-card card">
-      <mat-card-content>
-        <h3 class="section-title">Required Skills & Talents</h3>
+    <!-- Skills & Talents cards (split into two side-by-side cards) -->
+    <div class="grid two-cards">
+      <mat-card class="character-card card">
+        <mat-card-content>
+          <h3 class="section-title">Required Skills</h3>
 
-        <div class="grid">
-          <div class="section-split">
-            <label class="subtitle">Skills</label>
-            <div class="search-input">
-              <mat-form-field appearance="outline" class="full">
-                <mat-chip-grid #skillList aria-label="Skills">
-                  <mat-chip *ngFor="let s of skills.controls; let i = index" selectable="true" removable="true"
-                            (removed)="removeSkill(i)">
-                    {{ s.value }}
-                    <mat-icon matChipRemove>close</mat-icon>
-                  </mat-chip>
-                  <input
-                    matInput
-                    placeholder="Add skill..."
-                    [matChipInputFor]="skillList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    (matChipInputTokenEnd)="addSkillFromChip($event)"
-                  />
-                </mat-chip-grid>
-              </mat-form-field>
-            </div>
+          <div class="search-input">
+            <mat-form-field appearance="outline" class="full">
+              <mat-chip-grid #skillList aria-label="Skills">
+                <mat-chip *ngFor="let s of skills.controls; let i = index" selectable="true" removable="true"
+                          (removed)="removeSkill(i)">
+                  {{ s.value }}
+                  <mat-icon matChipRemove>close</mat-icon>
+                </mat-chip>
+                <input
+                  matInput
+                  placeholder="Add skill..."
+                  [matChipInputFor]="skillList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="addSkillFromChip($event)"
+                />
+              </mat-chip-grid>
+            </mat-form-field>
           </div>
+        </mat-card-content>
+      </mat-card>
 
-          <div class="section-split">
-            <label class="subtitle">Talents</label>
-            <div class="search-input">
-              <mat-form-field appearance="outline" class="full">
-                <mat-chip-grid #talentList aria-label="Talents">
-                  <mat-chip *ngFor="let t of talents.controls; let i = index" selectable="true" removable="true"
-                            (removed)="removeTalent(i)">
-                    {{ t.value }}
-                    <mat-icon matChipRemove>close</mat-icon>
-                  </mat-chip>
-                  <input
-                    matInput
-                    placeholder="Add talent..."
-                    [matChipInputFor]="talentList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    (matChipInputTokenEnd)="addTalentFromChip($event)"
-                  />
-                </mat-chip-grid>
-              </mat-form-field>
-            </div>
+      <mat-card class="character-card card">
+        <mat-card-content>
+          <h3 class="section-title">Required Talents</h3>
+
+          <div class="search-input">
+            <mat-form-field appearance="outline" class="full">
+              <mat-chip-grid #talentList aria-label="Talents">
+                <mat-chip *ngFor="let t of talents.controls; let i = index" selectable="true" removable="true"
+                          (removed)="removeTalent(i)">
+                  {{ t.value }}
+                  <mat-icon matChipRemove>close</mat-icon>
+                </mat-chip>
+                <input
+                  matInput
+                  placeholder="Add talent..."
+                  [matChipInputFor]="talentList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="addTalentFromChip($event)"
+                />
+              </mat-chip-grid>
+            </mat-form-field>
           </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
     <!-- Characteristics / Development card -->
     <mat-card class="character-card card">
@@ -504,4 +504,4 @@
       </button>
     </div>
   </form>
-</div>
+</mat-card>
