@@ -1,16 +1,20 @@
-import {TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {TalentsComponent} from './talents.component';
+import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { TalentsComponent } from './talents.component';
 
 describe('TalentsComponent', () => {
   it('renders talent name and description', async () => {
     await TestBed.configureTestingModule({
-      imports: [TalentsComponent]
+      imports: [TalentsComponent],
     }).compileComponents();
 
     const fixture = TestBed.createComponent(TalentsComponent);
     fixture.componentInstance.talents = [
-      {id: 'rapid-reload', name: 'Rapid Reload', description: 'You can reload faster than normal.'}
+      {
+        id: 'rapid-reload',
+        name: 'Rapid Reload',
+        description: 'You can reload faster than normal.',
+      },
     ];
     fixture.detectChanges();
 
@@ -23,7 +27,7 @@ describe('TalentsComponent', () => {
 
   it('shows empty state when list is empty', async () => {
     await TestBed.configureTestingModule({
-      imports: [TalentsComponent]
+      imports: [TalentsComponent],
     }).compileComponents();
 
     const fixture = TestBed.createComponent(TalentsComponent);

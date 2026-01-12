@@ -1,16 +1,16 @@
-import {CommonModule} from '@angular/common';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {CharacterSkill} from './skills.types';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CharacterSkill } from './skills.types';
 
 @Component({
   selector: 'skills',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './skills.component.html',
-  styleUrls: ['./skills.component.scss']
+  styleUrls: ['./skills.component.scss'],
 })
 export class SkillsComponent {
-  @Input({required: true}) skills: CharacterSkill[] = [];
+  @Input({ required: true }) skills: CharacterSkill[] = [];
 
   /**
    * Blokuje możliwość klikania kontrolek (TAKEN / +10% / +20%).

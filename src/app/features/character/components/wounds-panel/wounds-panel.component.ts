@@ -1,15 +1,15 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MatCardModule} from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'wounds-panel',
   standalone: true,
   imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule],
   templateUrl: './wounds-panel.component.html',
-  styleUrls: ['./wounds-panel.component.scss']
+  styleUrls: ['./wounds-panel.component.scss'],
 })
 export class WoundsPanelComponent {
   // Inputs/Outputs
@@ -72,7 +72,9 @@ export class WoundsPanelComponent {
   }
 
   get isWounded(): boolean {
-    return this.woundsFraction > this._criticalThreshold && this.woundsFraction < this._slightlyThreshold;
+    return (
+      this.woundsFraction > this._criticalThreshold && this.woundsFraction < this._slightlyThreshold
+    );
   }
 
   get isHealthy(): boolean {
@@ -80,6 +82,8 @@ export class WoundsPanelComponent {
   }
 
   get isSlightlyWounded(): boolean {
-    return this.woundsFraction >= this._slightlyThreshold && this.woundsFraction < this._healthyThreshold;
+    return (
+      this.woundsFraction >= this._slightlyThreshold && this.woundsFraction < this._healthyThreshold
+    );
   }
 }

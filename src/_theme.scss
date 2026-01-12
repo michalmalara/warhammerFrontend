@@ -60,26 +60,27 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     /* simple elevation/shadow colors */
     --shadow-dark: rgba(0, 0, 0, 0.6);
 
-
     /* Angular Material (MDC) - Tabs token overrides przez CSS variables */
-    @include mat.tabs-overrides((
-      active-indicator-color: var(--tab-ink-color),
-      active-focus-indicator-color: var(--tab-ink-color),
-      active-hover-indicator-color: var(--tab-ink-color),
-      inactive-label-text-color: var(--tab-inactive-color),
-      active-label-text-color: var(--tab-active-color),
-      inactive-hover-label-text-color: var(--tab-active-color),
-      active-hover-label-text-color: var(--tab-active-color),
-      divider-color: var(--color-panel-border)
-    ));
-
+    @include mat.tabs-overrides(
+      (
+        active-indicator-color: var(--tab-ink-color),
+        active-focus-indicator-color: var(--tab-ink-color),
+        active-hover-indicator-color: var(--tab-ink-color),
+        inactive-label-text-color: var(--tab-inactive-color),
+        active-label-text-color: var(--tab-active-color),
+        inactive-hover-label-text-color: var(--tab-active-color),
+        active-hover-label-text-color: var(--tab-active-color),
+        divider-color: var(--color-panel-border),
+      )
+    );
   }
 
-  html, body {
+  html,
+  body {
     height: 100%;
     background-color: var(--color-bg);
     color: var(--color-text);
-    font-family: Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: Inter, Roboto, 'Helvetica Neue', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: var(--fs-body);
@@ -102,7 +103,13 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     line-height: 1.15;
   }
 
-  h1, h2, h3, h4, h5, h6, .section-title {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .section-title {
     color: var(--header-text) !important;
   }
 
@@ -135,7 +142,7 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
       }
 
       .title {
-        font-family: "Playfair Display", Georgia, serif;
+        font-family: 'Playfair Display', Georgia, serif;
         font-weight: 700;
         font-size: 2.6rem; /* larger, closer to mockup */
         margin: 0 0 0.25rem 0; /* tighter bottom margin */
@@ -215,19 +222,22 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
   }
 
   /* Global tab overrides (Material-like, targets classic and MDC implementations) */
-  .mat-tab-group, .mat-mdc-tab-group {
+  .mat-tab-group,
+  .mat-mdc-tab-group {
     display: block;
     margin-top: 12px;
   }
 
-  .mat-tab-header, .mat-mdc-tab-header {
+  .mat-tab-header,
+  .mat-mdc-tab-header {
     padding: 0;
     border-bottom: 1px solid #543b3f;
     margin-bottom: 8px;
     background: transparent;
   }
 
-  .mat-tab-labels, .mat-mdc-tab-bar {
+  .mat-tab-labels,
+  .mat-mdc-tab-bar {
     align-items: center;
   }
 
@@ -261,11 +271,12 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     text-transform: uppercase;
     letter-spacing: 1.2px;
     color: var(--tab-inactive-color);
-    transition: color .16s ease;
+    transition: color 0.16s ease;
   }
 
   /* Legacy + fallback (in case mat-tab-label ever comes back) */
-  .mat-tab-label, .mat-mdc-tab-label {
+  .mat-tab-label,
+  .mat-mdc-tab-label {
     font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
@@ -273,7 +284,9 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     color: var(--tab-inactive-color);
     padding: 8px 12px;
     margin-right: 10px;
-    transition: color .16s ease, background-color .12s ease;
+    transition:
+      color 0.16s ease,
+      background-color 0.12s ease;
     background: transparent;
     border-radius: 4px;
     line-height: 1;
@@ -284,11 +297,13 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
 
   /* Hover */
   .mat-mdc-tab:hover .mdc-tab__text-label,
-  .mat-tab-label:hover, .mat-mdc-tab-label:hover {
+  .mat-tab-label:hover,
+  .mat-mdc-tab-label:hover {
     color: var(--tab-active-color);
   }
 
-  .mat-tab-label:hover, .mat-mdc-tab-label:hover {
+  .mat-tab-label:hover,
+  .mat-mdc-tab-label:hover {
     background: rgba(255, 255, 255, 0.02);
   }
 
@@ -308,26 +323,33 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     border-radius: 3px;
   }
 
-  .mat-ink-bar, .mat-mdc-ink-bar, .mat-mdc-tab-indicator {
+  .mat-ink-bar,
+  .mat-mdc-ink-bar,
+  .mat-mdc-tab-indicator {
     height: 3px;
     background: var(--tab-ink-color);
     border-radius: 3px;
-    transition: left .18s cubic-bezier(.35, 0, .25, 1), width .18s cubic-bezier(.35, 0, .25, 1);
+    transition:
+      left 0.18s cubic-bezier(0.35, 0, 0.25, 1),
+      width 0.18s cubic-bezier(0.35, 0, 0.25, 1);
   }
 
   /* Keyboard focus */
   .mat-mdc-tab:focus-visible,
-  .mat-tab-label:focus-visible, .mat-mdc-tab-label:focus-visible {
+  .mat-tab-label:focus-visible,
+  .mat-mdc-tab-label:focus-visible {
     outline: 2px solid rgba(199, 59, 59, 0.25);
     outline-offset: 3px;
     border-radius: 6px;
   }
 
-  .mat-tab-body, .mat-mdc-tab-body {
+  .mat-tab-body,
+  .mat-mdc-tab-body {
     padding: 0;
   }
 
-  .mat-tab-group .tab-content-card, .mat-mdc-tab-group .tab-content-card {
+  .mat-tab-group .tab-content-card,
+  .mat-mdc-tab-group .tab-content-card {
     margin-top: 6px;
   }
 
@@ -366,7 +388,7 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
   /* Wounds counter (large rounded square) */
   .wounds-panel {
     .counter {
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.0));
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
       border: 3px solid var(--color-accent);
       color: var(--color-text);
       font-weight: 700;
@@ -412,7 +434,8 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
     border-collapse: collapse;
     background: transparent; /* table sits on panel surface */
 
-    th, td {
+    th,
+    td {
       padding: 0.65rem 0.8rem;
       border-bottom: 1px solid var(--table-border);
       color: var(--table-cell-text);
@@ -474,4 +497,3 @@ $table-cell-text-hex: #d9cfc9; // slightly muted off-white for cells
 }
 
 /* End of theme partial */
-

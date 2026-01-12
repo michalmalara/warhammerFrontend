@@ -1,9 +1,9 @@
-import {inject, Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
-import {CrudApiService} from '../../../shared/services/crud-api.service';
-import {Profession, ProfessionSummary} from '../models/profession.models';
+import { CrudApiService } from '../../../shared/services/crud-api.service';
+import { Profession, ProfessionSummary } from '../models/profession.models';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ProfessionsApiService {
   private readonly crud = inject(CrudApiService);
 

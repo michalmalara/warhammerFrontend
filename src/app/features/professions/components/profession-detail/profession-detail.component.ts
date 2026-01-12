@@ -1,17 +1,17 @@
-import {Component, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ActivatedRoute, RouterModule} from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatIconModule} from '@angular/material/icon';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import {filter, map, switchMap} from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 
-import {ProfessionsApiService} from '../../services/professions-api.service';
+import { ProfessionsApiService } from '../../services/professions-api.service';
 
 @Component({
   selector: 'app-profession-detail',
@@ -43,4 +43,3 @@ export class ProfessionDetailComponent {
 
   trackById = (_: number, item: { id: number }) => item.id;
 }
-

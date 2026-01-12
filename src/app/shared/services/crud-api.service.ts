@@ -1,9 +1,9 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
-import {environment} from '../../../environments';
+import { environment } from '../../../environments';
 
 export interface CrudListParams {
   [key: string]: string | number | boolean | null | undefined;
@@ -18,7 +18,7 @@ export interface CrudListParams {
  *
  * Interceptor caseConverterInterceptor zajmie się konwersją camelCase <-> snake_case.
  */
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CrudApiService {
   private readonly http = inject(HttpClient);
 
@@ -41,7 +41,7 @@ export class CrudApiService {
   }
 
   list<T>(path: string, params?: CrudListParams): Observable<T> {
-    return this.http.get<T>(this.buildUrl(path), {params: this.buildParams(params)});
+    return this.http.get<T>(this.buildUrl(path), { params: this.buildParams(params) });
   }
 
   detail<T>(path: string, id: number | string): Observable<T> {
@@ -53,12 +53,20 @@ export class CrudApiService {
     return this.http.post<TResponse>(this.buildUrl(path), body);
   }
 
-  update<TResponse, TBody = unknown>(path: string, id: number | string, body: TBody): Observable<TResponse> {
+  update<TResponse, TBody = unknown>(
+    path: string,
+    id: number | string,
+    body: TBody,
+  ): Observable<TResponse> {
     const normalized = path.endsWith('/') ? path : `${path}/`;
     return this.http.put<TResponse>(this.buildUrl(`${normalized}${id}/`), body);
   }
 
-  patch<TResponse, TBody = unknown>(path: string, id: number | string, body: TBody): Observable<TResponse> {
+  patch<TResponse, TBody = unknown>(
+    path: string,
+    id: number | string,
+    body: TBody,
+  ): Observable<TResponse> {
     const normalized = path.endsWith('/') ? path : `${path}/`;
     return this.http.patch<TResponse>(this.buildUrl(`${normalized}${id}/`), body);
   }

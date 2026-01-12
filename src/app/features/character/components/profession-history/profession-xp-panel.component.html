@@ -6,7 +6,10 @@
   <div class="xp-top-row">
     @if (currentProfession) {
       <div class="xp-current-profession">
-        <div class="xp-current-profession-label muted" i18n="Etykieta: aktualna profesja@@xp.currentProfessionLabel">
+        <div
+          class="xp-current-profession-label muted"
+          i18n="Etykieta: aktualna profesja@@xp.currentProfessionLabel"
+        >
           Current profession
         </div>
         <div class="xp-current-profession-value">{{ currentProfession }}</div>
@@ -15,19 +18,26 @@
 
     <div class="xp-metrics">
       <div class="xp-metric">
-        <div class="xp-metric-label muted" i18n="Etykieta: punkty do wydania@@xp.toSpendLabel">To spend</div>
+        <div class="xp-metric-label muted" i18n="Etykieta: punkty do wydania@@xp.toSpendLabel">
+          To spend
+        </div>
         <div class="xp-metric-value">{{ xpToSpend }}</div>
       </div>
 
       <div class="xp-metric">
-        <div class="xp-metric-label muted" i18n="Etykieta: suma zdobytych punktów@@xp.totalEarnedLabel">Total earned
+        <div
+          class="xp-metric-label muted"
+          i18n="Etykieta: suma zdobytych punktów@@xp.totalEarnedLabel"
+        >
+          Total earned
         </div>
         <div class="xp-metric-value">{{ xpTotalEarned }}</div>
       </div>
     </div>
   </div>
 
-  <div class="xp-progress-label muted" i18n="Etykieta: do następnej profesji@@xp.toNextProfession">To next profession
+  <div class="xp-progress-label muted" i18n="Etykieta: do następnej profesji@@xp.toNextProfession">
+    To next profession
   </div>
   <div
     class="xp-bar"
@@ -40,7 +50,10 @@
   </div>
 
   <div class="xp-numbers">
-    {{ xpCurrent }} / {{ xpMax }} <span i18n="Skrót jednostki XP@@xp.unit">XP</span> • <span class="muted">(<span
-    i18n="Etykieta: pozostało@@xp.remaining">remaining</span> {{ xpMissingToProfession }})</span>
+    {{ xpCurrent }} / {{ xpMax }} <span i18n="Skrót jednostki XP@@xp.unit">XP</span> •
+    <span class="muted"
+      >(<span i18n="Etykieta: pozostało@@xp.remaining">remaining</span>
+      {{ xpMissingToProfession }})</span
+    >
   </div>
 </mat-card>

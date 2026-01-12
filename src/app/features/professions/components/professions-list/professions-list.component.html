@@ -4,7 +4,12 @@
 
   <mat-card-content>
     <div class="actions">
-      <a mat-raised-button color="primary" [routerLink]="['/professions/new']" aria-label="Create new profession">
+      <a
+        mat-raised-button
+        color="primary"
+        [routerLink]="['/professions/new']"
+        aria-label="Create new profession"
+      >
         <mat-icon>add</mat-icon>
         Add profession
       </a>
@@ -16,7 +21,11 @@
       } @else {
         <mat-nav-list>
           @for (p of professions; track trackById($index, p)) {
-            <a mat-list-item [routerLink]="['/professions', p.id]" aria-label="Open profession {{ p.name }}">
+            <a
+              mat-list-item
+              [routerLink]="['/professions', p.id]"
+              aria-label="Open profession {{ p.name }}"
+            >
               <div matListItemTitle>{{ p.name }}</div>
               <div matListItemLine>{{ p.description }}</div>
             </a>

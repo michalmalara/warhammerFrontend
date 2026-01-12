@@ -1,17 +1,17 @@
-import {Component, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon';
-import {MatListModule} from '@angular/material/list';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
-import {ProfessionsApiService} from '../../services/professions-api.service';
-import type {Profession, ProfessionSummary} from '../../models/profession.models';
+import { ProfessionsApiService } from '../../services/professions-api.service';
+import type { Profession, ProfessionSummary } from '../../models/profession.models';
 
 @Component({
   selector: 'app-professions-list',
@@ -35,4 +35,3 @@ export class ProfessionsListComponent {
 
   trackById = (_: number, item: ProfessionSummary | Profession) => item.id;
 }
-

@@ -1,19 +1,19 @@
-import {Component, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router, RouterModule} from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
-import {finalize} from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
-import {ProfessionsApiService} from '../../services/professions-api.service';
+import { ProfessionsApiService } from '../../services/professions-api.service';
 
 @Component({
   selector: 'app-profession-create',
@@ -77,11 +77,11 @@ export class ProfessionCreateComponent {
       .pipe(finalize(() => (this.isSaving = false)))
       .subscribe({
         next: (created) => {
-          this.snackBar.open('Profesja utworzona', 'OK', {duration: 2500});
+          this.snackBar.open('Profesja utworzona', 'OK', { duration: 2500 });
           this.router.navigate(['/professions', created.id]);
         },
         error: () => {
-          this.snackBar.open('Nie udało się utworzyć profesji', 'OK', {duration: 3500});
+          this.snackBar.open('Nie udało się utworzyć profesji', 'OK', { duration: 3500 });
         },
       });
   }

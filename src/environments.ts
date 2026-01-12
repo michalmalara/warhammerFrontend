@@ -7,4 +7,3 @@ export const environment = {
   /** Bazowy URL backendu (Django/DRF). */
   apiBaseUrl: 'http://localhost:8000',
 };
-

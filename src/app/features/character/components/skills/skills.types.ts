@@ -1,15 +1,6 @@
 // przeniesione 1:1 z app/skills
 
-export type CharacteristicKey =
-  | 'WS'
-  | 'BS'
-  | 'S'
-  | 'T'
-  | 'AG'
-  | 'INT'
-  | 'WP'
-  | 'FEL'
-  | string;
+export type CharacteristicKey = 'WS' | 'BS' | 'S' | 'T' | 'AG' | 'INT' | 'WP' | 'FEL' | string;
 
 export interface SkillDefinition {
   id: string;

@@ -1,20 +1,20 @@
-import {Component, Input} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTableModule} from '@angular/material/table';
-import {MatCardModule} from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTabsModule} from '@angular/material/tabs';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
-import {CharacterStatsComponent} from '../character-stats/character-stats.component';
-import {WoundsPanelComponent} from '../wounds-panel/wounds-panel.component';
-import {EquipmentTableComponent} from '../equipment-table/equipment-table.component';
-import {SkillsComponent} from '../skills/skills.component';
-import {CharacterSkill} from '../skills/skills.types';
-import {TalentsComponent} from '../talents/talents.component';
-import {Talent} from '../talents/talents.types';
-import {FatePointsComponent} from '../fate-points/fate-points.component';
-import {ProfessionXpPanelComponent} from '../profession-history/profession-xp-panel.component';
+import { CharacterStatsComponent } from '../character-stats/character-stats.component';
+import { WoundsPanelComponent } from '../wounds-panel/wounds-panel.component';
+import { EquipmentTableComponent } from '../equipment-table/equipment-table.component';
+import { SkillsComponent } from '../skills/skills.component';
+import { CharacterSkill } from '../skills/skills.types';
+import { TalentsComponent } from '../talents/talents.component';
+import { Talent } from '../talents/talents.types';
+import { FatePointsComponent } from '../fate-points/fate-points.component';
+import { ProfessionXpPanelComponent } from '../profession-history/profession-xp-panel.component';
 
 @Component({
   selector: 'character-card',
@@ -32,10 +32,10 @@ import {ProfessionXpPanelComponent} from '../profession-history/profession-xp-pa
     SkillsComponent,
     TalentsComponent,
     FatePointsComponent,
-    ProfessionXpPanelComponent
+    ProfessionXpPanelComponent,
   ],
   templateUrl: './character-card.component.html',
-  styleUrls: ['./character-card.component.scss']
+  styleUrls: ['./character-card.component.scss'],
 })
 export class CharacterCardComponent {
   // expose global Math to the template (Angular templates only see component properties)
@@ -80,25 +80,25 @@ export class CharacterCardComponent {
 
   // Primary / Secondary stats moved to a separate component
   primaryStats: { label: string; base: number; adv: number }[] = [
-    {label: 'WS', base: 31, adv: 3},
-    {label: 'BS', base: 26, adv: 5},
-    {label: 'S', base: 35, adv: 0},
-    {label: 'T', base: 33, adv: 5},
-    {label: 'A', base: 27, adv: 5},
-    {label: 'Int', base: 29, adv: 0},
-    {label: 'WP', base: 31, adv: 5},
-    {label: 'Fel', base: 30, adv: 0}
+    { label: 'WS', base: 31, adv: 3 },
+    { label: 'BS', base: 26, adv: 5 },
+    { label: 'S', base: 35, adv: 0 },
+    { label: 'T', base: 33, adv: 5 },
+    { label: 'A', base: 27, adv: 5 },
+    { label: 'Int', base: 29, adv: 0 },
+    { label: 'WP', base: 31, adv: 5 },
+    { label: 'Fel', base: 30, adv: 0 },
   ];
 
   secondaryStats: { label: string; base: number; adv: number }[] = [
-    {label: 'A', base: 1, adv: 1},
-    {label: 'W', base: 12, adv: 3},
-    {label: 'SB', base: 3, adv: 0},
-    {label: 'TB', base: 3, adv: 0},
-    {label: 'M', base: 4, adv: 0},
-    {label: 'MAG', base: 0, adv: 0},
-    {label: 'IP', base: 2, adv: 0},
-    {label: 'FP', base: 3, adv: 0}
+    { label: 'A', base: 1, adv: 1 },
+    { label: 'W', base: 12, adv: 3 },
+    { label: 'SB', base: 3, adv: 0 },
+    { label: 'TB', base: 3, adv: 0 },
+    { label: 'M', base: 4, adv: 0 },
+    { label: 'MAG', base: 0, adv: 0 },
+    { label: 'IP', base: 2, adv: 0 },
+    { label: 'FP', base: 3, adv: 0 },
   ];
 
   // Wounds state (kept as simple fields so parent can persist/observe value)
@@ -109,76 +109,84 @@ export class CharacterCardComponent {
   skills: CharacterSkill[] = [
     {
       id: 'animal-care',
-      skill: {id: 'animal-care', name: 'Animal Care', characteristic: 'INT'},
+      skill: { id: 'animal-care', name: 'Animal Care', characteristic: 'INT' },
       basePercent: 29,
       taken: true,
       advPlus10: false,
-      advPlus20: false
+      advPlus20: false,
     },
     {
       id: 'gossip',
-      skill: {id: 'gossip', name: 'Gossip', characteristic: 'FEL'},
+      skill: { id: 'gossip', name: 'Gossip', characteristic: 'FEL' },
       basePercent: 40,
       taken: true,
       advPlus10: true,
-      advPlus20: false
+      advPlus20: false,
     },
     {
       id: 'search',
-      skill: {id: 'search', name: 'Search', characteristic: 'INT'},
+      skill: { id: 'search', name: 'Search', characteristic: 'INT' },
       basePercent: 29,
       taken: true,
       advPlus10: true,
-      advPlus20: true
+      advPlus20: true,
     },
     {
       id: 'common-knowledge-empire',
-      skill: {id: 'common-knowledge-empire', name: 'Common Knowledge (Empire)', characteristic: 'INT'},
+      skill: {
+        id: 'common-knowledge-empire',
+        name: 'Common Knowledge (Empire)',
+        characteristic: 'INT',
+      },
       basePercent: 39,
       taken: true,
       advPlus10: true,
-      advPlus20: false
+      advPlus20: false,
     },
     {
       id: 'outdoor-survival',
-      skill: {id: 'outdoor-survival', name: 'Outdoor Survival', characteristic: 'INT'},
+      skill: { id: 'outdoor-survival', name: 'Outdoor Survival', characteristic: 'INT' },
       basePercent: 29,
       taken: true,
       advPlus10: false,
-      advPlus20: false
+      advPlus20: false,
     },
     {
       id: 'speak-language-reikspiel',
-      skill: {id: 'speak-language-reikspiel', name: 'Speak Language (Reikspiel)', characteristic: 'INT'},
+      skill: {
+        id: 'speak-language-reikspiel',
+        name: 'Speak Language (Reikspiel)',
+        characteristic: 'INT',
+      },
       basePercent: 39,
       taken: true,
       advPlus10: false,
-      advPlus20: false
+      advPlus20: false,
     },
     {
       id: 'drive',
-      skill: {id: 'drive', name: 'Drive', characteristic: 'S'},
+      skill: { id: 'drive', name: 'Drive', characteristic: 'S' },
       basePercent: 35,
       taken: true,
       advPlus10: false,
-      advPlus20: false
+      advPlus20: false,
     },
     {
       id: 'perception',
-      skill: {id: 'perception', name: 'Perception', characteristic: 'INT'},
+      skill: { id: 'perception', name: 'Perception', characteristic: 'INT' },
       basePercent: 39,
       taken: true,
       advPlus10: true,
-      advPlus20: false
+      advPlus20: false,
     },
     {
       id: 'swim',
-      skill: {id: 'swim', name: 'Swim', characteristic: 'S'},
+      skill: { id: 'swim', name: 'Swim', characteristic: 'S' },
       basePercent: 35,
       taken: true,
       advPlus10: false,
-      advPlus20: false
-    }
+      advPlus20: false,
+    },
   ];
 
   /** Mock danych dla taba Talents – do podpięcia pod backend w kolejnym kroku. */
@@ -186,23 +194,23 @@ export class CharacterCardComponent {
     {
       id: 'coolheaded',
       name: 'Coolheaded',
-      description: 'You can retry one failed Cool Test per session.'
+      description: 'You can retry one failed Cool Test per session.',
     },
     {
       id: 'night-vision',
       name: 'Night Vision',
-      description: 'You can see in the dark as if it were dim light.'
+      description: 'You can see in the dark as if it were dim light.',
     },
     {
       id: 'hardy',
       name: 'Hardy',
-      description: 'Increase your Wounds by +1.'
+      description: 'Increase your Wounds by +1.',
     },
     {
       id: 'rapid-reload',
       name: 'Rapid Reload',
-      description: 'You reload ranged weapons faster than normal.'
-    }
+      description: 'You reload ranged weapons faster than normal.',
+    },
   ];
 
   /** Fate/Fortune – mock pod kartę Fate Points (zgodnie z mockupem). */

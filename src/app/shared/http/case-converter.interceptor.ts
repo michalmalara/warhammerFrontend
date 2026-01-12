@@ -7,16 +7,17 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 
-import {map, Observable} from 'rxjs';
+import { map, Observable } from 'rxjs';
 
-import {toCamelCaseDeep, toSnakeCaseDeep, toSnakeCaseKey} from './case-converter';
+import { toCamelCaseDeep, toSnakeCaseDeep, toSnakeCaseKey } from './case-converter';
 
 function shouldTransformBody(req: HttpRequest<unknown>): boolean {
   // Transformujemy tylko JSON-y. GET zwykle nie ma body.
   const contentType = (req.headers.get('Content-Type') ?? '').toLowerCase();
   const accepts = (req.headers.get('Accept') ?? '').toLowerCase();
 
-  const looksLikeJson = contentType.includes('application/json') || accepts.includes('application/json');
+  const looksLikeJson =
+    contentType.includes('application/json') || accepts.includes('application/json');
 
   // Jeśli nie mamy żadnych wskazówek w headerach, i tak można trafić na JSON.
   // Dla bezpieczeństwa ograniczamy się do typów obiekt/array.
@@ -63,14 +64,14 @@ export const caseConverterInterceptor: HttpInterceptorFn = (
 
   const transformedReq =
     transformedParams !== req.params || transformedBody !== req.body
-      ? req.clone({params: transformedParams, body: transformedBody})
+      ? req.clone({ params: transformedParams, body: transformedBody })
       : req;
 
   return next(transformedReq).pipe(
     map((event) => {
       if (!shouldTransformResponseBody(event)) return event;
 
-      return event.clone({body: toCamelCaseDeep(event.body)});
+      return event.clone({ body: toCamelCaseDeep(event.body) });
     }),
   );
 };

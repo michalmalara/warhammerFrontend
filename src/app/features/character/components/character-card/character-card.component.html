@@ -19,7 +19,9 @@
 
               <div class="title-tags">
                 <span class="tag muted" i18n="Tag rasy@@character.tags.race">Human</span>
-                <span class="tag muted" i18n="Tag pochodzenia/kultury@@character.tags.heritage">Empire Heritage</span>
+                <span class="tag muted" i18n="Tag pochodzenia/kultury@@character.tags.heritage"
+                  >Empire Heritage</span
+                >
               </div>
             </div>
           </div>
@@ -42,7 +44,10 @@
           <!-- Left column: stats + wounds moved above tabs -->
           <div class="left-column">
             <div class="stats-and-wounds-row">
-              <character-stats [primaryStats]="primaryStats" [secondaryStats]="secondaryStats"></character-stats>
+              <character-stats
+                [primaryStats]="primaryStats"
+                [secondaryStats]="secondaryStats"
+              ></character-stats>
               <!-- wounds-panel moved to right column -->
             </div>
 
@@ -63,12 +68,15 @@
               <mat-tab i18n-label="Etykieta zakładki ekwipunku@@tabs.inventory" label="Inventory">
                 <!-- Placeholder / future inventory content -->
                 <div class="inventory-placeholder card">
-                  <p class="muted" i18n="Komunikat o braku widoku ekwipunku (placeholder)@@inventory.placeholder">
-                    Inventory view is under construction — move or copy items here as needed.</p>
+                  <p
+                    class="muted"
+                    i18n="Komunikat o braku widoku ekwipunku (placeholder)@@inventory.placeholder"
+                  >
+                    Inventory view is under construction — move or copy items here as needed.
+                  </p>
                 </div>
               </mat-tab>
             </mat-tab-group>
-
           </div>
 
           <!-- Right column: fate/fortune -->
@@ -80,9 +88,7 @@
               [fortuneCurrent]="fortuneCurrent"
             ></fate-points>
           </aside>
-
         </div>
-
       </section>
     </main>
   </div>

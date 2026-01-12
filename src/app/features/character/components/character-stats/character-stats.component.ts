@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 type Stat = {
   label: string;
@@ -20,7 +20,7 @@ type StatGroup = 'primary' | 'secondary';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './character-stats.component.html',
-  styleUrls: ['./character-stats.component.scss']
+  styleUrls: ['./character-stats.component.scss'],
 })
 export class CharacterStatsComponent {
   @Input() primaryStats: Stat[] = [];

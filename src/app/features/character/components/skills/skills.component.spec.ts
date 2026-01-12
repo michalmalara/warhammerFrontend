@@ -1,22 +1,22 @@
-import {TestBed} from '@angular/core/testing';
-import {SkillsComponent} from './skills.component';
-import {CharacterSkill} from './skills.types';
+import { TestBed } from '@angular/core/testing';
+import { SkillsComponent } from './skills.component';
+import { CharacterSkill } from './skills.types';
 
 describe('SkillsComponent', () => {
   const skills: CharacterSkill[] = [
     {
       id: '1',
-      skill: {id: 'sk1', name: 'Animal Care', characteristic: 'INT'},
+      skill: { id: 'sk1', name: 'Animal Care', characteristic: 'INT' },
       basePercent: 29,
       taken: true,
       advPlus10: false,
-      advPlus20: false
-    }
+      advPlus20: false,
+    },
   ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SkillsComponent]
+      imports: [SkillsComponent],
     }).compileComponents();
   });
 
@@ -37,7 +37,7 @@ describe('SkillsComponent', () => {
     fixture.detectChanges();
 
     const buttons = Array.from(
-      (fixture.nativeElement as HTMLElement).querySelectorAll('button.chip')
+      (fixture.nativeElement as HTMLElement).querySelectorAll('button.chip'),
     ) as HTMLButtonElement[];
 
     const plus10 = buttons.find((b) => (b.textContent ?? '').includes('+10%'));

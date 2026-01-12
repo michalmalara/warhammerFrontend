@@ -40,12 +40,8 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "polyfills": [
-              "@angular/localize/init"
-            ]
+            "styles": ["src/styles.scss"],
+            "polyfills": ["@angular/localize/init"]
           },
           "configurations": {
             "production": {
@@ -69,14 +65,10 @@
               "sourceMap": true
             },
             "en": {
-              "localize": [
-                "en"
-              ]
+              "localize": ["en"]
             },
             "pl": {
-              "localize": [
-                "pl"
-              ]
+              "localize": ["pl"]
             }
           },
           "defaultConfiguration": "production"

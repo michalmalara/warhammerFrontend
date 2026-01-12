@@ -1,6 +1,6 @@
-import {describe, expect, it} from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import {toCamelCaseDeep, toSnakeCaseDeep} from './case-converter';
+import { toCamelCaseDeep, toSnakeCaseDeep } from './case-converter';
 
 describe('case-converter', () => {
   it('converts camelCase keys to snake_case deeply', () => {
@@ -8,7 +8,7 @@ describe('case-converter', () => {
       someKey: 1,
       nestedValue: {
         innerKey: 'x',
-        arr: [{deepKey: true}],
+        arr: [{ deepKey: true }],
       },
       already_snake: 'ok',
     };
@@ -17,7 +17,7 @@ describe('case-converter', () => {
       some_key: 1,
       nested_value: {
         inner_key: 'x',
-        arr: [{deep_key: true}],
+        arr: [{ deep_key: true }],
       },
       already_snake: 'ok',
     });
@@ -28,7 +28,7 @@ describe('case-converter', () => {
       some_key: 1,
       nested_value: {
         inner_key: 'x',
-        arr: [{deep_key: true}],
+        arr: [{ deep_key: true }],
       },
     };
 
@@ -36,9 +36,8 @@ describe('case-converter', () => {
       someKey: 1,
       nestedValue: {
         innerKey: 'x',
-        arr: [{deepKey: true}],
+        arr: [{ deepKey: true }],
       },
     });
   });
 });
-

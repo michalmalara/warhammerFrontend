@@ -1,13 +1,13 @@
-import {CommonModule} from '@angular/common';
-import {Component, Input} from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'fate-points',
   standalone: true,
   imports: [CommonModule, MatCardModule],
   templateUrl: './fate-points.component.html',
-  styleUrls: ['./fate-points.component.scss']
+  styleUrls: ['./fate-points.component.scss'],
 })
 export class FatePointsComponent {
   /** Stałe "Fate" (max liczbą punktów przeznaczenia). */
@@ -24,11 +24,10 @@ export class FatePointsComponent {
   }
 
   dots(): number[] {
-    return Array.from({length: this.fateMax}, (_, i) => i);
+    return Array.from({ length: this.fateMax }, (_, i) => i);
   }
 
   isFilledDot(i: number): boolean {
     return i < this.clampedFateCurrent;
   }
 }
-
