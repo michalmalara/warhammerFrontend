@@ -6,6 +6,7 @@
 
 .skills {
   padding: 1rem;
+  /* `.card` jest globalny w _theme.scss; tutaj tylko dopinamy układ */
 }
 
 .skills-grid {
@@ -32,6 +33,12 @@
   border-radius: 0.375rem;
   padding: 0.75rem;
   min-height: 6.875rem;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.skill-tile:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.10);
 }
 
 .tile-header {
@@ -59,6 +66,10 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.0625rem;
+}
+
+.meta.muted {
+  color: var(--color-text-muted);
 }
 
 /* --- controls: TAKEN / +10% / +20% (jednolity wygląd jak w mockupie) --- */
@@ -148,4 +159,8 @@
 
 .view-all:hover {
   color: #fff;
+}
+
+.view-all.muted {
+  color: var(--color-text-muted);
 }

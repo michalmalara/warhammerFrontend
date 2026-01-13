@@ -1,0 +1,53 @@
+<mat-card class="skill-create">
+  <mat-card-title>Nowa umiejętność</mat-card-title>
+  <mat-card-subtitle>Utwórz nową umiejętność i przypisz cechę</mat-card-subtitle>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="save()">
+    <mat-card-content>
+      <div class="row">
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Nazwa</mat-label>
+          <input matInput formControlName="name" aria-label="Nazwa umiejętności"/>
+          @if (form.controls.name.touched && form.controls.name.invalid) {
+            <mat-error>Wymagana nazwa (max 100 znaków)</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Cecha powiązana</mat-label>
+          <mat-select formControlName="associatedCharacteristic" aria-label="Cecha powiązana">
+            @for (c of characteristics; track c) {
+              <mat-option [value]="c">{{ c }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.associatedCharacteristic.touched && form.controls.associatedCharacteristic.invalid) {
+            <mat-error>Wybierz cechę</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <div class="actions">
+      <a mat-stroked-button [routerLink]="['/skills']" aria-label="Anuluj">
+        <mat-icon>close</mat-icon>
+        Anuluj
+      </a>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="isSaving" aria-label="Zapisz">
+        @if (!isSaving) {
+          <ng-container>
+            <mat-icon>save</mat-icon>
+            Zapisz
+          </ng-container>
+        } @else {
+          <ng-container>
+            <mat-spinner diameter="18"></mat-spinner>
+            Zapisywanie
+          </ng-container>
+        }
+      </button>
+    </div>
+  </form>
+</mat-card>

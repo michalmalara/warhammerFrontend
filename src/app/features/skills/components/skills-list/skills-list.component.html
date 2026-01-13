@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-card-title>Umiejętności</mat-card-title>
+  <mat-card-subtitle>Lista dostępnych umiejętności</mat-card-subtitle>
+
+  <mat-card-content>
+    <div class="actions">
+      <a mat-raised-button color="primary" [routerLink]="['/skills/new']" aria-label="Dodaj umiejętność">
+        <mat-icon>add</mat-icon>
+        Dodaj umiejętność
+      </a>
+    </div>
+
+    @if (skills$ | async; as skills) {
+      @if (skills === null) {
+        <p class="error">Nie udało się pobrać listy umiejętności.</p>
+      } @else if (skills.length === 0) {
+        <p>Brak umiejętności.</p>
+      } @else {
+        <mat-nav-list>
+          @for (s of skills; track trackById($index, s)) {
+            <div mat-list-item>
+              <div matListItemTitle>{{ s.name }}</div>
+              <div matListItemLine>
+                <span class="muted">Cecha:</span>
+                {{ s.associatedCharacteristic }}
+              </div>
+            </div>
+          }
+        </mat-nav-list>
+      }
+    } @else {
+      <div class="loading">
+        <mat-spinner diameter="28"></mat-spinner>
+        <span>Ładowanie…</span>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>
+

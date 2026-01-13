@@ -1,0 +1,63 @@
+:host {
+  display: block;
+}
+
+mat-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-panel-border);
+  color: var(--color-text);
+}
+
+mat-card-title {
+  color: var(--header-text);
+}
+
+mat-card-subtitle {
+  color: var(--color-text-muted);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.skill-create {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.row {
+  display: grid;
+}
+
+.full {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: 8px 16px 16px;
+  align-items: center;
+}
+
+.actions a[mat-stroked-button] {
+  color: var(--color-text);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.actions button[mat-raised-button] {
+  background: var(--color-accent) !important;
+  color: #fff !important;
+  box-shadow: none;
+}
+
+.actions mat-icon {
+  vertical-align: middle;
+  margin-right: 6px;
+}
