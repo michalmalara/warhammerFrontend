@@ -32,13 +32,28 @@ describe('SkillsApiService', () => {
 
   it('creates a skill', () => {
     service
-      .create({name: 'Stealth', type: 'basic', associatedCharacteristic: 'agility'})
+      .create({
+        name: 'Stealth',
+        description: 'Move silently',
+        type: 'basic',
+        associatedCharacteristic: 'agility',
+      })
       .subscribe();
 
     const req = httpMock.expectOne(`${environment.apiBaseUrl}/professions/skills/`);
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({name: 'Stealth', type: 'basic', associatedCharacteristic: 'agility'});
-    req.flush({id: 1, name: 'Stealth', type: 'basic', associatedCharacteristic: 'agility'});
+    expect(req.request.body).toEqual({
+      name: 'Stealth',
+      description: 'Move silently',
+      type: 'basic',
+      associatedCharacteristic: 'agility',
+    });
+    req.flush({
+      id: 1,
+      name: 'Stealth',
+      description: 'Move silently',
+      type: 'basic',
+      associatedCharacteristic: 'agility',
+    });
   });
 });
-

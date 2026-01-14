@@ -47,6 +47,7 @@ describe('SkillCreateComponent', () => {
       name: 'Stealth',
       type: 'basic',
       associatedCharacteristic: 'agility',
+      description: 'Move silently',
     });
     fixture.componentInstance.save();
 
@@ -54,6 +55,7 @@ describe('SkillCreateComponent', () => {
       name: 'Stealth',
       type: 'basic',
       associatedCharacteristic: 'agility',
+      description: 'Move silently',
     });
     expect(navSpy).toHaveBeenCalledWith(['/skills']);
   });
@@ -76,6 +78,7 @@ describe('SkillCreateComponent', () => {
       name: 'Stealth',
       type: 'basic',
       associatedCharacteristic: 'agility',
+      description: null,
     });
     fixture.componentInstance.save();
 

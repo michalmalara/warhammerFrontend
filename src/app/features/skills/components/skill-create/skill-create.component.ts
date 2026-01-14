@@ -57,6 +57,7 @@ export class SkillCreateComponent {
     associatedCharacteristic: this.fb.nonNullable.control<SkillCharacteristic>('intelligence', [
       Validators.required,
     ]),
+    description: this.fb.control<string | null>(null, [Validators.maxLength(2000)]),
   });
 
   save() {

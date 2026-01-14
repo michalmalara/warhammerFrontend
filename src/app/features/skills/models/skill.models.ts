@@ -49,6 +49,7 @@ export const SKILL_TYPES: ReadonlyArray<{ value: SkillType; label: string; icon:
 export interface Skill {
   id: number;
   name: string;
+  description?: string | null;
   type?: SkillType | string;
   /** odpowiada backendowemu `associated_characteristic` */
   associatedCharacteristic: SkillCharacteristic | string;
@@ -56,6 +57,7 @@ export interface Skill {
 
 export interface CreateSkillPayload {
   name: string;
+  description?: string | null;
   type: SkillType;
   associatedCharacteristic: SkillCharacteristic | string;
 }
