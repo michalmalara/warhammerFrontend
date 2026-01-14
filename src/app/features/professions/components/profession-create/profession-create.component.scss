@@ -11,6 +11,32 @@
   width: 100%;
 }
 
+/* New Profession layout: prevent overlap on smaller widths */
+.new-profession-grid {
+  display: grid;
+  grid-template-columns: minmax(360px, 1.2fr) minmax(320px, 1.8fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.new-profession-grid__left,
+.new-profession-grid__right {
+  min-width: 0; /* critical: allow children to shrink instead of overflowing */
+}
+
+@media (max-width: 900px) {
+  .new-profession-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .type-toggle {
+    grid-template-columns: 1fr;
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));

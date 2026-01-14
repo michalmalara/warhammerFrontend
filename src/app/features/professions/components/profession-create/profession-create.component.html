@@ -28,9 +28,9 @@
 
       <mat-card-content>
         <!-- Two-column layout: left = name + type, right = description -->
-        <div style="display:flex; gap:24px; align-items:flex-start;">
+        <div class="new-profession-grid">
           <!-- Left column: name and type -->
-          <div style="flex:1; min-width:220px;">
+          <div class="new-profession-grid__left">
             <div class="row">
               <mat-form-field appearance="outline" class="full">
                 <mat-label i18n="Label|Name field label@@profession.create.name.label">Name</mat-label>
@@ -78,7 +78,7 @@
           </div>
 
           <!-- Right column: description -->
-          <div style="flex:2; min-width:300px;">
+          <div class="new-profession-grid__right">
             <mat-form-field appearance="outline" class="full">
               <mat-label i18n="Label|Description field label@@profession.create.description.label">Description
               </mat-label>
