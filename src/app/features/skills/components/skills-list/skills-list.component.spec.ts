@@ -2,6 +2,7 @@ import {TestBed} from '@angular/core/testing';
 import {provideRouter} from '@angular/router';
 import {of, throwError} from 'rxjs';
 import {vi} from 'vitest';
+import {Dialog} from '@angular/cdk/dialog';
 
 import {SkillsListComponent} from './skills-list.component';
 import {SkillsApiService} from '../../services/skills-api.service';
@@ -154,7 +155,7 @@ describe('SkillsListComponent', () => {
     expect(el.textContent).not.toContain('Stealth');
   });
 
-  it('calls delete when trash button clicked', async () => {
+  it('calls delete when trash button clicked and dialog is confirmed', async () => {
     const listSpy = vi
       .fn()
       .mockReturnValueOnce(
@@ -166,48 +167,75 @@ describe('SkillsListComponent', () => {
       .mockReturnValueOnce(of([{id: 2, name: 'Melee', associatedCharacteristic: 'weapon_skills'}]));
 
     const deleteSpy = vi.fn().mockReturnValue(of(void 0));
+    const dialogOpenSpy = vi.fn().mockReturnValue({closed: of(true)});
 
     await TestBed.configureTestingModule({
       imports: [SkillsListComponent],
       providers: [
         provideRouter([]),
-        {
-          provide: SkillsApiService,
-          useValue: {
-            list: listSpy,
-            delete: deleteSpy,
-          },
-        },
+        {provide: SkillsApiService, useValue: {list: listSpy, delete: deleteSpy}},
+        {provide: Dialog, useValue: {open: dialogOpenSpy}},
       ],
     }).compileComponents();
 
-    const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
+    const fixture = TestBed.createComponent(SkillsListComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-    try {
-      const fixture = TestBed.createComponent(SkillsListComponent);
-      fixture.detectChanges();
-      await fixture.whenStable();
+    const el: HTMLElement = fixture.nativeElement;
+    const deleteButtons = Array.from(
+      el.querySelectorAll('button[aria-label="Usuń umiejętność"]'),
+    ) as HTMLButtonElement[];
+    expect(deleteButtons.length).toBeGreaterThan(0);
 
-      const el: HTMLElement = fixture.nativeElement;
-      const deleteButtons = Array.from(
-        el.querySelectorAll('button[aria-label="Usuń umiejętność"]'),
-      ) as HTMLButtonElement[];
-      expect(deleteButtons.length).toBeGreaterThan(0);
+    const listCallsBefore = listSpy.mock.calls.length;
 
-      const listCallsBefore = listSpy.mock.calls.length;
+    deleteButtons[0].click();
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-      deleteButtons[0].click();
-      fixture.detectChanges();
-      await fixture.whenStable();
+    expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+    expect(deleteSpy).toHaveBeenCalledTimes(1);
 
-      expect(deleteSpy).toHaveBeenCalledTimes(1);
-      const calledWithId = deleteSpy.mock.calls[0]?.[0];
-      expect([1, 2]).toContain(calledWithId);
+    const listCallsAfter = listSpy.mock.calls.length;
+    expect(listCallsAfter).toBeGreaterThan(listCallsBefore);
+  });
 
-      const listCallsAfter = listSpy.mock.calls.length;
-      expect(listCallsAfter).toBeGreaterThan(listCallsBefore);
-    } finally {
-      confirmSpy.mockRestore();
-    }
+  it('does not call delete when dialog is cancelled', async () => {
+    const listSpy = vi.fn().mockReturnValue(
+      of([
+        {id: 1, name: 'Stealth', associatedCharacteristic: 'agility'},
+        {id: 2, name: 'Melee', associatedCharacteristic: 'weapon_skills'},
+      ]),
+    );
+
+    const deleteSpy = vi.fn().mockReturnValue(of(void 0));
+    const dialogOpenSpy = vi.fn().mockReturnValue({closed: of(false)});
+
+    await TestBed.configureTestingModule({
+      imports: [SkillsListComponent],
+      providers: [
+        provideRouter([]),
+        {provide: SkillsApiService, useValue: {list: listSpy, delete: deleteSpy}},
+        {provide: Dialog, useValue: {open: dialogOpenSpy}},
+      ],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(SkillsListComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const el: HTMLElement = fixture.nativeElement;
+    const deleteButtons = Array.from(
+      el.querySelectorAll('button[aria-label="Usuń umiejętność"]'),
+    ) as HTMLButtonElement[];
+    expect(deleteButtons.length).toBeGreaterThan(0);
+
+    deleteButtons[0].click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+    expect(deleteSpy).not.toHaveBeenCalled();
   });
 });

@@ -219,6 +219,111 @@ textarea[formControlName="description"]:-ms-input-placeholder,
   opacity: 1 !important;
 }
 
+/* === Shared UI: Wax seal buttons (used e.g. in Skill Create + Skill Delete dialog) === */
+.wax-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
 
+  border-style: solid;
+  border-width: 4px;
 
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.6);
 
+  transition: transform 140ms ease, filter 140ms ease;
+  text-decoration: none;
+
+  /* buttons defaults */
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.wax-seal:hover {
+  transform: scale(1.07);
+}
+
+.wax-seal:active {
+  transform: scale(0.93);
+}
+
+.wax-seal:focus-visible {
+  outline: 2px solid rgba(199, 59, 59, 0.55);
+  outline-offset: 4px;
+}
+
+.wax-icon {
+  color: #ffffff;
+  transition: transform 140ms ease;
+}
+
+.wax-seal:hover .wax-icon {
+  transform: rotate(12deg);
+}
+
+.wax-seal-cancel {
+  width: 80px;
+  height: 80px;
+  border-color: #39282b;
+  background: radial-gradient(circle at 30% 30%, #4a3b3d, #271c1d);
+}
+
+/* primary / destructive variant */
+.wax-seal-save {
+  width: 96px;
+  height: 96px;
+  border-color: #5d0a17;
+  background: radial-gradient(circle at 30% 30%, #d41434, #7a0a1c);
+}
+
+.wax-seal[disabled],
+.wax-seal-save[disabled] {
+  opacity: 0.7;
+  filter: grayscale(0.2);
+  cursor: not-allowed;
+}
+
+.wax-seal[disabled]:hover,
+.wax-seal-save[disabled]:hover {
+  transform: none;
+}
+
+.wax-spinner {
+  display: inline-block;
+}
+
+/* Angular Material spinner colors inside wax seal */
+.wax-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke: #ffffff;
+}
+
+.wax-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.wax-action-label {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: #b99da1;
+}
+
+.wax-action-label-accent {
+  color: rgba(189, 15, 44, 1);
+  font-size: 13px;
+  animation: actionPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes actionPulse {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}

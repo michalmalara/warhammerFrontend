@@ -11,6 +11,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {toObservable} from '@angular/core/rxjs-interop';
+import {Dialog} from '@angular/cdk/dialog';
 
 import {catchError, Observable, of, switchMap} from 'rxjs';
 
@@ -22,6 +23,10 @@ import {
   type SkillCharacteristic,
   type SkillType,
 } from '../../models/skill.models';
+import {
+  SkillDeleteConfirmDialogComponent,
+  type SkillDeleteConfirmDialogData,
+} from '../../../../shared/ui/skill-delete-confirm-dialog/skill-delete-confirm-dialog.component';
 
 @Component({
   selector: 'app-skills-list',
@@ -42,6 +47,7 @@ import {
 })
 export class SkillsListComponent {
   private readonly api = inject(SkillsApiService);
+  private readonly dialog = inject(Dialog);
 
   /**
    * Trik na łatwe odświeżanie listy po operacjach mutujących (create/delete/update).
@@ -152,33 +158,45 @@ export class SkillsListComponent {
     // Prosty guard, gdyby ktoś kliknął kilka razy.
     if (this.deletingIds().has(skill.id)) return;
 
-    const ok = window.confirm(`Usunąć umiejętność „${skill.name}”?`);
-    if (!ok) return;
+    const data: SkillDeleteConfirmDialogData = {
+      skillId: skill.id,
+      skillName: skill.name,
+    };
 
-    this.deletingIds.update(set => {
-      const next = new Set(set);
-      next.add(skill.id);
-      return next;
-    });
+    this.dialog
+      .open<boolean>(SkillDeleteConfirmDialogComponent, {
+        data,
+        disableClose: true,
+        ariaLabel: `Potwierdzenie usunięcia umiejętności ${skill.name}`,
+      })
+      .closed.subscribe(ok => {
+      if (!ok) return;
 
-    this.api.delete(skill.id).subscribe({
-      next: () => {
-        this.refreshTick.update(v => v + 1);
-      },
-      error: () => {
-        this.deletingIds.update(set => {
-          const next = new Set(set);
-          next.delete(skill.id);
-          return next;
-        });
-      },
-      complete: () => {
-        this.deletingIds.update(set => {
-          const next = new Set(set);
-          next.delete(skill.id);
-          return next;
-        });
-      },
+      this.deletingIds.update(set => {
+        const next = new Set(set);
+        next.add(skill.id);
+        return next;
+      });
+
+      this.api.delete(skill.id).subscribe({
+        next: () => {
+          this.refreshTick.update(v => v + 1);
+        },
+        error: () => {
+          this.deletingIds.update(set => {
+            const next = new Set(set);
+            next.delete(skill.id);
+            return next;
+          });
+        },
+        complete: () => {
+          this.deletingIds.update(set => {
+            const next = new Set(set);
+            next.delete(skill.id);
+            return next;
+          });
+        },
+      });
     });
   }
 }
