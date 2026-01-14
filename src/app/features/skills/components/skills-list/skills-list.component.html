@@ -1,39 +1,215 @@
-<mat-card>
-  <mat-card-title>Umiejętności</mat-card-title>
-  <mat-card-subtitle>Lista dostępnych umiejętności</mat-card-subtitle>
+<!-- Layout inspirowany mockupem skills_list -->
+<section class="page">
+  <h2 class="sr-only">Umiejętności</h2>
 
-  <mat-card-content>
-    <div class="actions">
-      <a mat-raised-button color="primary" [routerLink]="['/skills/new']" aria-label="Dodaj umiejętność">
-        <mat-icon>add</mat-icon>
-        Dodaj umiejętność
-      </a>
+  <header class="headline">
+    <div class="headline-text">
+      <h1 class="title">The Great Library of Skills</h1>
+      <p class="subtitle">
+        Consult the ancient scrolls to master the crafts of survival, intrigue, and combat in the Old World.
+      </p>
+    </div>
+  </header>
+
+  <section class="filters" aria-label="Wyszukiwanie i filtry">
+    <div class="filters-row">
+      <mat-form-field class="search" appearance="fill">
+        <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+        <input
+          matInput
+          type="text"
+          [value]="query()"
+          (input)="onQueryInput(($any($event.target).value) ?? '')"
+          placeholder="Search the archives for a skill..."
+          aria-label="Szukaj umiejętności"
+        />
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="filter-btn"
+        type="button"
+        (click)="toggleFiltersPanel()"
+        [attr.aria-expanded]="isFiltersOpen()"
+        aria-controls="filters-panel"
+      >
+        <span>Filter Results</span>
+        <mat-icon aria-hidden="true">filter_list</mat-icon>
+      </button>
     </div>
 
-    @if (skills$ | async; as skills) {
-      @if (skills === null) {
-        <p class="error">Nie udało się pobrać listy umiejętności.</p>
-      } @else if (skills.length === 0) {
-        <p>Brak umiejętności.</p>
-      } @else {
-        <mat-nav-list>
-          @for (s of skills; track trackById($index, s)) {
-            <div mat-list-item>
-              <div matListItemTitle>{{ s.name }}</div>
-              <div matListItemLine>
-                <span class="muted">Cecha:</span>
-                {{ s.associatedCharacteristic }}
-              </div>
-            </div>
-          }
-        </mat-nav-list>
+    <div class="quick-filters">
+      <span class="quick-label">Quick Filters:</span>
+
+      <button
+        mat-stroked-button
+        class="quick-pill"
+        type="button"
+        [class.active]="typeFilter() === 'basic'"
+        (click)="setTypeFilter(typeFilter() === 'basic' ? null : 'basic')"
+        [attr.aria-pressed]="typeFilter() === 'basic'"
+      >
+        <span>Type: Basic</span>
+        <mat-icon aria-hidden="true">{{ typeFilter() === 'basic' ? 'close' : 'keyboard_arrow_down' }}</mat-icon>
+      </button>
+
+      <button
+        mat-stroked-button
+        class="quick-pill"
+        type="button"
+        [class.active]="typeFilter() === 'advanced'"
+        (click)="setTypeFilter(typeFilter() === 'advanced' ? null : 'advanced')"
+        [attr.aria-pressed]="typeFilter() === 'advanced'"
+      >
+        <span>Type: Advanced</span>
+        <mat-icon aria-hidden="true">{{ typeFilter() === 'advanced' ? 'close' : 'keyboard_arrow_down' }}</mat-icon>
+      </button>
+
+      <span class="divider" aria-hidden="true"></span>
+
+      <button
+        mat-stroked-button
+        class="quick-pill"
+        type="button"
+        (click)="toggleFiltersPanel()"
+        [class.active]="characteristicFilter() !== null"
+        [attr.aria-pressed]="isFiltersOpen()"
+      >
+        <span>Characteristic: {{ characteristicShortLabel(characteristicFilter()) }}</span>
+        <mat-icon aria-hidden="true">keyboard_arrow_down</mat-icon>
+      </button>
+
+      @if (skills$ | async; as skillsForCount) {
+        @if (skillsForCount !== null) {
+          <span class="count">Showing {{ applyFilters(skillsForCount).length }} Skills</span>
+        }
       }
-    } @else {
-      <div class="loading">
-        <mat-spinner diameter="28"></mat-spinner>
-        <span>Ładowanie…</span>
+    </div>
+
+    @if (isFiltersOpen()) {
+      <div id="filters-panel" class="filters-panel" role="region" aria-label="Panel filtrów">
+        <div class="panel-grid">
+          <div class="panel-group">
+            <div class="panel-title">Type</div>
+            <div class="panel-options">
+              <button
+                mat-stroked-button
+                class="panel-pill"
+                type="button"
+                [class.active]="typeFilter() === null"
+                (click)="setTypeFilter(null)"
+              >
+                Any
+              </button>
+              @for (t of skillTypes; track t.value) {
+                <button
+                  mat-stroked-button
+                  class="panel-pill"
+                  type="button"
+                  [class.active]="typeFilter() === t.value"
+                  (click)="setTypeFilter(t.value)"
+                >
+                  {{ t.label }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="panel-group">
+            <div class="panel-title">Characteristic</div>
+            <div class="panel-options">
+              <button
+                mat-stroked-button
+                class="panel-pill"
+                type="button"
+                [class.active]="characteristicFilter() === null"
+                (click)="setCharacteristicFilter(null)"
+              >
+                Any
+              </button>
+              @for (c of characteristics; track c.value) {
+                <button
+                  mat-stroked-button
+                  class="panel-pill"
+                  type="button"
+                  [class.active]="characteristicFilter() === c.value"
+                  (click)="setCharacteristicFilter(c.value)"
+                >
+                  {{ c.label }} ({{ c.shortLabel }})
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-actions">
+          <button mat-stroked-button type="button" (click)="clearFilters()">Clear filters</button>
+          <button mat-raised-button color="primary" type="button" (click)="toggleFiltersPanel()">
+            Done
+          </button>
+        </div>
       </div>
     }
-  </mat-card-content>
-</mat-card>
+  </section>
 
+  @if (skills$ | async; as skills) {
+    @if (skills === null) {
+      <p class="error">Nie udało się pobrać listy umiejętności.</p>
+    } @else if (skills.length === 0) {
+      <p class="empty">Brak umiejętności.</p>
+    } @else {
+      @if (applyFilters(skills).length === 0) {
+        <p class="empty">Brak wyników dla wybranych filtrów.</p>
+      } @else {
+        <section class="skills-grid" aria-label="Lista umiejętności">
+          @for (s of applyFilters(skills); track trackById($index, s)) {
+            <article class="skill-card" tabindex="0">
+              <div class="card-top">
+                <div class="titles">
+                  <h3 class="skill-name">{{ s.name }}</h3>
+                  <div class="skill-meta">{{ characteristicLabel(s.associatedCharacteristic) }}</div>
+                </div>
+
+                <div class="icon-badge" aria-hidden="true">
+                  <mat-icon>menu_book</mat-icon>
+                </div>
+              </div>
+
+              @if (shortDescription(s.description); as desc) {
+                <p class="skill-desc">{{ desc }}</p>
+              } @else {
+                <p class="skill-desc muted">Brak opisu.</p>
+              }
+
+              <div class="card-bottom">
+                <mat-chip-set aria-label="Tagi">
+                  @if (typeMeta(s.type); as t) {
+                    <mat-chip class="chip" [class.advanced]="t.value === 'advanced'">{{ t.value }}</mat-chip>
+                  }
+                  <mat-chip class="chip">{{ s.associatedCharacteristic }}</mat-chip>
+                </mat-chip-set>
+              </div>
+            </article>
+          }
+        </section>
+      }
+    }
+  } @else {
+    <div class="loading">
+      <mat-spinner diameter="28"></mat-spinner>
+      <span>Ładowanie…</span>
+    </div>
+  }
+
+  <!-- Wax seal Floating Action Button -->
+  <a
+    class="fab"
+    mat-fab
+    color="primary"
+    [routerLink]="['/skills/new']"
+    aria-label="Dodaj umiejętność"
+  >
+    <mat-icon>add</mat-icon>
+  </a>
+</section>
