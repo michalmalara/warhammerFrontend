@@ -7,7 +7,7 @@ import {SkillsApiService} from '../../services/skills-api.service';
 
 describe('SkillCreateComponent', () => {
   it('does not call API when form invalid', async () => {
-    const createSpy = vi.fn(() => of({id: 1, name: 'x', associatedCharacteristic: 'INT'}));
+    const createSpy = vi.fn(() => of({id: 1, name: 'x', associatedCharacteristic: 'intelligence'}));
 
     await TestBed.configureTestingModule({
       imports: [SkillCreateComponent],
@@ -27,7 +27,7 @@ describe('SkillCreateComponent', () => {
   });
 
   it('calls API and navigates on success', async () => {
-    const createSpy = vi.fn(() => of({id: 1, name: 'Stealth', associatedCharacteristic: 'AG'}));
+    const createSpy = vi.fn(() => of({id: 1, name: 'Stealth', associatedCharacteristic: 'agility'}));
 
     await TestBed.configureTestingModule({
       imports: [SkillCreateComponent],
@@ -46,14 +46,14 @@ describe('SkillCreateComponent', () => {
     fixture.componentInstance.form.setValue({
       name: 'Stealth',
       type: 'basic',
-      associatedCharacteristic: 'AG',
+      associatedCharacteristic: 'agility',
     });
     fixture.componentInstance.save();
 
     expect(createSpy).toHaveBeenCalledWith({
       name: 'Stealth',
       type: 'basic',
-      associatedCharacteristic: 'AG',
+      associatedCharacteristic: 'agility',
     });
     expect(navSpy).toHaveBeenCalledWith(['/skills']);
   });
@@ -75,7 +75,7 @@ describe('SkillCreateComponent', () => {
     fixture.componentInstance.form.setValue({
       name: 'Stealth',
       type: 'basic',
-      associatedCharacteristic: 'AG',
+      associatedCharacteristic: 'agility',
     });
     fixture.componentInstance.save();
 

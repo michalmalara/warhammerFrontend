@@ -16,8 +16,8 @@ describe('SkillsListComponent', () => {
           useValue: {
             list: () =>
               of([
-                {id: 1, name: 'Stealth', associatedCharacteristic: 'AG'},
-                {id: 2, name: 'Melee', associatedCharacteristic: 'WS'},
+                {id: 1, name: 'Stealth', associatedCharacteristic: 'agility'},
+                {id: 2, name: 'Melee', associatedCharacteristic: 'weapon_skills'},
               ]),
           },
         },
@@ -30,7 +30,7 @@ describe('SkillsListComponent', () => {
 
     const el: HTMLElement = fixture.nativeElement;
     expect(el.textContent).toContain('Stealth');
-    expect(el.textContent).toContain('AG');
+    expect(el.textContent).toContain('agility');
     expect(el.textContent).toContain('Melee');
   });
 

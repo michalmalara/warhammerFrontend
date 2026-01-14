@@ -1,22 +1,22 @@
 export type SkillCharacteristic =
-  | 'WS'
-  | 'BS'
-  | 'S'
-  | 'T'
-  | 'AG'
-  | 'INT'
-  | 'WP'
-  | 'FEL';
+  | 'weapon_skills'
+  | 'ballistic_skills'
+  | 'strength'
+  | 'toughness'
+  | 'agility'
+  | 'intelligence'
+  | 'willpower'
+  | 'fellowship';
 
 export const SKILL_CHARACTERISTICS: readonly SkillCharacteristic[] = [
-  'WS',
-  'BS',
-  'S',
-  'T',
-  'AG',
-  'INT',
-  'WP',
-  'FEL',
+  'weapon_skills',
+  'ballistic_skills',
+  'strength',
+  'toughness',
+  'agility',
+  'intelligence',
+  'willpower',
+  'fellowship',
 ] as const;
 
 export type SkillCharacteristicMeta = Readonly<{
@@ -26,14 +26,14 @@ export type SkillCharacteristicMeta = Readonly<{
 }>;
 
 export const SKILL_CHARACTERISTICS_META: readonly SkillCharacteristicMeta[] = [
-  {value: 'WS', shortLabel: 'WS', label: 'Weapon'},
-  {value: 'BS', shortLabel: 'BS', label: 'Ballistic'},
-  {value: 'S', shortLabel: 'S', label: 'Strength'},
-  {value: 'T', shortLabel: 'T', label: 'Toughness'},
-  {value: 'AG', shortLabel: 'Ag', label: 'Agility'},
-  {value: 'INT', shortLabel: 'Int', label: 'Intellect'},
-  {value: 'WP', shortLabel: 'WP', label: 'Willpower'},
-  {value: 'FEL', shortLabel: 'Fel', label: 'Fellowship'},
+  {value: 'weapon_skills', shortLabel: 'WS', label: 'Weapon Skills'},
+  {value: 'ballistic_skills', shortLabel: 'BS', label: 'Ballistic Skills'},
+  {value: 'strength', shortLabel: 'S', label: 'Strength'},
+  {value: 'toughness', shortLabel: 'T', label: 'Toughness'},
+  {value: 'agility', shortLabel: 'Ag', label: 'Agility'},
+  {value: 'intelligence', shortLabel: 'Int', label: 'Intelligence'},
+  {value: 'willpower', shortLabel: 'WP', label: 'Willpower'},
+  {value: 'fellowship', shortLabel: 'Fel', label: 'Fellowship'},
 ] as const;
 
 export type SkillType = 'basic' | 'advanced';

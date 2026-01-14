@@ -54,7 +54,7 @@ export class SkillCreateComponent {
   readonly form = this.fb.nonNullable.group({
     name: this.fb.nonNullable.control('', [Validators.required, Validators.maxLength(100)]),
     type: this.fb.nonNullable.control<SkillType>('basic', [Validators.required]),
-    associatedCharacteristic: this.fb.nonNullable.control<SkillCharacteristic>('INT', [
+    associatedCharacteristic: this.fb.nonNullable.control<SkillCharacteristic>('intelligence', [
       Validators.required,
     ]),
   });
