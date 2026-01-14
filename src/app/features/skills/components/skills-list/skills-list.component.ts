@@ -104,7 +104,7 @@ export class SkillsListComponent {
   }
 
   characteristicShortLabel(value: SkillCharacteristic | null): string {
-    if (!value) return 'Any';
+    if (!value) return $localize`:Option@@skillsList.any:Any`;
     const meta = SKILL_CHARACTERISTICS_META.find(m => m.value === value);
     return meta?.shortLabel ?? String(value);
   }
@@ -167,7 +167,7 @@ export class SkillsListComponent {
       .open<boolean>(SkillDeleteConfirmDialogComponent, {
         data,
         disableClose: true,
-        ariaLabel: `Potwierdzenie usunięcia umiejętności ${skill.name}`,
+        ariaLabel: $localize`:Aria@@skillsList.deleteConfirm.aria:Confirm deletion of skill ${skill.name}:skillName:`,
       })
       .closed.subscribe(ok => {
       if (!ok) return;

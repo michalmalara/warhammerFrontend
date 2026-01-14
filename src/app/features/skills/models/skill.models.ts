@@ -39,8 +39,8 @@ export const SKILL_CHARACTERISTICS_META: readonly SkillCharacteristicMeta[] = [
 export type SkillType = 'basic' | 'advanced';
 
 export const SKILL_TYPES: ReadonlyArray<{ value: SkillType; label: string; icon: string }> = [
-  {value: 'basic', label: 'Podstawowa', icon: 'school'},
-  {value: 'advanced', label: 'Zaawansowana', icon: 'military_tech'},
+  {value: 'basic', label: 'Basic', icon: 'school'},
+  {value: 'advanced', label: 'Advanced', icon: 'military_tech'},
 ] as const;
 
 /**

@@ -74,11 +74,17 @@ export class SkillCreateComponent {
       .pipe(finalize(() => (this.isSaving = false)))
       .subscribe({
         next: () => {
-          this.snackBar.open('Umiejętność utworzona', 'OK', {duration: 2500});
+          this.snackBar.open($localize`:Snack bar@@skillCreate.snack.success:Skill created`, 'OK', {
+            duration: 2500,
+          });
           void this.router.navigate(['/skills']);
         },
         error: () => {
-          this.snackBar.open('Nie udało się utworzyć umiejętności', 'OK', {duration: 3500});
+          this.snackBar.open(
+            $localize`:Snack bar@@skillCreate.snack.error:Failed to create skill`,
+            'OK',
+            {duration: 3500},
+          );
         },
       });
   }

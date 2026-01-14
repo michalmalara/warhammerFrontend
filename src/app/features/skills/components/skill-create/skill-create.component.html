@@ -49,9 +49,9 @@
                     [value]="t.value"
                     [checked]="form.controls.type.value === t.value"
                     (change)="form.controls.type.setValue(t.value)"
-                    [attr.aria-label]="t.value"
+                    [attr.aria-label]="t.label"
                   />
-                  <div class="type-card">{{ t.value }}</div>
+                  <div class="type-card">{{ t.label }}</div>
                 </label>
               }
             </div>

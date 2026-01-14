@@ -1,17 +1,17 @@
 <!-- Layout inspirowany mockupem skills_list -->
 <section class="page">
-  <h2 class="sr-only">Umiejętności</h2>
+  <h2 class="sr-only" i18n="SR heading@@skillsList.srHeading">Skills</h2>
 
   <header class="headline">
     <div class="headline-text">
-      <h1 class="title">The Great Library of Skills</h1>
-      <p class="subtitle">
+      <h1 class="title" i18n="Title@@skillsList.title">The Great Library of Skills</h1>
+      <p class="subtitle" i18n="Subtitle@@skillsList.subtitle">
         Consult the ancient scrolls to master the crafts of survival, intrigue, and combat in the Old World.
       </p>
     </div>
   </header>
 
-  <section class="filters" aria-label="Wyszukiwanie i filtry">
+  <section class="filters" aria-label="Search and filters" i18n-aria-label="Aria@@skillsList.filters.aria">
     <div class="filters-row">
       <mat-form-field class="search" appearance="fill">
         <mat-icon matPrefix aria-hidden="true">search</mat-icon>
@@ -21,7 +21,9 @@
           [value]="query()"
           (input)="onQueryInput(($any($event.target).value) ?? '')"
           placeholder="Search the archives for a skill..."
-          aria-label="Szukaj umiejętności"
+          i18n-placeholder="Placeholder@@skillsList.search.placeholder"
+          aria-label="Search skills"
+          i18n-aria-label="Aria@@skillsList.search.aria"
         />
       </mat-form-field>
 
@@ -33,14 +35,15 @@
         (click)="toggleFiltersPanel()"
         [attr.aria-expanded]="isFiltersOpen()"
         aria-controls="filters-panel"
+        aria-label="Toggle filters"
+        i18n-aria-label="Aria@@skillsList.filters.toggle.aria"
       >
-        <span>Filter Results</span>
+        <span i18n="Button@@skillsList.filters.toggle">Filter Results</span>
         <mat-icon aria-hidden="true">filter_list</mat-icon>
       </button>
     </div>
 
     <div class="quick-filters">
-
       <button
         mat-stroked-button
         class="quick-pill"
@@ -48,23 +51,35 @@
         (click)="toggleFiltersPanel()"
         [class.active]="characteristicFilter() !== null"
         [attr.aria-pressed]="isFiltersOpen()"
+        aria-label="Characteristic quick filter"
+        i18n-aria-label="Aria@@skillsList.quickFilters.characteristic.aria"
       >
-        <span>Characteristic: {{ characteristicShortLabel(characteristicFilter()) }}</span>
+        <span i18n="Quick filter label@@skillsList.quickFilters.characteristic">
+          Characteristic: {{ characteristicShortLabel(characteristicFilter()) }}
+        </span>
         <mat-icon aria-hidden="true">keyboard_arrow_down</mat-icon>
       </button>
 
       @if (skills$ | async; as skillsForCount) {
         @if (skillsForCount !== null) {
-          <span class="count">Showing {{ applyFilters(skillsForCount).length }} Skills</span>
+          <span class="count" i18n="Count label@@skillsList.count">
+            Showing {{ applyFilters(skillsForCount).length }} Skills
+          </span>
         }
       }
     </div>
 
     @if (isFiltersOpen()) {
-      <div id="filters-panel" class="filters-panel" role="region" aria-label="Panel filtrów">
+      <div
+        id="filters-panel"
+        class="filters-panel"
+        role="region"
+        aria-label="Filters panel"
+        i18n-aria-label="Aria@@skillsList.filters.panel.aria"
+      >
         <div class="panel-grid">
           <div class="panel-group">
-            <div class="panel-title">Type</div>
+            <div class="panel-title" i18n="Panel title@@skillsList.filters.type.title">Type</div>
             <div class="panel-options">
               <button
                 mat-stroked-button
@@ -72,6 +87,7 @@
                 type="button"
                 [class.active]="typeFilter() === null"
                 (click)="setTypeFilter(null)"
+                i18n="Option@@skillsList.filters.anyType"
               >
                 Any
               </button>
@@ -90,7 +106,7 @@
           </div>
 
           <div class="panel-group">
-            <div class="panel-title">Characteristic</div>
+            <div class="panel-title" i18n="Panel title@@skillsList.filters.characteristic.title">Characteristic</div>
             <div class="panel-options">
               <button
                 mat-stroked-button
@@ -98,6 +114,7 @@
                 type="button"
                 [class.active]="characteristicFilter() === null"
                 (click)="setCharacteristicFilter(null)"
+                i18n="Option@@skillsList.filters.anyCharacteristic"
               >
                 Any
               </button>
@@ -117,8 +134,16 @@
         </div>
 
         <div class="panel-actions">
-          <button mat-stroked-button type="button" (click)="clearFilters()">Clear filters</button>
-          <button mat-raised-button color="primary" type="button" (click)="toggleFiltersPanel()">
+          <button mat-stroked-button type="button" (click)="clearFilters()" i18n="Button@@skillsList.filters.clear">
+            Clear filters
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="toggleFiltersPanel()"
+            i18n="Button@@skillsList.filters.done"
+          >
             Done
           </button>
         </div>
@@ -128,14 +153,14 @@
 
   @if (skills$ | async; as skills) {
     @if (skills === null) {
-      <p class="error">Nie udało się pobrać listy umiejętności.</p>
+      <p class="error" i18n="Error@@skillsList.error.loadFailed">Failed to load the skills list.</p>
     } @else if (skills.length === 0) {
-      <p class="empty">Brak umiejętności.</p>
+      <p class="empty" i18n="Empty@@skillsList.empty.noSkills">No skills.</p>
     } @else {
       @if (applyFilters(skills).length === 0) {
-        <p class="empty">Brak wyników dla wybranych filtrów.</p>
+        <p class="empty" i18n="Empty@@skillsList.empty.noResults">No results for the selected filters.</p>
       } @else {
-        <section class="skills-grid" aria-label="Lista umiejętności">
+        <section class="skills-grid" aria-label="Skills list" i18n-aria-label="Aria@@skillsList.grid.aria">
           @for (s of applyFilters(skills); track trackById($index, s)) {
             <article class="skill-card" tabindex="0">
               <div class="card-top">
@@ -152,11 +177,11 @@
               @if (shortDescription(s.description); as desc) {
                 <p class="skill-desc">{{ desc }}</p>
               } @else {
-                <p class="skill-desc muted">Brak opisu.</p>
+                <p class="skill-desc muted" i18n="Fallback@@skillsList.skill.noDescription">No description.</p>
               }
 
               <div class="card-bottom">
-                <mat-chip-set aria-label="Tagi">
+                <mat-chip-set aria-label="Tags" i18n-aria-label="Aria@@skillsList.tags.aria">
                   @if (typeMeta(s.type); as t) {
                     <mat-chip class="chip" [class.advanced]="t.value === 'advanced'">{{ t.value }}</mat-chip>
                   }
@@ -168,7 +193,8 @@
                   class="danger-icon-btn"
                   color="warn"
                   type="button"
-                  aria-label="Usuń umiejętność"
+                  aria-label="Delete skill"
+                  i18n-aria-label="Aria@@skillsList.delete.aria"
                   (click)="$event.stopPropagation(); $event.preventDefault(); onDeleteSkill(s)"
                   [disabled]="isDeleting(s)"
                 >
@@ -183,7 +209,7 @@
   } @else {
     <div class="loading">
       <mat-spinner diameter="28"></mat-spinner>
-      <span>Ładowanie…</span>
+      <span i18n="Loading@@skillsList.loading">Loading…</span>
     </div>
   }
 
@@ -193,7 +219,8 @@
     mat-fab
     color="primary"
     [routerLink]="['/skills/new']"
-    aria-label="Dodaj umiejętność"
+    aria-label="Add skill"
+    i18n-aria-label="Aria@@skillsList.fab.add.aria"
   >
     <mat-icon>add</mat-icon>
   </a>
