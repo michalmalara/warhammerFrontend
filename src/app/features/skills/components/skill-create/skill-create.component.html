@@ -1,31 +1,105 @@
 <mat-card class="skill-create">
-  <mat-card-title>Nowa umiejętność</mat-card-title>
-  <mat-card-subtitle>Utwórz nową umiejętność i przypisz cechę</mat-card-subtitle>
+  <div class="page-heading">
+    <h1 class="page-title">Skill Creation Editor</h1>
+    <div class="page-divider" aria-hidden="true"></div>
+    <p class="page-subtitle">Define a new skill for the grim world of perilous adventure.</p>
+  </div>
 
   <form class="form" [formGroup]="form" (ngSubmit)="save()">
-    <mat-card-content>
-      <div class="row">
-        <mat-form-field appearance="outline" class="full">
-          <mat-label>Nazwa</mat-label>
-          <input matInput formControlName="name" aria-label="Nazwa umiejętności"/>
-          @if (form.controls.name.touched && form.controls.name.invalid) {
-            <mat-error>Wymagana nazwa (max 100 znaków)</mat-error>
-          }
-        </mat-form-field>
-      </div>
+    <mat-card-content class="content">
+      <div class="form-grid">
+        <!-- Left column -->
+        <div class="left">
+          <div class="row">
+            <div class="section-label">
+              <mat-icon class="section-icon">edit_square</mat-icon>
+              <span>Skill Name</span>
+            </div>
+            <mat-form-field appearance="outline" class="full">
+              <input matInput formControlName="name" placeholder="e.g., Strike to Stun"
+                     aria-label="Nazwa umiejętności"/>
+              @if (form.controls.name.touched && form.controls.name.invalid) {
+                <mat-error>Wymagana nazwa (max 100 znaków)</mat-error>
+              }
+            </mat-form-field>
+          </div>
 
-      <div class="row">
-        <mat-form-field appearance="outline" class="full">
-          <mat-label>Cecha powiązana</mat-label>
-          <mat-select formControlName="associatedCharacteristic" aria-label="Cecha powiązana">
-            @for (c of characteristics; track c) {
-              <mat-option [value]="c">{{ c }}</mat-option>
+          <div class="row">
+            <div class="section-label">
+              <mat-icon class="section-icon">category</mat-icon>
+              <span>Skill Type</span>
+            </div>
+
+            <div class="type-tiles" role="radiogroup" aria-label="Typ umiejętności">
+              @for (t of skillTypes; track t.value) {
+                <label class="type-tile">
+                  <input
+                    class="type-input"
+                    type="radio"
+                    name="skillType"
+                    [value]="t.value"
+                    [checked]="form.controls.type.value === t.value"
+                    (change)="form.controls.type.setValue(t.value)"
+                  />
+                  <div class="type-card">{{ t.value }}</div>
+                </label>
+              }
+            </div>
+
+            @if (form.controls.type.touched && form.controls.type.invalid) {
+              <mat-error>Wybierz typ umiejętności</mat-error>
             }
-          </mat-select>
-          @if (form.controls.associatedCharacteristic.touched && form.controls.associatedCharacteristic.invalid) {
-            <mat-error>Wybierz cechę</mat-error>
-          }
-        </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="characteristic-field" aria-label="Cecha powiązana">
+              <div class="section-label">
+                <mat-icon class="section-icon">analytics</mat-icon>
+                <span>Related Characteristic</span>
+              </div>
+
+              <div class="characteristic-tiles" role="radiogroup" aria-label="Wybierz cechę powiązaną">
+                @for (c of characteristics; track c.value) {
+                  <label class="char-tile">
+                    <input
+                      class="char-input"
+                      type="radio"
+                      name="associatedCharacteristic"
+                      [value]="c.value"
+                      [checked]="form.controls.associatedCharacteristic.value === c.value"
+                      (change)="form.controls.associatedCharacteristic.setValue(c.value)"
+                    />
+                    <div class="char-card">
+                      <span class="char-short">{{ c.shortLabel }}</span>
+                      <span class="char-label">{{ c.label }}</span>
+                    </div>
+                  </label>
+                }
+              </div>
+
+              @if (form.controls.associatedCharacteristic.touched && form.controls.associatedCharacteristic.invalid) {
+                <mat-error>Wybierz cechę</mat-error>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div class="right">
+          <div class="section-label">
+            <mat-icon class="section-icon">history_edu</mat-icon>
+            <span>Skill Description &amp; Lore</span>
+          </div>
+
+          <mat-form-field appearance="outline" class="full lore">
+            <textarea
+              matInput
+              rows="10"
+              placeholder="Detail the mechanics and the flavor of this skill. How is it practiced in the Old World? What are the grim consequences of failure?"
+              aria-label="Opis umiejętności"
+            ></textarea>
+          </mat-form-field>
+        </div>
       </div>
     </mat-card-content>
 

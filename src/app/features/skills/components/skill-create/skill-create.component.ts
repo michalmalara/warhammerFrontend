@@ -9,12 +9,17 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {finalize} from 'rxjs';
 
-import {type CreateSkillPayload, SKILL_CHARACTERISTICS, type SkillCharacteristic,} from '../../models/skill.models';
+import {
+  type CreateSkillPayload,
+  SKILL_CHARACTERISTICS_META,
+  SKILL_TYPES,
+  type SkillCharacteristic,
+  type SkillType,
+} from '../../models/skill.models';
 import {SkillsApiService} from '../../services/skills-api.service';
 
 @Component({
@@ -30,7 +35,6 @@ import {SkillsApiService} from '../../services/skills-api.service';
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatSelectModule,
     MatSnackBarModule,
   ],
   templateUrl: './skill-create.component.html',
@@ -42,12 +46,14 @@ export class SkillCreateComponent {
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
 
-  readonly characteristics = SKILL_CHARACTERISTICS;
+  readonly characteristics = SKILL_CHARACTERISTICS_META;
+  readonly skillTypes = SKILL_TYPES;
 
   isSaving = false;
 
   readonly form = this.fb.nonNullable.group({
     name: this.fb.nonNullable.control('', [Validators.required, Validators.maxLength(100)]),
+    type: this.fb.nonNullable.control<SkillType>('basic', [Validators.required]),
     associatedCharacteristic: this.fb.nonNullable.control<SkillCharacteristic>('INT', [
       Validators.required,
     ]),

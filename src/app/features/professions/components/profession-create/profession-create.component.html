@@ -557,11 +557,15 @@
 
       <button mat-raised-button color="primary" type="submit" [disabled]="isSaving" aria-label="Save profession">
         @if (!isSaving) {
-          <mat-icon>save</mat-icon>
-          Save
+          <ng-container>
+            <mat-icon>save</mat-icon>
+            Save
+          </ng-container>
         } @else {
-          <mat-spinner diameter="18"></mat-spinner>
-          Saving
+          <ng-container>
+            <mat-spinner diameter="18"></mat-spinner>
+            Saving
+          </ng-container>
         }
       </button>
     </div>

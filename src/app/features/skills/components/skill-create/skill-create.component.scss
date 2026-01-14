@@ -1,54 +1,278 @@
 :host {
   display: block;
+  padding: 24px;
+}
+
+.skill-create {
+  max-width: 64rem;
+  margin: 24px auto;
+  padding: 28px;
+  background: rgba(26, 13, 15, 0.92);
+  color: var(--color-text);
+  border: 2px solid #543b3f;
+  position: relative;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+}
+
+/* proste „rogi” jak w mockupie */
+.skill-create::before,
+.skill-create::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 0;
+  pointer-events: none;
+}
+
+.page-heading {
+  text-align: center;
+  margin: 4px 0 22px;
+}
+
+.page-title {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 56px;
+  line-height: 1;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-style: italic;
+  color: #ffffff;
+}
+
+.page-divider {
+  height: 1px;
+  width: 140px;
+  background: var(--color-accent);
+  margin: 14px auto 14px;
+}
+
+.page-subtitle {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 18px;
+  font-style: italic;
+}
+
+.content {
+  padding: 0;
+}
+
+.form {
+  display: block;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 980px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title {
+    font-size: 40px;
+  }
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin: 0 0 10px;
+}
+
+.section-icon {
+  color: var(--color-accent);
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.row {
+  display: grid;
+  margin-top: 0;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
 mat-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-panel-border);
-  color: var(--color-text);
-}
-
-mat-card-title {
-  color: var(--header-text);
-}
-
-mat-card-subtitle {
-  color: var(--color-text-muted);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 mat-form-field {
   width: 100%;
 }
 
-.skill-create {
-  max-width: 900px;
-  margin: 0 auto;
+/* pola jak w mockupie: ciemne tło + ozdobna ramka */
+:host ::ng-deep .mat-mdc-form-field .mdc-text-field--outlined {
+  --mdc-outlined-text-field-outline-color: #543b3f;
+  --mdc-outlined-text-field-hover-outline-color: var(--color-accent);
+  --mdc-outlined-text-field-focus-outline-color: var(--color-accent);
+  background: rgba(39, 28, 29, 0.9);
 }
 
-.form {
-  display: grid;
-  gap: 12px;
+:host ::ng-deep .mat-mdc-form-field .mdc-text-field--outlined .mdc-text-field__input {
+  color: #ffffff;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
 }
 
-.row {
-  display: grid;
+/* Skill type tiles (jak w mockupie) */
+.type-tiles {
+  display: flex;
+  background: #271c1d;
+  border: 1px solid #543b3f;
+  padding: 4px;
+  gap: 0;
 }
 
-.full {
+.type-tile {
+  flex: 1 1 0;
+  cursor: pointer;
+  display: block;
+}
+
+.type-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.type-card {
   width: 100%;
+  text-align: center;
+  padding: 8px 0;
+
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em; /* mockup ma tracking-tighter */
+  color: #b99da1;
+
+  transition: background-color 160ms ease, color 160ms ease;
 }
 
+.type-tile:has(.type-input:checked) .type-card {
+  background: rgba(189, 15, 44, 1); /* primary */
+  color: #ffffff;
+}
+
+.type-tile:has(.type-input:focus-visible) .type-card {
+  outline: 2px solid rgba(199, 59, 59, 0.55);
+  outline-offset: 2px;
+}
+
+/* Legacy (mat-button-toggle) – sekcja typu została przerobiona na kafelki-radio */
+.type-toggle-group,
+.type-toggle-btn {
+  display: none;
+}
+
+.characteristic-field {
+  display: grid;
+  gap: 8px;
+}
+
+.characteristic-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.char-tile {
+  cursor: pointer;
+  display: block;
+}
+
+.char-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.char-card {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  border: 1px solid #543b3f;
+  background: #271c1d;
+  color: #ffffff;
+
+  transition: background-color 160ms ease, border-color 160ms ease, transform 120ms ease;
+}
+
+.char-tile:hover .char-card {
+  background: #39282b;
+}
+
+/* checked state */
+.char-tile:has(.char-input:checked) .char-card {
+  border-color: var(--color-accent);
+  background: rgba(199, 59, 59, 0.18);
+}
+
+/* focus ring (keyboard) */
+.char-tile:has(.char-input:focus-visible) .char-card {
+  outline: 2px solid rgba(199, 59, 59, 0.55);
+  outline-offset: 2px;
+}
+
+.char-short {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+}
+
+.char-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #b99da1;
+}
+
+.char-tile:has(.char-input:checked) .char-label {
+  color: var(--color-accent);
+}
+
+/* usuwamy resztki stylów po chipach (nieużywane, ale zostawiają zbędne override'y) */
+:host ::ng-deep .characteristic-tile,
+:host ::ng-deep .mdc-evolution-chip__action,
+:host ::ng-deep .mat-mdc-chip-focus-overlay {
+  all: unset;
+}
+
+/* akcje (na razie Material buttons – można później podmienić na „pieczęcie”) */
 .actions {
   display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin: 8px 16px 16px;
+  justify-content: center;
+  gap: 20px;
+  margin: 22px 0 0;
   align-items: center;
 }
 
 .actions a[mat-stroked-button] {
   color: var(--color-text);
-  border-color: rgba(255, 255, 255, 0.06);
+  border-color: #543b3f;
 }
 
 .actions button[mat-raised-button] {

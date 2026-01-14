@@ -43,10 +43,18 @@ describe('SkillCreateComponent', () => {
     const fixture = TestBed.createComponent(SkillCreateComponent);
     fixture.detectChanges();
 
-    fixture.componentInstance.form.setValue({name: 'Stealth', associatedCharacteristic: 'AG'});
+    fixture.componentInstance.form.setValue({
+      name: 'Stealth',
+      type: 'basic',
+      associatedCharacteristic: 'AG',
+    });
     fixture.componentInstance.save();
 
-    expect(createSpy).toHaveBeenCalledWith({name: 'Stealth', associatedCharacteristic: 'AG'});
+    expect(createSpy).toHaveBeenCalledWith({
+      name: 'Stealth',
+      type: 'basic',
+      associatedCharacteristic: 'AG',
+    });
     expect(navSpy).toHaveBeenCalledWith(['/skills']);
   });
 
@@ -64,7 +72,11 @@ describe('SkillCreateComponent', () => {
     const fixture = TestBed.createComponent(SkillCreateComponent);
     fixture.detectChanges();
 
-    fixture.componentInstance.form.setValue({name: 'Stealth', associatedCharacteristic: 'AG'});
+    fixture.componentInstance.form.setValue({
+      name: 'Stealth',
+      type: 'basic',
+      associatedCharacteristic: 'AG',
+    });
     fixture.componentInstance.save();
 
     expect(createSpy).toHaveBeenCalled();
