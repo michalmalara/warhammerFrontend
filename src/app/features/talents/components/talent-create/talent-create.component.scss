@@ -1,0 +1,6 @@
+@use '../../../skills/components/skill-create/skill-create.component.scss';
+
+:host ::ng-deep .form-grid.single {
+  grid-template-columns: 1fr;
+}
+

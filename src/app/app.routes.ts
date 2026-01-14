@@ -9,6 +9,8 @@ import {
 } from './features/professions/components/profession-detail/profession-detail.component';
 import {SkillCreateComponent} from './features/skills/components/skill-create/skill-create.component';
 import {SkillsListComponent} from './features/skills/components/skills-list/skills-list.component';
+import {TalentCreateComponent} from './features/talents/components/talent-create/talent-create.component';
+import {TalentsListComponent} from './features/talents/components/talents-list/talents-list.component';
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'character'},
@@ -20,6 +22,9 @@ export const routes: Routes = [
 
   {path: 'skills', component: SkillsListComponent},
   {path: 'skills/new', component: SkillCreateComponent},
+
+  {path: 'talents', component: TalentsListComponent},
+  {path: 'talents/new', component: TalentCreateComponent},
 
   {path: '**', redirectTo: 'character'},
 ];

@@ -1,0 +1,88 @@
+<mat-card class="skill-create">
+  <div class="page-heading">
+    <h1 class="page-title" i18n="Page title@@talentCreate.title">Talent Creation Editor</h1>
+    <div class="page-divider" aria-hidden="true"></div>
+    <p class="page-subtitle" i18n="Page subtitle@@talentCreate.subtitle">
+      Define a new talent for the grim world of perilous adventure.
+    </p>
+  </div>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="save()">
+    <mat-card-content class="content">
+      <div class="form-grid single">
+        <div class="left">
+          <div class="row">
+            <div class="section-label">
+              <mat-icon class="section-icon" aria-hidden="true">edit_square</mat-icon>
+              <span i18n="Section label@@talentCreate.name.label">Talent Name</span>
+            </div>
+            <mat-form-field appearance="outline" class="full">
+              <input
+                matInput
+                formControlName="name"
+                placeholder="e.g., Hardy"
+                i18n-placeholder="Placeholder@@talentCreate.name.placeholder"
+                aria-label="Talent name"
+                i18n-aria-label="Aria@@talentCreate.name.aria"
+              />
+              @if (form.controls.name.touched && form.controls.name.invalid) {
+                <mat-error i18n="Validation@@talentCreate.name.error">Required name (max 100 characters)</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="section-label">
+              <mat-icon class="section-icon" aria-hidden="true">history_edu</mat-icon>
+              <span i18n="Section label@@talentCreate.description.label">Talent Description &amp; Lore</span>
+            </div>
+
+            <mat-form-field appearance="outline" class="full lore">
+              <textarea
+                matInput
+                rows="10"
+                formControlName="description"
+                placeholder="Describe what this talent grants and how it manifests."
+                i18n-placeholder="Placeholder@@talentCreate.description.placeholder"
+                aria-label="Talent description"
+                i18n-aria-label="Aria@@talentCreate.description.aria"
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <div class="actions">
+      <div class="action">
+        <a
+          class="wax-seal wax-seal-cancel"
+          [routerLink]="['/talents']"
+          aria-label="Discard"
+          i18n-aria-label="Aria@@talentCreate.actions.discard.aria"
+        >
+          <mat-icon class="wax-icon" aria-hidden="true">close</mat-icon>
+        </a>
+        <div class="action-label" i18n="Action label@@talentCreate.actions.discard">Discard</div>
+      </div>
+
+      <div class="action">
+        <button
+          class="wax-seal wax-seal-save"
+          type="submit"
+          [disabled]="isSaving"
+          aria-label="Affix seal"
+          i18n-aria-label="Aria@@talentCreate.actions.save.aria"
+        >
+          @if (!isSaving) {
+            <mat-icon class="wax-icon" aria-hidden="true">check</mat-icon>
+          } @else {
+            <mat-spinner class="wax-spinner" diameter="28"></mat-spinner>
+          }
+        </button>
+        <div class="action-label action-label-accent" i18n="Action label@@talentCreate.actions.save">Affix Seal</div>
+      </div>
+    </div>
+  </form>
+</mat-card>
+

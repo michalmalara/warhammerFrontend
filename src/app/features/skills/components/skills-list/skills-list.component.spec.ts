@@ -150,8 +150,8 @@ describe('SkillsListComponent', () => {
     await fixture.whenStable();
 
     const el: HTMLElement = fixture.nativeElement;
-    // Wystarczy, że widok się renderuje i nie pokazuje elementów listy.
-    expect(el.textContent).toContain('Umiejętności');
+    // Stabilny smoke-check: widok się renderuje, a elementy z listy nie.
+    expect(el.textContent).toContain('The Great Library of Skills');
     expect(el.textContent).not.toContain('Stealth');
   });
 
@@ -184,7 +184,7 @@ describe('SkillsListComponent', () => {
 
     const el: HTMLElement = fixture.nativeElement;
     const deleteButtons = Array.from(
-      el.querySelectorAll('button[aria-label="Usuń umiejętność"]'),
+      el.querySelectorAll('button[aria-label="Delete skill"]'),
     ) as HTMLButtonElement[];
     expect(deleteButtons.length).toBeGreaterThan(0);
 
@@ -227,7 +227,7 @@ describe('SkillsListComponent', () => {
 
     const el: HTMLElement = fixture.nativeElement;
     const deleteButtons = Array.from(
-      el.querySelectorAll('button[aria-label="Usuń umiejętność"]'),
+      el.querySelectorAll('button[aria-label="Delete skill"]'),
     ) as HTMLButtonElement[];
     expect(deleteButtons.length).toBeGreaterThan(0);
 

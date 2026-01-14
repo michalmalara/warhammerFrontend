@@ -1,0 +1,50 @@
+<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="talent-delete-title">
+  <div class="modal">
+    <div class="corner top-left" aria-hidden="true">
+      <mat-icon>flare</mat-icon>
+    </div>
+    <div class="corner top-right" aria-hidden="true">
+      <mat-icon>flare</mat-icon>
+    </div>
+    <div class="corner bottom-left" aria-hidden="true">
+      <mat-icon>flare</mat-icon>
+    </div>
+    <div class="corner bottom-right" aria-hidden="true">
+      <mat-icon>flare</mat-icon>
+    </div>
+
+    <div class="header">
+      <h2 id="talent-delete-title" class="title">Czy na pewno chcesz usunąć ten talent?</h2>
+    </div>
+
+    <div class="talent">
+      <span class="talent-name">{{ data.talentName }}</span>
+    </div>
+
+    <div class="body">
+      <p class="quote">„Wiedza raz utracona może nigdy nie zostać odzyskana.”</p>
+    </div>
+
+    <div class="actions">
+      <div class="wax-action">
+        <button type="button" class="wax-seal wax-seal-cancel" (click)="cancel()">
+          <mat-icon class="wax-icon">close</mat-icon>
+        </button>
+        <div class="wax-action-label">Anuluj</div>
+      </div>
+
+      <div class="wax-action">
+        <button type="button" class="wax-seal wax-seal-save" (click)="confirm()">
+          <mat-icon class="wax-icon">delete_forever</mat-icon>
+        </button>
+        <div class="wax-action-label wax-action-label-accent">Usuń</div>
+      </div>
+    </div>
+
+    <div class="bottom-detail" aria-hidden="true">
+      <span class="line"></span>
+      <mat-icon class="skull">skull</mat-icon>
+      <span class="line"></span>
+    </div>
+  </div>
+</div>

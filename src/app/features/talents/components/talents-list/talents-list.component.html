@@ -1,0 +1,123 @@
+<!-- Layout inspirowany mockupem skills_list -->
+<section class="page">
+  <h2 class="sr-only" i18n="SR heading@@talentsList.srHeading">Talents</h2>
+
+  <header class="headline">
+    <div class="headline-text">
+      <h1 class="title" i18n="Title@@talentsList.title">The Great Library of Talents</h1>
+      <p class="subtitle" i18n="Subtitle@@talentsList.subtitle">
+        Browse the gifts and hard-won tricks that set heroes apart in the Old World.
+      </p>
+    </div>
+  </header>
+
+  <section class="filters" aria-label="Search" i18n-aria-label="Aria@@talentsList.filters.aria">
+    <div class="filters-row">
+      <mat-form-field class="search" appearance="fill">
+        <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+        <input
+          matInput
+          type="text"
+          [value]="query()"
+          (input)="onQueryInput(($any($event.target).value) ?? '')"
+          placeholder="Search the archives for a talent..."
+          i18n-placeholder="Placeholder@@talentsList.search.placeholder"
+          aria-label="Search talents"
+          i18n-aria-label="Aria@@talentsList.search.aria"
+        />
+      </mat-form-field>
+
+      <a
+        mat-raised-button
+        color="primary"
+        class="filter-btn"
+        [routerLink]="['/talents/new']"
+        aria-label="Add talent"
+        i18n-aria-label="Aria@@talentsList.add.aria"
+      >
+        <span i18n="Button@@talentsList.add">Add Talent</span>
+        <mat-icon aria-hidden="true">add</mat-icon>
+      </a>
+    </div>
+
+    @if (talents$ | async; as talentsForCount) {
+      @if (talentsForCount !== null) {
+        <div class="quick-filters">
+          <span class="count" i18n="Count label@@talentsList.count">
+            Showing {{ applyFilters(talentsForCount).length }} Talents
+          </span>
+        </div>
+      }
+    }
+  </section>
+
+  @if (talents$ | async; as talents) {
+    @if (talents === null) {
+      <p class="error" i18n="Error@@talentsList.error.loadFailed">Failed to load the talents list.</p>
+    } @else if (talents.length === 0) {
+      <p class="empty" i18n="Empty@@talentsList.empty.noTalents">No talents.</p>
+    } @else {
+      @if (applyFilters(talents).length === 0) {
+        <p class="empty" i18n="Empty@@talentsList.empty.noResults">No results for the selected search.</p>
+      } @else {
+        <section class="skills-grid" aria-label="Talents list" i18n-aria-label="Aria@@talentsList.grid.aria">
+          @for (t of applyFilters(talents); track trackById($index, t)) {
+            <article class="skill-card" tabindex="0">
+              <div class="card-top">
+                <div class="titles">
+                  <h3 class="skill-name">{{ t.name }}</h3>
+                  <div class="skill-meta" i18n="Meta@@talentsList.meta">Talent</div>
+                </div>
+
+                <div class="icon-badge" aria-hidden="true">
+                  <mat-icon>workspace_premium</mat-icon>
+                </div>
+              </div>
+
+              @if (shortDescription(t.description); as desc) {
+                <p class="skill-desc">{{ desc }}</p>
+              } @else {
+                <p class="skill-desc muted" i18n="Fallback@@talentsList.talent.noDescription">No description.</p>
+              }
+
+              <div class="card-bottom">
+                <mat-chip-set aria-label="Tags" i18n-aria-label="Aria@@talentsList.tags.aria">
+                  <mat-chip class="chip">talent</mat-chip>
+                </mat-chip-set>
+
+                <button
+                  mat-icon-button
+                  class="danger-icon-btn"
+                  color="warn"
+                  type="button"
+                  aria-label="Delete talent"
+                  i18n-aria-label="Aria@@talentsList.delete.aria"
+                  (click)="$event.stopPropagation(); $event.preventDefault(); onDeleteTalent(t)"
+                  [disabled]="isDeleting(t)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </article>
+          }
+        </section>
+      }
+    }
+  } @else {
+    <div class="loading">
+      <mat-spinner diameter="28"></mat-spinner>
+      <span i18n="Loading@@talentsList.loading">Loading…</span>
+    </div>
+  }
+
+  <a
+    class="fab"
+    mat-fab
+    color="primary"
+    [routerLink]="['/talents/new']"
+    aria-label="Add talent"
+    i18n-aria-label="Aria@@talentsList.fab.add.aria"
+  >
+    <mat-icon>add</mat-icon>
+  </a>
+</section>
