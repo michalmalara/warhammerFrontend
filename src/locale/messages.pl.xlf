@@ -187,6 +187,260 @@
         <source>Increase wounds</source>
         <target> Zwiększ rany </target>
       </trans-unit>
+
+      <!-- Skill Create -->
+      <trans-unit id="skillCreate.title" datatype="html">
+        <source>Skill Creation Editor</source>
+        <target>Edytor tworzenia umiejętności</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.subtitle" datatype="html">
+        <source> Define a new skill for the grim world of perilous adventure. </source>
+        <target> Zdefiniuj nową umiejętność dla ponurego świata pełnego niebezpiecznych przygód. </target>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillName.label" datatype="html">
+        <source>Skill Name</source>
+        <target>Nazwa umiejętności</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillName.placeholder" datatype="html">
+        <source>e.g., Strike to Stun</source>
+        <target>np. Ogłuszające uderzenie</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillName.aria" datatype="html">
+        <source>Skill name</source>
+        <target>Nazwa umiejętności</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillName.error" datatype="html">
+        <source>Required name (max 100 characters)</source>
+        <target>Nazwa jest wymagana (maks. 100 znaków)</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillType.label" datatype="html">
+        <source>Skill Type</source>
+        <target>Typ umiejętności</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillType.aria" datatype="html">
+        <source>Skill type</source>
+        <target>Typ umiejętności</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillType.error" datatype="html">
+        <source>Choose a skill type</source>
+        <target>Wybierz typ umiejętności</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.characteristic.aria" datatype="html">
+        <source>Related characteristic</source>
+        <target>Powiązana cecha</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.characteristic.label" datatype="html">
+        <source>Related Characteristic</source>
+        <target>Powiązana cecha</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.characteristic.groupAria" datatype="html">
+        <source>Choose related characteristic</source>
+        <target>Wybierz powiązaną cechę</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.characteristic.error" datatype="html">
+        <source>Choose a characteristic</source>
+        <target>Wybierz cechę</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.description.label" datatype="html">
+        <source>Skill Description &amp; Lore</source>
+        <target>Opis umiejętności i tło</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.description.placeholder" datatype="html">
+        <source>Detail the mechanics and the flavor of this skill. How is it practiced in the Old World? What are the grim consequences of failure?</source>
+        <target>Opisz mechanikę i klimat tej umiejętności. Jak praktykuje się ją w Starym Świecie? Jakie ponure konsekwencje niesie porażka?</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.description.aria" datatype="html">
+        <source>Skill description</source>
+        <target>Opis umiejętności</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.actions.discard.aria" datatype="html">
+        <source>Discard</source>
+        <target>Odrzuć</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.actions.discard" datatype="html">
+        <source>Discard</source>
+        <target>Odrzuć</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.actions.save.aria" datatype="html">
+        <source>Affix seal</source>
+        <target>Przyłóż pieczęć</target>
+      </trans-unit>
+      <trans-unit id="skillCreate.actions.save" datatype="html">
+        <source>Affix Seal</source>
+        <target>Przyłóż pieczęć</target>
+      </trans-unit>
+
+      <!-- Profession Create -->
+      <trans-unit id="profession.create.hero.title" datatype="html"><source>Create Profession</source><target>Utwórz profesję</target></trans-unit>
+      <trans-unit id="profession.create.hero.subtitle" datatype="html"><source>Quickly define a new profession and its development costs</source><target>Szybko zdefiniuj nową profesję i jej koszty rozwoju</target></trans-unit>
+      <trans-unit id="profession.create.card.title" datatype="html"><source> New Profession </source><target> Nowa profesja </target></trans-unit>
+      <trans-unit id="profession.create.card.subtitle" datatype="html"><source> Fill in basic information and development costs </source><target> Uzupełnij podstawowe informacje i koszty rozwoju </target></trans-unit>
+      <trans-unit id="profession.create.name.label" datatype="html"><source>Name</source><target>Nazwa</target></trans-unit>
+      <trans-unit id="profession.create.name.aria" datatype="html"><source>Profession name</source><target>Nazwa profesji</target></trans-unit>
+      <trans-unit id="profession.create.name.required" datatype="html"><source>Name is required </source><target>Nazwa jest wymagana </target></trans-unit>
+      <trans-unit id="profession.create.description.label" datatype="html"><source>Description </source><target>Opis </target></trans-unit>
+      <trans-unit id="profession.create.description.aria" datatype="html"><source>Profession description</source><target>Opis profesji</target></trans-unit>
+      <trans-unit id="profession.create.description.required" datatype="html"><source> Description is required </source><target> Opis jest wymagany </target></trans-unit>
+      <trans-unit id="profession.create.development.title" datatype="html"><source> Development (cost per level)</source><target> Rozwój (koszt za poziom)</target></trans-unit>
+
+      <trans-unit id="profession.create.label.ws" datatype="html">
+        <source>WS <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Weapon Skill)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>WW <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Walka wręcz)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.ws.dec" datatype="html"><source>Decrease Weapon Skill development</source><target>Zmniejsz koszt rozwoju Walki wręcz</target></trans-unit>
+      <trans-unit id="profession.create.ws.inc" datatype="html"><source>Increase Weapon Skill development</source><target>Zwiększ koszt rozwoju Walki wręcz</target></trans-unit>
+
+      <trans-unit id="profession.create.label.bs" datatype="html">
+        <source>BS <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Ballistic Skill)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>US <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Umiejętności strzeleckie)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.bs.dec" datatype="html"><source>Decrease Ballistic Skill development</source><target>Zmniejsz koszt rozwoju Umiejętności strzeleckich</target></trans-unit>
+      <trans-unit id="profession.create.bs.inc" datatype="html"><source>Increase Ballistic Skill development</source><target>Zwiększ koszt rozwoju Umiejętności strzeleckich</target></trans-unit>
+
+      <trans-unit id="profession.create.label.str" datatype="html">
+        <source>S <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Strength)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>S <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Siła)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.str.dec" datatype="html"><source>Decrease Strength development</source><target>Zmniejsz koszt rozwoju Siły</target></trans-unit>
+      <trans-unit id="profession.create.str.inc" datatype="html"><source>Increase Strength development</source><target>Zwiększ koszt rozwoju Siły</target></trans-unit>
+
+      <trans-unit id="profession.create.label.tgh" datatype="html">
+        <source>T <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Toughness)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>Wt <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Wytrzymałość)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.tgh.dec" datatype="html"><source>Decrease Toughness development</source><target>Zmniejsz koszt rozwoju Wytrzymałości</target></trans-unit>
+      <trans-unit id="profession.create.tgh.inc" datatype="html"><source>Increase Toughness development</source><target>Zwiększ koszt rozwoju Wytrzymałości</target></trans-unit>
+
+      <trans-unit id="profession.create.label.ag" datatype="html">
+        <source>Ag <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Agility)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>Zr <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Zręczność)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.ag.dec" datatype="html"><source>Decrease Agility development</source><target>Zmniejsz koszt rozwoju Zręczności</target></trans-unit>
+      <trans-unit id="profession.create.ag.inc" datatype="html"><source>Increase Agility development</source><target>Zwiększ koszt rozwoju Zręczności</target></trans-unit>
+
+      <trans-unit id="profession.create.label.int" datatype="html">
+        <source>Int <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Intelligence)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>Int <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Inteligencja)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.int.dec" datatype="html"><source>Decrease Intelligence development</source><target>Zmniejsz koszt rozwoju Inteligencji</target></trans-unit>
+      <trans-unit id="profession.create.int.inc" datatype="html"><source>Increase Intelligence development</source><target>Zwiększ koszt rozwoju Inteligencji</target></trans-unit>
+
+      <trans-unit id="profession.create.label.wp" datatype="html">
+        <source>WP <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Willpower)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>SW <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Siła Woli)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.wp.dec" datatype="html"><source>Decrease Willpower development</source><target>Zmniejsz koszt rozwoju Siły Woli</target></trans-unit>
+      <trans-unit id="profession.create.wp.inc" datatype="html"><source>Increase Willpower development</source><target>Zwiększ koszt rozwoju Siły Woli</target></trans-unit>
+
+      <trans-unit id="profession.create.label.fel" datatype="html">
+        <source>Fel <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Fellowship)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>Ogd <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Ogłada)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.fel.dec" datatype="html"><source>Decrease Fellowship development</source><target>Zmniejsz koszt rozwoju Ogłady</target></trans-unit>
+      <trans-unit id="profession.create.fel.inc" datatype="html"><source>Increase Fellowship development</source><target>Zwiększ koszt rozwoju Ogłady</target></trans-unit>
+
+      <trans-unit id="profession.create.label.a" datatype="html">
+        <source>A <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Attacks)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>A <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Ataki)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.a.dec" datatype="html"><source>Decrease Attacks development</source><target>Zmniejsz koszt rozwoju Ataków</target></trans-unit>
+      <trans-unit id="profession.create.a.inc" datatype="html"><source>Increase Attacks development</source><target>Zwiększ koszt rozwoju Ataków</target></trans-unit>
+
+      <trans-unit id="profession.create.label.w" datatype="html">
+        <source>W <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Wounds)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>Żyw <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Żywotność)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.w.dec" datatype="html"><source>Decrease Wounds development</source><target>Zmniejsz koszt rozwoju Żywotności</target></trans-unit>
+      <trans-unit id="profession.create.w.inc" datatype="html"><source>Increase Wounds development</source><target>Zwiększ koszt rozwoju Żywotności</target></trans-unit>
+
+      <trans-unit id="profession.create.label.m" datatype="html">
+        <source>M <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Movement)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>SZ <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Szybkość)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.m.dec" datatype="html"><source>Decrease Movement development</source><target>Zmniejsz koszt rozwoju Szybkości</target></trans-unit>
+      <trans-unit id="profession.create.m.inc" datatype="html"><source>Increase Movement development</source><target>Zwiększ koszt rozwoju Szybkości</target></trans-unit>
+
+      <trans-unit id="profession.create.label.mag" datatype="html">
+        <source>MAG <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Magic)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>MAG <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Magia)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="profession.create.mag.dec" datatype="html"><source>Decrease Magic development</source><target>Zmniejsz koszt rozwoju Magii</target></trans-unit>
+      <trans-unit id="profession.create.mag.inc" datatype="html"><source>Increase Magic development</source><target>Zwiększ koszt rozwoju Magii</target></trans-unit>
+
+      <!-- Profession Detail -->
+      <trans-unit id="profession.back.aria" datatype="html"><source>Back to professions list</source><target>Wróć do listy profesji</target></trans-unit>
+      <trans-unit id="profession.card.title" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{
+      p.name
+    }}"/></source>
+        <target><x id="INTERPOLATION" equiv-text="{{
+      p.name
+    }}"/></target>
+      </trans-unit>
+      <trans-unit id="profession.card.subtitle" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ p.description }}"/> </source>
+        <target><x id="INTERPOLATION" equiv-text="{{ p.description }}"/> </target>
+      </trans-unit>
+      <trans-unit id="profession.back" datatype="html"><source>Back</source><target>Wróć</target></trans-unit>
+      <trans-unit id="profession.development.title" datatype="html"><source> Development </source><target> Rozwój </target></trans-unit>
+
+      <!-- Core stat labels (profession detail) -->
+      <trans-unit id="label.ws" datatype="html"><source>WS</source><target>WW</target></trans-unit>
+      <trans-unit id="label.ws.full" datatype="html"><source>(Weapon Skill)</source><target>(Walka wręcz)</target></trans-unit>
+      <trans-unit id="label.bs" datatype="html"><source>BS</source><target>US</target></trans-unit>
+      <trans-unit id="label.bs.full" datatype="html"><source>(Ballistic Skill)</source><target>(Umiejętności strzeleckie)</target></trans-unit>
+      <trans-unit id="label.s" datatype="html"><source>S</source><target>S</target></trans-unit>
+      <trans-unit id="label.s.full" datatype="html"><source>(Strength)</source><target>(Siła)</target></trans-unit>
+      <trans-unit id="label.t" datatype="html"><source>T</source><target>Wt</target></trans-unit>
+      <trans-unit id="label.t.full" datatype="html"><source>(Toughness)</source><target>(Wytrzymałość)</target></trans-unit>
+      <trans-unit id="label.ag" datatype="html"><source>Ag</source><target>Zr</target></trans-unit>
+      <trans-unit id="label.ag.full" datatype="html"><source>(Agility)</source><target>(Zręczność)</target></trans-unit>
+      <trans-unit id="label.int" datatype="html"><source>Int</source><target>Int</target></trans-unit>
+      <trans-unit id="label.int.full" datatype="html"><source>(Intelligence)</source><target>(Inteligencja)</target></trans-unit>
+      <trans-unit id="label.wp" datatype="html"><source>WP</source><target>SW</target></trans-unit>
+      <trans-unit id="label.wp.full" datatype="html"><source>(Willpower)</source><target>(Siła Woli)</target></trans-unit>
+      <trans-unit id="label.fel" datatype="html"><source>Fel</source><target>Ogd</target></trans-unit>
+      <trans-unit id="label.fel.full" datatype="html"><source>(Fellowship)</source><target>(Ogłada)</target></trans-unit>
+      <trans-unit id="label.a" datatype="html"><source>A</source><target>A</target></trans-unit>
+      <trans-unit id="label.a.full" datatype="html"><source>(Attacks)</source><target>(Ataki)</target></trans-unit>
+      <trans-unit id="label.w" datatype="html"><source>W</source><target>Żyw</target></trans-unit>
+      <trans-unit id="label.w.full" datatype="html"><source>(Wounds)</source><target>(Żywotność)</target></trans-unit>
+      <trans-unit id="label.m" datatype="html"><source>M</source><target>SZ</target></trans-unit>
+      <trans-unit id="label.m.full" datatype="html"><source>(Movement)</source><target>(Szybkość)</target></trans-unit>
+      <trans-unit id="label.mag" datatype="html"><source>MAG</source><target>MAG</target></trans-unit>
+      <trans-unit id="label.mag.full" datatype="html"><source>(Magic)</source><target>(Magia)</target></trans-unit>
+
+      <trans-unit id="profession.skills.title" datatype="html"><source>Skills</source><target>Umiejętności</target></trans-unit>
+      <trans-unit id="profession.skills.none" datatype="html"><source>None.</source><target>Brak.</target></trans-unit>
+      <trans-unit id="profession.skill.item" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ ps.skill.name }}"/> (<x id="INTERPOLATION_1" equiv-text="{{ ps.skill.associatedCharacteristic }}"/>)</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ ps.skill.name }}"/> (<x id="INTERPOLATION_1" equiv-text="{{ ps.skill.associatedCharacteristic }}"/>)</target>
+      </trans-unit>
+      <trans-unit id="profession.skill.alt" datatype="html">
+        <source> or: <x id="INTERPOLATION" equiv-text="{{ alt.skill.name }}"/> </source>
+        <target> lub: <x id="INTERPOLATION" equiv-text="{{ alt.skill.name }}"/> </target>
+      </trans-unit>
+
+      <trans-unit id="profession.talents.title" datatype="html"><source>Talents</source><target>Talenty</target></trans-unit>
+      <trans-unit id="profession.talents.none" datatype="html"><source>None.</source><target>Brak.</target></trans-unit>
+      <trans-unit id="profession.talent.item" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{
+                  pt.talent.name
+                }}"/></source>
+        <target><x id="INTERPOLATION" equiv-text="{{
+                  pt.talent.name
+                }}"/></target>
+      </trans-unit>
+      <trans-unit id="profession.talent.alt" datatype="html">
+        <source> or: <x id="INTERPOLATION" equiv-text="{{ alt.talent.name }}"/> </source>
+        <target> lub: <x id="INTERPOLATION" equiv-text="{{ alt.talent.name }}"/> </target>
+      </trans-unit>
+
+      <trans-unit id="profession.entryexit.title" datatype="html"><source> Entry / Exit Professions </source><target> Profesje wejścia / wyjścia </target></trans-unit>
+      <trans-unit id="profession.entry.title" datatype="html"><source>Entry</source><target>Wejście</target></trans-unit>
+      <trans-unit id="profession.entry.none" datatype="html"><source>None.</source><target>Brak.</target></trans-unit>
+      <trans-unit id="profession.exit.title" datatype="html"><source>Exit</source><target>Wyjście</target></trans-unit>
+      <trans-unit id="profession.exit.none" datatype="html"><source>None.</source><target>Brak.</target></trans-unit>
     </body>
   </file>
 </xliff>

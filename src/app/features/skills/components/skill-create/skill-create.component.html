@@ -1,8 +1,10 @@
 <mat-card class="skill-create">
   <div class="page-heading">
-    <h1 class="page-title">Skill Creation Editor</h1>
+    <h1 class="page-title" i18n="Page title@@skillCreate.title">Skill Creation Editor</h1>
     <div class="page-divider" aria-hidden="true"></div>
-    <p class="page-subtitle">Define a new skill for the grim world of perilous adventure.</p>
+    <p class="page-subtitle" i18n="Page subtitle@@skillCreate.subtitle">
+      Define a new skill for the grim world of perilous adventure.
+    </p>
   </div>
 
   <form class="form" [formGroup]="form" (ngSubmit)="save()">
@@ -12,25 +14,32 @@
         <div class="left">
           <div class="row">
             <div class="section-label">
-              <mat-icon class="section-icon">edit_square</mat-icon>
-              <span>Skill Name</span>
+              <mat-icon class="section-icon" aria-hidden="true">edit_square</mat-icon>
+              <span i18n="Section label@@skillCreate.skillName.label">Skill Name</span>
             </div>
             <mat-form-field appearance="outline" class="full">
-              <input matInput formControlName="name" placeholder="e.g., Strike to Stun"
-                     aria-label="Nazwa umiejętności"/>
+              <input
+                matInput
+                formControlName="name"
+                placeholder="e.g., Strike to Stun"
+                i18n-placeholder="Placeholder@@skillCreate.skillName.placeholder"
+                aria-label="Skill name"
+                i18n-aria-label="Aria@@skillCreate.skillName.aria"
+              />
               @if (form.controls.name.touched && form.controls.name.invalid) {
-                <mat-error>Wymagana nazwa (max 100 znaków)</mat-error>
+                <mat-error i18n="Validation@@skillCreate.skillName.error">Required name (max 100 characters)</mat-error>
               }
             </mat-form-field>
           </div>
 
           <div class="row">
             <div class="section-label">
-              <mat-icon class="section-icon">category</mat-icon>
-              <span>Skill Type</span>
+              <mat-icon class="section-icon" aria-hidden="true">category</mat-icon>
+              <span i18n="Section label@@skillCreate.skillType.label">Skill Type</span>
             </div>
 
-            <div class="type-tiles" role="radiogroup" aria-label="Typ umiejętności">
+            <div class="type-tiles" role="radiogroup" aria-label="Skill type"
+                 i18n-aria-label="Aria@@skillCreate.skillType.aria">
               @for (t of skillTypes; track t.value) {
                 <label class="type-tile">
                   <input
@@ -40,6 +49,7 @@
                     [value]="t.value"
                     [checked]="form.controls.type.value === t.value"
                     (change)="form.controls.type.setValue(t.value)"
+                    [attr.aria-label]="t.value"
                   />
                   <div class="type-card">{{ t.value }}</div>
                 </label>
@@ -47,18 +57,20 @@
             </div>
 
             @if (form.controls.type.touched && form.controls.type.invalid) {
-              <mat-error>Wybierz typ umiejętności</mat-error>
+              <mat-error i18n="Validation@@skillCreate.skillType.error">Choose a skill type</mat-error>
             }
           </div>
 
           <div class="row">
-            <div class="characteristic-field" aria-label="Cecha powiązana">
+            <div class="characteristic-field" aria-label="Related characteristic"
+                 i18n-aria-label="Aria@@skillCreate.characteristic.aria">
               <div class="section-label">
-                <mat-icon class="section-icon">analytics</mat-icon>
-                <span>Related Characteristic</span>
+                <mat-icon class="section-icon" aria-hidden="true">analytics</mat-icon>
+                <span i18n="Section label@@skillCreate.characteristic.label">Related Characteristic</span>
               </div>
 
-              <div class="characteristic-tiles" role="radiogroup" aria-label="Wybierz cechę powiązaną">
+              <div class="characteristic-tiles" role="radiogroup" aria-label="Choose related characteristic"
+                   i18n-aria-label="Aria@@skillCreate.characteristic.groupAria">
                 @for (c of characteristics; track c.value) {
                   <label class="char-tile">
                     <input
@@ -68,6 +80,7 @@
                       [value]="c.value"
                       [checked]="form.controls.associatedCharacteristic.value === c.value"
                       (change)="form.controls.associatedCharacteristic.setValue(c.value)"
+                      [attr.aria-label]="c.label"
                     />
                     <div class="char-card">
                       <span class="char-short">{{ c.shortLabel }}</span>
@@ -78,7 +91,7 @@
               </div>
 
               @if (form.controls.associatedCharacteristic.touched && form.controls.associatedCharacteristic.invalid) {
-                <mat-error>Wybierz cechę</mat-error>
+                <mat-error i18n="Validation@@skillCreate.characteristic.error">Choose a characteristic</mat-error>
               }
             </div>
           </div>
@@ -87,8 +100,8 @@
         <!-- Right column -->
         <div class="right">
           <div class="section-label">
-            <mat-icon class="section-icon">history_edu</mat-icon>
-            <span>Skill Description &amp; Lore</span>
+            <mat-icon class="section-icon" aria-hidden="true">history_edu</mat-icon>
+            <span i18n="Section label@@skillCreate.description.label">Skill Description &amp; Lore</span>
           </div>
 
           <mat-form-field appearance="outline" class="full lore">
@@ -96,7 +109,9 @@
               matInput
               rows="10"
               placeholder="Detail the mechanics and the flavor of this skill. How is it practiced in the Old World? What are the grim consequences of failure?"
-              aria-label="Opis umiejętności"
+              i18n-placeholder="Placeholder@@skillCreate.description.placeholder"
+              aria-label="Skill description"
+              i18n-aria-label="Aria@@skillCreate.description.aria"
             ></textarea>
           </mat-form-field>
         </div>
@@ -104,24 +119,30 @@
     </mat-card-content>
 
     <div class="actions">
-      <a mat-stroked-button [routerLink]="['/skills']" aria-label="Anuluj">
-        <mat-icon>close</mat-icon>
-        Anuluj
-      </a>
+      <div class="action">
+        <a class="wax-seal wax-seal-cancel" [routerLink]="['/skills']" aria-label="Discard"
+           i18n-aria-label="Aria@@skillCreate.actions.discard.aria">
+          <mat-icon class="wax-icon" aria-hidden="true">close</mat-icon>
+        </a>
+        <div class="action-label" i18n="Action label@@skillCreate.actions.discard">Discard</div>
+      </div>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="isSaving" aria-label="Zapisz">
-        @if (!isSaving) {
-          <ng-container>
-            <mat-icon>save</mat-icon>
-            Zapisz
-          </ng-container>
-        } @else {
-          <ng-container>
-            <mat-spinner diameter="18"></mat-spinner>
-            Zapisywanie
-          </ng-container>
-        }
-      </button>
+      <div class="action">
+        <button
+          class="wax-seal wax-seal-save"
+          type="submit"
+          [disabled]="isSaving"
+          aria-label="Affix seal"
+          i18n-aria-label="Aria@@skillCreate.actions.save.aria"
+        >
+          @if (!isSaving) {
+            <mat-icon class="wax-icon" aria-hidden="true">check</mat-icon>
+          } @else {
+            <mat-spinner class="wax-spinner" diameter="28"></mat-spinner>
+          }
+        </button>
+        <div class="action-label action-label-accent" i18n="Action label@@skillCreate.actions.save">Affix Seal</div>
+      </div>
     </div>
   </form>
 </mat-card>
