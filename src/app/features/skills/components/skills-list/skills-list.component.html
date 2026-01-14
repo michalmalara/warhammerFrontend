@@ -40,33 +40,6 @@
     </div>
 
     <div class="quick-filters">
-      <span class="quick-label">Quick Filters:</span>
-
-      <button
-        mat-stroked-button
-        class="quick-pill"
-        type="button"
-        [class.active]="typeFilter() === 'basic'"
-        (click)="setTypeFilter(typeFilter() === 'basic' ? null : 'basic')"
-        [attr.aria-pressed]="typeFilter() === 'basic'"
-      >
-        <span>Type: Basic</span>
-        <mat-icon aria-hidden="true">{{ typeFilter() === 'basic' ? 'close' : 'keyboard_arrow_down' }}</mat-icon>
-      </button>
-
-      <button
-        mat-stroked-button
-        class="quick-pill"
-        type="button"
-        [class.active]="typeFilter() === 'advanced'"
-        (click)="setTypeFilter(typeFilter() === 'advanced' ? null : 'advanced')"
-        [attr.aria-pressed]="typeFilter() === 'advanced'"
-      >
-        <span>Type: Advanced</span>
-        <mat-icon aria-hidden="true">{{ typeFilter() === 'advanced' ? 'close' : 'keyboard_arrow_down' }}</mat-icon>
-      </button>
-
-      <span class="divider" aria-hidden="true"></span>
 
       <button
         mat-stroked-button
