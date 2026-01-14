@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
 
-import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -13,7 +12,6 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatOptionModule} from '@angular/material/core';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
@@ -30,7 +28,6 @@ import {CreateProfessionPayload} from '../../models/profession.models';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatIconModule,
@@ -40,7 +37,6 @@ import {CreateProfessionPayload} from '../../models/profession.models';
     MatChipsModule,
     MatAutocompleteModule,
     MatOptionModule,
-    MatButtonToggleModule,
   ],
   templateUrl: './profession-create.component.html',
   styleUrls: ['./profession-create.component.scss'],

@@ -47,24 +47,33 @@
               </mat-form-field>
             </div>
 
-            <!-- Profession type toggle placed under the name (mat-button-toggle-group) -->
+            <!-- Profession type: custom buttons styled like the mockup -->
             <div class="row" style="margin-top: 8px;">
-              <mat-button-toggle-group class="type-toggle-group"
-                                       [value]="form.controls.isAdvanced.value"
-                                       (change)="form.controls.isAdvanced.setValue($event.value)"
-                                       aria-label="Profession type">
+              <div class="type-toggle" role="group" aria-label="Profession type">
+                <button
+                  type="button"
+                  class="type-toggle__btn"
+                  [class.is-active]="!form.controls.isAdvanced.value"
+                  [attr.aria-pressed]="!form.controls.isAdvanced.value"
+                  aria-label="Podstawowa"
+                  (click)="form.controls.isAdvanced.setValue(false)"
+                >
+                  <mat-icon class="type-toggle__icon">person_search</mat-icon>
+                  <span class="type-toggle__label">Podstawowa</span>
+                </button>
 
-                <mat-button-toggle class="type-toggle-btn" [value]="false" aria-label="Podstawowa">
-                  <mat-icon class="type-icon">person_search</mat-icon>
-                  <span class="type-label">Podstawowa</span>
-                </mat-button-toggle>
-
-                <mat-button-toggle class="type-toggle-btn" [value]="true" aria-label="Zaawansowana">
-                  <mat-icon class="type-icon">military_tech</mat-icon>
-                  <span class="type-label">Zaawansowana</span>
-                </mat-button-toggle>
-
-              </mat-button-toggle-group>
+                <button
+                  type="button"
+                  class="type-toggle__btn"
+                  [class.is-active]="form.controls.isAdvanced.value"
+                  [attr.aria-pressed]="form.controls.isAdvanced.value"
+                  aria-label="Zaawansowana"
+                  (click)="form.controls.isAdvanced.setValue(true)"
+                >
+                  <mat-icon class="type-toggle__icon">military_tech</mat-icon>
+                  <span class="type-toggle__label">Zaawansowana</span>
+                </button>
+              </div>
             </div>
           </div>
 
