@@ -10,7 +10,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
-import {catchError, Observable, of} from 'rxjs';
+import {toObservable} from '@angular/core/rxjs-interop';
+
+import {catchError, Observable, of, switchMap} from 'rxjs';
 
 import {SkillsApiService} from '../../services/skills-api.service';
 import {
@@ -41,7 +43,19 @@ import {
 export class SkillsListComponent {
   private readonly api = inject(SkillsApiService);
 
-  readonly skills$: Observable<Skill[] | null> = this.api.list().pipe(catchError(() => of(null)));
+  /**
+   * Trik na łatwe odświeżanie listy po operacjach mutujących (create/delete/update).
+   * Zwiększamy licznik, a skills$ pobiera listę ponownie.
+   */
+  private readonly refreshTick = signal(0);
+
+  /** Idki umiejętności aktualnie usuwanych (UI disable na przycisku). */
+  readonly deletingIds = signal<Set<number>>(new Set());
+
+  readonly skills$: Observable<Skill[] | null> = toObservable(this.refreshTick).pipe(
+    switchMap(() => this.api.list()),
+    catchError(() => of(null)),
+  );
 
   /** UI state */
   readonly query = signal('');
@@ -128,5 +142,43 @@ export class SkillsListComponent {
 
   applyFilters(skills: Skill[]): Skill[] {
     return skills.filter(s => this.matchesAll(s));
+  }
+
+  isDeleting(skill: Skill): boolean {
+    return this.deletingIds().has(skill.id);
+  }
+
+  onDeleteSkill(skill: Skill) {
+    // Prosty guard, gdyby ktoś kliknął kilka razy.
+    if (this.deletingIds().has(skill.id)) return;
+
+    const ok = window.confirm(`Usunąć umiejętność „${skill.name}”?`);
+    if (!ok) return;
+
+    this.deletingIds.update(set => {
+      const next = new Set(set);
+      next.add(skill.id);
+      return next;
+    });
+
+    this.api.delete(skill.id).subscribe({
+      next: () => {
+        this.refreshTick.update(v => v + 1);
+      },
+      error: () => {
+        this.deletingIds.update(set => {
+          const next = new Set(set);
+          next.delete(skill.id);
+          return next;
+        });
+      },
+      complete: () => {
+        this.deletingIds.update(set => {
+          const next = new Set(set);
+          next.delete(skill.id);
+          return next;
+        });
+      },
+    });
   }
 }

@@ -162,6 +162,18 @@
                   }
                   <mat-chip class="chip">{{ s.associatedCharacteristic }}</mat-chip>
                 </mat-chip-set>
+
+                <button
+                  mat-icon-button
+                  class="danger-icon-btn"
+                  color="warn"
+                  type="button"
+                  aria-label="Usuń umiejętność"
+                  (click)="$event.stopPropagation(); $event.preventDefault(); onDeleteSkill(s)"
+                  [disabled]="isDeleting(s)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
               </div>
             </article>
           }
