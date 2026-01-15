@@ -1,23 +1,22 @@
 import {inject, Injectable} from '@angular/core';
 
 import {CrudApiService} from '../../../shared/services/crud-api.service';
-import {CreateProfessionPayload, Profession, ProfessionSummary} from '../models/profession.models';
+import {CreateProfessionPayload, Profession} from '../models/profession.models';
 
 @Injectable({providedIn: 'root'})
 export class ProfessionsApiService {
   private readonly crud = inject(CrudApiService);
 
   /**
-   * Endpointy DRF. Jeśli w backendzie są inne, zmień tylko tę stałą.
-   *
-   * Przykłady:
-   * - '/api/professions/'
-   * - '/professionsBank/professions/'
+   * Backend (warhammer/urls.py) montuje professionsBank pod '/professions/'.
+   * A router DRF w professionsBank/urls.py rejestruje ProfessionView pod '' (root),
+   * więc endpoint listy to po prostu '/professions/'.
    */
-  private static readonly PATH = '/api/professions/';
+  private static readonly PATH = '/professions/';
 
   list() {
-    return this.crud.list<Array<ProfessionSummary | Profession>>(ProfessionsApiService.PATH);
+    // Zgodnie z serializerem ProfessionSerializer (GET): pełny obiekt Profession
+    return this.crud.list<Profession[]>(ProfessionsApiService.PATH);
   }
 
   getById(id: number) {
@@ -41,11 +40,11 @@ export class ProfessionsApiService {
   }
 
   /**
-   * Wyszukiwanie profesji (autocomplete). Zwraca listę `ProfessionSummary`.
-   * Używa parametru query `search` (dostosuj jeśli backend oczekuje innego parametru, np. `q`).
+   * Wyszukiwanie profesji (autocomplete).
+   * Jeśli backend wspiera parametr `search`, można to wykorzystać w przyszłości.
    */
   search(query: string) {
     const params = query ? {search: query} : undefined;
-    return this.crud.list<ProfessionSummary[]>(ProfessionsApiService.PATH, params);
+    return this.crud.list<Profession[]>(ProfessionsApiService.PATH, params);
   }
 }

@@ -1,6 +1,8 @@
 export interface Skill {
   id: number;
   name: string;
+  description?: string;
+  type?: string;
   associatedCharacteristic: string;
 }
 
@@ -14,6 +16,7 @@ export interface ProfessionSummary {
   id: number;
   name: string;
   description: string;
+  type: string;
 }
 
 export interface ProfessionSkillAlternative {
@@ -45,6 +48,7 @@ export interface Profession {
   id: number;
   name: string;
   description: string;
+  type: string;
 
   weaponSkillsDevelopment: number;
   ballisticSkillsDevelopment: number;
@@ -70,6 +74,7 @@ export interface Profession {
 export interface CreateProfessionPayload {
   name: string;
   description: string;
+  type?: string;
 
   weaponSkillsDevelopment?: number;
   ballisticSkillsDevelopment?: number;

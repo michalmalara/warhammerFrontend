@@ -1,41 +1,132 @@
-<mat-card>
-  <mat-card-title>Professions</mat-card-title>
-  <mat-card-subtitle>Overview and creation of professions</mat-card-subtitle>
-
-  <mat-card-content>
-    <div class="actions">
-      <a
-        mat-raised-button
-        color="primary"
-        [routerLink]="['/professions/new']"
-        aria-label="Create new profession"
-      >
-        <mat-icon>add</mat-icon>
-        Add profession
-      </a>
+<!-- Layout inspirowany mockupem "Professions Library" -->
+<section class="page parchment-texture">
+  <header class="page__heading">
+    <div class="page__heading-left">
+      <h2 class="page__title">PROFESSIONS LIBRARY</h2>
+      <p class="page__quote">
+        "From the lowliest rat catcher to the most divine witch hunter, every soul in the Old World has a path.
+        Some lead to glory, most lead to an early grave."
+      </p>
     </div>
 
-    @if (professions$ | async; as professions) {
-      @if (professions.length === 0) {
-        <p>No professions available.</p>
-      } @else {
-        <mat-nav-list>
-          @for (p of professions; track trackById($index, p)) {
-            <a
-              mat-list-item
-              [routerLink]="['/professions', p.id]"
-              aria-label="Open profession {{ p.name }}"
-            >
-              <div matListItemTitle>{{ p.name }}</div>
-              <div matListItemLine>{{ p.description }}</div>
-            </a>
-          }
-        </mat-nav-list>
-      }
+    <div class="page__heading-right">
+      <div class="segment" role="tablist" aria-label="Profession tier filter">
+        <button
+          type="button"
+          class="segment__btn"
+          [class.is-active]="(tierFilter$ | async) === 'all'"
+          (click)="setTierFilter('all')"
+        >
+          ALL CAREERS
+        </button>
+        <button
+          type="button"
+          class="segment__btn"
+          [class.is-active]="(tierFilter$ | async) === 'basic'"
+          (click)="setTierFilter('basic')"
+        >
+          BASIC
+        </button>
+        <button
+          type="button"
+          class="segment__btn"
+          [class.is-active]="(tierFilter$ | async) === 'advanced'"
+          (click)="setTierFilter('advanced')"
+        >
+          ADVANCED
+        </button>
+      </div>
+
+      <button type="button" class="export-btn" aria-label="Export professions">
+        <mat-icon class="export-btn__icon">download</mat-icon>
+        EXPORT
+      </button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <mat-form-field class="search" appearance="outline">
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        type="text"
+        placeholder="Search the archives..."
+        [value]="(search$ | async) ?? ''"
+        (input)="setSearch(($any($event.target).value) ?? '')"
+        aria-label="Search professions"
+      />
+    </mat-form-field>
+
+    <a class="create-btn" mat-raised-button color="primary" [routerLink]="['/professions/new']"
+       aria-label="Create new profession">
+      <mat-icon>add</mat-icon>
+      Add profession
+    </a>
+  </div>
+
+  @if (filteredProfessions$ | async; as professions) {
+    @if (professions.length === 0) {
+      <div class="empty-state">
+        <h3>No professions found</h3>
+        <p>Try changing filters or search query.</p>
+      </div>
     } @else {
-      <div class="loading">
-        <mat-spinner diameter="32"></mat-spinner>
+      <div class="grid" role="list">
+        @for (p of professions; track trackById($index, p)) {
+          <a class="profession-card" role="listitem" [routerLink]="['/professions', p.id]"
+             aria-label="Open profession {{ p.name }}">
+            <div class="profession-card__glow" aria-hidden="true"></div>
+
+            <div class="profession-card__top">
+              <span class="profession-card__meta">
+                {{ getProfessionClassLabel(p) }} • {{ getProfessionTierLabel(p) }}
+              </span>
+              <button
+                type="button"
+                class="profession-card__delete"
+                aria-label="Delete profession (not implemented)"
+                (click)="$event.preventDefault(); $event.stopPropagation()"
+              >
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </div>
+
+            <div class="profession-card__body">
+              <div class="profession-card__thumb" aria-hidden="true"></div>
+
+              <div class="profession-card__content">
+                <h3 class="profession-card__title">{{ p.name }}</h3>
+                <p class="profession-card__desc">
+                  {{ p.description || '—' }}
+                </p>
+              </div>
+            </div>
+
+            <div class="profession-card__footer">
+              <span class="profession-card__source">SOURCE: CORE RULEBOOK</span>
+              <span class="profession-card__details">DETAILS</span>
+            </div>
+          </a>
+        }
+
+        <a class="profession-card profession-card--placeholder" [routerLink]="['/professions/new']"
+           aria-label="Document new profession">
+          <div class="placeholder__icon" aria-hidden="true">
+            <mat-icon>add_circle</mat-icon>
+          </div>
+          <div class="placeholder__text">DOCUMENT NEW PROFESSION</div>
+        </a>
       </div>
     }
-  </mat-card-content>
-</mat-card>
+  } @else {
+    <div class="loading">
+      <mat-spinner diameter="32"></mat-spinner>
+    </div>
+  }
+
+  <a class="fab-seal" [routerLink]="['/professions/new']" aria-label="Create Profession">
+    <span class="fab-seal__ring" aria-hidden="true"></span>
+    <mat-icon class="fab-seal__icon">add</mat-icon>
+    <span class="fab-seal__tooltip">Create Profession</span>
+  </a>
+</section>
