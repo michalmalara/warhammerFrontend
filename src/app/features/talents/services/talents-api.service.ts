@@ -37,5 +37,14 @@ export class TalentsApiService {
   delete(id: number) {
     return this.crud.delete(TalentsApiService.PATH, id);
   }
-}
 
+  /**
+   * Wyszukiwanie talentów (autocomplete).
+   * Backend: TalentView ma filter_backends = [FullTextSearchFilter].
+   */
+  search(query: string) {
+    const q = (query || '').trim();
+    const params = q ? {search: q} : undefined;
+    return this.crud.list<Talent[]>(TalentsApiService.PATH, params);
+  }
+}

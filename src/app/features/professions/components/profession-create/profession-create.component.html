@@ -111,17 +111,25 @@
               <mat-chip-grid #skillList aria-label="Skills">
                 <mat-chip *ngFor="let s of skills.controls; let i = index" [removable]="true"
                           (removed)="removeSkill(i)">
-                  {{ s.value }}
+                  {{ (s.value && (s.value.name || s.value)) }}
                   <mat-icon matChipRemove>close</mat-icon>
                 </mat-chip>
                 <input
                   matInput
-                  placeholder="Add skill..."
+                  [formControl]="skillSearchControl"
+                  [matAutocomplete]="skillAuto"
+                  placeholder="Search skills (min 3 chars)..."
                   [matChipInputFor]="skillList"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   (matChipInputTokenEnd)="addSkillFromChip($event)"
                 />
               </mat-chip-grid>
+
+              <mat-autocomplete #skillAuto="matAutocomplete" (optionSelected)="selectSkill($event)">
+                <mat-option *ngFor="let o of skillsOptions$ | async" [value]="o">
+                  {{ o.name }}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
           </div>
         </mat-card-content>
@@ -136,17 +144,25 @@
               <mat-chip-grid #talentList aria-label="Talents">
                 <mat-chip *ngFor="let t of talents.controls; let i = index" [removable]="true"
                           (removed)="removeTalent(i)">
-                  {{ t.value }}
+                  {{ (t.value && (t.value.name || t.value)) }}
                   <mat-icon matChipRemove>close</mat-icon>
                 </mat-chip>
                 <input
                   matInput
-                  placeholder="Add talent..."
+                  [formControl]="talentSearchControl"
+                  [matAutocomplete]="talentAuto"
+                  placeholder="Search talents (min 3 chars)..."
                   [matChipInputFor]="talentList"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   (matChipInputTokenEnd)="addTalentFromChip($event)"
                 />
               </mat-chip-grid>
+
+              <mat-autocomplete #talentAuto="matAutocomplete" (optionSelected)="selectTalent($event)">
+                <mat-option *ngFor="let o of talentsOptions$ | async" [value]="o">
+                  {{ o.name }}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
           </div>
         </mat-card-content>

@@ -37,5 +37,14 @@ export class SkillsApiService {
   delete(id: number) {
     return this.crud.delete(SkillsApiService.PATH, id);
   }
-}
 
+  /**
+   * Wyszukiwanie umiejętności (autocomplete).
+   * Backend: SkillView ma filter_backends = [FullTextSearchFilter].
+   */
+  search(query: string) {
+    const q = (query || '').trim();
+    const params = q ? {search: q} : undefined;
+    return this.crud.list<Skill[]>(SkillsApiService.PATH, params);
+  }
+}

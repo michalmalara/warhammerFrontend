@@ -17,10 +17,12 @@ import {MatOptionModule} from '@angular/material/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 import {finalize} from 'rxjs/operators';
-import {catchError, debounceTime, distinctUntilChanged, of, startWith, switchMap} from 'rxjs';
+import {catchError, debounceTime, distinctUntilChanged, map, of, startWith, switchMap} from 'rxjs';
 
 import {ProfessionsApiService} from '../../services/professions-api.service';
 import {CreateProfessionPayload} from '../../models/profession.models';
+import {SkillsApiService} from '../../../skills/services/skills-api.service';
+import {TalentsApiService} from '../../../talents/services/talents-api.service';
 
 @Component({
   selector: 'app-profession-create',
@@ -46,8 +48,12 @@ import {CreateProfessionPayload} from '../../models/profession.models';
 export class ProfessionCreateComponent {
   private readonly fb = inject(FormBuilder);
   private readonly api = inject(ProfessionsApiService);
+  private readonly skillsApi = inject(SkillsApiService);
+  private readonly talentsApi = inject(TalentsApiService);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
+
+  private static readonly MIN_AUTOCOMPLETE_CHARS = 3;
 
   isSaving = false;
 
@@ -65,6 +71,33 @@ export class ProfessionCreateComponent {
     debounceTime(300),
     distinctUntilChanged(),
     switchMap((q) => this.api.search(q || '').pipe(catchError(() => of([]))))
+  );
+
+  // skills/talents autocomplete (>= 3 znaki)
+  readonly skillSearchControl = new FormControl('');
+  skillsOptions$ = this.skillSearchControl.valueChanges.pipe(
+    startWith(''),
+    map((v) => (v || '').toString().trim()),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((q) =>
+      q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
+        ? this.skillsApi.search(q).pipe(catchError(() => of([])))
+        : of([])
+    )
+  );
+
+  readonly talentSearchControl = new FormControl('');
+  talentsOptions$ = this.talentSearchControl.valueChanges.pipe(
+    startWith(''),
+    map((v) => (v || '').toString().trim()),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((q) =>
+      q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
+        ? this.talentsApi.search(q).pipe(catchError(() => of([])))
+        : of([])
+    )
   );
 
   readonly form = this.fb.nonNullable.group({
@@ -85,7 +118,7 @@ export class ProfessionCreateComponent {
     movementDevelopment: [0, [Validators.required, Validators.min(0)]],
     magicDevelopment: [0, [Validators.required, Validators.min(0)]],
 
-    // dynamic lists (skills / talents)
+    // dynamic lists (skills / talents) - przechowujemy string (ręczny wpis) albo obiekt {id, name} z autocomplete
     skills: this.fb.array([]),
     talents: this.fb.array([]),
     trappings: ['', [Validators.maxLength(2000)]],
@@ -157,6 +190,10 @@ export class ProfessionCreateComponent {
     // map skills/talents arrays to number[] of IDs when possible
     const skillsIds: number[] = [];
     for (const s of (v.skills || [])) {
+      if (s && typeof s === 'object' && 'id' in s && typeof (s as any).id === 'number') {
+        skillsIds.push((s as any).id);
+        continue;
+      }
       const n = Number(s);
       if (!Number.isNaN(n) && Number.isFinite(n)) skillsIds.push(n);
     }
@@ -164,6 +201,10 @@ export class ProfessionCreateComponent {
 
     const talentsIds: number[] = [];
     for (const t of (v.talents || [])) {
+      if (t && typeof t === 'object' && 'id' in t && typeof (t as any).id === 'number') {
+        talentsIds.push((t as any).id);
+        continue;
+      }
       const n = Number(t);
       if (!Number.isNaN(n) && Number.isFinite(n)) talentsIds.push(n);
     }
@@ -227,6 +268,8 @@ export class ProfessionCreateComponent {
     if (event.chipInput) {
       event.chipInput.clear();
     }
+    // czyścimy też kontrolkę wyszukiwania, żeby nie zostawał tekst w input
+    this.skillSearchControl.setValue('');
   }
 
   addTalentFromChip(event: MatChipInputEvent) {
@@ -237,6 +280,7 @@ export class ProfessionCreateComponent {
     if (event.chipInput) {
       event.chipInput.clear();
     }
+    this.talentSearchControl.setValue('');
   }
 
   removeSkill(index: number) {
@@ -247,6 +291,22 @@ export class ProfessionCreateComponent {
   removeTalent(index: number) {
     if (index < 0 || index >= this.talents.length) return;
     this.talents.removeAt(index);
+  }
+
+  selectSkill(event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as { id: number; name: string };
+    if (opt && opt.id) {
+      this.skills.push(new FormControl({id: opt.id, name: opt.name}));
+    }
+    this.skillSearchControl.setValue('');
+  }
+
+  selectTalent(event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as { id: number; name: string };
+    if (opt && opt.id) {
+      this.talents.push(new FormControl({id: opt.id, name: opt.name}));
+    }
+    this.talentSearchControl.setValue('');
   }
 
   // Career exits helpers (mat-chip)
