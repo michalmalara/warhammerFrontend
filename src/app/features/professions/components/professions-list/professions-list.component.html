@@ -36,11 +36,6 @@
           ADVANCED
         </button>
       </div>
-
-      <button type="button" class="export-btn" aria-label="Export professions">
-        <mat-icon class="export-btn__icon">download</mat-icon>
-        EXPORT
-      </button>
     </div>
   </header>
 
@@ -56,12 +51,6 @@
         aria-label="Search professions"
       />
     </mat-form-field>
-
-    <a class="create-btn" mat-raised-button color="primary" [routerLink]="['/professions/new']"
-       aria-label="Create new profession">
-      <mat-icon>add</mat-icon>
-      Add profession
-    </a>
   </div>
 
   @if (filteredProfessions$ | async; as professions) {
@@ -84,8 +73,9 @@
               <button
                 type="button"
                 class="profession-card__delete"
-                aria-label="Delete profession (not implemented)"
-                (click)="$event.preventDefault(); $event.stopPropagation()"
+                aria-label="Delete profession"
+                (click)="$event.preventDefault(); $event.stopPropagation(); onDeleteProfession(p)"
+                [disabled]="isDeleting(p)"
               >
                 <mat-icon>delete_forever</mat-icon>
               </button>

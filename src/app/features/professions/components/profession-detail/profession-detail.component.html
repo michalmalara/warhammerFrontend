@@ -1,213 +1,294 @@
-@if (profession$ | async; as p) {
-  <mat-card>
-    <mat-card-title i18n="Card title|Profession name@@profession.card.title">{{
-      p.name
-    }}</mat-card-title>
-    <mat-card-subtitle i18n="Card subtitle|Short profession description@@profession.card.subtitle"
-      >{{ p.description }}
-    </mat-card-subtitle>
+﻿@if (profession$ | async; as p) {
+  <div class="page parchment-texture">
+    <header class="page__heading">
+      <div class="page__heading-left">
+        <div class="page__title-row">
+          <h2 class="page__title" i18n="Card title|Profession name@@profession.card.title">{{ p.name }}</h2>
 
-    <mat-card-content>
-      <div class="actions">
+          @if (p.type) {
+            <span class="badge" i18n="Profession type badge|Profession type@@profession.badge.type">{{ p.type }}</span>
+          }
+        </div>
+
+        <p class="page__subtitle" i18n="Card subtitle|Short profession description@@profession.card.subtitle">
+          “{{ p.description }}”
+        </p>
+      </div>
+
+      <div class="page__heading-right">
         <a
+          class="back-btn"
           mat-stroked-button
           [routerLink]="['/professions']"
           aria-label="Back to professions list"
           i18n-aria-label="Link aria-label|Back button aria-label@@profession.back.aria"
         >
-          <mat-icon>arrow_back</mat-icon>
-          <span i18n="Action label|Back button text@@profession.back">Back</span>
+          <mat-icon class="back-btn__icon">key</mat-icon>
+          <span i18n="Action label|Back button text@@profession.back">Back to Library</span>
         </a>
       </div>
+    </header>
 
-      <section class="section">
-        <h3 i18n="Section heading|Development section heading@@profession.development.title">
-          Development
-        </h3>
-        <div class="grid">
-          <div>
-            <b i18n="Abbrev: WS|Weapon Skill abbreviation@@label.ws">WS</b>:
-            {{ p.weaponSkillsDevelopment }}
-            <span class="muted" i18n="Label context|Weapon Skill full name@@label.ws.full"
-              >(Weapon Skill)</span
-            >
+    <section class="intro">
+      <div class="intro__hairline" aria-hidden="true"></div>
+      <h3 class="intro__title" i18n="Section heading|Profession description heading@@profession.about.title">
+        The Life of a Warden
+      </h3>
+      <div class="intro__hairline" aria-hidden="true"></div>
+
+      <p class="intro__text" i18n="Profession long description|Profession description block@@profession.about.text">
+        {{ p.description }}
+      </p>
+    </section>
+
+    <section class="panel">
+      <h3 class="panel__title" i18n="Section heading|Development section heading@@profession.development.title">
+        <mat-icon class="panel__icon">analytics</mat-icon>
+        Advance Scheme
+      </h3>
+
+      <div class="advance">
+        <!-- Primary: 8 columns, 2 rows (headers + values) -->
+        <div class="advance__grid">
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: WS|Weapon Skill abbreviation@@label.ws">WS</div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: BS|Ballistic Skill abbreviation@@label.bs">BS
           </div>
-          <div>
-            <b i18n="Abbrev: BS|Ballistic Skill abbreviation@@label.bs">BS</b>:
-            {{ p.ballisticSkillsDevelopment }}
-            <span class="muted" i18n="Label context|Ballistic Skill full name@@label.bs.full"
-              >(Ballistic Skill)</span
-            >
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: S|Strength abbreviation@@label.s">S</div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: T|Toughness abbreviation@@label.t">T</div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: Ag|Agility abbreviation@@label.ag">Ag</div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: Int|Intelligence abbreviation@@label.int">Int
           </div>
-          <div>
-            <b i18n="Abbrev: S|Strength abbreviation@@label.s">S</b>: {{ p.strengthDevelopment }}
-            <span class="muted" i18n="Label context|Strength full name@@label.s.full"
-              >(Strength)</span
-            >
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: WP|Willpower abbreviation@@label.wp">WP</div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: Fel|Fellowship abbreviation@@label.fel">Fel</div>
+
+          <div class="advance__cell advance__cell--val">
+            @if (p.weaponSkillsDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.weaponSkillsDevelopment * 5 }}
+            }
           </div>
-          <div>
-            <b i18n="Abbrev: T|Toughness abbreviation@@label.t">T</b>: {{ p.toughnessDevelopment }}
-            <span class="muted" i18n="Label context|Toughness full name@@label.t.full"
-              >(Toughness)</span
-            >
+          <div class="advance__cell advance__cell--val">
+            @if (p.ballisticSkillsDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.ballisticSkillsDevelopment * 5 }}
+            }
           </div>
-          <div>
-            <b i18n="Abbrev: Ag|Agility abbreviation@@label.ag">Ag</b>: {{ p.agilityDevelopment }}
-            <span class="muted" i18n="Label context|Agility full name@@label.ag.full"
-              >(Agility)</span
-            >
+          <div class="advance__cell advance__cell--val">
+            @if (p.strengthDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.strengthDevelopment * 5 }}
+            }
           </div>
-          <div>
-            <b i18n="Abbrev: Int|Intelligence abbreviation@@label.int">Int</b>:
-            {{ p.intelligenceDevelopment }}
-            <span class="muted" i18n="Label context|Intelligence full name@@label.int.full"
-              >(Intelligence)</span
-            >
+          <div class="advance__cell advance__cell--val">
+            @if (p.toughnessDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.toughnessDevelopment * 5 }}
+            }
           </div>
-          <div>
-            <b i18n="Abbrev: WP|Willpower abbreviation@@label.wp">WP</b>:
-            {{ p.willpowerDevelopment }}
-            <span class="muted" i18n="Label context|Willpower full name@@label.wp.full"
-              >(Willpower)</span
-            >
+          <div class="advance__cell advance__cell--val">
+            @if (p.agilityDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.agilityDevelopment * 5 }}
+            }
           </div>
-          <div>
-            <b i18n="Abbrev: Fel|Fellowship abbreviation@@label.fel">Fel</b>:
-            {{ p.fellowshipDevelopment }}
-            <span class="muted" i18n="Label context|Fellowship full name@@label.fel.full"
-              >(Fellowship)</span
-            >
+          <div class="advance__cell advance__cell--val">
+            @if (p.intelligenceDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.intelligenceDevelopment * 5 }}
+            }
           </div>
-          <div>
-            <b i18n="Abbrev: A|Attacks abbreviation@@label.a">A</b>: {{ p.attacksDevelopment }}
-            <span class="muted" i18n="Label context|Attacks full name@@label.a.full"
-              >(Attacks)</span
-            >
+          <div class="advance__cell advance__cell--val">
+            @if (p.willpowerDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.willpowerDevelopment * 5 }}
+            }
           </div>
-          <div>
-            <b i18n="Abbrev: W|Wounds abbreviation@@label.w">W</b>: {{ p.woundsDevelopment }}
-            <span class="muted" i18n="Label context|Wounds full name@@label.w.full">(Wounds)</span>
-          </div>
-          <div>
-            <b i18n="Abbrev: M|Movement abbreviation@@label.m">M</b>: {{ p.movementDevelopment }}
-            <span class="muted" i18n="Label context|Movement full name@@label.m.full"
-              >(Movement)</span
-            >
-          </div>
-          <div>
-            <b i18n="Abbrev: MAG|Magic abbreviation@@label.mag">MAG</b>: {{ p.magicDevelopment }}
-            <span class="muted" i18n="Label context|Magic full name@@label.mag.full">(Magic)</span>
+          <div class="advance__cell advance__cell--val">
+            @if (p.fellowshipDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.fellowshipDevelopment * 5 }}
+            }
           </div>
         </div>
-      </section>
 
-      <mat-divider></mat-divider>
+        <!-- Secondary: 8 columns, 2 rows (headers + values) -->
+        <div class="advance__grid advance__grid--secondary">
+          <!-- headers row -->
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: A|Attacks abbreviation@@label.a">A</div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: W|Wounds abbreviation@@label.w">W</div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: SB|Strength Bonus abbreviation@@label.sb">SB
+          </div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: TB|Toughness Bonus abbreviation@@label.tb">TB
+          </div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: M|Movement abbreviation@@label.m">M</div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: Mag|Magic abbreviation@@label.mag">Mag</div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: IP|Insanity Points abbreviation@@label.ip">IP
+          </div>
+          <div class="advance__cell advance__cell--head" i18n="Abbrev: FP|Fate Points abbreviation@@label.fp">FP</div>
 
-      <section class="section">
-        <h3 i18n="Section heading|Skills section heading@@profession.skills.title">Skills</h3>
+          <!-- values row -->
+          <div class="advance__cell advance__cell--val">
+            @if (p.attacksDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.attacksDevelopment }}
+            }
+          </div>
+          <div class="advance__cell advance__cell--val">
+            @if (p.woundsDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.woundsDevelopment }}
+            }
+          </div>
+          <div class="advance__cell advance__cell--val">—</div>
+          <div class="advance__cell advance__cell--val">—</div>
+          <div class="advance__cell advance__cell--val">
+            @if (p.movementDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.movementDevelopment }}
+            }
+          </div>
+          <div class="advance__cell advance__cell--val">
+            @if (p.magicDevelopment === 0) {
+              —
+            } @else {
+              +{{ p.magicDevelopment }}
+            }
+          </div>
+          <div class="advance__cell advance__cell--val">—</div>
+          <div class="advance__cell advance__cell--val">—</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tri">
+      <div class="list">
+        <div class="list__head">
+          <mat-icon class="list__icon">workspace_premium</mat-icon>
+          <h4 class="list__title" i18n="Section heading|Skills section heading@@profession.skills.title">Skills</h4>
+        </div>
+
         @if (p.skills.length === 0) {
-          <p i18n="Empty list|No skills available message@@profession.skills.none">None.</p>
+          <p class="empty" i18n="Empty list|No skills available message@@profession.skills.none">None.</p>
         } @else {
-          <div class="chips">
+          <ul class="bullets">
             @for (ps of p.skills; track trackById($index, ps)) {
-              <mat-chip-set>
-                <mat-chip>
-                  <span
-                    i18n="
-                      Skill with characteristic|Skill name and characteristic@@profession.skill.item"
-                    >{{ ps.skill.name }} ({{ ps.skill.associatedCharacteristic }})</span
-                  >
-                </mat-chip>
+              <li>
+                <span class="term"
+                      i18n="Skill with characteristic|Skill name and characteristic@@profession.skill.item">
+                  {{ ps.skill.name }} ({{ ps.skill.associatedCharacteristic }})
+                </span>
+
                 @for (alt of ps.alternativeSkill; track trackById($index, alt)) {
-                  <mat-chip
-                    class="alt"
-                    i18n="Alternative skill prefix|or label@@profession.skill.alt"
-                  >
-                    or: {{ alt.skill.name }}
-                  </mat-chip>
+                  <div class="alt" i18n="Alternative skill prefix|or label@@profession.skill.alt">
+                    or {{ alt.skill.name }}
+                  </div>
                 }
-              </mat-chip-set>
+              </li>
             }
-          </div>
+          </ul>
         }
-      </section>
+      </div>
 
-      <mat-divider></mat-divider>
-
-      <section class="section">
-        <h3 i18n="Section heading|Talents section heading@@profession.talents.title">Talents</h3>
-        @if (p.talents.length === 0) {
-          <p i18n="Empty list|No talents available message@@profession.talents.none">None.</p>
-        } @else {
-          <div class="chips">
-            @for (pt of p.talents; track trackById($index, pt)) {
-              <mat-chip-set>
-                <mat-chip i18n="Talent name|Talent item@@profession.talent.item">{{
-                  pt.talent.name
-                }}</mat-chip>
-                @for (alt of pt.alternativeTalent; track trackById($index, alt)) {
-                  <mat-chip
-                    class="alt"
-                    i18n="Alternative talent prefix|or label@@profession.talent.alt"
-                  >
-                    or: {{ alt.talent.name }}
-                  </mat-chip>
-                }
-              </mat-chip-set>
-            }
-          </div>
-        }
-      </section>
-
-      <mat-divider></mat-divider>
-
-      <section class="section">
-        <h3 i18n="Section heading|Entry and Exit professions@@profession.entryexit.title">
-          Entry / Exit Professions
-        </h3>
-        <div class="grid">
-          <div>
-            <h4 i18n="Subheading|Entry professions list heading@@profession.entry.title">Entry</h4>
-            @if (p.entryProfessions.length === 0) {
-              <p i18n="Empty list|No entry professions message@@profession.entry.none">None.</p>
-            } @else {
-              <ul>
-                @for (ep of p.entryProfessions; track trackById($index, ep)) {
-                  <li>
-                    <a
-                      [routerLink]="['/professions', ep.id]"
-                      i18n-attr.aria-label="
-                        Link aria-label|Open entry profession@@profession.entry.link.aria"
-                      >{{ ep.name }}</a
-                    >
-                  </li>
-                }
-              </ul>
-            }
-          </div>
-          <div>
-            <h4 i18n="Subheading|Exit professions list heading@@profession.exit.title">Exit</h4>
-            @if (p.exitProfessions.length === 0) {
-              <p i18n="Empty list|No exit professions message@@profession.exit.none">None.</p>
-            } @else {
-              <ul>
-                @for (xp of p.exitProfessions; track trackById($index, xp)) {
-                  <li>
-                    <a
-                      [routerLink]="['/professions', xp.id]"
-                      i18n-attr.aria-label="
-                        Link aria-label|Open exit profession@@profession.exit.link.aria"
-                      >{{ xp.name }}</a
-                    >
-                  </li>
-                }
-              </ul>
-            }
-          </div>
+      <div class="list">
+        <div class="list__head">
+          <mat-icon class="list__icon">military_tech</mat-icon>
+          <h4 class="list__title" i18n="Section heading|Talents section heading@@profession.talents.title">Talents</h4>
         </div>
-      </section>
-    </mat-card-content>
-  </mat-card>
+
+        @if (p.talents.length === 0) {
+          <p class="empty" i18n="Empty list|No talents available message@@profession.talents.none">None.</p>
+        } @else {
+          <ul class="bullets">
+            @for (pt of p.talents; track trackById($index, pt)) {
+              <li>
+                <span class="term" i18n="Talent name|Talent item@@profession.talent.item">{{ pt.talent.name }}</span>
+
+                @for (alt of pt.alternativeTalent; track trackById($index, alt)) {
+                  <div class="alt" i18n="Alternative talent prefix|or label@@profession.talent.alt">
+                    or {{ alt.talent.name }}
+                  </div>
+                }
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      <div class="list">
+        <div class="list__head">
+          <mat-icon class="list__icon">backpack</mat-icon>
+          <h4 class="list__title" i18n="Section heading|Equipment section heading@@profession.equipment.title">
+            Equipment
+          </h4>
+        </div>
+
+        <p class="empty" i18n="Placeholder|Equipment not available@@profession.equipment.todo">
+          Equipment will be available in a future update.
+        </p>
+      </div>
+    </section>
+
+    <section class="exits">
+      <h3 class="exits__title" i18n="Section heading|Entry and Exit professions@@profession.entryexit.title">
+        Career Exits
+      </h3>
+
+      <div class="exits__grid">
+        <div class="exits__col">
+          <h4 class="exits__sub" i18n="Subheading|Entry professions list heading@@profession.entry.title">Entry</h4>
+          @if (p.entryProfessions.length === 0) {
+            <p class="empty" i18n="Empty list|No entry professions message@@profession.entry.none">None.</p>
+          } @else {
+            <div class="tiles">
+              @for (ep of p.entryProfessions; track trackById($index, ep)) {
+                <a
+                  class="tile"
+                  [routerLink]="['/professions', ep.id]"
+                  aria-label="Open entry profession"
+                  i18n-aria-label="Link aria-label|Open entry profession@@profession.entry.link.aria"
+                >
+                  <span class="tile__meta" i18n="Meta label|Entry label@@profession.entry.meta">Entry</span>
+                  <span class="tile__name">{{ ep.name }}</span>
+                </a>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="exits__col">
+          <h4 class="exits__sub" i18n="Subheading|Exit professions list heading@@profession.exit.title">Exit</h4>
+          @if (p.exitProfessions.length === 0) {
+            <p class="empty" i18n="Empty list|No exit professions message@@profession.exit.none">None.</p>
+          } @else {
+            <div class="tiles">
+              @for (xp of p.exitProfessions; track trackById($index, xp)) {
+                <a
+                  class="tile"
+                  [routerLink]="['/professions', xp.id]"
+                  aria-label="Open exit profession"
+                  i18n-aria-label="Link aria-label|Open exit profession@@profession.exit.link.aria"
+                >
+                  <span class="tile__meta" i18n="Meta label|Exit label@@profession.exit.meta">Exit</span>
+                  <span class="tile__name">{{ xp.name }}</span>
+                </a>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+  </div>
 } @else {
   <div class="loading">
     <mat-spinner diameter="32"></mat-spinner>
