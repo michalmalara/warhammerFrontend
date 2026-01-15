@@ -9,10 +9,10 @@ export class ProfessionsApiService {
 
   /**
    * Backend (warhammer/urls.py) montuje professionsBank pod '/professions/'.
-   * A router DRF w professionsBank/urls.py rejestruje ProfessionView pod '' (root),
-   * więc endpoint listy to po prostu '/professions/'.
+   * Router DRF w professionsBank/urls.py rejestruje ProfessionView pod 'professions',
+   * więc endpoint listy to '/professions/professions/'.
    */
-  private static readonly PATH = '/professions/';
+  private static readonly PATH = '/professions/professions/';
 
   list() {
     // Zgodnie z serializerem ProfessionSerializer (GET): pełny obiekt Profession
