@@ -52,8 +52,11 @@
 .page__title-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  align-items: baseline;
+  gap: 24px; /* increased gap to create larger space between title and badge */
+  /* Wyśrodkowujemy poziomo całą grupę: nazwę i typ profesji oraz pionowo wyrównujemy je względem siebie */
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .page__title {
