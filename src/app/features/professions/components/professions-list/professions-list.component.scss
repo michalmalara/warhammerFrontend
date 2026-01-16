@@ -10,24 +10,24 @@
 
 /* --- Mockup-inspired palette (lokalnie, bez globalnego theme) --- */
 .page {
-  --primary: #bd0f2c;
-  --bg-dark: #1a0d0e;
-  --card-dark: #2a181a;
-  --border-dark: #3d2a2c;
+  /* Ujednolicenie z listą umiejętności: tło bierze się z globalnego theme (body/html).
+     Tutaj trzymamy tylko layout i (opcjonalnie) lokalne aliasy na zmienne. */
+  --primary: var(--color-accent, #bd0f2c);
+  --bg-dark: var(--color-bg, #1a0d0e);
+  --card-dark: var(--color-surface, #2a181a);
+  --border-dark: var(--color-panel-border, #3d2a2c);
 
   color: var(--color-text);
-  padding: clamp(16px, 3vw, 32px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 24px 96px;
   min-height: calc(100vh - 64px);
-  background: radial-gradient(circle at 50% 50%, rgba(189, 15, 44, 0.1) 0%, transparent 70%),
-  var(--bg-dark);
 }
 
 .parchment-texture {
-  /* Delikatna tekstura + winieta; bez zewnętrznych assetów */
-  background-image: radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.05) 0%, transparent 55%),
-  radial-gradient(circle at 80% 90%, rgba(189, 15, 44, 0.07) 0%, transparent 60%),
-  linear-gradient(120deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.25));
-  background-blend-mode: screen, normal, multiply;
+  /* Tło/tekstura wyłączone – ma być takie jak w skills list (globalne). */
+  background: transparent;
+  background-image: none;
 }
 
 /* --- Heading + filters --- */
