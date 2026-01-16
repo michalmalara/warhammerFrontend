@@ -10,9 +10,11 @@
           }
         </div>
 
-        <p class="page__subtitle" i18n="Card subtitle|Short profession description@@profession.card.subtitle">
-          “{{ p.description }}”
-        </p>
+        @if (p.description) {
+          <p class="page__subtitle" i18n="Card subtitle|Short profession description@@profession.card.subtitle">
+            “{{ p.description }}”
+          </p>
+        }
       </div>
 
       <div class="page__heading-right">
@@ -28,30 +30,28 @@
         </a>
 
         <a
-          mat-flat-button
-          color="primary"
+          class="back-btn"
+          mat-stroked-button
           [routerLink]="['/professions', p.id, 'edit']"
           aria-label="Edit profession"
           i18n-aria-label="Link aria-label|Edit profession@@profession.edit.aria"
-          style="margin-left: 12px;"
         >
-          <mat-icon>edit</mat-icon>
+          <mat-icon class="back-btn__icon">edit</mat-icon>
           <span i18n="Action label|Edit profession@@profession.edit">Edytuj</span>
         </a>
       </div>
     </header>
 
-    <section class="intro">
-      <div class="intro__hairline" aria-hidden="true"></div>
-      <h3 class="intro__title" i18n="Section heading|Profession description heading@@profession.about.title">
-        The Life of a Warden
-      </h3>
-      <div class="intro__hairline" aria-hidden="true"></div>
+    @if (p.description && p.description.trim()) {
+      <section class="intro">
+        <div class="intro__hairline" aria-hidden="true"></div>
+        <div class="intro__hairline" aria-hidden="true"></div>
 
-      <p class="intro__text" i18n="Profession long description|Profession description block@@profession.about.text">
-        {{ p.description }}
-      </p>
-    </section>
+        <p class="intro__text" i18n="Profession long description|Profession description block@@profession.about.text">
+          {{ p.description }}
+        </p>
+      </section>
+    }
 
     <section class="panel">
       <h3 class="panel__title" i18n="Section heading|Development section heading@@profession.development.title">

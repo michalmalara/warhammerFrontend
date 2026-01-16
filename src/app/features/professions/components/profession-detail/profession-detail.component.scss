@@ -109,6 +109,11 @@
   color: var(--primary);
 }
 
+/* Dodajemy odstęp między przyciskami w nagłówku: tylko jeśli jest więcej niż jeden przycisk */
+.page__heading-right .back-btn + .back-btn {
+  margin-left: 12px;
+}
+
 /* --- Intro --- */
 .intro {
   margin: 18px auto 34px;
