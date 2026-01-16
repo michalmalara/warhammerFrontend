@@ -210,7 +210,7 @@
     </section>
 
     <!-- Career exits -->
-    @if (p.exitProfessions?.length) {
+    @if (p && p.entryProfessions && p.entryProfessions.length) {
       <section class="panel">
         <h3 class="panel__title" i18n="Section heading|Career exits heading@@profession.exits.title">
           <mat-icon class="panel__icon">arrow_outward</mat-icon>
@@ -225,7 +225,7 @@
     }
 
     <!-- Entry paths -->
-    @if (p.entryProfessions?.length) {
+    @if (p && p.entryProfessions && p.entryProfessions.length) {
       <section class="panel">
         <h3 class="panel__title" i18n="Section heading|Entry paths heading@@profession.entries.title">
           <mat-icon class="panel__icon">merge_type</mat-icon>

@@ -69,16 +69,6 @@ mat-card-title {
   color: var(--header-text);
 }
 
-.actions a[mat-stroked-button] {
-  color: var(--color-text);
-  border-color: rgba(255, 255, 255, 0.06);
-}
-
-.actions button[mat-raised-button] {
-  background: var(--color-accent) !important;
-  color: #fff !important;
-}
-
 /* Stat control styles */
 .stat-control {
   display: flex;
@@ -223,6 +213,39 @@ mat-card-title {
   height: 40px;
 }
 
+/* Hero action button: match the rest of the view's dark + accent visual language */
+.hero-actions__btn {
+  height: 40px;
+  padding: 0 14px;
+
+  color: var(--color-text) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  background: rgba(0, 0, 0, 0.14);
+  border-radius: 10px;
+
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.12rem;
+  text-transform: uppercase;
+
+  transition: border-color 180ms ease, box-shadow 200ms ease, background 180ms ease;
+}
+
+.hero-actions__btn mat-icon {
+  margin-right: 8px;
+  color: var(--color-text);
+}
+
+.hero-actions__btn:hover {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0.125rem 0.5rem rgba(199, 59, 59, 0.12);
+}
+
+.hero-actions__btn:focus-visible {
+  outline: 2px solid rgba(199, 59, 59, 0.55);
+  outline-offset: 3px;
+}
+
 /* Profession type toggle (custom buttons, mockup-like) */
 .type-toggle {
   display: grid;
@@ -328,24 +351,7 @@ mat-card-title {
 }
 
 /* Wax actions (footer) */
-.wax-actions a[mat-stroked-button] {
-  border-radius: 6px;
-}
-
-.wax-actions button[mat-raised-button] {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-  border-radius: 6px;
-  padding: 0.6rem 1.1rem;
-
-  .wax-actions button[mat-raised-button] mat-icon {
-    margin-bottom: 0;
-    margin-right: 8px;
-  }
-
-  .wax-actions button[mat-raised-button] span.label {
-    font-size: 0.9rem;
-  }
-}
+/* (usunięto stare .wax-actions - stopka ma teraz wax-seal jak w skill-create) */
 
 /* Slightly stronger visual styling for inner "character-card" mat-cards
    so they match the appearance used by the `character-card` component */

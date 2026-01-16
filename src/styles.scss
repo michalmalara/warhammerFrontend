@@ -304,6 +304,22 @@ textarea[formControlName="description"]:-ms-input-placeholder,
   gap: 10px;
 }
 
+/* Globalny layout dla akcji wax-seal (używany m.in. w profession-create) */
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  margin: 42px 0 0;
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
 .wax-action-label {
   font-size: 12px;
   font-weight: 800;
@@ -316,6 +332,15 @@ textarea[formControlName="description"]:-ms-input-placeholder,
   color: rgba(189, 15, 44, 1);
   font-size: 13px;
   animation: actionPulse 1.6s ease-in-out infinite;
+}
+
+/* Aliasy dla profesji (i innych ekranów), żeby używać bardziej neutralnych klas */
+.action-label {
+  @extend .wax-action-label;
+}
+
+.action-label-accent {
+  @extend .wax-action-label-accent;
 }
 
 @keyframes actionPulse {

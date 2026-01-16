@@ -7,10 +7,11 @@
     </div>
 
     <div class="hero-actions">
-      <button mat-stroked-button type="button" aria-label="Browse professions library">
+      <a mat-stroked-button class="hero-actions__btn" [routerLink]="['/professions']"
+         aria-label="Browse professions library">
         <mat-icon>search</mat-icon>
         Browse library
-      </button>
+      </a>
     </div>
   </header>
 
@@ -710,25 +711,29 @@
     </mat-card>
 
     <!-- Actions remain inside the form so submit covers all cards -->
-    <div class="actions wax-actions">
-      <a mat-stroked-button [routerLink]="['/professions']" aria-label="Cancel creating profession">
-        <mat-icon>close</mat-icon>
-        Cancel
-      </a>
+    <div class="actions">
+      <div class="action">
+        <a class="wax-seal wax-seal-cancel" [routerLink]="['/professions']" aria-label="Discard">
+          <mat-icon class="wax-icon" aria-hidden="true">close</mat-icon>
+        </a>
+        <div class="action-label">Discard</div>
+      </div>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="isSaving" aria-label="Save profession">
-        @if (!isSaving) {
-          <ng-container>
-            <mat-icon>save</mat-icon>
-            Save
-          </ng-container>
-        } @else {
-          <ng-container>
-            <mat-spinner diameter="18"></mat-spinner>
-            Saving
-          </ng-container>
-        }
-      </button>
+      <div class="action">
+        <button
+          class="wax-seal wax-seal-save"
+          type="submit"
+          [disabled]="isSaving"
+          aria-label="Affix seal"
+        >
+          @if (!isSaving) {
+            <mat-icon class="wax-icon" aria-hidden="true">check</mat-icon>
+          } @else {
+            <mat-spinner class="wax-spinner" diameter="28"></mat-spinner>
+          }
+        </button>
+        <div class="action-label action-label-accent">Affix Seal</div>
+      </div>
     </div>
   </form>
 </mat-card>
