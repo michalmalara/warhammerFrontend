@@ -551,22 +551,13 @@
 
         <div class="search-input">
           <mat-form-field appearance="outline" class="full">
-            <mat-chip-grid #exitList aria-label="Career Exits">
-              <mat-chip *ngFor="let e of exits.controls; let i = index" [removable]="true"
-                        (removed)="removeExit(i)">
-                {{ (e.value && (e.value.name || e.value)) }}
-                <mat-icon matChipRemove>close</mat-icon>
-              </mat-chip>
-              <input
-                matInput
-                [formControl]="exitSearchControl"
-                [matAutocomplete]="auto"
-                placeholder="Search careers..."
-                [matChipInputFor]="exitList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="addExitFromChip($event)"
-              />
-            </mat-chip-grid>
+            <mat-label>Search careers...</mat-label>
+            <input
+              matInput
+              [formControl]="exitSearchControl"
+              [matAutocomplete]="auto"
+              aria-label="Search careers"
+            />
 
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectExit($event)">
               <mat-option *ngFor="let o of exitsOptions$ | async" [value]="o">
@@ -574,6 +565,13 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
+
+          <mat-chip-grid #exitList aria-label="Career Exits">
+            <mat-chip *ngFor="let e of exits.controls; let i = index" [removable]="true" (removed)="removeExit(i)">
+              {{ (e.value && (e.value.name || e.value)) }}
+              <mat-icon matChipRemove>close</mat-icon>
+            </mat-chip>
+          </mat-chip-grid>
         </div>
       </mat-card-content>
     </mat-card>
