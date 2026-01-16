@@ -234,6 +234,26 @@ export class ProfessionEditComponent {
     );
   }
 
+  // --- UI state: pokazywanie panelu alternatyw per-wiersz (wspólny template z create) ---
+  private readonly altSkillPickerVisible = new Map<number, boolean>();
+  private readonly altTalentPickerVisible = new Map<number, boolean>();
+
+  isAltSkillPickerVisible(i: number): boolean {
+    return this.altSkillPickerVisible.get(i) ?? false;
+  }
+
+  toggleAltSkillPicker(i: number) {
+    this.altSkillPickerVisible.set(i, !this.isAltSkillPickerVisible(i));
+  }
+
+  isAltTalentPickerVisible(i: number): boolean {
+    return this.altTalentPickerVisible.get(i) ?? false;
+  }
+
+  toggleAltTalentPicker(i: number) {
+    this.altTalentPickerVisible.set(i, !this.isAltTalentPickerVisible(i));
+  }
+
   constructor() {
     // Wczytaj profesję i ustaw form
     this.route.paramMap
@@ -396,11 +416,45 @@ export class ProfessionEditComponent {
     const id = current?.id;
     if (typeof id !== 'number') {
       this.skills.removeAt(index);
+
+      // przesuwamy stan widoczności
+      this.altSkillPickerVisible.delete(index);
+      const nextVisible = new Map<number, boolean>();
+      for (const [k, v] of this.altSkillPickerVisible.entries()) {
+        nextVisible.set(k > index ? k - 1 : k, v);
+      }
+      this.altSkillPickerVisible.clear();
+      for (const [k, v] of nextVisible.entries()) this.altSkillPickerVisible.set(k, v);
+
       return;
     }
 
     this.linksApi.deleteProfessionSkill(id).subscribe({
-      next: () => this.skills.removeAt(index),
+      next: () => {
+        this.skills.removeAt(index);
+        this.altSkillSearchControls.delete(index);
+
+        // przesuwamy searchControls
+        const nextSearchControls = new Map<number, FormControl<string>>();
+        for (const [k, v] of this.altSkillSearchControls.entries()) {
+          if (k > index) {
+            nextSearchControls.set(k - 1, v);
+          } else if (k < index) {
+            nextSearchControls.set(k, v);
+          }
+        }
+        this.altSkillSearchControls.clear();
+        for (const [k, v] of nextSearchControls.entries()) this.altSkillSearchControls.set(k, v);
+
+        // przesuwamy stan widoczności
+        this.altSkillPickerVisible.delete(index);
+        const nextVisible = new Map<number, boolean>();
+        for (const [k, v] of this.altSkillPickerVisible.entries()) {
+          nextVisible.set(k > index ? k - 1 : k, v);
+        }
+        this.altSkillPickerVisible.clear();
+        for (const [k, v] of nextVisible.entries()) this.altSkillPickerVisible.set(k, v);
+      },
       error: () => {
         this.snackBar.open('Nie udało się usunąć umiejętności z bazy.', 'OK', {duration: 3000});
       },
@@ -414,11 +468,45 @@ export class ProfessionEditComponent {
     const id = current?.id;
     if (typeof id !== 'number') {
       this.talents.removeAt(index);
+
+      // przesuwamy stan widoczności
+      this.altTalentPickerVisible.delete(index);
+      const nextVisible = new Map<number, boolean>();
+      for (const [k, v] of this.altTalentPickerVisible.entries()) {
+        nextVisible.set(k > index ? k - 1 : k, v);
+      }
+      this.altTalentPickerVisible.clear();
+      for (const [k, v] of nextVisible.entries()) this.altTalentPickerVisible.set(k, v);
+
       return;
     }
 
     this.linksApi.deleteProfessionTalent(id).subscribe({
-      next: () => this.talents.removeAt(index),
+      next: () => {
+        this.talents.removeAt(index);
+        this.altTalentSearchControls.delete(index);
+
+        // przesuwamy searchControls
+        const nextSearchControls = new Map<number, FormControl<string>>();
+        for (const [k, v] of this.altTalentSearchControls.entries()) {
+          if (k > index) {
+            nextSearchControls.set(k - 1, v);
+          } else if (k < index) {
+            nextSearchControls.set(k, v);
+          }
+        }
+        this.altTalentSearchControls.clear();
+        for (const [k, v] of nextSearchControls.entries()) this.altTalentSearchControls.set(k, v);
+
+        // przesuwamy stan widoczności
+        this.altTalentPickerVisible.delete(index);
+        const nextVisible = new Map<number, boolean>();
+        for (const [k, v] of this.altTalentPickerVisible.entries()) {
+          nextVisible.set(k > index ? k - 1 : k, v);
+        }
+        this.altTalentPickerVisible.clear();
+        for (const [k, v] of nextVisible.entries()) this.altTalentPickerVisible.set(k, v);
+      },
       error: () => {
         this.snackBar.open('Nie udało się usunąć talentu z bazy.', 'OK', {duration: 3000});
       },
@@ -688,4 +776,33 @@ export class ProfessionEditComponent {
     const n = typeof v === 'number' ? v : Number(v);
     return Number.isFinite(n) ? n : NaN;
   }
+
+  isSkillRenderedAsAlternative(i: number): boolean {
+    const current = this.skills.at(i)?.value as any;
+    const currentSkillId = current?.skill?.id;
+    if (typeof currentSkillId !== 'number') return false;
+
+    for (let j = 0; j < this.skills.length; j++) {
+      if (j === i) continue;
+      const other = this.skills.at(j)?.value as any;
+      const alt = Array.isArray(other?.alternativeSkill) ? other.alternativeSkill : [];
+      if (alt.some((a: any) => a?.skill?.id === currentSkillId)) return true;
+    }
+    return false;
+  }
+
+  isTalentRenderedAsAlternative(i: number): boolean {
+    const current = this.talents.at(i)?.value as any;
+    const currentTalentId = current?.talent?.id;
+    if (typeof currentTalentId !== 'number') return false;
+
+    for (let j = 0; j < this.talents.length; j++) {
+      if (j === i) continue;
+      const other = this.talents.at(j)?.value as any;
+      const alt = Array.isArray(other?.alternativeTalent) ? other.alternativeTalent : [];
+      if (alt.some((a: any) => a?.talent?.id === currentTalentId)) return true;
+    }
+    return false;
+  }
 }
+

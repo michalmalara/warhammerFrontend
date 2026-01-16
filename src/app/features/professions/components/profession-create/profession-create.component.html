@@ -124,49 +124,80 @@
               </mat-autocomplete>
             </mat-form-field>
 
-            <mat-chip-grid #skillList aria-label="Skills">
+            <!-- (kafelki) -->
+            <div class="tiles" aria-label="Skills">
               @for (s of skills.controls; track s; let i = $index) {
-                <mat-chip [removable]="true" (removed)="removeSkill(i)">
-                  {{ (s.value?.skill?.name || s.value?.name || s.value) }}
-                  <mat-icon matChipRemove>close</mat-icon>
-                </mat-chip>
+                @if (!isSkillRenderedAsAlternative(i)) {
+                  <div
+                    class="tile optional-block"
+                    [class.optional-block--has-alternatives]="(s.value?.alternativeSkill?.length ?? 0) > 0 || isAltSkillPickerVisible(i)"
+                    [class.tile--no-alternatives]="(s.value?.alternativeSkill?.length ?? 0) === 0 && !isAltSkillPickerVisible(i)"
+                  >
+                    <div class="tile__header">
+                      <div class="tile__title">
+                        {{ (s.value?.skill?.name || s.value?.name || s.value) }}
+                      </div>
 
-                <!-- Alternatywne umiejętności dla tego skilla -->
-                @if (s.value?.alternativeSkill?.length) {
-                  <div class="alt-block" aria-label="Alternative skills">
-                    <div class="alt-title">Alternatives</div>
-                    <mat-chip-set aria-label="Alternative skills">
-                      @for (a of s.value.alternativeSkill; track a?.id ?? a?.skill?.id ?? a; let ai = $index) {
-                        <mat-chip [removable]="true" (removed)="removeAlternativeSkill(i, ai)">
-                          {{ a?.skill?.name }}
-                          <mat-icon matChipRemove>close</mat-icon>
-                        </mat-chip>
-                      }
-                    </mat-chip-set>
+                      <div class="tile__actions">
+                        <button
+                          mat-icon-button
+                          type="button"
+                          aria-label="Pokaż/ukryj alternatywy"
+                          (click)="toggleAltSkillPicker(i)"
+                        >
+                          <mat-icon>{{ isAltSkillPickerVisible(i) ? 'expand_less' : 'expand_more' }}</mat-icon>
+                        </button>
+
+                        <button mat-icon-button type="button" aria-label="Usuń" (click)="removeSkill(i)">
+                          <mat-icon>close</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Alternatywne umiejętności dla tego skilla -->
+                    @if (s.value?.alternativeSkill?.length) {
+                      <div class="tile__section" aria-label="Alternative skills">
+                        <div class="tile__section-title">Alternatywy</div>
+                        <div class="tile__subtiles">
+                          @for (a of s.value.alternativeSkill; track a?.id ?? a?.skill?.id ?? a; let ai = $index) {
+                            <div class="subtile">
+                              <div class="subtile__title">{{ a?.skill?.name }}</div>
+                              <button
+                                mat-icon-button
+                                type="button"
+                                aria-label="Usuń alternatywę"
+                                (click)="removeAlternativeSkill(i, ai)"
+                              >
+                                <mat-icon>close</mat-icon>
+                              </button>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    }
+
+                    @if (isAltSkillPickerVisible(i)) {
+                      <div class="tile__section">
+                        <mat-form-field appearance="outline" class="full" style="margin-top: 8px;">
+                          <mat-label>Dodaj alternatywną umiejętność (z już dodanych)</mat-label>
+                          <select
+                            matNativeControl
+                            (change)="addAlternativeSkillFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
+                          >
+                            <option value="" selected disabled>Wybierz...</option>
+                            @for (ss of skills.controls; track ss; let si = $index) {
+                              @if (si !== i) {
+                                <option [value]="ss.value?.id">{{ ss.value?.skill?.name }}</option>
+                              }
+                            }
+                          </select>
+                        </mat-form-field>
+                      </div>
+                    }
                   </div>
                 }
-
-                <mat-form-field appearance="outline" class="full" style="margin-top: 8px;">
-                  <mat-label>Dodaj alternatywną umiejętność (z już dodanych)</mat-label>
-                  <select
-                    matNativeControl
-                    (change)="addAlternativeSkillFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value))"
-                  >
-                    <option value="" selected disabled>Wybierz...</option>
-                    @for (ss of skills.controls; track ss; let si = $index) {
-                      @if (si !== i) {
-                        <option [value]="ss.value?.skill?.id">{{ ss.value?.skill?.name }}</option>
-                      }
-                    }
-                  </select>
-                </mat-form-field>
               }
-              <input
-                [matChipInputFor]="skillList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="addSkillFromChip($event)"
-              />
-            </mat-chip-grid>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -193,49 +224,80 @@
               </mat-autocomplete>
             </mat-form-field>
 
-            <mat-chip-grid #talentList aria-label="Talents">
+            <!-- zamiast mat-chip-grid: kafelki -->
+            <div class="tiles" aria-label="Talents">
               @for (t of talents.controls; track t; let i = $index) {
-                <mat-chip [removable]="true" (removed)="removeTalent(i)">
-                  {{ (t.value?.talent?.name || t.value?.name || t.value) }}
-                  <mat-icon matChipRemove>close</mat-icon>
-                </mat-chip>
+                @if (!isTalentRenderedAsAlternative(i)) {
+                  <div
+                    class="tile optional-block"
+                    [class.optional-block--has-alternatives]="(t.value?.alternativeTalent?.length ?? 0) > 0 || isAltTalentPickerVisible(i)"
+                    [class.tile--no-alternatives]="(t.value?.alternativeTalent?.length ?? 0) === 0 && !isAltTalentPickerVisible(i)"
+                  >
+                    <div class="tile__header">
+                      <div class="tile__title">
+                        {{ (t.value?.talent?.name || t.value?.name || t.value) }}
+                      </div>
 
-                <!-- Alternatywne talenty dla tego talentu -->
-                @if (t.value?.alternativeTalent?.length) {
-                  <div class="alt-block" aria-label="Alternative talents">
-                    <div class="alt-title">Alternatives</div>
-                    <mat-chip-set aria-label="Alternative talents">
-                      @for (a of t.value.alternativeTalent; track a?.id ?? a?.talent?.id ?? a; let ai = $index) {
-                        <mat-chip [removable]="true" (removed)="removeAlternativeTalent(i, ai)">
-                          {{ a?.talent?.name }}
-                          <mat-icon matChipRemove>close</mat-icon>
-                        </mat-chip>
-                      }
-                    </mat-chip-set>
+                      <div class="tile__actions">
+                        <button
+                          mat-icon-button
+                          type="button"
+                          aria-label="Pokaż/ukryj alternatywy"
+                          (click)="toggleAltTalentPicker(i)"
+                        >
+                          <mat-icon>{{ isAltTalentPickerVisible(i) ? 'expand_less' : 'expand_more' }}</mat-icon>
+                        </button>
+
+                        <button mat-icon-button type="button" aria-label="Usuń" (click)="removeTalent(i)">
+                          <mat-icon>close</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Alternatywne talenty dla tego talentu -->
+                    @if (t.value?.alternativeTalent?.length) {
+                      <div class="tile__section" aria-label="Alternative talents">
+                        <div class="tile__section-title">Alternatywy</div>
+                        <div class="tile__subtiles">
+                          @for (a of t.value.alternativeTalent; track a?.id ?? a?.talent?.id ?? a; let ai = $index) {
+                            <div class="subtile">
+                              <div class="subtile__title">{{ a?.talent?.name }}</div>
+                              <button
+                                mat-icon-button
+                                type="button"
+                                aria-label="Usuń alternatywę"
+                                (click)="removeAlternativeTalent(i, ai)"
+                              >
+                                <mat-icon>close</mat-icon>
+                              </button>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    }
+
+                    @if (isAltTalentPickerVisible(i)) {
+                      <div class="tile__section">
+                        <mat-form-field appearance="outline" class="full" style="margin-top: 8px;">
+                          <mat-label>Dodaj alternatywny talent (z już dodanych)</mat-label>
+                          <select
+                            matNativeControl
+                            (change)="addAlternativeTalentFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
+                          >
+                            <option value="" selected disabled>Wybierz...</option>
+                            @for (tt of talents.controls; track tt; let ti = $index) {
+                              @if (ti !== i) {
+                                <option [value]="tt.value?.id">{{ tt.value?.talent?.name }}</option>
+                              }
+                            }
+                          </select>
+                        </mat-form-field>
+                      </div>
+                    }
                   </div>
                 }
-
-                <mat-form-field appearance="outline" class="full" style="margin-top: 8px;">
-                  <mat-label>Dodaj alternatywny talent (z już dodanych)</mat-label>
-                  <select
-                    matNativeControl
-                    (change)="addAlternativeTalentFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value))"
-                  >
-                    <option value="" selected disabled>Wybierz...</option>
-                    @for (tt of talents.controls; track tt; let ti = $index) {
-                      @if (ti !== i) {
-                        <option [value]="tt.value?.talent?.id">{{ tt.value?.talent?.name }}</option>
-                      }
-                    }
-                  </select>
-                </mat-form-field>
               }
-              <input
-                [matChipInputFor]="talentList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="addTalentFromChip($event)"
-              />
-            </mat-chip-grid>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>
