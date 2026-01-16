@@ -352,3 +352,9 @@ textarea[formControlName="description"]:-ms-input-placeholder,
     opacity: 1;
   }
 }
+
+/* Character Creator: use Newsreader font (mockup) on demand */
+.cc-root,
+.cc-root * {
+  font-family: 'Newsreader', serif;
+}

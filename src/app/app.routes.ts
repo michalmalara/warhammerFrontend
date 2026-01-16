@@ -13,9 +13,40 @@ import {SkillsListComponent} from './features/skills/components/skills-list/skil
 import {TalentCreateComponent} from './features/talents/components/talent-create/talent-create.component';
 import {TalentsListComponent} from './features/talents/components/talents-list/talents-list.component';
 
+import {
+  CharacterCreationShellComponent
+} from './features/character-creation/components/character-creation-shell/character-creation-shell.component';
+import {
+  CharacterCreationStep1BioRaceComponent
+} from './features/character-creation/components/character-creation-step-1-bio-race/character-creation-step-1-bio-race.component';
+import {
+  CharacterCreationStepPlaceholderComponent
+} from './features/character-creation/components/character-creation-step-placeholder/character-creation-step-placeholder.component';
+import {
+  CharacterCreationStep2AttributesComponent
+} from './features/character-creation/components/character-creation-step-2-attributes/character-creation-step-2-attributes.component';
+
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'character'},
   {path: 'character', component: CharacterCardComponent},
+
+  {
+    path: 'character/create',
+    component: CharacterCreationShellComponent,
+    children: [
+      {path: '', pathMatch: 'full', redirectTo: 'step-1'},
+      {path: 'step-1', component: CharacterCreationStep1BioRaceComponent},
+      {
+        path: 'step-2',
+        component: CharacterCreationStep2AttributesComponent,
+      },
+      {
+        path: 'step-3',
+        component: CharacterCreationStepPlaceholderComponent,
+        data: {stepLabel: 'Step 3: Skills'},
+      },
+    ],
+  },
 
   {path: 'professions', component: ProfessionsListComponent},
   {path: 'professions/new', component: ProfessionCreateComponent},

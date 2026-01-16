@@ -1,0 +1,168 @@
+<div class="cc-root">
+  <header class="cc-top">
+    <div class="cc-top__left">
+      <div class="cc-logo" aria-hidden="true">
+        <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z"
+          ></path>
+        </svg>
+      </div>
+      <h2 class="cc-brand">WFRP Character Creator</h2>
+    </div>
+
+    <div class="cc-top__right">
+      <button class="cc-icon" type="button" aria-label="Save Draft">
+        <span class="material-symbols-outlined">save</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="cc-main">
+    <nav class="cc-breadcrumbs" aria-label="Kroki kreatora">
+      <span class="cc-breadcrumbs__inactive">Step 1: Race ({{ selectedRaceLabel() }})</span>
+      <span class="cc-breadcrumbs__sep">/</span>
+      <span class="cc-breadcrumbs__active">Step 2: Attributes Roll</span>
+      <span class="cc-breadcrumbs__sep">/</span>
+      <span class="cc-breadcrumbs__inactive">Step 3: Career</span>
+      <span class="cc-breadcrumbs__sep">/</span>
+      <span class="cc-breadcrumbs__inactive">Step 4: Skills</span>
+      <span class="cc-breadcrumbs__sep">/</span>
+      <span class="cc-breadcrumbs__inactive">Step 5: Trappings</span>
+    </nav>
+
+    <header class="cc-heading cc-heading--left">
+      <h1 class="cc-title">Generate Characteristics</h1>
+      <p class="cc-subtitle">
+        "The gods favor the bold, but Shallya offers mercy to the weak. Roll your fate, or pray for a
+        kinder hand."
+      </p>
+    </header>
+
+    <section class="attr-layout">
+      <aside class="attr-sidebar">
+        <div class="panel">
+          <h3 class="panel__title">The Dice of Fate</h3>
+
+          <button class="dice" type="button">
+            <div class="dice__left">
+              <span class="material-symbols-outlined dice__icon">casino</span>
+              <div class="dice__hint">Roll 2d10</div>
+            </div>
+            <div class="dice__sep" aria-hidden="true"></div>
+            <div class="dice__right">
+              <div class="dice__num">+20</div>
+              <div class="dice__base">Base</div>
+            </div>
+          </button>
+
+          <p class="panel__desc">
+            Clicking will generate rolls for all Primary Characteristics. Secondary stats will be derived
+            automatically.
+          </p>
+        </div>
+
+        <div class="mercy">
+          <div class="mercy__head">
+            <span class="material-symbols-outlined">favorite</span>
+            <h3>Shallya's Mercy</h3>
+          </div>
+          <p>
+            You may upgrade one Primary Characteristic to its average racial value (31 for Humans). Choose
+            wisely; you can only invoke her mercy once.
+          </p>
+          <button class="mercy__btn" type="button" disabled>Select a stat to upgrade</button>
+        </div>
+      </aside>
+
+      <div class="attr-main">
+        <div class="section-head">
+          <h2>Primary Characteristics</h2>
+          <div class="section-head__meta">HUMAN BASE: {{ humanBase }}</div>
+        </div>
+
+        <div class="primary-grid" role="list">
+          @for (s of primaryStats(); track s.id) {
+            <div
+              class="stat-card"
+              role="listitem"
+              [class.stat-card--low]="s.id === 'S'"
+              [class.stat-card--hi]="s.deltaFromBase >= 18"
+            >
+              <div class="stat-card__abbr">{{ s.label }}</div>
+              <div class="stat-card__row">
+                <div class="stat-card__value">{{ s.value }}</div>
+                <div class="stat-card__delta" [class.is-hi]="s.deltaFromBase >= 18">
+                  +{{ s.deltaFromBase }}
+                </div>
+              </div>
+              <div class="stat-card__name">{{ s.fullName }}</div>
+              @if (s.id === 'S') {
+                <div class="stat-card__badge">LOW ROLL</div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="section-head section-head--spaced">
+          <h2>Secondary Characteristics</h2>
+          <div class="section-head__meta">DERIVED VALUES</div>
+        </div>
+
+        <div class="secondary-grid">
+          <div class="sec">
+            <div class="sec__k">A</div>
+            <div class="sec__v">1</div>
+          </div>
+          <div class="sec">
+            <div class="sec__k">W</div>
+            <div class="sec__v">12</div>
+          </div>
+          <div class="sec">
+            <div class="sec__k">SB</div>
+            <div class="sec__v">2</div>
+          </div>
+          <div class="sec">
+            <div class="sec__k">TB</div>
+            <div class="sec__v">3</div>
+          </div>
+          <div class="sec">
+            <div class="sec__k">M</div>
+            <div class="sec__v">4</div>
+          </div>
+          <div class="sec">
+            <div class="sec__k">Mag</div>
+            <div class="sec__v">0</div>
+          </div>
+          <div class="sec">
+            <div class="sec__k">IP</div>
+            <div class="sec__v">0</div>
+          </div>
+          <div class="sec">
+            <div class="sec__k">FP</div>
+            <div class="sec__v">3</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="cc-footer-nav">
+      <button class="cc-back" type="button" (click)="goPrev()">
+        <span class="material-symbols-outlined">arrow_back</span>
+        Back to Race Selection
+      </button>
+
+      <div class="cc-footer-nav__right">
+        <button class="cc-skip" type="button" disabled>Skip to Career</button>
+        <button class="cc-next" type="button" (click)="goNext()">
+          Confirm Attributes
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <div class="decor decor--bl" aria-hidden="true">
+    <span class="material-symbols-outlined">skull</span>
+  </div>
+</div>
