@@ -1,7 +1,7 @@
-import {booleanAttribute, Component, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import {FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router, RouterModule} from '@angular/router';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -16,17 +16,27 @@ import {MatOptionModule} from '@angular/material/core';
 
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
-import {finalize} from 'rxjs/operators';
-import {catchError, debounceTime, distinctUntilChanged, map, of, startWith, switchMap} from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  finalize,
+  map,
+  of,
+  startWith,
+  switchMap,
+  take
+} from 'rxjs';
 
-import {ProfessionsApiService} from '../../services/professions-api.service';
-import {CreateProfessionPayload, ProfessionSkill, ProfessionTalent} from '../../models/profession.models';
+import {ProfessionsApiService, type ProfessionUpsertPayload} from '../../services/professions-api.service';
+import type {Profession, ProfessionSkill, ProfessionTalent} from '../../models/profession.models';
 import {SkillsApiService} from '../../../skills/services/skills-api.service';
 import {TalentsApiService} from '../../../talents/services/talents-api.service';
 import {ProfessionLinksApiService} from '../../services/profession-links-api.service';
 
 @Component({
-  selector: 'app-profession-create',
+  selector: 'app-profession-edit',
   standalone: true,
   imports: [
     CommonModule,
@@ -43,25 +53,25 @@ import {ProfessionLinksApiService} from '../../services/profession-links-api.ser
     MatAutocompleteModule,
     MatOptionModule,
   ],
-  templateUrl: './profession-create.component.html',
-  styleUrls: ['./profession-create.component.scss'],
+  templateUrl: '../profession-create/profession-create.component.html',
+  styleUrls: ['../profession-create/profession-create.component.scss'],
 })
-export class ProfessionCreateComponent {
+export class ProfessionEditComponent {
   private readonly fb = inject(FormBuilder);
   private readonly api = inject(ProfessionsApiService);
   private readonly skillsApi = inject(SkillsApiService);
   private readonly talentsApi = inject(TalentsApiService);
   private readonly linksApi = inject(ProfessionLinksApiService);
+  private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
 
   private static readonly MIN_AUTOCOMPLETE_CHARS = 3;
 
   isSaving = false;
+  isLoading = true;
 
-  // transient animation state per control
-  animating: Record<string, boolean> = {};
-  private timeouts: Record<string, any> = {};
+  private professionId!: number;
 
   // separator keys for mat-chip input
   readonly separatorKeysCodes = [ENTER, COMMA];
@@ -83,7 +93,7 @@ export class ProfessionCreateComponent {
     debounceTime(300),
     distinctUntilChanged(),
     switchMap((q) =>
-      q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
+      q.length >= ProfessionEditComponent.MIN_AUTOCOMPLETE_CHARS
         ? this.skillsApi.search(q).pipe(catchError(() => of([])))
         : of([])
     )
@@ -96,7 +106,7 @@ export class ProfessionCreateComponent {
     debounceTime(300),
     distinctUntilChanged(),
     switchMap((q) =>
-      q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
+      q.length >= ProfessionEditComponent.MIN_AUTOCOMPLETE_CHARS
         ? this.talentsApi.search(q).pipe(catchError(() => of([])))
         : of([])
     )
@@ -120,14 +130,14 @@ export class ProfessionCreateComponent {
     movementDevelopment: [0, [Validators.required, Validators.min(0)]],
     magicDevelopment: [0, [Validators.required, Validators.min(0)]],
 
-    // dynamic lists (skills / talents) - przechowujemy encje ProfessionSkill/ProfessionTalent
     skills: this.fb.array([]),
     talents: this.fb.array([]),
     trappings: ['', [Validators.maxLength(2000)]],
 
-    // career exits (chips) - can contain numbers, strings or objects { id, name }
     exitProfessions: this.fb.array([]),
-    isAdvanced: booleanAttribute(false)
+
+    // create template używa tego pola do toggle; w trybie edycji nie mapujemy na backend
+    isAdvanced: false,
   });
 
   // convenience getters for template
@@ -139,92 +149,17 @@ export class ProfessionCreateComponent {
     return this.form.get('talents') as FormArray;
   }
 
-  // getter for exits FormArray used by template
   get exits(): FormArray {
     return this.form.get('exitProfessions') as FormArray;
   }
 
-  save() {
-    if (this.form.invalid || this.isSaving) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    this.isSaving = true;
-
-    const payload = this.buildCreatePayload();
-    this.api
-      .create(payload)
-      .pipe(finalize(() => (this.isSaving = false)))
-      .subscribe({
-        next: (created) => {
-          this.snackBar.open('Profesja utworzona', 'OK', {duration: 2500});
-          this.router.navigate(['/professions', created.id]);
-        },
-        error: () => {
-          this.snackBar.open('Nie udało się utworzyć profesji', 'OK', {duration: 3500});
-        },
-      });
-  }
-
-  private buildCreatePayload(): CreateProfessionPayload {
-    const v = this.form.getRawValue();
-    const payload: CreateProfessionPayload = {
-      name: v.name,
-      description: v.description,
-      weaponSkillsDevelopment: v.weaponSkillsDevelopment,
-      ballisticSkillsDevelopment: v.ballisticSkillsDevelopment,
-      strengthDevelopment: v.strengthDevelopment,
-      toughnessDevelopment: v.toughnessDevelopment,
-      agilityDevelopment: v.agilityDevelopment,
-      intelligenceDevelopment: v.intelligenceDevelopment,
-      willpowerDevelopment: v.willpowerDevelopment,
-      fellowshipDevelopment: v.fellowshipDevelopment,
-
-      attacksDevelopment: v.attacksDevelopment,
-      woundsDevelopment: v.woundsDevelopment,
-      movementDevelopment: v.movementDevelopment,
-      magicDevelopment: v.magicDevelopment,
-
-      trappings: v.trappings,
-    };
-
-    // map skills/talents arrays to number[] of IDs (ProfessionSkill/ProfessionTalent)
-    const skillsIds: number[] = [];
-    for (const s of (v.skills || [])) {
-      if (s && typeof s === 'object' && 'id' in s && typeof (s as any).id === 'number') {
-        skillsIds.push((s as any).id);
-      }
-    }
-    if (skillsIds.length) payload.skills = skillsIds;
-
-    const talentsIds: number[] = [];
-    for (const t of (v.talents || [])) {
-      if (t && typeof t === 'object' && 'id' in t && typeof (t as any).id === 'number') {
-        talentsIds.push((t as any).id);
-      }
-    }
-    if (talentsIds.length) payload.talents = talentsIds;
-
-    // map exit professions: support objects with `id`, numeric strings, and numbers
-    const exitIds: number[] = [];
-    for (const e of (v.exitProfessions || [])) {
-      if (e && typeof e === 'object' && 'id' in e && typeof (e as any).id === 'number') {
-        exitIds.push((e as any).id);
-        continue;
-      }
-      const n = Number(e);
-      if (!Number.isNaN(n) && Number.isFinite(n)) exitIds.push(n);
-    }
-    if (exitIds.length) payload.exitProfessions = exitIds;
-
-    return payload;
-  }
+  // transient animation state per control (współdzielony template z create)
+  animating: Record<string, boolean> = {};
+  private timeouts: Record<string, any> = {};
 
   // Trigger a short pulse animation for the named control
   private triggerPulse(controlName: string) {
     const DURATION = 300; // ms, keep in sync with CSS animation duration
-    // clear existing timeout if present
     if (this.timeouts[controlName]) {
       clearTimeout(this.timeouts[controlName]);
     }
@@ -254,21 +189,157 @@ export class ProfessionCreateComponent {
     this.triggerPulse(controlName);
   }
 
+  constructor() {
+    // Wczytaj profesję i ustaw form
+    this.route.paramMap
+      .pipe(
+        map((pm) => pm.get('id')),
+        filter((id): id is string => !!id),
+        map((id) => Number(id)),
+        filter((id) => Number.isFinite(id)),
+        take(1),
+        switchMap((id) => {
+          this.professionId = id;
+          return this.api.getById(id);
+        }),
+        finalize(() => (this.isLoading = false))
+      )
+      .subscribe({
+        next: (p) => this.patchFromProfession(p),
+        error: () => {
+          this.snackBar.open('Nie udało się wczytać profesji', 'OK', {duration: 3500});
+          this.router.navigate(['/professions']);
+        },
+      });
+  }
+
+  save() {
+    if (this.form.invalid || this.isSaving || this.isLoading) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.isSaving = true;
+    const payload = this.buildPatchPayload();
+
+    this.api
+      .patch(this.professionId, payload)
+      .pipe(finalize(() => (this.isSaving = false)))
+      .subscribe({
+        next: (updated) => {
+          this.snackBar.open('Profesja zapisana', 'OK', {duration: 2500});
+          this.router.navigate(['/professions', updated.id]);
+        },
+        error: () => {
+          this.snackBar.open('Nie udało się zapisać profesji', 'OK', {duration: 3500});
+        },
+      });
+  }
+
+  private patchFromProfession(p: Profession) {
+    this.form.patchValue({
+      name: p.name,
+      description: p.description,
+
+      weaponSkillsDevelopment: p.weaponSkillsDevelopment,
+      ballisticSkillsDevelopment: p.ballisticSkillsDevelopment,
+      strengthDevelopment: p.strengthDevelopment,
+      toughnessDevelopment: p.toughnessDevelopment,
+      agilityDevelopment: p.agilityDevelopment,
+      intelligenceDevelopment: p.intelligenceDevelopment,
+      willpowerDevelopment: p.willpowerDevelopment,
+      fellowshipDevelopment: p.fellowshipDevelopment,
+
+      attacksDevelopment: p.attacksDevelopment,
+      woundsDevelopment: p.woundsDevelopment,
+      movementDevelopment: p.movementDevelopment,
+      magicDevelopment: p.magicDevelopment,
+
+      trappings: (p as any).trappings ?? '',
+
+      isAdvanced: (p.entryProfessions?.length ?? 0) > 0,
+    });
+
+    // skills / talents = trzymamy całe obiekty ProfessionSkill/ProfessionTalent v2
+    this.skills.clear();
+    for (const s of p.skills ?? []) {
+      this.skills.push(new FormControl<ProfessionSkill>(s));
+    }
+
+    this.talents.clear();
+    for (const t of p.talents ?? []) {
+      this.talents.push(new FormControl<ProfessionTalent>(t));
+    }
+
+    this.exits.clear();
+    for (const e of p.exitProfessions ?? []) {
+      this.exits.push(new FormControl({id: e.id, name: e.name}));
+    }
+  }
+
+  private buildPatchPayload(): ProfessionUpsertPayload {
+    const v = this.form.getRawValue();
+
+    const payload: ProfessionUpsertPayload = {
+      name: v.name,
+      description: v.description,
+
+      weaponSkillsDevelopment: v.weaponSkillsDevelopment,
+      ballisticSkillsDevelopment: v.ballisticSkillsDevelopment,
+      strengthDevelopment: v.strengthDevelopment,
+      toughnessDevelopment: v.toughnessDevelopment,
+      agilityDevelopment: v.agilityDevelopment,
+      intelligenceDevelopment: v.intelligenceDevelopment,
+      willpowerDevelopment: v.willpowerDevelopment,
+      fellowshipDevelopment: v.fellowshipDevelopment,
+
+      attacksDevelopment: v.attacksDevelopment,
+      woundsDevelopment: v.woundsDevelopment,
+      movementDevelopment: v.movementDevelopment,
+      magicDevelopment: v.magicDevelopment,
+
+      trappings: v.trappings,
+    };
+
+    const skillsIds: number[] = [];
+    for (const s of v.skills || []) {
+      if (s && typeof s === 'object' && 'id' in s && typeof (s as any).id === 'number') {
+        skillsIds.push((s as any).id);
+      }
+    }
+    payload.skills = skillsIds;
+
+    const talentsIds: number[] = [];
+    for (const t of v.talents || []) {
+      if (t && typeof t === 'object' && 'id' in t && typeof (t as any).id === 'number') {
+        talentsIds.push((t as any).id);
+      }
+    }
+    payload.talents = talentsIds;
+
+    const exitIds: number[] = [];
+    for (const e of v.exitProfessions || []) {
+      if (e && typeof e === 'object' && 'id' in e && typeof (e as any).id === 'number') {
+        exitIds.push((e as any).id);
+        continue;
+      }
+      const n = Number(e);
+      if (!Number.isNaN(n) && Number.isFinite(n)) exitIds.push(n);
+    }
+    payload.exitProfessions = exitIds;
+
+    return payload;
+  }
+
   // Skills / talents helpers (mat-chip)
   addSkillFromChip(event: MatChipInputEvent) {
-    // ręczne dodawanie wyłączone — backend wymaga istniejących ProfessionSkill
-    if (event.chipInput) {
-      event.chipInput.clear();
-    }
+    if (event.chipInput) event.chipInput.clear();
     this.skillSearchControl.setValue('');
     this.snackBar.open('Wybierz umiejętność z listy (autocomplete).', 'OK', {duration: 2500});
   }
 
   addTalentFromChip(event: MatChipInputEvent) {
-    // ręczne dodawanie wyłączone — backend wymaga istniejących ProfessionTalent
-    if (event.chipInput) {
-      event.chipInput.clear();
-    }
+    if (event.chipInput) event.chipInput.clear();
     this.talentSearchControl.setValue('');
     this.snackBar.open('Wybierz talent z listy (autocomplete).', 'OK', {duration: 2500});
   }
@@ -280,19 +351,11 @@ export class ProfessionCreateComponent {
     const id = current?.id;
     if (typeof id !== 'number') {
       this.skills.removeAt(index);
-      // odśwież listę podpowiedzi
-      const q = (this.skillSearchControl.value ?? '').toString();
-      this.skillSearchControl.setValue(q);
       return;
     }
 
     this.linksApi.deleteProfessionSkill(id).subscribe({
-      next: () => {
-        this.skills.removeAt(index);
-        // odśwież listę podpowiedzi (autocomplete)
-        const q = (this.skillSearchControl.value ?? '').toString();
-        this.skillSearchControl.setValue(q);
-      },
+      next: () => this.skills.removeAt(index),
       error: () => {
         this.snackBar.open('Nie udało się usunąć umiejętności z bazy.', 'OK', {duration: 3000});
       },
@@ -306,19 +369,11 @@ export class ProfessionCreateComponent {
     const id = current?.id;
     if (typeof id !== 'number') {
       this.talents.removeAt(index);
-      // odśwież listę podpowiedzi
-      const q = (this.talentSearchControl.value ?? '').toString();
-      this.talentSearchControl.setValue(q);
       return;
     }
 
     this.linksApi.deleteProfessionTalent(id).subscribe({
-      next: () => {
-        this.talents.removeAt(index);
-        // odśwież listę podpowiedzi (autocomplete)
-        const q = (this.talentSearchControl.value ?? '').toString();
-        this.talentSearchControl.setValue(q);
-      },
+      next: () => this.talents.removeAt(index),
       error: () => {
         this.snackBar.open('Nie udało się usunąć talentu z bazy.', 'OK', {duration: 3000});
       },
@@ -332,7 +387,6 @@ export class ProfessionCreateComponent {
       return;
     }
 
-    // unikamy duplikatów po skill.id
     const already = this.skills.controls.some((c) => {
       const v = c.value as any;
       return v?.skill?.id === opt.id;
@@ -361,7 +415,6 @@ export class ProfessionCreateComponent {
       return;
     }
 
-    // unikamy duplikatów po talent.id
     const already = this.talents.controls.some((c) => {
       const v = c.value as any;
       return v?.talent?.id === opt.id;
@@ -387,13 +440,11 @@ export class ProfessionCreateComponent {
   addExitFromChip(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
     if (value) {
-      // add plain text entry (keeps previous behavior)
       this.exits.push(new FormControl(value));
     }
     if (event.chipInput) {
       event.chipInput.clear();
     }
-    // also clear search control
     this.exitSearchControl.setValue('');
   }
 
@@ -407,7 +458,6 @@ export class ProfessionCreateComponent {
     if (opt && opt.id) {
       this.exits.push(new FormControl({id: opt.id, name: opt.name}));
     }
-    // clear input
     this.exitSearchControl.setValue('');
   }
 }

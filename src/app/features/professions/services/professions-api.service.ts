@@ -3,6 +3,17 @@ import {inject, Injectable} from '@angular/core';
 import {CrudApiService} from '../../../shared/services/crud-api.service';
 import {CreateProfessionPayload, Profession} from '../models/profession.models';
 
+// Payload dla update/patch (backend oczekuje ID w polach relacji, a nie zagnieżdżonych obiektów)
+export type ProfessionUpsertPayload =
+  Partial<Omit<Profession, 'skills' | 'talents' | 'entryProfessions' | 'exitProfessions'>>
+  & {
+  skills?: number[];
+  talents?: number[];
+  entryProfessions?: number[];
+  exitProfessions?: number[];
+  trappings?: string;
+};
+
 @Injectable({providedIn: 'root'})
 export class ProfessionsApiService {
   private readonly crud = inject(CrudApiService);
@@ -27,12 +38,12 @@ export class ProfessionsApiService {
     return this.crud.create<Profession, CreateProfessionPayload>(ProfessionsApiService.PATH, body);
   }
 
-  update(id: number, body: Partial<Profession>) {
-    return this.crud.update<Profession, Partial<Profession>>(ProfessionsApiService.PATH, id, body);
+  update(id: number, body: ProfessionUpsertPayload) {
+    return this.crud.update<Profession, ProfessionUpsertPayload>(ProfessionsApiService.PATH, id, body);
   }
 
-  patch(id: number, body: Partial<Profession>) {
-    return this.crud.patch<Profession, Partial<Profession>>(ProfessionsApiService.PATH, id, body);
+  patch(id: number, body: ProfessionUpsertPayload) {
+    return this.crud.patch<Profession, ProfessionUpsertPayload>(ProfessionsApiService.PATH, id, body);
   }
 
   delete(id: number) {
@@ -41,7 +52,7 @@ export class ProfessionsApiService {
 
   /**
    * Wyszukiwanie profesji (autocomplete).
-   * Jeśli backend wspiera parametr `search`, można to wykorzystać w przyszłości.
+   * Jeżeli backend wspiera parametr `search`, można to wykorzystać w przyszłości.
    */
   search(query: string) {
     const params = query ? {search: query} : undefined;

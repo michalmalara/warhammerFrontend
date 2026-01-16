@@ -7,6 +7,7 @@ import {
 import {
   ProfessionDetailComponent
 } from './features/professions/components/profession-detail/profession-detail.component';
+import {ProfessionEditComponent} from './features/professions/components/profession-edit/profession-edit.component';
 import {SkillCreateComponent} from './features/skills/components/skill-create/skill-create.component';
 import {SkillsListComponent} from './features/skills/components/skills-list/skills-list.component';
 import {TalentCreateComponent} from './features/talents/components/talent-create/talent-create.component';
@@ -18,6 +19,7 @@ export const routes: Routes = [
 
   {path: 'professions', component: ProfessionsListComponent},
   {path: 'professions/new', component: ProfessionCreateComponent},
+  {path: 'professions/:id/edit', component: ProfessionEditComponent},
   {path: 'professions/:id', component: ProfessionDetailComponent},
 
   {path: 'skills', component: SkillsListComponent},

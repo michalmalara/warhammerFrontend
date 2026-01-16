@@ -1,4 +1,4 @@
-﻿@if (profession$ | async; as p) {
+﻿﻿@if (profession$ | async; as p) {
   <div class="page parchment-texture">
     <header class="page__heading">
       <div class="page__heading-left">
@@ -25,6 +25,18 @@
         >
           <mat-icon class="back-btn__icon">key</mat-icon>
           <span i18n="Action label|Back button text@@profession.back">Back to Library</span>
+        </a>
+
+        <a
+          mat-flat-button
+          color="primary"
+          [routerLink]="['/professions', p.id, 'edit']"
+          aria-label="Edit profession"
+          i18n-aria-label="Link aria-label|Edit profession@@profession.edit.aria"
+          style="margin-left: 12px;"
+        >
+          <mat-icon>edit</mat-icon>
+          <span i18n="Action label|Edit profession@@profession.edit">Edytuj</span>
         </a>
       </div>
     </header>
@@ -158,6 +170,7 @@
               +{{ p.movementDevelopment }}
             }
           </div>
+
           <div class="advance__cell advance__cell--val">
             @if (p.magicDevelopment === 0) {
               —
@@ -169,128 +182,65 @@
           <div class="advance__cell advance__cell--val">—</div>
         </div>
       </div>
-    </section>
 
-    <section class="tri">
-      <div class="list">
-        <div class="list__head">
-          <mat-icon class="list__icon">workspace_premium</mat-icon>
-          <h4 class="list__title" i18n="Section heading|Skills section heading@@profession.skills.title">Skills</h4>
-        </div>
-
-        @if (p.skills.length === 0) {
-          <p class="empty" i18n="Empty list|No skills available message@@profession.skills.none">None.</p>
-        } @else {
-          <ul class="bullets">
-            @for (ps of p.skills; track trackById($index, ps)) {
-              <li>
-                <span class="term"
-                      i18n="Skill with characteristic|Skill name and characteristic@@profession.skill.item">
-                  {{ ps.skill.name }} ({{ ps.skill.associatedCharacteristic }})
-                </span>
-
-                @for (alt of ps.alternativeSkill; track trackById($index, alt)) {
-                  <div class="alt" i18n="Alternative skill prefix|or label@@profession.skill.alt">
-                    or {{ alt.skill.name }}
-                  </div>
-                }
-              </li>
+      <!-- Skills & Talents section -->
+      <div class="panel__split">
+        <div class="panel__block">
+          <h4 class="panel__subhead" i18n="Section heading|Skills heading@@profession.skills.title">Skills</h4>
+          <mat-chip-set>
+            @for (s of p.skills; track trackById($index, s)) {
+              <mat-chip>
+                {{ s.skill.name }}
+              </mat-chip>
             }
-          </ul>
-        }
-      </div>
-
-      <div class="list">
-        <div class="list__head">
-          <mat-icon class="list__icon">military_tech</mat-icon>
-          <h4 class="list__title" i18n="Section heading|Talents section heading@@profession.talents.title">Talents</h4>
+          </mat-chip-set>
         </div>
 
-        @if (p.talents.length === 0) {
-          <p class="empty" i18n="Empty list|No talents available message@@profession.talents.none">None.</p>
-        } @else {
-          <ul class="bullets">
-            @for (pt of p.talents; track trackById($index, pt)) {
-              <li>
-                <span class="term" i18n="Talent name|Talent item@@profession.talent.item">{{ pt.talent.name }}</span>
-
-                @for (alt of pt.alternativeTalent; track trackById($index, alt)) {
-                  <div class="alt" i18n="Alternative talent prefix|or label@@profession.talent.alt">
-                    or {{ alt.talent.name }}
-                  </div>
-                }
-              </li>
+        <div class="panel__block">
+          <h4 class="panel__subhead" i18n="Section heading|Talents heading@@profession.talents.title">Talents</h4>
+          <mat-chip-set>
+            @for (t of p.talents; track trackById($index, t)) {
+              <mat-chip>
+                {{ t.talent.name }}
+              </mat-chip>
             }
-          </ul>
-        }
-      </div>
-
-      <div class="list">
-        <div class="list__head">
-          <mat-icon class="list__icon">backpack</mat-icon>
-          <h4 class="list__title" i18n="Section heading|Equipment section heading@@profession.equipment.title">
-            Equipment
-          </h4>
-        </div>
-
-        <p class="empty" i18n="Placeholder|Equipment not available@@profession.equipment.todo">
-          Equipment will be available in a future update.
-        </p>
-      </div>
-    </section>
-
-    <section class="exits">
-      <h3 class="exits__title" i18n="Section heading|Entry and Exit professions@@profession.entryexit.title">
-        Career Exits
-      </h3>
-
-      <div class="exits__grid">
-        <div class="exits__col">
-          <h4 class="exits__sub" i18n="Subheading|Entry professions list heading@@profession.entry.title">Entry</h4>
-          @if (p.entryProfessions.length === 0) {
-            <p class="empty" i18n="Empty list|No entry professions message@@profession.entry.none">None.</p>
-          } @else {
-            <div class="tiles">
-              @for (ep of p.entryProfessions; track trackById($index, ep)) {
-                <a
-                  class="tile"
-                  [routerLink]="['/professions', ep.id]"
-                  aria-label="Open entry profession"
-                  i18n-aria-label="Link aria-label|Open entry profession@@profession.entry.link.aria"
-                >
-                  <span class="tile__meta" i18n="Meta label|Entry label@@profession.entry.meta">Entry</span>
-                  <span class="tile__name">{{ ep.name }}</span>
-                </a>
-              }
-            </div>
-          }
-        </div>
-
-        <div class="exits__col">
-          <h4 class="exits__sub" i18n="Subheading|Exit professions list heading@@profession.exit.title">Exit</h4>
-          @if (p.exitProfessions.length === 0) {
-            <p class="empty" i18n="Empty list|No exit professions message@@profession.exit.none">None.</p>
-          } @else {
-            <div class="tiles">
-              @for (xp of p.exitProfessions; track trackById($index, xp)) {
-                <a
-                  class="tile"
-                  [routerLink]="['/professions', xp.id]"
-                  aria-label="Open exit profession"
-                  i18n-aria-label="Link aria-label|Open exit profession@@profession.exit.link.aria"
-                >
-                  <span class="tile__meta" i18n="Meta label|Exit label@@profession.exit.meta">Exit</span>
-                  <span class="tile__name">{{ xp.name }}</span>
-                </a>
-              }
-            </div>
-          }
+          </mat-chip-set>
         </div>
       </div>
     </section>
+
+    <!-- Career exits -->
+    @if (p.exitProfessions?.length) {
+      <section class="panel">
+        <h3 class="panel__title" i18n="Section heading|Career exits heading@@profession.exits.title">
+          <mat-icon class="panel__icon">arrow_outward</mat-icon>
+          Career Exits
+        </h3>
+        <mat-chip-set>
+          @for (c of p.exitProfessions; track trackById($index, c)) {
+            <a mat-chip [routerLink]="['/professions', c.id]">{{ c.name }}</a>
+          }
+        </mat-chip-set>
+      </section>
+    }
+
+    <!-- Entry paths -->
+    @if (p.entryProfessions?.length) {
+      <section class="panel">
+        <h3 class="panel__title" i18n="Section heading|Entry paths heading@@profession.entries.title">
+          <mat-icon class="panel__icon">merge_type</mat-icon>
+          Entry Paths
+        </h3>
+        <mat-chip-set>
+          @for (c of p.entryProfessions; track trackById($index, c)) {
+            <a mat-chip [routerLink]="['/professions', c.id]">{{ c.name }}</a>
+          }
+        </mat-chip-set>
+      </section>
+    }
   </div>
 } @else {
   <div class="loading">
-    <mat-spinner diameter="32"></mat-spinner>
+    <mat-spinner diameter="44"></mat-spinner>
   </div>
 }
