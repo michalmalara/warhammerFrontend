@@ -73,6 +73,40 @@ export class ProfessionEditComponent {
 
   private professionId!: number;
 
+  // transient animation state per control (współdzielony template z create)
+  animating: Record<string, boolean> = {};
+  private timeouts: Record<string, any> = {};
+
+  // Trigger a short pulse animation for the named control
+  private triggerPulse(controlName: string) {
+    const DURATION = 300;
+    if (this.timeouts[controlName]) {
+      clearTimeout(this.timeouts[controlName]);
+    }
+    this.animating[controlName] = true;
+    this.timeouts[controlName] = setTimeout(() => {
+      this.animating[controlName] = false;
+      delete this.timeouts[controlName];
+    }, DURATION);
+  }
+
+  increment(controlName: string, step = 1) {
+    const ctrl = this.form.get(controlName);
+    if (!ctrl) return;
+    const current = Number(ctrl.value ?? 0) || 0;
+    ctrl.setValue(Math.max(0, current + step));
+    this.triggerPulse(controlName);
+  }
+
+  decrement(controlName: string, step = 1) {
+    const ctrl = this.form.get(controlName);
+    if (!ctrl) return;
+    const current = Number(ctrl.value ?? 0) || 0;
+    const next = Math.max(0, current - step);
+    ctrl.setValue(next);
+    this.triggerPulse(controlName);
+  }
+
   // separator keys for mat-chip input
   readonly separatorKeysCodes = [ENTER, COMMA];
 
@@ -140,7 +174,6 @@ export class ProfessionEditComponent {
     isAdvanced: false,
   });
 
-  // convenience getters for template
   get skills(): FormArray {
     return this.form.get('skills') as FormArray;
   }
@@ -153,40 +186,52 @@ export class ProfessionEditComponent {
     return this.form.get('exitProfessions') as FormArray;
   }
 
-  // transient animation state per control (współdzielony template z create)
-  animating: Record<string, boolean> = {};
-  private timeouts: Record<string, any> = {};
+  // alternatywy (search per-row)
+  private readonly altSkillSearchControls = new Map<number, FormControl<string>>();
+  private readonly altTalentSearchControls = new Map<number, FormControl<string>>();
 
-  // Trigger a short pulse animation for the named control
-  private triggerPulse(controlName: string) {
-    const DURATION = 300; // ms, keep in sync with CSS animation duration
-    if (this.timeouts[controlName]) {
-      clearTimeout(this.timeouts[controlName]);
-    }
-    this.animating[controlName] = true;
-    this.timeouts[controlName] = setTimeout(() => {
-      this.animating[controlName] = false;
-      delete this.timeouts[controlName];
-    }, DURATION);
+  altSkillControl(i: number): FormControl<string> {
+    const existing = this.altSkillSearchControls.get(i);
+    if (existing) return existing;
+    const ctrl = new FormControl<string>('', {nonNullable: true});
+    this.altSkillSearchControls.set(i, ctrl);
+    return ctrl;
   }
 
-  // Increment a numeric form control by `step` (default 1). Minimum is 0.
-  increment(controlName: string, step = 1) {
-    const ctrl = this.form.get(controlName);
-    if (!ctrl) return;
-    const current = Number(ctrl.value ?? 0) || 0;
-    ctrl.setValue(Math.max(0, current + step));
-    this.triggerPulse(controlName);
+  altTalentControl(i: number): FormControl<string> {
+    const existing = this.altTalentSearchControls.get(i);
+    if (existing) return existing;
+    const ctrl = new FormControl<string>('', {nonNullable: true});
+    this.altTalentSearchControls.set(i, ctrl);
+    return ctrl;
   }
 
-  // Decrement a numeric form control by `step` (default 1). Minimum is 0.
-  decrement(controlName: string, step = 1) {
-    const ctrl = this.form.get(controlName);
-    if (!ctrl) return;
-    const current = Number(ctrl.value ?? 0) || 0;
-    const next = Math.max(0, current - step);
-    ctrl.setValue(next);
-    this.triggerPulse(controlName);
+  altSkillsOptions$(i: number) {
+    return this.altSkillControl(i).valueChanges.pipe(
+      startWith(this.altSkillControl(i).value),
+      map((v) => (typeof v === 'string' ? v : '').toString().trim()),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((q) =>
+        q.length >= ProfessionEditComponent.MIN_AUTOCOMPLETE_CHARS
+          ? this.skillsApi.search(q).pipe(catchError(() => of([])))
+          : of([])
+      )
+    );
+  }
+
+  altTalentsOptions$(i: number) {
+    return this.altTalentControl(i).valueChanges.pipe(
+      startWith(this.altTalentControl(i).value),
+      map((v) => (typeof v === 'string' ? v : '').toString().trim()),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((q) =>
+        q.length >= ProfessionEditComponent.MIN_AUTOCOMPLETE_CHARS
+          ? this.talentsApi.search(q).pipe(catchError(() => of([])))
+          : of([])
+      )
+    );
   }
 
   constructor() {
@@ -459,5 +504,188 @@ export class ProfessionEditComponent {
       this.exits.push(new FormControl({id: opt.id, name: opt.name}));
     }
     this.exitSearchControl.setValue('');
+  }
+
+  selectAlternativeSkill(skillIndex: number, event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as { id: number; name: string };
+    const base = this.skills.at(skillIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+
+    if (!opt?.id || typeof baseId !== 'number') {
+      this.altSkillControl(skillIndex).setValue('');
+      return;
+    }
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeSkill) ? base.alternativeSkill : [];
+    const already = currentAlt.some((a) => a?.skill?.id === opt.id || a?.id === opt.id);
+    if (already) {
+      this.altSkillControl(skillIndex).setValue('');
+      return;
+    }
+
+    const nextAltSkillIds = [
+      ...currentAlt
+        .map((a) => a?.skill?.id)
+        .filter((id) => typeof id === 'number'),
+      opt.id,
+    ];
+
+    this.linksApi.updateProfessionSkill(baseId, {alternativeSkill: nextAltSkillIds}).subscribe({
+      next: (updated: ProfessionSkill) => {
+        this.skills.at(skillIndex)?.setValue(updated);
+        this.altSkillControl(skillIndex).setValue('');
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się dodać alternatywnej umiejętności.', 'OK', {duration: 3000});
+        this.altSkillControl(skillIndex).setValue('');
+      },
+    });
+  }
+
+  removeAlternativeSkill(skillIndex: number, altIndex: number) {
+    const base = this.skills.at(skillIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+    if (typeof baseId !== 'number') return;
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeSkill) ? base.alternativeSkill : [];
+    const nextAltSkillIds = currentAlt
+      .filter((_: any, i: number) => i !== altIndex)
+      .map((a) => a?.skill?.id)
+      .filter((id) => typeof id === 'number');
+
+    this.linksApi.updateProfessionSkill(baseId, {alternativeSkill: nextAltSkillIds}).subscribe({
+      next: (updated: ProfessionSkill) => {
+        this.skills.at(skillIndex)?.setValue(updated);
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się usunąć alternatywnej umiejętności.', 'OK', {duration: 3000});
+      },
+    });
+  }
+
+  selectAlternativeTalent(talentIndex: number, event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as { id: number; name: string };
+    const base = this.talents.at(talentIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+
+    if (!opt?.id || typeof baseId !== 'number') {
+      this.altTalentControl(talentIndex).setValue('');
+      return;
+    }
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeTalent) ? base.alternativeTalent : [];
+    const already = currentAlt.some((a) => a?.talent?.id === opt.id || a?.id === opt.id);
+    if (already) {
+      this.altTalentControl(talentIndex).setValue('');
+      return;
+    }
+
+    const nextAltTalentIds = [
+      ...currentAlt
+        .map((a) => a?.talent?.id)
+        .filter((id) => typeof id === 'number'),
+      opt.id,
+    ];
+
+    this.linksApi.updateProfessionTalent(baseId, {alternativeTalent: nextAltTalentIds}).subscribe({
+      next: (updated: ProfessionTalent) => {
+        this.talents.at(talentIndex)?.setValue(updated);
+        this.altTalentControl(talentIndex).setValue('');
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się dodać alternatywnego talentu.', 'OK', {duration: 3000});
+        this.altTalentControl(talentIndex).setValue('');
+      },
+    });
+  }
+
+  removeAlternativeTalent(talentIndex: number, altIndex: number) {
+    const base = this.talents.at(talentIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+    if (typeof baseId !== 'number') return;
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeTalent) ? base.alternativeTalent : [];
+    const nextAltTalentIds = currentAlt
+      .filter((_: any, i: number) => i !== altIndex)
+      .map((a) => a?.talent?.id)
+      .filter((id) => typeof id === 'number');
+
+    this.linksApi.updateProfessionTalent(baseId, {alternativeTalent: nextAltTalentIds}).subscribe({
+      next: (updated: ProfessionTalent) => {
+        this.talents.at(talentIndex)?.setValue(updated);
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się usunąć alternatywnego talentu.', 'OK', {duration: 3000});
+      },
+    });
+  }
+
+  addAlternativeSkillFromExisting(skillIndex: number, altSkillId: number) {
+    const base = this.skills.at(skillIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+    const baseSkillId = base?.skill?.id as number | undefined;
+
+    if (typeof baseId !== 'number' || typeof altSkillId !== 'number') return;
+    if (typeof baseSkillId === 'number' && altSkillId === baseSkillId) {
+      this.snackBar.open('Nie możesz dodać jako alternatywy tej samej umiejętności.', 'OK', {duration: 2500});
+      return;
+    }
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeSkill) ? base.alternativeSkill : [];
+    const already = currentAlt.some((a) => a?.skill?.id === altSkillId);
+    if (already) return;
+
+    const nextAltSkillIds = [
+      ...currentAlt
+        .map((a) => a?.skill?.id)
+        .filter((id) => typeof id === 'number'),
+      altSkillId,
+    ];
+
+    this.linksApi.updateProfessionSkill(baseId, {alternativeSkill: nextAltSkillIds}).subscribe({
+      next: (updated: ProfessionSkill) => {
+        this.skills.at(skillIndex)?.setValue(updated);
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się dodać alternatywnej umiejętności.', 'OK', {duration: 3000});
+      },
+    });
+  }
+
+  addAlternativeTalentFromExisting(talentIndex: number, altTalentId: number) {
+    const base = this.talents.at(talentIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+    const baseTalentId = base?.talent?.id as number | undefined;
+
+    if (typeof baseId !== 'number' || typeof altTalentId !== 'number') return;
+    if (typeof baseTalentId === 'number' && altTalentId === baseTalentId) {
+      this.snackBar.open('Nie możesz dodać jako alternatywy tego samego talentu.', 'OK', {duration: 2500});
+      return;
+    }
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeTalent) ? base.alternativeTalent : [];
+    const already = currentAlt.some((a) => a?.talent?.id === altTalentId);
+    if (already) return;
+
+    const nextAltTalentIds = [
+      ...currentAlt
+        .map((a) => a?.talent?.id)
+        .filter((id) => typeof id === 'number'),
+      altTalentId,
+    ];
+
+    this.linksApi.updateProfessionTalent(baseId, {alternativeTalent: nextAltTalentIds}).subscribe({
+      next: (updated: ProfessionTalent) => {
+        this.talents.at(talentIndex)?.setValue(updated);
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się dodać alternatywnego talentu.', 'OK', {duration: 3000});
+      },
+    });
+  }
+
+  parseNumberValue(v: unknown): number {
+    const n = typeof v === 'number' ? v : Number(v);
+    return Number.isFinite(n) ? n : NaN;
   }
 }

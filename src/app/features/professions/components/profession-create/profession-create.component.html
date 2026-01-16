@@ -116,17 +116,51 @@
               />
 
               <mat-autocomplete #skillAuto="matAutocomplete" (optionSelected)="selectSkill($event)">
-                <mat-option *ngFor="let o of skillsOptions$ | async" [value]="o">
-                  {{ o.name }}
-                </mat-option>
+                @for (o of skillsOptions$ | async; track o?.id ?? o?.name ?? o) {
+                  <mat-option [value]="o">
+                    {{ o.name }}
+                  </mat-option>
+                }
               </mat-autocomplete>
             </mat-form-field>
 
             <mat-chip-grid #skillList aria-label="Skills">
-              <mat-chip *ngFor="let s of skills.controls; let i = index" [removable]="true" (removed)="removeSkill(i)">
-                {{ (s.value?.skill?.name || s.value?.name || s.value) }}
-                <mat-icon matChipRemove>close</mat-icon>
-              </mat-chip>
+              @for (s of skills.controls; track s; let i = $index) {
+                <mat-chip [removable]="true" (removed)="removeSkill(i)">
+                  {{ (s.value?.skill?.name || s.value?.name || s.value) }}
+                  <mat-icon matChipRemove>close</mat-icon>
+                </mat-chip>
+
+                <!-- Alternatywne umiejętności dla tego skilla -->
+                @if (s.value?.alternativeSkill?.length) {
+                  <div class="alt-block" aria-label="Alternative skills">
+                    <div class="alt-title">Alternatives</div>
+                    <mat-chip-set aria-label="Alternative skills">
+                      @for (a of s.value.alternativeSkill; track a?.id ?? a?.skill?.id ?? a; let ai = $index) {
+                        <mat-chip [removable]="true" (removed)="removeAlternativeSkill(i, ai)">
+                          {{ a?.skill?.name }}
+                          <mat-icon matChipRemove>close</mat-icon>
+                        </mat-chip>
+                      }
+                    </mat-chip-set>
+                  </div>
+                }
+
+                <mat-form-field appearance="outline" class="full" style="margin-top: 8px;">
+                  <mat-label>Dodaj alternatywną umiejętność (z już dodanych)</mat-label>
+                  <select
+                    matNativeControl
+                    (change)="addAlternativeSkillFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value))"
+                  >
+                    <option value="" selected disabled>Wybierz...</option>
+                    @for (ss of skills.controls; track ss; let si = $index) {
+                      @if (si !== i) {
+                        <option [value]="ss.value?.skill?.id">{{ ss.value?.skill?.name }}</option>
+                      }
+                    }
+                  </select>
+                </mat-form-field>
+              }
               <input
                 [matChipInputFor]="skillList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -151,18 +185,51 @@
               />
 
               <mat-autocomplete #talentAuto="matAutocomplete" (optionSelected)="selectTalent($event)">
-                <mat-option *ngFor="let o of talentsOptions$ | async" [value]="o">
-                  {{ o.name }}
-                </mat-option>
+                @for (o of talentsOptions$ | async; track o?.id ?? o?.name ?? o) {
+                  <mat-option [value]="o">
+                    {{ o.name }}
+                  </mat-option>
+                }
               </mat-autocomplete>
             </mat-form-field>
 
             <mat-chip-grid #talentList aria-label="Talents">
-              <mat-chip *ngFor="let t of talents.controls; let i = index" [removable]="true"
-                        (removed)="removeTalent(i)">
-                {{ (t.value?.talent?.name || t.value?.name || t.value) }}
-                <mat-icon matChipRemove>close</mat-icon>
-              </mat-chip>
+              @for (t of talents.controls; track t; let i = $index) {
+                <mat-chip [removable]="true" (removed)="removeTalent(i)">
+                  {{ (t.value?.talent?.name || t.value?.name || t.value) }}
+                  <mat-icon matChipRemove>close</mat-icon>
+                </mat-chip>
+
+                <!-- Alternatywne talenty dla tego talentu -->
+                @if (t.value?.alternativeTalent?.length) {
+                  <div class="alt-block" aria-label="Alternative talents">
+                    <div class="alt-title">Alternatives</div>
+                    <mat-chip-set aria-label="Alternative talents">
+                      @for (a of t.value.alternativeTalent; track a?.id ?? a?.talent?.id ?? a; let ai = $index) {
+                        <mat-chip [removable]="true" (removed)="removeAlternativeTalent(i, ai)">
+                          {{ a?.talent?.name }}
+                          <mat-icon matChipRemove>close</mat-icon>
+                        </mat-chip>
+                      }
+                    </mat-chip-set>
+                  </div>
+                }
+
+                <mat-form-field appearance="outline" class="full" style="margin-top: 8px;">
+                  <mat-label>Dodaj alternatywny talent (z już dodanych)</mat-label>
+                  <select
+                    matNativeControl
+                    (change)="addAlternativeTalentFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value))"
+                  >
+                    <option value="" selected disabled>Wybierz...</option>
+                    @for (tt of talents.controls; track tt; let ti = $index) {
+                      @if (ti !== i) {
+                        <option [value]="tt.value?.talent?.id">{{ tt.value?.talent?.name }}</option>
+                      }
+                    }
+                  </select>
+                </mat-form-field>
+              }
               <input
                 [matChipInputFor]="talentList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -560,17 +627,21 @@
             />
 
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectExit($event)">
-              <mat-option *ngFor="let o of exitsOptions$ | async" [value]="o">
-                {{ o.name }}
-              </mat-option>
+              @for (o of exitsOptions$ | async; track o?.id ?? o?.name ?? o) {
+                <mat-option [value]="o">
+                  {{ o.name }}
+                </mat-option>
+              }
             </mat-autocomplete>
           </mat-form-field>
 
-          <mat-chip-grid #exitList aria-label="Career Exits">
-            <mat-chip *ngFor="let e of exits.controls; let i = index" [removable]="true" (removed)="removeExit(i)">
-              {{ (e.value && (e.value.name || e.value)) }}
-              <mat-icon matChipRemove>close</mat-icon>
-            </mat-chip>
+          <mat-chip-grid aria-label="Career Exits">
+            @for (e of exits.controls; track e; let i = $index) {
+              <mat-chip [removable]="true" (removed)="removeExit(i)">
+                {{ (e.value && (e.value.name || e.value)) }}
+                <mat-icon matChipRemove>close</mat-icon>
+              </mat-chip>
+            }
           </mat-chip-grid>
         </div>
       </mat-card-content>

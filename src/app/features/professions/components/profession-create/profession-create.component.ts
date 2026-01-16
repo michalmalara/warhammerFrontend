@@ -102,6 +102,54 @@ export class ProfessionCreateComponent {
     )
   );
 
+  // alternatywy (search per-row)
+  private readonly altSkillSearchControls = new Map<number, FormControl<string>>();
+  private readonly altTalentSearchControls = new Map<number, FormControl<string>>();
+
+  altSkillControl(i: number): FormControl<string> {
+    const existing = this.altSkillSearchControls.get(i);
+    if (existing) return existing;
+    const ctrl = new FormControl<string>('', {nonNullable: true});
+    this.altSkillSearchControls.set(i, ctrl);
+    return ctrl;
+  }
+
+  altTalentControl(i: number): FormControl<string> {
+    const existing = this.altTalentSearchControls.get(i);
+    if (existing) return existing;
+    const ctrl = new FormControl<string>('', {nonNullable: true});
+    this.altTalentSearchControls.set(i, ctrl);
+    return ctrl;
+  }
+
+  altSkillsOptions$(i: number) {
+    return this.altSkillControl(i).valueChanges.pipe(
+      startWith(this.altSkillControl(i).value),
+      map((v) => (typeof v === 'string' ? v : '').toString().trim()),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((q) =>
+        q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
+          ? this.skillsApi.search(q).pipe(catchError(() => of([])))
+          : of([])
+      )
+    );
+  }
+
+  altTalentsOptions$(i: number) {
+    return this.altTalentControl(i).valueChanges.pipe(
+      startWith(this.altTalentControl(i).value),
+      map((v) => (typeof v === 'string' ? v : '').toString().trim()),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((q) =>
+        q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
+          ? this.talentsApi.search(q).pipe(catchError(() => of([])))
+          : of([])
+      )
+    );
+  }
+
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(120)]],
     description: ['', [Validators.required, Validators.maxLength(2000)]],
@@ -289,7 +337,16 @@ export class ProfessionCreateComponent {
     this.linksApi.deleteProfessionSkill(id).subscribe({
       next: () => {
         this.skills.removeAt(index);
-        // odśwież listę podpowiedzi (autocomplete)
+        this.altSkillSearchControls.delete(index);
+        // przesuwamy map9 index3w (po removeAt wszystko po prawej przesuwa si9 o -1)
+        const nextMap = new Map<number, FormControl<string>>();
+        for (const [k, v] of this.altSkillSearchControls.entries()) {
+          nextMap.set(k > index ? k - 1 : k, v);
+        }
+        this.altSkillSearchControls.clear();
+        for (const [k, v] of nextMap.entries()) this.altSkillSearchControls.set(k, v);
+
+        // odbwiec list9 podpowiedzi (autocomplete)
         const q = (this.skillSearchControl.value ?? '').toString();
         this.skillSearchControl.setValue(q);
       },
@@ -315,7 +372,15 @@ export class ProfessionCreateComponent {
     this.linksApi.deleteProfessionTalent(id).subscribe({
       next: () => {
         this.talents.removeAt(index);
-        // odśwież listę podpowiedzi (autocomplete)
+        this.altTalentSearchControls.delete(index);
+        const nextMap = new Map<number, FormControl<string>>();
+        for (const [k, v] of this.altTalentSearchControls.entries()) {
+          nextMap.set(k > index ? k - 1 : k, v);
+        }
+        this.altTalentSearchControls.clear();
+        for (const [k, v] of nextMap.entries()) this.altTalentSearchControls.set(k, v);
+
+        // odbwiec list9 podpowiedzi (autocomplete)
         const q = (this.talentSearchControl.value ?? '').toString();
         this.talentSearchControl.setValue(q);
       },
@@ -409,5 +474,190 @@ export class ProfessionCreateComponent {
     }
     // clear input
     this.exitSearchControl.setValue('');
+  }
+
+  // --- Alternatywne umiej9tnobci / talenty ---
+  selectAlternativeSkill(skillIndex: number, event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as { id: number; name: string };
+    const base = this.skills.at(skillIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+
+    if (!opt?.id || typeof baseId !== 'number') {
+      this.altSkillControl(skillIndex).setValue('');
+      return;
+    }
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeSkill) ? base.alternativeSkill : [];
+    const already = currentAlt.some((a) => a?.skill?.id === opt.id || a?.id === opt.id);
+    if (already) {
+      this.altSkillControl(skillIndex).setValue('');
+      return;
+    }
+
+    const nextAltSkillIds = [
+      ...currentAlt
+        .map((a) => a?.skill?.id)
+        .filter((id) => typeof id === 'number'),
+      opt.id,
+    ];
+
+    this.linksApi.updateProfessionSkill(baseId, {alternativeSkill: nextAltSkillIds}).subscribe({
+      next: (updated: ProfessionSkill) => {
+        this.skills.at(skillIndex)?.setValue(updated);
+        this.altSkillControl(skillIndex).setValue('');
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się dodać alternatywnej umiejętności.', 'OK', {duration: 3000});
+        this.altSkillControl(skillIndex).setValue('');
+      },
+    });
+  }
+
+  removeAlternativeSkill(skillIndex: number, altIndex: number) {
+    const base = this.skills.at(skillIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+    if (typeof baseId !== 'number') return;
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeSkill) ? base.alternativeSkill : [];
+    const nextAltSkillIds = currentAlt
+      .filter((_: any, i: number) => i !== altIndex)
+      .map((a) => a?.skill?.id)
+      .filter((id) => typeof id === 'number');
+
+    this.linksApi.updateProfessionSkill(baseId, {alternativeSkill: nextAltSkillIds}).subscribe({
+      next: (updated: ProfessionSkill) => {
+        this.skills.at(skillIndex)?.setValue(updated);
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się usunąć alternatywnej umiejętności.', 'OK', {duration: 3000});
+      },
+    });
+  }
+
+  selectAlternativeTalent(talentIndex: number, event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as { id: number; name: string };
+    const base = this.talents.at(talentIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+
+    if (!opt?.id || typeof baseId !== 'number') {
+      this.altTalentControl(talentIndex).setValue('');
+      return;
+    }
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeTalent) ? base.alternativeTalent : [];
+    const already = currentAlt.some((a) => a?.talent?.id === opt.id || a?.id === opt.id);
+    if (already) {
+      this.altTalentControl(talentIndex).setValue('');
+      return;
+    }
+
+    const nextAltTalentIds = [
+      ...currentAlt
+        .map((a) => a?.talent?.id)
+        .filter((id) => typeof id === 'number'),
+      opt.id,
+    ];
+
+    this.linksApi.updateProfessionTalent(baseId, {alternativeTalent: nextAltTalentIds}).subscribe({
+      next: (updated: ProfessionTalent) => {
+        this.talents.at(talentIndex)?.setValue(updated);
+        this.altTalentControl(talentIndex).setValue('');
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się dodać alternatywnego talentu.', 'OK', {duration: 3000});
+        this.altTalentControl(talentIndex).setValue('');
+      },
+    });
+  }
+
+  removeAlternativeTalent(talentIndex: number, altIndex: number) {
+    const base = this.talents.at(talentIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+    if (typeof baseId !== 'number') return;
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeTalent) ? base.alternativeTalent : [];
+    const nextAltTalentIds = currentAlt
+      .filter((_: any, i: number) => i !== altIndex)
+      .map((a) => a?.talent?.id)
+      .filter((id) => typeof id === 'number');
+
+    this.linksApi.updateProfessionTalent(baseId, {alternativeTalent: nextAltTalentIds}).subscribe({
+      next: (updated: ProfessionTalent) => {
+        this.talents.at(talentIndex)?.setValue(updated);
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się usunąć alternatywnego talentu.', 'OK', {duration: 3000});
+      },
+    });
+  }
+
+  // --- Alternatywy wybierane z juc dodanych ---
+  addAlternativeSkillFromExisting(skillIndex: number, altSkillId: number) {
+    const base = this.skills.at(skillIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+    const baseSkillId = base?.skill?.id as number | undefined;
+
+    if (typeof baseId !== 'number' || !Number.isFinite(altSkillId)) return;
+    if (typeof baseSkillId === 'number' && altSkillId === baseSkillId) {
+      this.snackBar.open('Nie możesz dodać jako alternatywy tej samej umiejętności.', 'OK', {duration: 2500});
+      return;
+    }
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeSkill) ? base.alternativeSkill : [];
+    const already = currentAlt.some((a) => a?.skill?.id === altSkillId);
+    if (already) return;
+
+    const nextAltSkillIds = [
+      ...currentAlt
+        .map((a) => a?.skill?.id)
+        .filter((id) => typeof id === 'number'),
+      altSkillId,
+    ];
+
+    this.linksApi.updateProfessionSkill(baseId, {alternativeSkill: nextAltSkillIds}).subscribe({
+      next: (updated: ProfessionSkill) => {
+        this.skills.at(skillIndex)?.setValue(updated);
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się dodać alternatywnej umiejętności.', 'OK', {duration: 3000});
+      },
+    });
+  }
+
+  addAlternativeTalentFromExisting(talentIndex: number, altTalentId: number) {
+    const base = this.talents.at(talentIndex)?.value as any;
+    const baseId = base?.id as number | undefined;
+    const baseTalentId = base?.talent?.id as number | undefined;
+
+    if (typeof baseId !== 'number' || !Number.isFinite(altTalentId)) return;
+    if (typeof baseTalentId === 'number' && altTalentId === baseTalentId) {
+      this.snackBar.open('Nie możesz dodać jako alternatywy tego samego talentu.', 'OK', {duration: 2500});
+      return;
+    }
+
+    const currentAlt: any[] = Array.isArray(base?.alternativeTalent) ? base.alternativeTalent : [];
+    const already = currentAlt.some((a) => a?.talent?.id === altTalentId);
+    if (already) return;
+
+    const nextAltTalentIds = [
+      ...currentAlt
+        .map((a) => a?.talent?.id)
+        .filter((id) => typeof id === 'number'),
+      altTalentId,
+    ];
+
+    this.linksApi.updateProfessionTalent(baseId, {alternativeTalent: nextAltTalentIds}).subscribe({
+      next: (updated: ProfessionTalent) => {
+        this.talents.at(talentIndex)?.setValue(updated);
+      },
+      error: () => {
+        this.snackBar.open('Nie udało się dodać alternatywnego talentu.', 'OK', {duration: 3000});
+      },
+    });
+  }
+
+  parseNumberValue(v: unknown): number {
+    const n = typeof v === 'number' ? v : Number(v);
+    return Number.isFinite(n) ? n : NaN;
   }
 }

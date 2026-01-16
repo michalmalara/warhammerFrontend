@@ -8,8 +8,16 @@ export type CreateProfessionSkillPayload = {
   alternativeSkill?: number[];
 };
 
+export type UpdateProfessionSkillPayload = {
+  alternativeSkill?: number[];
+};
+
 export type CreateProfessionTalentPayload = {
   talent: number;
+  alternativeTalent?: number[];
+};
+
+export type UpdateProfessionTalentPayload = {
   alternativeTalent?: number[];
 };
 
@@ -27,9 +35,25 @@ export class ProfessionLinksApiService {
     );
   }
 
+  updateProfessionSkill(id: number, body: UpdateProfessionSkillPayload) {
+    return this.crud.patch<ProfessionSkill, UpdateProfessionSkillPayload>(
+      ProfessionLinksApiService.PROFESSION_SKILLS_PATH,
+      id,
+      body
+    );
+  }
+
   createProfessionTalent(body: CreateProfessionTalentPayload) {
     return this.crud.create<ProfessionTalent, CreateProfessionTalentPayload>(
       ProfessionLinksApiService.PROFESSION_TALENTS_PATH,
+      body
+    );
+  }
+
+  updateProfessionTalent(id: number, body: UpdateProfessionTalentPayload) {
+    return this.crud.patch<ProfessionTalent, UpdateProfessionTalentPayload>(
+      ProfessionLinksApiService.PROFESSION_TALENTS_PATH,
+      id,
       body
     );
   }
