@@ -6,6 +6,8 @@ import {A11yModule} from '@angular/cdk/a11y';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 
+import {WaxSealButtonComponent} from '../wax-seal-button/wax-seal-button.component';
+
 export type SkillDeleteConfirmDialogData = Readonly<{
   skillId: number;
   skillName: string;
@@ -14,7 +16,7 @@ export type SkillDeleteConfirmDialogData = Readonly<{
 @Component({
   selector: 'app-skill-delete-confirm-dialog',
   standalone: true,
-  imports: [CommonModule, A11yModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, A11yModule, MatButtonModule, MatIconModule, WaxSealButtonComponent],
   templateUrl: './skill-delete-confirm-dialog.component.html',
   styleUrls: ['./skill-delete-confirm-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

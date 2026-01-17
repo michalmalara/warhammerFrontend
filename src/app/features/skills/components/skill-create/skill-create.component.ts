@@ -13,6 +13,8 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {finalize} from 'rxjs';
 
+import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
+
 import {
   type CreateSkillPayload,
   SKILL_CHARACTERISTICS_META,
@@ -36,6 +38,7 @@ import {SkillsApiService} from '../../services/skills-api.service';
     MatInputModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    WaxSealButtonComponent,
   ],
   templateUrl: './skill-create.component.html',
   styleUrls: ['./skill-create.component.scss'],

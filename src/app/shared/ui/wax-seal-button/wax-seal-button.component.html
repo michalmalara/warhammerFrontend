@@ -1,0 +1,28 @@
+<div class="action">
+  @if (routerLink) {
+    <a
+      [class]="buttonClasses"
+      [routerLink]="routerLink"
+      [attr.aria-label]="ariaLabel || null"
+    >
+      <mat-icon class="wax-icon" aria-hidden="true">{{ icon }}</mat-icon>
+    </a>
+  } @else {
+    <button
+      [class]="buttonClasses"
+      [type]="type"
+      [disabled]="isDisabled"
+      [attr.aria-label]="ariaLabel || null"
+      (click)="onClick()"
+    >
+      @if (!loading) {
+        <mat-icon class="wax-icon" aria-hidden="true">{{ icon }}</mat-icon>
+      } @else {
+        <mat-spinner class="wax-spinner" diameter="28"></mat-spinner>
+      }
+    </button>
+  }
+  @if (label) {
+    <div [class]="labelClasses">{{ label }}</div>
+  }
+</div>

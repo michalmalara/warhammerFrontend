@@ -1,26 +1,4 @@
 <div class="cc-root">
-  <header class="cc-top">
-    <div class="cc-top__left">
-      <div class="cc-logo" aria-hidden="true">
-        <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z"
-          ></path>
-        </svg>
-      </div>
-      <h2 class="cc-brand">WFRP Character Creator</h2>
-    </div>
-
-    <div class="cc-top__right">
-      <button class="cc-icon" type="button" aria-label="Compendium">
-        <span class="material-symbols-outlined">menu_book</span>
-      </button>
-      <button class="cc-icon" type="button" aria-label="Settings">
-        <span class="material-symbols-outlined">settings</span>
-      </button>
-    </div>
-  </header>
-
   <main class="cc-main">
     <nav class="cc-breadcrumbs" aria-label="Kroki kreatora">
       <span class="cc-breadcrumbs__active">Step 1: Bio &amp; Race</span>
@@ -45,7 +23,7 @@
           <button
             class="race-card"
             type="button"
-            role="listitem"
+            matRipple
             [class.is-selected]="selectedRace() === r.id"
             (click)="selectRace(r.id)"
             [attr.aria-pressed]="selectedRace() === r.id"
@@ -57,7 +35,7 @@
               "
             >
               <span class="race-card__check" aria-hidden="true">
-                <span class="material-symbols-outlined">check</span>
+                <mat-icon aria-hidden="true" fontIcon="check"></mat-icon>
               </span>
               <div class="race-card__text">
                 <h3 class="race-card__title">{{ r.label }}</h3>
@@ -77,81 +55,108 @@
 
       <form class="ledger__form" [formGroup]="form">
         <div class="ledger__col">
-          <label class="ledger__label">Name</label>
-          <input class="ledger__input" type="text" formControlName="name" placeholder="Gottfried of Altdorf"/>
+          <!-- zamienione na Angular Material -->
+          <mat-form-field class="ledger__field" appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput id="cc-name" type="text" formControlName="name"/>
+            <mat-hint align="start">Character's given name</mat-hint>
+          </mat-form-field>
 
-          <label class="ledger__label">Gender</label>
-          <select class="ledger__input" formControlName="gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
+          <mat-form-field class="ledger__field" appearance="fill">
+            <mat-label>Gender</mat-label>
+            <mat-select id="cc-gender" formControlName="gender">
+              <mat-option value="male">Male</mat-option>
+              <mat-option value="female">Female</mat-option>
+              <mat-option value="other">Other</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-          <label class="ledger__label">Star Sign</label>
-          <select class="ledger__input" formControlName="starSign">
-            <option>The Drummer</option>
-            <option>The Piper</option>
-            <option>Vobist the Faint</option>
-            <option>Gnuthus the Ox</option>
-            <option>The Big Wheel</option>
-          </select>
+          <mat-form-field class="ledger__field" appearance="fill">
+            <mat-label>Star Sign</mat-label>
+            <mat-select id="cc-starSign" formControlName="starSign">
+              <mat-option value="The Drummer">The Drummer</mat-option>
+              <mat-option value="The Piper">The Piper</mat-option>
+              <mat-option value="Vobist the Faint">Vobist the Faint</mat-option>
+              <mat-option value="Gnuthus the Ox">Gnuthus the Ox</mat-option>
+              <mat-option value="The Big Wheel">The Big Wheel</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div class="ledger__col">
-          <label class="ledger__label">Age</label>
-          <input class="ledger__input" type="number" formControlName="age"/>
+          <mat-form-field class="ledger__field" appearance="fill" subscriptSizing="dynamic">
+            <mat-label>Age</mat-label>
+            <input matInput id="cc-age" type="number" formControlName="age"/>
+            @if (form.controls.age.touched && form.controls.age.invalid) {
+              <mat-error>
+                @if (form.controls.age.hasError('min')) {
+                  Age must be at least 1
+                } @else {
+                  Age is too high
+                }
+              </mat-error>
+            }
+          </mat-form-field>
 
           <div class="ledger__row2">
-            <div>
-              <label class="ledger__label">Eye Color</label>
-              <select class="ledger__input" formControlName="eyeColor">
-                <option>Hazel</option>
-                <option>Grey</option>
-                <option>Blue</option>
-                <option>Green</option>
-              </select>
-            </div>
-            <div>
-              <label class="ledger__label">Hair Color</label>
-              <select class="ledger__input" formControlName="hairColor">
-                <option>Ash Blonde</option>
-                <option>Brown</option>
-                <option>Black</option>
-                <option>Red</option>
-              </select>
-            </div>
+            <mat-form-field class="ledger__field" appearance="fill" subscriptSizing="dynamic">
+              <mat-label>Eye Color</mat-label>
+              <mat-select id="cc-eyeColor" formControlName="eyeColor">
+                <mat-option value="Hazel">Hazel</mat-option>
+                <mat-option value="Grey">Grey</mat-option>
+                <mat-option value="Blue">Blue</mat-option>
+                <mat-option value="Green">Green</mat-option>
+              </mat-select>
+              @if (form.controls.eyeColor.touched && form.controls.eyeColor.invalid) {
+                <mat-error>Eye Color is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field class="ledger__field" appearance="fill" subscriptSizing="dynamic">
+              <mat-label>Hair Color</mat-label>
+              <mat-select id="cc-hairColor" formControlName="hairColor">
+                <mat-option value="Ash Blonde">Ash Blonde</mat-option>
+                <mat-option value="Brown">Brown</mat-option>
+                <mat-option value="Black">Black</mat-option>
+                <mat-option value="Red">Red</mat-option>
+              </mat-select>
+              @if (form.controls.hairColor.touched && form.controls.hairColor.invalid) {
+                <mat-error>Hair Color is required</mat-error>
+              }
+            </mat-form-field>
           </div>
 
-          <label class="ledger__label">Physical Markings</label>
-          <input
-            class="ledger__input"
-            type="text"
-            formControlName="physicalMarkings"
-            placeholder="Scar on left cheek"
-          />
+          <mat-form-field class="ledger__field" appearance="fill" subscriptSizing="dynamic">
+            <mat-label>Physical Markings</mat-label>
+            <input matInput id="cc-physicalMarkings" type="text" formControlName="physicalMarkings"/>
+            @if (form.controls.physicalMarkings.touched && form.controls.physicalMarkings.invalid) {
+              <mat-error>Too long</mat-error>
+            }
+          </mat-form-field>
         </div>
       </form>
     </section>
 
     <div class="cc-nav">
-      <button class="wax" type="button" (click)="goPrev()" aria-label="Previous">
-        <span class="material-symbols-outlined wax__icon wax__icon--prev">arrow_back</span>
-        <span class="wax__label">Previous</span>
-      </button>
+      <app-wax-seal-button
+        class="wax"
+        variant="cancel"
+        icon="navigate_before"
+        ariaLabel="Previous"
+        (click)="goPrev()"
+        type="button"
+      ></app-wax-seal-button>
 
       <div class="cc-nav__line" aria-hidden="true"></div>
 
-      <button class="wax wax--next" type="button" (click)="goNext()" aria-label="Next Step">
-        <span class="material-symbols-outlined wax__icon wax__icon--next">arrow_forward</span>
-        <span class="wax__label">Next Step</span>
-        <span class="wax__inner" aria-hidden="true">
-          <span class="material-symbols-outlined wax__icon wax__icon--inner">auto_awesome</span>
-        </span>
-      </button>
+      <app-wax-seal-button
+        class="wax wax--next"
+        variant="save"
+        icon="navigate_next"
+        ariaLabel="Next Step"
+        (click)="goNext()"
+        type="button"
+      ></app-wax-seal-button>
     </div>
-
-    <footer class="cc-footer">
-      <p>WFRP 2nd Edition - Character Creator System © Imperial Archive</p>
-    </footer>
   </main>
 </div>

@@ -2,9 +2,16 @@ import {CommonModule} from '@angular/common';
 import {Component, computed, effect, inject} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 
 import {CharacterCreationStateService} from '../../services/character-creation-state.service';
 import type {CharacterRace} from '../../models/character-creation.models';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRippleModule} from '@angular/material/core';
 
 type RaceCard = {
   id: CharacterRace;
@@ -16,7 +23,18 @@ type RaceCard = {
 @Component({
   selector: 'app-character-creation-step-1-bio-race',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    WaxSealButtonComponent,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRippleModule,
+  ],
   templateUrl: './character-creation-step-1-bio-race.component.html',
   styleUrls: ['./character-creation-step-1-bio-race.component.scss'],
 })

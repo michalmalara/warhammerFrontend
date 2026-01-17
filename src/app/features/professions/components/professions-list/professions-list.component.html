@@ -77,7 +77,7 @@
                 (click)="$event.preventDefault(); $event.stopPropagation(); onDeleteProfession(p)"
                 [disabled]="isDeleting(p)"
               >
-                <mat-icon>delete_forever</mat-icon>
+                <mat-icon fontIcon="delete_forever"></mat-icon>
               </button>
             </div>
 
@@ -102,7 +102,7 @@
         <a class="profession-card profession-card--placeholder" [routerLink]="['/professions/new']"
            aria-label="Document new profession">
           <div class="placeholder__icon" aria-hidden="true">
-            <mat-icon>add_circle</mat-icon>
+            <mat-icon fontIcon="add_circle"></mat-icon>
           </div>
           <div class="placeholder__text">DOCUMENT NEW PROFESSION</div>
         </a>
@@ -116,7 +116,7 @@
 
   <a class="fab-seal" [routerLink]="['/professions/new']" aria-label="Create Profession">
     <span class="fab-seal__ring" aria-hidden="true"></span>
-    <mat-icon class="fab-seal__icon">add</mat-icon>
+    <mat-icon class="fab-seal__icon" fontIcon="add"></mat-icon>
     <span class="fab-seal__tooltip">Create Profession</span>
   </a>
 </section>

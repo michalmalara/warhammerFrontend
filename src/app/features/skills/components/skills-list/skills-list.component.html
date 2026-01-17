@@ -14,7 +14,7 @@
   <section class="filters" aria-label="Search and filters" i18n-aria-label="Aria@@skillsList.filters.aria">
     <div class="filters-row">
       <mat-form-field class="search" appearance="fill">
-        <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+        <mat-icon matPrefix aria-hidden="true" fontIcon="search"></mat-icon>
         <input
           matInput
           type="text"
@@ -39,7 +39,7 @@
         i18n-aria-label="Aria@@skillsList.filters.toggle.aria"
       >
         <span i18n="Button@@skillsList.filters.toggle">Filter Results</span>
-        <mat-icon aria-hidden="true">filter_list</mat-icon>
+        <mat-icon aria-hidden="true" fontIcon="filter_list"></mat-icon>
       </button>
     </div>
 
@@ -57,7 +57,7 @@
         <span i18n="Quick filter label@@skillsList.quickFilters.characteristic">
           Characteristic: {{ characteristicShortLabel(characteristicFilter()) }}
         </span>
-        <mat-icon aria-hidden="true">keyboard_arrow_down</mat-icon>
+        <mat-icon aria-hidden="true" fontIcon="keyboard_arrow_down"></mat-icon>
       </button>
 
       @if (skills$ | async; as skillsForCount) {
@@ -170,7 +170,7 @@
                 </div>
 
                 <div class="icon-badge" aria-hidden="true">
-                  <mat-icon>menu_book</mat-icon>
+                  <mat-icon fontIcon="menu_book"></mat-icon>
                 </div>
               </div>
 
@@ -198,7 +198,7 @@
                   (click)="$event.stopPropagation(); $event.preventDefault(); onDeleteSkill(s)"
                   [disabled]="isDeleting(s)"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon fontIcon="delete"></mat-icon>
                 </button>
               </div>
             </article>
@@ -222,6 +222,6 @@
     aria-label="Add skill"
     i18n-aria-label="Aria@@skillsList.fab.add.aria"
   >
-    <mat-icon>add</mat-icon>
+    <mat-icon fontIcon="add"></mat-icon>
   </a>
 </section>

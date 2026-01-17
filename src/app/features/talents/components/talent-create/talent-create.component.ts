@@ -13,6 +13,7 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {finalize} from 'rxjs';
 
+import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 import type {CreateTalentPayload} from '../../models/talent.models';
 import {TalentsApiService} from '../../services/talents-api.service';
 
@@ -30,6 +31,7 @@ import {TalentsApiService} from '../../services/talents-api.service';
     MatInputModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    WaxSealButtonComponent,
   ],
   templateUrl: './talent-create.component.html',
   styleUrls: ['./talent-create.component.scss'],

@@ -34,6 +34,7 @@ import type {Profession, ProfessionSkill, ProfessionTalent} from '../../models/p
 import {SkillsApiService} from '../../../skills/services/skills-api.service';
 import {TalentsApiService} from '../../../talents/services/talents-api.service';
 import {ProfessionLinksApiService} from '../../services/profession-links-api.service';
+import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 
 @Component({
   selector: 'app-profession-edit',
@@ -52,6 +53,7 @@ import {ProfessionLinksApiService} from '../../services/profession-links-api.ser
     MatChipsModule,
     MatAutocompleteModule,
     MatOptionModule,
+    WaxSealButtonComponent,
   ],
   templateUrl: '../profession-create/profession-create.component.html',
   styleUrls: ['../profession-create/profession-create.component.scss'],

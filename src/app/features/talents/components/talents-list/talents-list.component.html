@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="icon-badge" aria-hidden="true">
-                  <mat-icon>workspace_premium</mat-icon>
+                  <mat-icon fontIcon="workspace_premium"></mat-icon>
                 </div>
               </div>
 
@@ -95,7 +95,7 @@
                   (click)="$event.stopPropagation(); $event.preventDefault(); onDeleteTalent(t)"
                   [disabled]="isDeleting(t)"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon fontIcon="delete"></mat-icon>
                 </button>
               </div>
             </article>
@@ -118,6 +118,6 @@
     aria-label="Add talent"
     i18n-aria-label="Aria@@talentsList.fab.add.aria"
   >
-    <mat-icon>add</mat-icon>
+    <mat-icon fontIcon="add"></mat-icon>
   </a>
 </section>

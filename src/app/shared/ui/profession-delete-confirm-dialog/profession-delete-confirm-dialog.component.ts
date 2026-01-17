@@ -6,6 +6,8 @@ import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 
+import {WaxSealButtonComponent} from '../wax-seal-button/wax-seal-button.component';
+
 export type ProfessionDeleteConfirmDialogData = Readonly<{
   professionId: number;
   professionName: string;
@@ -14,7 +16,7 @@ export type ProfessionDeleteConfirmDialogData = Readonly<{
 @Component({
   selector: 'app-profession-delete-confirm-dialog',
   standalone: true,
-  imports: [CommonModule, A11yModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, A11yModule, MatButtonModule, MatIconModule, WaxSealButtonComponent],
   templateUrl: './profession-delete-confirm-dialog.component.html',
   styleUrls: ['./profession-delete-confirm-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

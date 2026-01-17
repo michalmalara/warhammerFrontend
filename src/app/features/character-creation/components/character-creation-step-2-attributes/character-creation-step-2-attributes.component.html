@@ -12,8 +12,8 @@
     </div>
 
     <div class="cc-top__right">
-      <button class="cc-icon" type="button" aria-label="Save Draft">
-        <span class="material-symbols-outlined">save</span>
+      <button mat-icon-button class="cc-icon" type="button" aria-label="Save Draft">
+        <mat-icon aria-hidden="true">save</mat-icon>
       </button>
     </div>
   </header>
@@ -46,7 +46,7 @@
 
           <button class="dice" type="button">
             <div class="dice__left">
-              <span class="material-symbols-outlined dice__icon">casino</span>
+              <mat-icon class="dice__icon" aria-hidden="true">casino</mat-icon>
               <div class="dice__hint">Roll 2d10</div>
             </div>
             <div class="dice__sep" aria-hidden="true"></div>
@@ -64,7 +64,7 @@
 
         <div class="mercy">
           <div class="mercy__head">
-            <span class="material-symbols-outlined">favorite</span>
+            <mat-icon aria-hidden="true">favorite</mat-icon>
             <h3>Shallya's Mercy</h3>
           </div>
           <p>
@@ -147,22 +147,22 @@
     </section>
 
     <div class="cc-footer-nav">
-      <button class="cc-back" type="button" (click)="goPrev()">
-        <span class="material-symbols-outlined">arrow_back</span>
-        Back to Race Selection
+      <button mat-icon-button class="cc-back" type="button" (click)="goPrev()" aria-label="Back to Race Selection">
+        <mat-icon aria-hidden="true">arrow_back</mat-icon>
       </button>
+      <span class="cc-back__label">Back to Race Selection</span>
 
       <div class="cc-footer-nav__right">
         <button class="cc-skip" type="button" disabled>Skip to Career</button>
-        <button class="cc-next" type="button" (click)="goNext()">
-          Confirm Attributes
-          <span class="material-symbols-outlined">arrow_forward</span>
+        <button mat-icon-button class="cc-next" type="button" (click)="goNext()" aria-label="Confirm Attributes">
+          <mat-icon aria-hidden="true">arrow_forward</mat-icon>
         </button>
+        <span class="cc-next__label">Confirm Attributes</span>
       </div>
     </div>
   </main>
 
   <div class="decor decor--bl" aria-hidden="true">
-    <span class="material-symbols-outlined">skull</span>
+    <mat-icon aria-hidden="true">skull</mat-icon>
   </div>
 </div>

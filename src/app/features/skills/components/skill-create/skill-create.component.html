@@ -120,30 +120,27 @@
     </mat-card-content>
 
     <div class="actions">
-      <div class="action">
-        <a class="wax-seal wax-seal-cancel" [routerLink]="['/skills']" aria-label="Discard"
-           i18n-aria-label="Aria@@skillCreate.actions.discard.aria">
-          <mat-icon class="wax-icon" aria-hidden="true">close</mat-icon>
-        </a>
-        <div class="action-label" i18n="Action label@@skillCreate.actions.discard">Discard</div>
-      </div>
+      <app-wax-seal-button
+        variant="cancel"
+        icon="close"
+        label="Discard"
+        i18n-label="Action label@@skillCreate.actions.discard"
+        [routerLink]="['/skills']"
+        ariaLabel="Discard"
+        i18n-ariaLabel="Aria@@skillCreate.actions.discard.aria"
+      ></app-wax-seal-button>
 
-      <div class="action">
-        <button
-          class="wax-seal wax-seal-save"
-          type="submit"
-          [disabled]="isSaving"
-          aria-label="Affix seal"
-          i18n-aria-label="Aria@@skillCreate.actions.save.aria"
-        >
-          @if (!isSaving) {
-            <mat-icon class="wax-icon" aria-hidden="true">check</mat-icon>
-          } @else {
-            <mat-spinner class="wax-spinner" diameter="28"></mat-spinner>
-          }
-        </button>
-        <div class="action-label action-label-accent" i18n="Action label@@skillCreate.actions.save">Affix Seal</div>
-      </div>
+      <app-wax-seal-button
+        variant="save"
+        icon="check"
+        label="Affix Seal"
+        i18n-label="Action label@@skillCreate.actions.save"
+        type="submit"
+        [loading]="isSaving"
+        [disabled]="isSaving"
+        ariaLabel="Affix seal"
+        i18n-ariaLabel="Aria@@skillCreate.actions.save.aria"
+      ></app-wax-seal-button>
     </div>
   </form>
 </mat-card>

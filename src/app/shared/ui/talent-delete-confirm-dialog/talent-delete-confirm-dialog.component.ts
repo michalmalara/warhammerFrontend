@@ -6,6 +6,8 @@ import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 
+import {WaxSealButtonComponent} from '../wax-seal-button/wax-seal-button.component';
+
 export type TalentDeleteConfirmDialogData = Readonly<{
   talentId: number;
   talentName: string;
@@ -14,7 +16,7 @@ export type TalentDeleteConfirmDialogData = Readonly<{
 @Component({
   selector: 'app-talent-delete-confirm-dialog',
   standalone: true,
-  imports: [CommonModule, A11yModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, A11yModule, MatButtonModule, MatIconModule, WaxSealButtonComponent],
   templateUrl: './talent-delete-confirm-dialog.component.html',
   styleUrls: ['./talent-delete-confirm-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

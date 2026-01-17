@@ -9,7 +9,7 @@
     <div class="hero-actions">
       <a mat-stroked-button class="hero-actions__btn" [routerLink]="['/professions']"
          aria-label="Browse professions library">
-        <mat-icon>search</mat-icon>
+        <mat-icon fontIcon="search"></mat-icon>
         Browse library
       </a>
     </div>
@@ -59,7 +59,7 @@
                   aria-label="Podstawowa"
                   (click)="form.controls.isAdvanced.setValue(false)"
                 >
-                  <mat-icon class="type-toggle__icon">person_search</mat-icon>
+                  <mat-icon class="type-toggle__icon" fontIcon="person_search"></mat-icon>
                   <span class="type-toggle__label">Podstawowa</span>
                 </button>
 
@@ -71,7 +71,7 @@
                   aria-label="Zaawansowana"
                   (click)="form.controls.isAdvanced.setValue(true)"
                 >
-                  <mat-icon class="type-toggle__icon">military_tech</mat-icon>
+                  <mat-icon class="type-toggle__icon" fontIcon="military_tech"></mat-icon>
                   <span class="type-toggle__label">Zaawansowana</span>
                 </button>
               </div>
@@ -146,11 +146,11 @@
                           aria-label="Pokaż/ukryj alternatywy"
                           (click)="toggleAltSkillPicker(i)"
                         >
-                          <mat-icon>{{ isAltSkillPickerVisible(i) ? 'expand_less' : 'expand_more' }}</mat-icon>
+                          <mat-icon [fontIcon]="isAltSkillPickerVisible(i) ? 'expand_less' : 'expand_more'"></mat-icon>
                         </button>
 
                         <button mat-icon-button type="button" aria-label="Usuń" (click)="removeSkill(i)">
-                          <mat-icon>close</mat-icon>
+                          <mat-icon fontIcon="close"></mat-icon>
                         </button>
                       </div>
                     </div>
@@ -246,11 +246,11 @@
                           aria-label="Pokaż/ukryj alternatywy"
                           (click)="toggleAltTalentPicker(i)"
                         >
-                          <mat-icon>{{ isAltTalentPickerVisible(i) ? 'expand_less' : 'expand_more' }}</mat-icon>
+                          <mat-icon [fontIcon]="isAltTalentPickerVisible(i) ? 'expand_less' : 'expand_more'"></mat-icon>
                         </button>
 
                         <button mat-icon-button type="button" aria-label="Usuń" (click)="removeTalent(i)">
-                          <mat-icon>close</mat-icon>
+                          <mat-icon fontIcon="close"></mat-icon>
                         </button>
                       </div>
                     </div>
@@ -324,7 +324,7 @@
                 i18n-aria-label="Button aria|Decrease Weapon Skill development@@profession.create.ws.dec"
                 (click)="decrement('weaponSkillsDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.weaponSkillsDevelopment.value }}</div>
               <button
@@ -334,7 +334,7 @@
                 i18n-aria-label="Button aria|Increase Weapon Skill development@@profession.create.ws.inc"
                 (click)="increment('weaponSkillsDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -351,7 +351,7 @@
                 i18n-aria-label="Button aria|Decrease Ballistic Skill development@@profession.create.bs.dec"
                 (click)="decrement('ballisticSkillsDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.ballisticSkillsDevelopment.value }}</div>
               <button
@@ -361,7 +361,7 @@
                 i18n-aria-label="Button aria|Increase Ballistic Skill development@@profession.create.bs.inc"
                 (click)="increment('ballisticSkillsDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -380,7 +380,7 @@
                 i18n-aria-label="Button aria|Decrease Strength development@@profession.create.str.dec"
                 (click)="decrement('strengthDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.strengthDevelopment.value }}</div>
               <button
@@ -390,7 +390,7 @@
                 i18n-aria-label="Button aria|Increase Strength development@@profession.create.str.inc"
                 (click)="increment('strengthDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -410,7 +410,7 @@
                   Button aria|Decrease Toughness development@@profession.create.tgh.dec"
                 (click)="decrement('toughnessDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.toughnessDevelopment.value }}</div>
               <button
@@ -421,7 +421,7 @@
                   Button aria|Increase Toughness development@@profession.create.tgh.inc"
                 (click)="increment('toughnessDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -440,7 +440,7 @@
                 i18n-aria-label="Button aria|Decrease Agility development@@profession.create.ag.dec"
                 (click)="decrement('agilityDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.agilityDevelopment.value }}</div>
               <button
@@ -450,7 +450,7 @@
                 i18n-aria-label="Button aria|Increase Agility development@@profession.create.ag.inc"
                 (click)="increment('agilityDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -471,7 +471,7 @@
                   Button aria|Decrease Intelligence development@@profession.create.int.dec"
                 (click)="decrement('intelligenceDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.intelligenceDevelopment.value }}</div>
               <button
@@ -482,7 +482,7 @@
                   Button aria|Increase Intelligence development@@profession.create.int.inc"
                 (click)="increment('intelligenceDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -501,7 +501,7 @@
                 i18n-aria-label="Button aria|Decrease Willpower development@@profession.create.wp.dec"
                 (click)="decrement('willpowerDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.willpowerDevelopment.value }}</div>
               <button
@@ -511,7 +511,7 @@
                 i18n-aria-label="Button aria|Increase Willpower development@@profession.create.wp.inc"
                 (click)="increment('willpowerDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -531,7 +531,7 @@
                   Button aria|Decrease Fellowship development@@profession.create.fel.dec"
                 (click)="decrement('fellowshipDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.fellowshipDevelopment.value }}</div>
               <button
@@ -542,7 +542,7 @@
                   Button aria|Increase Fellowship development@@profession.create.fel.inc"
                 (click)="increment('fellowshipDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -559,7 +559,7 @@
                 i18n-aria-label="Button aria|Decrease Attacks development@@profession.create.a.dec"
                 (click)="decrement('attacksDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.attacksDevelopment.value }}</div>
               <button
@@ -569,7 +569,7 @@
                 i18n-aria-label="Button aria|Increase Attacks development@@profession.create.a.inc"
                 (click)="increment('attacksDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -586,7 +586,7 @@
                 i18n-aria-label="Button aria|Decrease Wounds development@@profession.create.w.dec"
                 (click)="decrement('woundsDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.woundsDevelopment.value }}</div>
               <button
@@ -596,7 +596,7 @@
                 i18n-aria-label="Button aria|Increase Wounds development@@profession.create.w.inc"
                 (click)="increment('woundsDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -615,7 +615,7 @@
                 i18n-aria-label="Button aria|Decrease Movement development@@profession.create.m.dec"
                 (click)="decrement('movementDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.movementDevelopment.value }}</div>
               <button
@@ -625,7 +625,7 @@
                 i18n-aria-label="Button aria|Increase Movement development@@profession.create.m.inc"
                 (click)="increment('movementDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -642,7 +642,7 @@
                 i18n-aria-label="Button aria|Decrease Magic development@@profession.create.mag.dec"
                 (click)="decrement('magicDevelopment')"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon fontIcon="remove"></mat-icon>
               </button>
               <div class="value">{{ form.controls.magicDevelopment.value }}</div>
               <button
@@ -652,7 +652,7 @@
                 i18n-aria-label="Button aria|Increase Magic development@@profession.create.mag.inc"
                 (click)="increment('magicDevelopment')"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add"></mat-icon>
               </button>
             </div>
           </div>
@@ -702,7 +702,7 @@
             @for (e of exits.controls; track e; let i = $index) {
               <mat-chip [removable]="true" (removed)="removeExit(i)">
                 {{ (e.value && (e.value.name || e.value)) }}
-                <mat-icon matChipRemove>close</mat-icon>
+                <mat-icon matChipRemove fontIcon="close"></mat-icon>
               </mat-chip>
             }
           </mat-chip-grid>
@@ -712,28 +712,23 @@
 
     <!-- Actions remain inside the form so submit covers all cards -->
     <div class="actions">
-      <div class="action">
-        <a class="wax-seal wax-seal-cancel" [routerLink]="['/professions']" aria-label="Discard">
-          <mat-icon class="wax-icon" aria-hidden="true">close</mat-icon>
-        </a>
-        <div class="action-label">Discard</div>
-      </div>
+      <app-wax-seal-button
+        variant="cancel"
+        icon="close"
+        label="Discard"
+        [routerLink]="['/professions']"
+        ariaLabel="Discard"
+      ></app-wax-seal-button>
 
-      <div class="action">
-        <button
-          class="wax-seal wax-seal-save"
-          type="submit"
-          [disabled]="isSaving"
-          aria-label="Affix seal"
-        >
-          @if (!isSaving) {
-            <mat-icon class="wax-icon" aria-hidden="true">check</mat-icon>
-          } @else {
-            <mat-spinner class="wax-spinner" diameter="28"></mat-spinner>
-          }
-        </button>
-        <div class="action-label action-label-accent">Affix Seal</div>
-      </div>
+      <app-wax-seal-button
+        variant="save"
+        icon="check"
+        label="Affix Seal"
+        type="submit"
+        [loading]="isSaving"
+        [disabled]="isSaving"
+        ariaLabel="Affix seal"
+      ></app-wax-seal-button>
     </div>
   </form>
 </mat-card>

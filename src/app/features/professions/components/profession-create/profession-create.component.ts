@@ -24,6 +24,7 @@ import {CreateProfessionPayload, ProfessionSkill, ProfessionTalent} from '../../
 import {SkillsApiService} from '../../../skills/services/skills-api.service';
 import {TalentsApiService} from '../../../talents/services/talents-api.service';
 import {ProfessionLinksApiService} from '../../services/profession-links-api.service';
+import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 
 @Component({
   selector: 'app-profession-create',
@@ -42,6 +43,7 @@ import {ProfessionLinksApiService} from '../../services/profession-links-api.ser
     MatChipsModule,
     MatAutocompleteModule,
     MatOptionModule,
+    WaxSealButtonComponent,
   ],
   templateUrl: './profession-create.component.html',
   styleUrls: ['./profession-create.component.scss'],

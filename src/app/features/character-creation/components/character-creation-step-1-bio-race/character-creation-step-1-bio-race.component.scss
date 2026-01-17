@@ -304,6 +304,94 @@
   gap: 1.25rem;
 }
 
+// --- Angular Material skin (dopasowanie do mockupu „ledger”) ---
+// NOTE: Angular Material ma wewnętrzną strukturę DOM, więc używamy ::ng-deep tylko do lokalnego „skórowania”.
+:host ::ng-deep {
+  /* ripple na kartach ras - delikatniejszy, czerwony */
+  .race-card .mat-ripple-element {
+    background-color: rgba(189, 15, 44, 0.18);
+  }
+
+  /* MatFormField: tło jak .ledger__input i brak „box look” */
+  .ledger__field {
+    width: 100%;
+  }
+
+  .ledger__field .mat-mdc-text-field-wrapper {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 0.75rem;
+  }
+
+  /* usuń obrys/ramkę, zostaw dolną linię */
+  .ledger__field .mdc-notched-outline,
+  .ledger__field .mdc-notched-outline__leading,
+  .ledger__field .mdc-notched-outline__notch,
+  .ledger__field .mdc-notched-outline__trailing {
+    border: 0 !important;
+  }
+
+  .ledger__field .mat-mdc-form-field-flex {
+    border-bottom: 1px solid rgba(57, 40, 43, 1);
+    padding-inline: 0.75rem;
+  }
+
+  .ledger__field.mat-focused .mat-mdc-form-field-flex {
+    border-bottom-color: rgba(189, 15, 44, 1);
+  }
+
+  /* label/typografia jak w mockupie */
+  .ledger__field .mat-mdc-floating-label {
+    color: rgba(185, 157, 161, 1) !important;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* input/select tekst */
+  .ledger__field input.mat-mdc-input-element,
+  .ledger__field .mat-mdc-select-value {
+    color: rgba(226, 209, 210, 1) !important;
+    font-size: 1.25rem;
+    font-style: italic;
+  }
+
+  .ledger__field input.mat-mdc-input-element::placeholder {
+    color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* ikonka selecta */
+  .ledger__field .mat-mdc-select-arrow {
+    color: rgba(185, 157, 161, 0.85);
+  }
+
+  /* hint/error */
+  .ledger__field .mat-mdc-form-field-hint {
+    color: rgba(185, 157, 161, 0.6);
+    font-style: italic;
+  }
+
+  .ledger__field .mat-mdc-form-field-error {
+    color: rgba(230, 26, 60, 1);
+    font-weight: 700;
+  }
+
+  /* Panel mat-select (overlay) */
+  .mat-mdc-select-panel {
+    background: rgba(24, 17, 18, 0.98) !important;
+    border: 1px solid rgba(57, 40, 43, 1);
+  }
+
+  .mat-mdc-option {
+    color: rgba(226, 209, 210, 1);
+  }
+
+  .mat-mdc-option.mdc-list-item--selected,
+  .mat-mdc-option:hover {
+    background: rgba(189, 15, 44, 0.18) !important;
+  }
+}
+
 .ledger__row2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
