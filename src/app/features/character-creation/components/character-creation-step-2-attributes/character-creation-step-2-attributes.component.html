@@ -19,17 +19,7 @@
   </header>
 
   <main class="cc-main">
-    <nav class="cc-breadcrumbs" aria-label="Kroki kreatora">
-      <span class="cc-breadcrumbs__inactive">Step 1: Race ({{ selectedRaceLabel() }})</span>
-      <span class="cc-breadcrumbs__sep">/</span>
-      <span class="cc-breadcrumbs__active">Step 2: Attributes Roll</span>
-      <span class="cc-breadcrumbs__sep">/</span>
-      <span class="cc-breadcrumbs__inactive">Step 3: Career</span>
-      <span class="cc-breadcrumbs__sep">/</span>
-      <span class="cc-breadcrumbs__inactive">Step 4: Skills</span>
-      <span class="cc-breadcrumbs__sep">/</span>
-      <span class="cc-breadcrumbs__inactive">Step 5: Trappings</span>
-    </nav>
+    <app-breadcrumbs [currentStep]="2" [selectedRaceLabel]="selectedRaceLabel()"></app-breadcrumbs>
 
     <header class="cc-heading cc-heading--left">
       <h1 class="cc-title">Generate Characteristics</h1>
@@ -46,7 +36,7 @@
 
           <button class="dice" type="button">
             <div class="dice__left">
-              <mat-icon class="dice__icon" aria-hidden="true">casino</mat-icon>
+              <mat-icon class="dice__icon wax-icon" aria-hidden="true">casino</mat-icon>
               <div class="dice__hint">Roll 2d10</div>
             </div>
             <div class="dice__sep" aria-hidden="true"></div>
@@ -55,6 +45,7 @@
               <div class="dice__base">Base</div>
             </div>
           </button>
+
 
           <p class="panel__desc">
             Clicking will generate rolls for all Primary Characteristics. Secondary stats will be derived
@@ -71,7 +62,14 @@
             You may upgrade one Primary Characteristic to its average racial value (31 for Humans). Choose
             wisely; you can only invoke her mercy once.
           </p>
-          <button class="mercy__btn" type="button" disabled>Select a stat to upgrade</button>
+          <app-wax-seal-button
+            variant="cancel"
+            icon="favorite"
+            label="Select a stat to upgrade"
+            [disabled]="true"
+            type="button"
+            ariaLabel="Select a stat to upgrade"
+          ></app-wax-seal-button>
         </div>
       </aside>
 
@@ -154,10 +152,13 @@
 
       <div class="cc-footer-nav__right">
         <button class="cc-skip" type="button" disabled>Skip to Career</button>
-        <button mat-icon-button class="cc-next" type="button" (click)="goNext()" aria-label="Confirm Attributes">
-          <mat-icon aria-hidden="true">arrow_forward</mat-icon>
-        </button>
-        <span class="cc-next__label">Confirm Attributes</span>
+        <app-wax-seal-button
+          variant="save"
+          icon="arrow_forward"
+          ariaLabel="Confirm Attributes"
+          type="button"
+          (click)="goNext()"
+        ></app-wax-seal-button>
       </div>
     </div>
   </main>

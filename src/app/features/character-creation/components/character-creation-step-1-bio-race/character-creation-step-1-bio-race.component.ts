@@ -4,6 +4,7 @@ import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
+import {BreadcrumbsComponent} from '../../../../shared/ui/breadcrumbs/breadcrumbs.component';
 
 import {CharacterCreationStateService} from '../../services/character-creation-state.service';
 import type {CharacterRace} from '../../models/character-creation.models';
@@ -29,6 +30,7 @@ type RaceCard = {
     ReactiveFormsModule,
     MatButtonModule,
     WaxSealButtonComponent,
+    BreadcrumbsComponent,
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,

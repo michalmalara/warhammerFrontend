@@ -1,0 +1,50 @@
+<nav class="cc-breadcrumbs" aria-label="Kroki kreatora">
+  <a
+    class="cc-breadcrumbs__link"
+    [routerLink]="['/character/create/step-1']"
+    [class.cc-breadcrumbs__active]="currentStep===1"
+    [class.cc-breadcrumbs__inactive]="currentStep!==1"
+  >
+    Step 1: Race<span *ngIf="selectedRaceLabel"> ({{ selectedRaceLabel }})</span>
+  </a>
+  <span class="cc-breadcrumbs__sep">/</span>
+
+  <a
+    class="cc-breadcrumbs__link"
+    [routerLink]="['/character/create/step-2']"
+    [class.cc-breadcrumbs__active]="currentStep===2"
+    [class.cc-breadcrumbs__inactive]="currentStep!==2"
+  >
+    Step 2: Attributes Roll
+  </a>
+  <span class="cc-breadcrumbs__sep">/</span>
+
+  <a
+    class="cc-breadcrumbs__link"
+    [routerLink]="['/character/create/step-3']"
+    [class.cc-breadcrumbs__active]="currentStep===3"
+    [class.cc-breadcrumbs__inactive]="currentStep!==3"
+  >
+    Step 3: Career
+  </a>
+  <span class="cc-breadcrumbs__sep">/</span>
+
+  <a
+    class="cc-breadcrumbs__link"
+    [routerLink]="['/character/create/step-4']"
+    [class.cc-breadcrumbs__active]="currentStep===4"
+    [class.cc-breadcrumbs__inactive]="currentStep!==4"
+  >
+    Step 4: Skills
+  </a>
+  <span class="cc-breadcrumbs__sep">/</span>
+
+  <a
+    class="cc-breadcrumbs__link"
+    [routerLink]="['/character/create/step-5']"
+    [class.cc-breadcrumbs__active]="currentStep===5"
+    [class.cc-breadcrumbs__inactive]="currentStep!==5"
+  >
+    Step 5: Trappings
+  </a>
+</nav>

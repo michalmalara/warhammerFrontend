@@ -3,6 +3,8 @@ import {Component, computed, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {BreadcrumbsComponent} from '../../../../shared/ui/breadcrumbs/breadcrumbs.component';
+import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 
 import {CharacterCreationStateService} from '../../services/character-creation-state.service';
 
@@ -19,7 +21,7 @@ type PrimaryStat = {
 @Component({
   selector: 'app-character-creation-step-2-attributes',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, BreadcrumbsComponent, WaxSealButtonComponent],
   templateUrl: './character-creation-step-2-attributes.component.html',
   styleUrls: ['./character-creation-step-2-attributes.component.scss'],
 })

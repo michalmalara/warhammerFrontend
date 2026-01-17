@@ -1,12 +1,7 @@
 <div class="cc-root">
   <main class="cc-main">
-    <nav class="cc-breadcrumbs" aria-label="Kroki kreatora">
-      <span class="cc-breadcrumbs__active">Step 1: Bio &amp; Race</span>
-      <span class="cc-breadcrumbs__sep">/</span>
-      <span class="cc-breadcrumbs__inactive">Step 2: Attributes</span>
-      <span class="cc-breadcrumbs__sep">/</span>
-      <span class="cc-breadcrumbs__inactive">Step 3: Skills</span>
-    </nav>
+    <app-breadcrumbs [currentStep]="1"
+                     [selectedRaceLabel]="selectedRace() ? (selectedRace() | titlecase) : null"></app-breadcrumbs>
 
     <header class="cc-heading">
       <h1 class="cc-title">The Ledger of Origins</h1>
