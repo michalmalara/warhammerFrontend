@@ -56,22 +56,21 @@
       <form class="ledger__form" [formGroup]="form">
         <div class="ledger__col">
           <!-- zamienione na Angular Material -->
-          <mat-form-field class="ledger__field" appearance="fill">
+          <mat-form-field class="ledger__field" appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput id="cc-name" type="text" formControlName="name"/>
             <mat-hint align="start">Character's given name</mat-hint>
           </mat-form-field>
 
-          <mat-form-field class="ledger__field" appearance="fill">
+          <mat-form-field class="ledger__field" appearance="outline">
             <mat-label>Gender</mat-label>
             <mat-select id="cc-gender" formControlName="gender">
               <mat-option value="male">Male</mat-option>
               <mat-option value="female">Female</mat-option>
-              <mat-option value="other">Other</mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="ledger__field" appearance="fill">
+          <mat-form-field class="ledger__field" appearance="outline">
             <mat-label>Star Sign</mat-label>
             <mat-select id="cc-starSign" formControlName="starSign">
               <mat-option value="The Drummer">The Drummer</mat-option>
@@ -84,7 +83,7 @@
         </div>
 
         <div class="ledger__col">
-          <mat-form-field class="ledger__field" appearance="fill" subscriptSizing="dynamic">
+          <mat-form-field class="ledger__field" appearance="outline" subscriptSizing="dynamic">
             <mat-label>Age</mat-label>
             <input matInput id="cc-age" type="number" formControlName="age"/>
             @if (form.controls.age.touched && form.controls.age.invalid) {
@@ -99,7 +98,7 @@
           </mat-form-field>
 
           <div class="ledger__row2">
-            <mat-form-field class="ledger__field" appearance="fill" subscriptSizing="dynamic">
+            <mat-form-field class="ledger__field" appearance="outline" subscriptSizing="dynamic">
               <mat-label>Eye Color</mat-label>
               <mat-select id="cc-eyeColor" formControlName="eyeColor">
                 <mat-option value="Hazel">Hazel</mat-option>
@@ -112,7 +111,7 @@
               }
             </mat-form-field>
 
-            <mat-form-field class="ledger__field" appearance="fill" subscriptSizing="dynamic">
+            <mat-form-field class="ledger__field" appearance="outline" subscriptSizing="dynamic">
               <mat-label>Hair Color</mat-label>
               <mat-select id="cc-hairColor" formControlName="hairColor">
                 <mat-option value="Ash Blonde">Ash Blonde</mat-option>
@@ -126,7 +125,7 @@
             </mat-form-field>
           </div>
 
-          <mat-form-field class="ledger__field" appearance="fill" subscriptSizing="dynamic">
+          <mat-form-field class="ledger__field" appearance="outline" subscriptSizing="dynamic">
             <mat-label>Physical Markings</mat-label>
             <input matInput id="cc-physicalMarkings" type="text" formControlName="physicalMarkings"/>
             @if (form.controls.physicalMarkings.touched && form.controls.physicalMarkings.invalid) {

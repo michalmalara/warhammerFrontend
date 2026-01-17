@@ -304,6 +304,12 @@
   gap: 1.25rem;
 }
 
+/* Zwiększ odstęp pionowy tylko w drugiej kolumnie formularza (Age, Eye Color, Physical Markings)
+   aby nie wpływać na layout w pierwszej kolumnie */
+.ledger__form .ledger__col:nth-child(2) {
+  gap: 2.5rem;
+}
+
 // --- Angular Material skin (dopasowanie do mockupu „ledger”) ---
 // NOTE: Angular Material ma wewnętrzną strukturę DOM, więc używamy ::ng-deep tylko do lokalnego „skórowania”.
 :host ::ng-deep {
@@ -331,7 +337,6 @@
   }
 
   .ledger__field .mat-mdc-form-field-flex {
-    border-bottom: 1px solid rgba(57, 40, 43, 1);
     padding-inline: 0.75rem;
   }
 
