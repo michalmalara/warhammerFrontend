@@ -106,9 +106,13 @@ export class CharacterCreationStep2AttributesComponent {
     const rng = this.dice.rngFactory(seed);
     const base = this.humanBase;
 
-    // Update primary stats: if a stat has Shallya's Mercy flagged, ignore roll and add +11
+    // Update primary stats: always perform rolls (so we keep lastRoll/lastRollTotal for logs)
+    // but if a stat has Shallya's Mercy flagged, override the final value to base + 11
     this.primaryStats.update(prev => {
       return prev.map(s => {
+        // Always roll and store roll info
+        const {total, rolls} = this.dice.roll2d10(rng);
+
         if (s.shallyasMercy) {
           const added = 11; // fixed bonus when mercy is used
           const newValue = base + added;
@@ -116,14 +120,13 @@ export class CharacterCreationStep2AttributesComponent {
             ...s,
             value: newValue,
             deltaFromBase: added,
-            // clear roll info because mercy overrides the roll
-            lastRoll: undefined,
-            lastRollTotal: undefined,
+            // keep roll info even though Mercy overrides the final value
+            lastRoll: rolls,
+            lastRollTotal: total,
             shallyasMercy: true,
           } as PrimaryStat;
         }
 
-        const {total, rolls} = this.dice.roll2d10(rng);
         const newValue = base + total;
         const delta = newValue - base;
         return {
@@ -144,7 +147,11 @@ export class CharacterCreationStep2AttributesComponent {
       const found = arr.find(s => s.id === selected);
       if (found) {
         if (found.shallyasMercy) {
-          this.lastRollDisplay = `${found.label}: ${found.value} (Shallya +11)`;
+          if (typeof found.lastRollTotal === 'number') {
+            this.lastRollDisplay = `${found.label}: ${found.value} (Shallya +11; roll ${found.lastRollTotal} +${base})`;
+          } else {
+            this.lastRollDisplay = `${found.label}: ${found.value} (Shallya +11)`;
+          }
         } else if (typeof found.lastRollTotal === 'number') {
           // show label, total value and roll/base breakdown
           this.lastRollDisplay = `${found.label}: ${found.value} (roll ${found.lastRollTotal} +${base})`;
@@ -216,6 +223,34 @@ export class CharacterCreationStep2AttributesComponent {
     this.primaryStats.update(prev => prev.map(s => ({...s, shallyasMercy: s.id === id})));
   }
 
+  // Expose button state for Mercy UI (variant, label, disabled)
+  get mercyVariant(): 'save' | 'cancel' {
+    // If a stat has Mercy applied, show primary (red) variant. Otherwise if a stat is selected show 'save'.
+    const hasMercy = this.primaryStats().some(s => s.shallyasMercy);
+    if (hasMercy) return 'save';
+    return this.selectedStat() ? 'save' : 'cancel';
+  }
+
+  get mercyLabel(): string {
+    const hasMercy = this.primaryStats().some(s => s.shallyasMercy);
+    if (hasMercy) {
+      const stat = this.primaryStats().find(s => s.shallyasMercy);
+      return stat ? `Mercy: ${stat.label}` : 'Mercy Applied';
+    }
+    return this.selectedStat() ? 'Invoke Mercy' : 'Select a stat to upgrade';
+  }
+
+  get mercyDisabled(): boolean {
+    // If Mercy already applied, disable the button. Otherwise enabled only when a stat is selected.
+    const hasMercy = this.primaryStats().some(s => s.shallyasMercy);
+    return hasMercy || !this.selectedStat();
+  }
+
+  // Avoid arrow functions in template bindings by exposing a getter used by the template
+  get primaryStatsHasMercy(): boolean {
+    return this.primaryStats().some(s => s.shallyasMercy);
+  }
+
   onSelectPrimary(id: PrimaryStatId) {
     const cur = this.selectedStat();
     const newSelected = cur === id ? null : id;
@@ -227,7 +262,13 @@ export class CharacterCreationStep2AttributesComponent {
     if (newSelected) {
       const found = arr.find(s => s.id === newSelected);
       if (found) {
-        if (typeof found.lastRollTotal === 'number') {
+        if (found.shallyasMercy) {
+          if (typeof found.lastRollTotal === 'number') {
+            this.lastRollDisplay = `${found.label}: ${found.value} (Shallya +11; roll ${found.lastRollTotal} +${base})`;
+          } else {
+            this.lastRollDisplay = `${found.label}: ${found.value} (Shallya +11)`;
+          }
+        } else if (typeof found.lastRollTotal === 'number') {
           this.lastRollDisplay = `${found.label}: ${found.value} (roll ${found.lastRollTotal} +${base})`;
         } else {
           this.lastRollDisplay = `${found.label}: ${found.value} (base ${base})`;

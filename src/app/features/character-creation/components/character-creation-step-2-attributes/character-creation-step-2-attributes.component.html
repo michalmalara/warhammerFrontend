@@ -63,13 +63,14 @@
             wisely; you can only invoke her mercy once.
           </p>
           <app-wax-seal-button
-            [variant]="selectedStat() ? 'save' : 'cancel'"
+            [variant]="mercyVariant"
             icon="favorite"
-            [label]="selectedStat() ? 'Invoke Mercy' : 'Select a stat to upgrade'"
-            [disabled]="!selectedStat()"
+            [label]="mercyLabel"
+            [disabled]="mercyDisabled"
             (clicked)="applyShallyasMercy()"
             type="button"
             ariaLabel="Select a stat to upgrade"
+            [class.mercy__applied]="primaryStatsHasMercy"
           ></app-wax-seal-button>
         </div>
       </aside>
