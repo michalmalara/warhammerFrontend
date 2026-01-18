@@ -358,3 +358,12 @@ textarea[formControlName="description"]:-ms-input-placeholder,
 .cc-root * {
   font-family: 'Newsreader', serif;
 }
+
+/* BUT: don't override icon fonts used by Angular Material / Material Symbols */
+.cc-root mat-icon,
+.cc-root .mat-icon,
+.cc-root .material-icons,
+.cc-root .material-symbols-outlined {
+  font-family: 'Material Icons', 'Material Symbols Outlined', sans-serif !important;
+  font-feature-settings: 'liga';
+}
