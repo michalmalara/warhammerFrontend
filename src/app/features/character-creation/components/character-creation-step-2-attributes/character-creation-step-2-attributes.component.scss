@@ -314,6 +314,14 @@
   box-shadow: 0 0 0 2px rgba(189, 15, 44, 0.2);
 }
 
+/* Wybrane kafelki: jaśniejsze, z akcentem koloru */
+.stat-card--selected {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(189, 15, 44, 0.06));
+  border-color: rgba(189, 15, 44, 0.9);
+  box-shadow: 0 8px 20px rgba(189, 15, 44, 0.12);
+  transform: translateY(-2px);
+}
+
 .stat-card__abbr {
   font-size: 0.7rem;
   font-weight: 900;
@@ -365,6 +373,20 @@
   font-weight: 900;
   border-radius: 6px;
   letter-spacing: 0.08em;
+}
+
+.stat-card__mercy-badge {
+  position: absolute;
+  bottom: -0.55rem;
+  left: 0.5rem;
+  padding: 0.2rem 0.45rem;
+  background: linear-gradient(180deg, #d41434, #7a0a1c);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 900;
+  border-radius: 6px;
+  letter-spacing: 0.08em;
+  box-shadow: 0 8px 20px rgba(189, 15, 44, 0.12);
 }
 
 .secondary-grid {

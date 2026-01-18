@@ -34,14 +34,14 @@
         <div class="panel">
           <h3 class="panel__title">The Dice of Fate</h3>
 
-          <button class="dice" type="button">
+          <button class="dice" type="button" (click)="onRollDice()" [disabled]="isRolling">
             <div class="dice__left">
               <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
               <div class="dice__hint">Roll 2d10</div>
             </div>
             <div class="dice__sep" aria-hidden="true"></div>
             <div class="dice__right">
-              <div class="dice__num">+20</div>
+              <div class="dice__num">{{ lastRollDisplay }}</div>
               <div class="dice__base">Base</div>
             </div>
           </button>
@@ -63,10 +63,11 @@
             wisely; you can only invoke her mercy once.
           </p>
           <app-wax-seal-button
-            variant="cancel"
+            [variant]="selectedStat() ? 'save' : 'cancel'"
             icon="favorite"
-            label="Select a stat to upgrade"
-            [disabled]="true"
+            [label]="selectedStat() ? 'Invoke Mercy' : 'Select a stat to upgrade'"
+            [disabled]="!selectedStat()"
+            (clicked)="applyShallyasMercy()"
             type="button"
             ariaLabel="Select a stat to upgrade"
           ></app-wax-seal-button>
@@ -80,26 +81,34 @@
         </div>
 
         <div class="primary-grid" role="list">
-          @for (s of primaryStats(); track s.id) {
+          <ng-container *ngFor="let s of primaryStats()">
             <div
               class="stat-card"
               role="listitem"
-              [class.stat-card--low]="s.id === 'S'"
+              tabindex="0"
+              (click)="onSelectPrimary(s.id)"
+              (keydown.enter)="onSelectPrimary(s.id)"
+              (keydown.space)="$event.preventDefault(); onSelectPrimary(s.id)"
+              [attr.aria-pressed]="selectedStat() === s.id"
+              [class.stat-card--low]="lowestRollTotal() !== undefined && s.lastRollTotal === lowestRollTotal()"
               [class.stat-card--hi]="s.deltaFromBase >= 18"
+              [class.stat-card--selected]="selectedStat() === s.id"
             >
               <div class="stat-card__abbr">{{ s.label }}</div>
               <div class="stat-card__row">
                 <div class="stat-card__value">{{ s.value }}</div>
                 <div class="stat-card__delta" [class.is-hi]="s.deltaFromBase >= 18">
-                  +{{ s.deltaFromBase }}
+                  {{ s.deltaFromBase === 0 ? '-' : (s.deltaFromBase > 0 ? '+' + s.deltaFromBase : s.deltaFromBase) }}
                 </div>
               </div>
               <div class="stat-card__name">{{ s.fullName }}</div>
-              @if (s.id === 'S') {
-                <div class="stat-card__badge">LOW ROLL</div>
-              }
+              <div *ngIf="lowestRollTotal() !== undefined && s.lastRollTotal === lowestRollTotal()"
+                   class="stat-card__badge">LOW ROLL
+              </div>
+              <div *ngIf="s.shallyasMercy" class="stat-card__mercy-badge">MERCY</div>
             </div>
-          }
+          </ng-container>
+
         </div>
 
         <div class="section-head section-head--spaced">
@@ -110,35 +119,35 @@
         <div class="secondary-grid">
           <div class="sec">
             <div class="sec__k">A</div>
-            <div class="sec__v">1</div>
+            <div class="sec__v">{{ secondaryStats().A }}</div>
           </div>
           <div class="sec">
             <div class="sec__k">W</div>
-            <div class="sec__v">12</div>
+            <div class="sec__v">{{ secondaryStats().W }}</div>
           </div>
           <div class="sec">
             <div class="sec__k">SB</div>
-            <div class="sec__v">2</div>
+            <div class="sec__v">{{ secondaryStats().SB }}</div>
           </div>
           <div class="sec">
             <div class="sec__k">TB</div>
-            <div class="sec__v">3</div>
+            <div class="sec__v">{{ secondaryStats().TB }}</div>
           </div>
           <div class="sec">
             <div class="sec__k">M</div>
-            <div class="sec__v">4</div>
+            <div class="sec__v">{{ secondaryStats().M }}</div>
           </div>
           <div class="sec">
             <div class="sec__k">Mag</div>
-            <div class="sec__v">0</div>
+            <div class="sec__v">{{ secondaryStats().Mag }}</div>
           </div>
           <div class="sec">
             <div class="sec__k">IP</div>
-            <div class="sec__v">0</div>
+            <div class="sec__v">{{ secondaryStats().IP }}</div>
           </div>
           <div class="sec">
             <div class="sec__k">FP</div>
-            <div class="sec__v">3</div>
+            <div class="sec__v">{{ secondaryStats().FP }}</div>
           </div>
         </div>
       </div>
@@ -152,13 +161,8 @@
 
       <div class="cc-footer-nav__right">
         <button class="cc-skip" type="button" disabled>Skip to Career</button>
-        <app-wax-seal-button
-          variant="save"
-          icon="arrow_forward"
-          ariaLabel="Confirm Attributes"
-          type="button"
-          (click)="goNext()"
-        ></app-wax-seal-button>
+        <app-wax-seal-button variant="save" icon="arrow_forward" ariaLabel="Confirm Attributes" type="button"
+                             (click)="goNext()"></app-wax-seal-button>
       </div>
     </div>
   </main>
