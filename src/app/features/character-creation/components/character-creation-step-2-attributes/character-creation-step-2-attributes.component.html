@@ -71,15 +71,18 @@
               (keydown.space)="$event.preventDefault(); onSelectPrimary(s.id)"
               [attr.aria-pressed]="selectedStat() === s.id"
               [class.stat-card--low]="lowestRollTotal() !== undefined && s.rolledStat === lowestRollTotal()"
-              [class.stat-card--hi]="(s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) >= 18"
+              [class.stat-card--hi]="(s.base + (s.shallyasMercy ? 11 : (s.rolledStat ?? 0))) >= 18"
               [class.stat-card--selected]="selectedStat() === s.id"
             >
               <div class="stat-card__abbr">{{ s.label }}</div>
               <div class="stat-card__row">
-                <div class="stat-card__value">{{ s.shallyasMercy ? (s.base + 11) : (s.base + (s.rolledStat ?? 0)) }}
+                <!-- Wyświetl finalną wartość: jeśli mercy -> base + 11, w przeciwnym razie base + rolled -->
+                <div class="stat-card__value">{{ s.base + (s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) }}
                 </div>
-                <div class="stat-card__delta" [class.is-hi]="(s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) >= 18">
-                  {{ (s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) === 0 ? '-' : ((s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) > 0 ? '+' + (s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) : (s.shallyasMercy ? 11 : (s.rolledStat ?? 0))) }}
+                <!-- Delta: pokaż tylko wylosowaną wartość (lub '-' jeśli brak rolla). is-hi używa finalnej wartości -->
+                <div class="stat-card__delta"
+                     [class.is-hi]="(s.base + (s.shallyasMercy ? 11 : (s.rolledStat ?? 0))) >= 18">
+                  {{ (s.rolledStat ?? 0) === 0 ? '-' : ((s.rolledStat ?? 0) > 0 ? '+' + (s.rolledStat ?? 0) : (s.rolledStat ?? 0)) }}
                 </div>
               </div>
               <div class="stat-card__name">{{ s.fullName }}</div>
