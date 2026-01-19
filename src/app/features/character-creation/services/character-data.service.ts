@@ -1,6 +1,7 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {DiceService} from '../../../shared/services/dice.service';
 import {type CharacterCreationBio, type CharacterRace, DEFAULT_STEP_1} from '../models/character-creation.models';
+import {RaceBaseService} from './race-bases.service';
 
 export type PrimaryStatId = 'WS' | 'BS' | 'S' | 'T' | 'Ag' | 'Int' | 'WP' | 'Fel';
 
@@ -27,9 +28,21 @@ export type SecondaryStats = {
 @Injectable({providedIn: 'root'})
 export class CharacterDataService {
   private readonly dice = inject(DiceService);
+  // Inject RaceBaseService to provide race-dependent base values
+  private readonly raceBases = inject(RaceBaseService);
 
   // minimal UI: prezentujemy dane przykładowe z mockupa
-  readonly humanBase = 20;
+  // Expose a reactive getter for the human/base value used by templates.
+  // Keep the old `humanBase` name for template compatibility.
+  get humanBase() {
+    // For backward compat the UI referenced "HUMAN BASE" label; keep it by
+    // returning the generic per-stat base for the currently selected race
+    const r = this.race ? this.race() : null;
+    // If race is null, use Human as default for display parity
+    const baseMap = this.raceBases.getPrimaryBases(r);
+    // Use WS as representative base (all races return a full map)
+    return baseMap.WS ?? 20;
+  }
 
   // --- race (moved here) ---
   readonly race = signal<CharacterRace | null>(DEFAULT_STEP_1.race);
@@ -37,6 +50,9 @@ export class CharacterDataService {
   // helper API to update race from UI
   setRace(r: CharacterRace) {
     this.race.set(r);
+    // When race changes update primary stat bases to race-specific defaults
+    const bases = this.raceBases.getPrimaryBases(r);
+    this.primaryStats.update(prev => prev.map(s => ({...s, base: bases[s.id]})));
   }
 
   // --- primary stats

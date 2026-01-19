@@ -22,7 +22,8 @@ export class CharacterCreationStep2AttributesComponent {
   readonly charData = inject(CharacterDataService);
 
   // minimal UI: prezentujemy dane przykładowe z mockupa
-  readonly humanBase = this.charData.humanBase;
+  // Keep a computed wrapper so template updates when race changes.
+  readonly humanBase = computed(() => this.charData.humanBase);
 
   readonly primaryStats = this.charData.primaryStats;
   readonly selectedStat = this.charData.selectedStat;
