@@ -7,7 +7,6 @@ import {BreadcrumbsComponent} from '../../../../shared/ui/breadcrumbs/breadcrumb
 import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 
 import {CharacterCreationStateService} from '../../services/character-creation-state.service';
-import {DiceService} from '../../../../shared/services/dice.service';
 import {CharacterDataService, PrimaryStatId} from '../../services/character-data.service';
 
 @Component({
@@ -20,7 +19,6 @@ import {CharacterDataService, PrimaryStatId} from '../../services/character-data
 export class CharacterCreationStep2AttributesComponent {
   private readonly router = inject(Router);
   private readonly state = inject(CharacterCreationStateService);
-  private readonly dice = inject(DiceService);
 
   // Inject new CharacterDataService which now owns stats and rolling logic
   readonly charData = inject(CharacterDataService);
@@ -44,7 +42,7 @@ export class CharacterCreationStep2AttributesComponent {
   readonly lowestRollTotal = this.charData.lowestRollTotal;
 
   readonly selectedRaceLabel = computed(() => {
-    const race = this.state.step1().race;
+    const race = this.charData.race();
     if (!race) return 'Unknown';
     return race.charAt(0).toUpperCase() + race.slice(1);
   });

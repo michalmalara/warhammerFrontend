@@ -6,13 +6,13 @@ import {MatButtonModule} from '@angular/material/button';
 import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 import {BreadcrumbsComponent} from '../../../../shared/ui/breadcrumbs/breadcrumbs.component';
 
-import {CharacterCreationStateService} from '../../services/character-creation-state.service';
 import type {CharacterRace} from '../../models/character-creation.models';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRippleModule} from '@angular/material/core';
+import {CharacterDataService} from '../../services/character-data.service';
 
 type RaceCard = {
   id: CharacterRace;
@@ -42,8 +42,8 @@ type RaceCard = {
 })
 export class CharacterCreationStep1BioRaceComponent {
   private readonly fb = inject(FormBuilder);
-  private readonly state = inject(CharacterCreationStateService);
   private readonly router = inject(Router);
+  private readonly charData = inject(CharacterDataService);
 
   readonly races: RaceCard[] = [
     {
@@ -72,7 +72,7 @@ export class CharacterCreationStep1BioRaceComponent {
     },
   ];
 
-  readonly selectedRace = computed(() => this.state.step1().race);
+  readonly selectedRace = computed(() => this.charData.race());
 
   readonly form = this.fb.nonNullable.group({
     name: this.fb.nonNullable.control('', [Validators.required, Validators.maxLength(80)]),
@@ -85,14 +85,14 @@ export class CharacterCreationStep1BioRaceComponent {
   });
 
   constructor() {
-    // init from state
+    // init from state (race stays in CharacterCreationStateService; bio moved to CharacterDataService)
     effect(() => {
-      const s = this.state.step1();
-      this.form.patchValue(s.bio, {emitEvent: false});
+      const bio = this.charData.bio();
+      this.form.patchValue(bio, {emitEvent: false});
     });
 
     this.form.valueChanges.subscribe((value) => {
-      this.state.patchBio({
+      this.charData.patchBio({
         name: value.name ?? '',
         gender: (value.gender ?? 'male') as any,
         age: value.age ?? null,
@@ -105,7 +105,7 @@ export class CharacterCreationStep1BioRaceComponent {
   }
 
   selectRace(race: CharacterRace) {
-    this.state.setRace(race);
+    this.charData.setRace(race);
   }
 
   goPrev() {
@@ -113,7 +113,7 @@ export class CharacterCreationStep1BioRaceComponent {
   }
 
   goNext() {
-    if (!this.state.step1().race || this.form.invalid) {
+    if (!this.charData.race() || this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }

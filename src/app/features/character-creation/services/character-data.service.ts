@@ -1,5 +1,6 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {DiceService} from '../../../shared/services/dice.service';
+import {type CharacterCreationBio, type CharacterRace, DEFAULT_STEP_1} from '../models/character-creation.models';
 
 export type PrimaryStatId = 'WS' | 'BS' | 'S' | 'T' | 'Ag' | 'Int' | 'WP' | 'Fel';
 
@@ -29,6 +30,14 @@ export class CharacterDataService {
 
   // minimal UI: prezentujemy dane przykładowe z mockupa
   readonly humanBase = 20;
+
+  // --- race (moved here) ---
+  readonly race = signal<CharacterRace | null>(DEFAULT_STEP_1.race);
+
+  // helper API to update race from UI
+  setRace(r: CharacterRace) {
+    this.race.set(r);
+  }
 
   // --- primary stats
   readonly primaryStats = signal<PrimaryStat[]>([
@@ -60,6 +69,18 @@ export class CharacterDataService {
   // --- new UI state for rolling ---
   readonly lastRollDisplay = signal<string>('-');
   readonly isRolling = signal<boolean>(false);
+
+  // --- bio stored in this service (moved from CharacterCreationStateService)
+  readonly bio = signal<CharacterCreationBio>(DEFAULT_STEP_1.bio);
+
+  // helper API to update bio from forms
+  patchBio(patch: Partial<CharacterCreationBio>) {
+    this.bio.update(b => ({...b, ...patch}));
+  }
+
+  setBio(b: CharacterCreationBio) {
+    this.bio.set(b);
+  }
 
   // Cached values
   private lastMappedW: number | null = null;
