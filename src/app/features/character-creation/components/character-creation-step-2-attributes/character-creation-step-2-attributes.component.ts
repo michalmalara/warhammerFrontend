@@ -6,7 +6,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {BreadcrumbsComponent} from '../../../../shared/ui/breadcrumbs/breadcrumbs.component';
 import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 
-import {CharacterCreationStateService} from '../../services/character-creation-state.service';
 import {CharacterDataService, PrimaryStatId} from '../../services/character-data.service';
 
 @Component({
@@ -18,7 +17,6 @@ import {CharacterDataService, PrimaryStatId} from '../../services/character-data
 })
 export class CharacterCreationStep2AttributesComponent {
   private readonly router = inject(Router);
-  private readonly state = inject(CharacterCreationStateService);
 
   // Inject new CharacterDataService which now owns stats and rolling logic
   readonly charData = inject(CharacterDataService);
