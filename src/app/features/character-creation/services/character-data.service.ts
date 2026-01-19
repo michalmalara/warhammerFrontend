@@ -214,10 +214,10 @@ export class CharacterDataService {
     const A = 1;
     const {SB, TB} = this.computeSBandTB();
 
-    // W: jeśli przekazano rng -> wylosuj mappedW i zapisz w cache. Jeśli przekazano liczbę ->
-    // użyj jej i zapisz w cache. W przeciwnym razie użyj cache lub fallbacku.
+    // W: jeśli przekazano rng -> wylosuj mappedW używając mapy zależnej od rasy i zapisz w cache.
+    // Jeśli przekazano liczbę -> użyj jej i zapisz w cache. W przeciwnym razie użyj cache lub fallbacku.
     let W: number;
-    const wMapping = {map: [10, 10, 10, 11, 11, 11, 12, 12, 12, 13]};
+    const wMapping = this.raceBases.getWMapping(this.race());
     if (typeof mappedWOrRng !== 'undefined' && typeof mappedWOrRng !== 'number') {
       W = this.dice.mapRawToMapped(wMapping, mappedWOrRng);
       this.lastMappedW = W;
@@ -232,19 +232,26 @@ export class CharacterDataService {
     }
     // M ma zawsze wartość 5 zgodnie z wymaganiem
     const M = 5;
-    // Mag (magic) is always 1 per requirement
-    const Mag = 1;
+    // Mag (magic) should always be 0 per requirement
+    const Mag = 0;
     // IP ma zawsze wartość 0 zgodnie z wymaganiem
     const IP = 0;
-    // FP: jeśli przekazano rng -> policz FP i zapisz w cache. W przeciwnym razie użyj cache
-    // lub policz i zapisz jeśli nie było poprzednio.
+    // FP: jeśli przekazano rng -> wylosuj FP używając mapy zależnej od rasy i zapisz w cache.
+    // Jeśli przekazano liczbę -> użyj jej i zapisz w cache. W przeciwnym razie użyj cache lub
+    // wykonaj fallbackowe obliczenie (stare zachowanie).
     let FP: number;
+    const fpMapping = this.raceBases.getFPMapping(this.race());
     if (typeof mappedWOrRng !== 'undefined' && typeof mappedWOrRng !== 'number') {
-      FP = Math.max(1, Math.floor((T + WP) / 20));
+      // use mapping to derive FP from a single d10 roll
+      FP = this.dice.mapRawToMapped(fpMapping, mappedWOrRng);
+      this.lastComputedFP = FP;
+    } else if (typeof mappedWOrRng === 'number') {
+      FP = mappedWOrRng;
       this.lastComputedFP = FP;
     } else if (this.lastComputedFP != null) {
       FP = this.lastComputedFP;
     } else {
+      // fallback to previous formula if no rng provided
       FP = Math.max(1, Math.floor((T + WP) / 20));
       this.lastComputedFP = FP;
     }

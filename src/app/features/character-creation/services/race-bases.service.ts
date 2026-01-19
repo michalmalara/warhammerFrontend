@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CharacterRace} from '../models/character-creation.models';
+import type {DiceMapping} from '../../../shared/services/dice.service';
 
 // Local duplicate of PrimaryStatId to avoid circular imports
 export type PrimaryStatId = 'WS' | 'BS' | 'S' | 'T' | 'Ag' | 'Int' | 'WP' | 'Fel';
@@ -8,6 +9,48 @@ export type PrimaryStatId = 'WS' | 'BS' | 'S' | 'T' | 'Ag' | 'Int' | 'WP' | 'Fel
 export class RaceBaseService {
   // Fallback base used when race is null or unknown
   private readonly fallbackBase = 20;
+
+  /**
+   * Return a dice mapping used to map a raw d10 (1..10) to a wound (W) value
+   * depending on race. The returned mapping must be an array of length 10.
+   */
+  getWMapping(race: CharacterRace | null): DiceMapping {
+    switch (race) {
+      case 'human':
+        return {map: [10, 10, 10, 11, 11, 11, 12, 12, 12, 13]};
+      case 'dwarf':
+        // Dwarves are tougher: shift distribution upwards
+        return {map: [11, 11, 11, 12, 12, 12, 13, 13, 13, 14]};
+      case 'elf':
+        // Elves are slightly more fragile in this mapping
+        return {map: [9, 9, 9, 10, 10, 10, 11, 11, 11, 12]};
+      case 'halfling':
+        // Halflings are small; lower W on average
+        return {map: [9, 9, 9, 10, 10, 10, 11, 11, 11, 11]};
+      default:
+        return {map: [10, 10, 10, 11, 11, 11, 12, 12, 12, 13]};
+    }
+  }
+
+  /**
+   * Return a dice mapping used to map a raw d10 (1..10) to an FP adjustment
+   * or lookup value depending on race. These are example values and can be
+   * tuned later; mapping length must be 10.
+   */
+  getFPMapping(race: CharacterRace | null): DiceMapping {
+    switch (race) {
+      case 'human':
+        return {map: [1, 1, 1, 2, 2, 2, 3, 3, 3, 4]};
+      case 'dwarf':
+        return {map: [1, 1, 2, 2, 2, 3, 3, 3, 4, 4]};
+      case 'elf':
+        return {map: [1, 1, 1, 1, 2, 2, 2, 3, 3, 3]};
+      case 'halfling':
+        return {map: [1, 1, 1, 2, 2, 2, 2, 3, 3, 3]};
+      default:
+        return {map: [1, 1, 1, 2, 2, 2, 3, 3, 3, 4]};
+    }
+  }
 
   /**
    * Return per-stat base values for a given race.
