@@ -23,10 +23,8 @@
             <div class="dice__sep" aria-hidden="true"></div>
             <div class="dice__right">
               <div class="dice__num">{{ lastRollDisplay }}</div>
-              <div class="dice__base">Base</div>
             </div>
           </button>
-
 
           <p class="panel__desc">
             Clicking will generate rolls for all Primary Characteristics. Secondary stats will be derived
@@ -72,19 +70,20 @@
               (keydown.enter)="onSelectPrimary(s.id)"
               (keydown.space)="$event.preventDefault(); onSelectPrimary(s.id)"
               [attr.aria-pressed]="selectedStat() === s.id"
-              [class.stat-card--low]="lowestRollTotal() !== undefined && s.lastRollTotal === lowestRollTotal()"
-              [class.stat-card--hi]="s.deltaFromBase >= 18"
+              [class.stat-card--low]="lowestRollTotal() !== undefined && s.rolledStat === lowestRollTotal()"
+              [class.stat-card--hi]="(s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) >= 18"
               [class.stat-card--selected]="selectedStat() === s.id"
             >
               <div class="stat-card__abbr">{{ s.label }}</div>
               <div class="stat-card__row">
-                <div class="stat-card__value">{{ s.value }}</div>
-                <div class="stat-card__delta" [class.is-hi]="s.deltaFromBase >= 18">
-                  {{ s.deltaFromBase === 0 ? '-' : (s.deltaFromBase > 0 ? '+' + s.deltaFromBase : s.deltaFromBase) }}
+                <div class="stat-card__value">{{ s.shallyasMercy ? (s.base + 11) : (s.base + (s.rolledStat ?? 0)) }}
+                </div>
+                <div class="stat-card__delta" [class.is-hi]="(s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) >= 18">
+                  {{ (s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) === 0 ? '-' : ((s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) > 0 ? '+' + (s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) : (s.shallyasMercy ? 11 : (s.rolledStat ?? 0))) }}
                 </div>
               </div>
               <div class="stat-card__name">{{ s.fullName }}</div>
-              <div *ngIf="lowestRollTotal() !== undefined && s.lastRollTotal === lowestRollTotal()"
+              <div *ngIf="lowestRollTotal() !== undefined && s.rolledStat === lowestRollTotal()"
                    class="stat-card__badge">LOW ROLL
               </div>
               <div *ngIf="s.shallyasMercy" class="stat-card__mercy-badge">MERCY</div>
@@ -136,13 +135,10 @@
     </section>
 
     <div class="cc-footer-nav">
-      <button mat-icon-button class="cc-back" type="button" (click)="goPrev()" aria-label="Back to Race Selection">
-        <mat-icon aria-hidden="true">arrow_back</mat-icon>
-      </button>
-      <span class="cc-back__label">Back to Race Selection</span>
+      <app-wax-seal-button variant="cancel" icon="navigate_before" ariaLabel="Back to Race Selection" type="button"
+                           (click)="goPrev()"></app-wax-seal-button>
 
       <div class="cc-footer-nav__right">
-        <button class="cc-skip" type="button" disabled>Skip to Career</button>
         <app-wax-seal-button variant="save" icon="arrow_forward" ariaLabel="Confirm Attributes" type="button"
                              (click)="goNext()"></app-wax-seal-button>
       </div>

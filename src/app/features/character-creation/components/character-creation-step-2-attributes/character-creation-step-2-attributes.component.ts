@@ -15,11 +15,11 @@ type PrimaryStat = {
   id: PrimaryStatId;
   label: string;
   fullName: string;
-  value: number;
-  deltaFromBase: number;
-  lastRoll?: [number, number];
-  lastRollTotal?: number;
-  // Shallya's Mercy flag (boolean) added to primary stats
+  // base value (np. 20 dla człowieka)
+  base: number;
+  // rolledStat = suma oczek na 2d10 (np. 4..20) — przechowujemy surową wartość losowania
+  rolledStat?: number;
+  // Shallya's Mercy flag
   shallyasMercy?: boolean;
 };
 
@@ -38,15 +38,16 @@ export class CharacterCreationStep2AttributesComponent {
   // minimal UI: prezentujemy dane przykładowe z mockupa
   readonly humanBase = 20;
 
+  // --- primary stats trzymają teraz: id, label, fullName, base, rolledStat, shallyasMercy
   readonly primaryStats = signal<PrimaryStat[]>([
-    {id: 'WS', label: 'WS', fullName: 'Weapon Skill', value: 20, deltaFromBase: 0, shallyasMercy: false},
-    {id: 'BS', label: 'BS', fullName: 'Ballistic Skill', value: 20, deltaFromBase: 0, shallyasMercy: false},
-    {id: 'S', label: 'S', fullName: 'Strength', value: 20, deltaFromBase: 0, shallyasMercy: false},
-    {id: 'T', label: 'T', fullName: 'Toughness', value: 20, deltaFromBase: 0, shallyasMercy: false},
-    {id: 'Ag', label: 'Ag', fullName: 'Agility', value: 20, deltaFromBase: 0, shallyasMercy: false},
-    {id: 'Int', label: 'Int', fullName: 'Intelligence', value: 20, deltaFromBase: 0, shallyasMercy: false},
-    {id: 'WP', label: 'WP', fullName: 'Willpower', value: 20, deltaFromBase: 0, shallyasMercy: false},
-    {id: 'Fel', label: 'Fel', fullName: 'Fellowship', value: 20, deltaFromBase: 0, shallyasMercy: false},
+    {id: 'WS', label: 'WS', fullName: 'Weapon Skill', base: 20, rolledStat: undefined, shallyasMercy: false},
+    {id: 'BS', label: 'BS', fullName: 'Ballistic Skill', base: 20, rolledStat: undefined, shallyasMercy: false},
+    {id: 'S', label: 'S', fullName: 'Strength', base: 20, rolledStat: undefined, shallyasMercy: false},
+    {id: 'T', label: 'T', fullName: 'Toughness', base: 20, rolledStat: undefined, shallyasMercy: false},
+    {id: 'Ag', label: 'Ag', fullName: 'Agility', base: 20, rolledStat: undefined, shallyasMercy: false},
+    {id: 'Int', label: 'Int', fullName: 'Intelligence', base: 20, rolledStat: undefined, shallyasMercy: false},
+    {id: 'WP', label: 'WP', fullName: 'Willpower', base: 20, rolledStat: undefined, shallyasMercy: false},
+    {id: 'Fel', label: 'Fel', fullName: 'Fellowship', base: 20, rolledStat: undefined, shallyasMercy: false},
   ]);
 
   readonly selectedRaceLabel = computed(() => {
@@ -58,6 +59,13 @@ export class CharacterCreationStep2AttributesComponent {
   // --- new UI state for rolling ---
   lastRollDisplay = '-';
   isRolling = false;
+
+  // Cached values: jeśli W został już wylosowany, przechowujemy mappedW, aby
+  // przy późniejszym przeliczaniu sekundarnych nie "przelosowywać" go ponownie.
+  private lastMappedW: number | null = null;
+  // Podobnie przechowujemy ostatnio obliczone FP — użytkownik poprosił, żeby
+  // nie 'losować' (ponownie przeliczać) W i FP przy ponownych przeliczaniach.
+  private lastComputedFP: number | null = null;
 
   // selected primary stat for UI (click / toggle)
   readonly selectedStat = signal<PrimaryStatId | null>(null);
@@ -74,10 +82,10 @@ export class CharacterCreationStep2AttributesComponent {
     FP: 0,
   });
 
-  // computed: lowest total of lastRollTotal across primaryStats (undefined if none)
+  // computed: lowest rolledStat across primaryStats (undefined if none)
   readonly lowestRollTotal = computed(() => {
     const arr = this.primaryStats();
-    const totals = arr.map(s => s.lastRollTotal).filter((t): t is number => typeof t === 'number');
+    const totals = arr.map(s => s.rolledStat).filter((t): t is number => typeof t === 'number');
     if (totals.length === 0) return undefined as number | undefined;
     return Math.min(...totals);
   });
@@ -91,11 +99,15 @@ export class CharacterCreationStep2AttributesComponent {
     void this.router.navigate(['/character/create/step-3']);
   }
 
-  // Helper: get primary stat value by id
+  // Helper: get primary stat total by id = base + (shallyasMercy ? 11 : rolledStat)
   private getStat(id: PrimaryStatId): number {
     const arr = this.primaryStats();
     const found = arr.find(s => s.id === id);
-    return found ? found.value : 0;
+    if (!found) return 0;
+    const base = found.base;
+    if (found.shallyasMercy) return base + 11;
+    const rolled = typeof found.rolledStat === 'number' ? found.rolledStat : 0;
+    return base + rolled;
   }
 
   // Public: wywołaj przy kliknięciu przycisku. Opcjonalnie pass seed for deterministic tests.
@@ -103,38 +115,28 @@ export class CharacterCreationStep2AttributesComponent {
     if (this.isRolling) return;
     this.isRolling = true;
 
+    // Nowy rzut: kasujemy cache wylosowanego W i obliczonego FP
+    this.lastMappedW = null;
+    this.lastComputedFP = null;
+
+    // Reset any previously-applied Shallya's Mercy so that a fresh roll
+    // re-enables the mercy button (if a stat is selected).
+    this.primaryStats.update(prev => prev.map(s => ({...s, shallyasMercy: false})));
+
     const rng = this.dice.rngFactory(seed);
+
     const base = this.humanBase;
 
-    // Update primary stats: always perform rolls (so we keep lastRoll/lastRollTotal for logs)
-    // but if a stat has Shallya's Mercy flagged, override the final value to base + 11
+    // Update primary stats: always perform rolls (so we keep rolledStat for logs)
     this.primaryStats.update(prev => {
       return prev.map(s => {
-        // Always roll and store roll info
-        const {total, rolls} = this.dice.roll2d10(rng);
-
-        if (s.shallyasMercy) {
-          const added = 11; // fixed bonus when mercy is used
-          const newValue = base + added;
-          return {
-            ...s,
-            value: newValue,
-            deltaFromBase: added,
-            // keep roll info even though Mercy overrides the final value
-            lastRoll: rolls,
-            lastRollTotal: total,
-            shallyasMercy: true,
-          } as PrimaryStat;
-        }
-
-        const newValue = base + total;
-        const delta = newValue - base;
+        const {total} = this.dice.roll2d10(rng);
         return {
           ...s,
-          value: newValue,
-          deltaFromBase: delta,
-          lastRoll: rolls,
-          lastRollTotal: total,
+          // store the rolled total (raw die total). Final displayed total uses base + rolledStat,
+          // or base + 11 when shallyasMercy is true (handled in getStat and display logic)
+          rolledStat: total,
+          // preserve any mercy flag that might have been set by UI (applyShallyasMercy)
           shallyasMercy: s.shallyasMercy ?? false,
         } as PrimaryStat;
       });
@@ -146,50 +148,53 @@ export class CharacterCreationStep2AttributesComponent {
     if (selected) {
       const found = arr.find(s => s.id === selected);
       if (found) {
+        const rolled = found.rolledStat;
         if (found.shallyasMercy) {
-          if (typeof found.lastRollTotal === 'number') {
-            this.lastRollDisplay = `${found.label}: ${found.value} (Shallya +11; roll ${found.lastRollTotal} +${base})`;
+          if (typeof rolled === 'number') {
+            this.lastRollDisplay = `${found.label}: ${found.base + 11} (Shallya +11; roll ${rolled} +${found.base})`;
           } else {
-            this.lastRollDisplay = `${found.label}: ${found.value} (Shallya +11)`;
+            this.lastRollDisplay = `${found.label}: ${found.base + 11} (Shallya +11)`;
           }
-        } else if (typeof found.lastRollTotal === 'number') {
-          // show label, total value and roll/base breakdown
-          this.lastRollDisplay = `${found.label}: ${found.value} (roll ${found.lastRollTotal} +${base})`;
+        } else if (typeof rolled === 'number') {
+          this.lastRollDisplay = `${found.label}: ${found.base + rolled} (roll ${rolled} +${found.base})`;
         } else {
-          this.lastRollDisplay = `${found.label}: ${found.value} (base ${base})`;
+          this.lastRollDisplay = `${found.label}: ${found.base} (base ${found.base})`;
         }
       } else {
         // fallback to representative last
         const last = arr[arr.length - 1];
-        if (last && typeof last.lastRollTotal === 'number') {
-          this.lastRollDisplay = `${last.lastRollTotal} (+${base})`;
+        if (last && typeof last.rolledStat === 'number') {
+          this.lastRollDisplay = `${last.rolledStat} (+${base})`;
         } else {
           this.lastRollDisplay = `+${base}`;
         }
       }
     } else {
-      // No stat selected: previous behaviour (representative last)
-      const last = arr[arr.length - 1];
-      if (last && typeof last.lastRollTotal === 'number') {
-        this.lastRollDisplay = `${last.lastRollTotal} (+${base})`;
+      // No stat selected: show average of all rolledStat values if available
+      const totals = arr.map(s => s.rolledStat).filter((t): t is number => typeof t === 'number');
+      if (totals.length > 0) {
+        const sum = totals.reduce((a, b) => a + b, 0);
+        const avg = sum / totals.length;
+        const avgDisplay = Number.isInteger(avg) ? `${avg}` : `${avg.toFixed(1)}`;
+        // Show average only, do not include base information per request
+        this.lastRollDisplay = `AVG: ${avgDisplay}`;
       } else {
         this.lastRollDisplay = `+${base}`;
       }
     }
 
-    // Draw a single d10 (mapped) for W according to the requested rule
-    // Provide mapping array: index 0 => raw=1, ..., index 9 => raw=10
-    const wMapping = {map: [10, 10, 10, 11, 11, 11, 12, 12, 12, 13]};
-    const mappedW = this.dice.mapRawToMapped(wMapping, rng);
-
-    // IP jest stałe (0) — nie losujemy go
-    this.deriveSecondaries(mappedW);
+    // Przenieśliśmy losowanie mapped W oraz obliczanie FP do metody deriveSecondaries.
+    // Przekazujemy rng, aby metoda sama wykonała potrzebne losowania i zapisała cache.
+    this.deriveSecondaries(rng);
 
     this.isRolling = false;
   }
 
   // Minimal placeholder derivation rules. These can be replaced with real WFRP formulas later.
-  private deriveSecondaries(mappedW?: number) {
+  // Jeżeli przekazano rng (nie-number), metoda wykona losowanie mapped W i obliczy FP;
+  // jeżeli przekazano liczbę, użyje jej jako mappedW; jeśli nic nie przekazano, użyje
+  // cache lub fallbackowych obliczeń.
+  private deriveSecondaries(mappedWOrRng?: number | any) {
     const BS = this.getStat('BS');
     const S = this.getStat('S');
     const T = this.getStat('T');
@@ -199,21 +204,60 @@ export class CharacterCreationStep2AttributesComponent {
     // A and Mag are always 1
     // SB = S // 10, TB = T // 10
     const A = 1;
-    const SB = Math.floor(S / 10);
-    const TB = Math.floor(T / 10);
+    const {SB, TB} = this.computeSBandTB();
 
-    // W: if mappedW provided, use it (single mapped d10), otherwise fallback to previous rule
-    const W = typeof mappedW === 'number' ? mappedW : Math.max(1, Math.floor((T + S + Math.floor(BS / 10)) / 10));
+    // W: jeśli przekazano rng -> wylosuj mappedW i zapisz w cache. Jeśli przekazano liczbę ->
+    // użyj jej i zapisz w cache. W przeciwnym razie użyj cache lub fallbacku.
+    let W: number;
+    const wMapping = {map: [10, 10, 10, 11, 11, 11, 12, 12, 12, 13]};
+    if (typeof mappedWOrRng !== 'undefined' && typeof mappedWOrRng !== 'number') {
+      // traktujemy to jako rng
+      W = this.dice.mapRawToMapped(wMapping, mappedWOrRng);
+      this.lastMappedW = W;
+    } else if (typeof mappedWOrRng === 'number') {
+      W = mappedWOrRng;
+      this.lastMappedW = W;
+    } else if (this.lastMappedW != null) {
+      W = this.lastMappedW;
+    } else {
+      W = Math.max(1, Math.floor((T + S + Math.floor(BS / 10)) / 10));
+    }
     // M ma zawsze wartość 5 zgodnie z wymaganiem
     const M = 5;
     // Mag (magic) is always 1 per requirement
     const Mag = 1;
     // IP ma zawsze wartość 0 zgodnie z wymaganiem
     const IP = 0;
-    // FP obliczane standardowo
-    const FP = Math.max(1, Math.floor((T + WP) / 20));
+    // FP: jeśli przekazano rng -> policz FP i zapisz w cache. W przeciwnym razie użyj cache
+    // lub policz i zapisz jeśli nie było poprzednio.
+    let FP: number;
+    if (typeof mappedWOrRng !== 'undefined' && typeof mappedWOrRng !== 'number') {
+      // przekazano rng -> oblicz FP i zapisz
+      FP = Math.max(1, Math.floor((T + WP) / 20));
+      this.lastComputedFP = FP;
+    } else if (this.lastComputedFP != null) {
+      FP = this.lastComputedFP;
+    } else {
+      FP = Math.max(1, Math.floor((T + WP) / 20));
+      this.lastComputedFP = FP;
+    }
 
     this.secondaryStats.set({A, W, SB, TB, M, Mag, IP, FP});
+  }
+
+  // Wydzielona logika przeliczania SB i TB
+  private computeSBandTB(): { SB: number; TB: number } {
+    // Pobierz aktualne wartości primaryStats i oblicz SB/TB z uwzględnieniem shallyasMercy
+    const arr = this.primaryStats();
+    const sStat = arr.find(s => s.id === 'S');
+    const tStat = arr.find(s => s.id === 'T');
+
+    const sTotal = sStat ? (sStat.base + (sStat.shallyasMercy ? 11 : (typeof sStat.rolledStat === 'number' ? sStat.rolledStat : 0))) : 0;
+    const tTotal = tStat ? (tStat.base + (tStat.shallyasMercy ? 11 : (typeof tStat.rolledStat === 'number' ? tStat.rolledStat : 0))) : 0;
+
+    const SB = Math.floor(sTotal / 10);
+    const TB = Math.floor(tTotal / 10);
+    return {SB, TB};
   }
 
   // Apply Shallya's Mercy to the currently selected stat (set boolean true for selected, false for others)
@@ -221,6 +265,8 @@ export class CharacterCreationStep2AttributesComponent {
     const id = this.selectedStat();
     if (!id) return;
     this.primaryStats.update(prev => prev.map(s => ({...s, shallyasMercy: s.id === id})));
+    // Po zastosowaniu Mercy przeliczamy ponownie statystyki pochodne, aby SB/TB uwzględniały +11
+    this.deriveSecondaries();
   }
 
   // Expose button state for Mercy UI (variant, label, disabled)
@@ -258,29 +304,33 @@ export class CharacterCreationStep2AttributesComponent {
 
     // Update button display immediately to reflect selected stat's current values
     const arr = this.primaryStats();
-    const base = this.humanBase;
     if (newSelected) {
       const found = arr.find(s => s.id === newSelected);
       if (found) {
+        const rolled = found.rolledStat;
         if (found.shallyasMercy) {
-          if (typeof found.lastRollTotal === 'number') {
-            this.lastRollDisplay = `${found.label}: ${found.value} (Shallya +11; roll ${found.lastRollTotal} +${base})`;
+          if (typeof rolled === 'number') {
+            this.lastRollDisplay = `${found.label}: ${found.base + 11} (Shallya +11; roll ${rolled} +${found.base})`;
           } else {
-            this.lastRollDisplay = `${found.label}: ${found.value} (Shallya +11)`;
+            this.lastRollDisplay = `${found.label}: ${found.base + 11} (Shallya +11)`;
           }
-        } else if (typeof found.lastRollTotal === 'number') {
-          this.lastRollDisplay = `${found.label}: ${found.value} (roll ${found.lastRollTotal} +${base})`;
+        } else if (typeof rolled === 'number') {
+          this.lastRollDisplay = `${found.label}: ${found.base + rolled} (roll ${rolled} +${found.base})`;
         } else {
-          this.lastRollDisplay = `${found.label}: ${found.value} (base ${base})`;
+          this.lastRollDisplay = `${found.label}: ${found.base} (base ${found.base})`;
         }
       }
     } else {
-      // Deselected: fallback to representative last or base-only
-      const last = arr[arr.length - 1];
-      if (last && typeof last.lastRollTotal === 'number') {
-        this.lastRollDisplay = `${last.lastRollTotal} (+${base})`;
+      // Deselected: show average of all rolledStat values if available
+      const totals = arr.map(s => s.rolledStat).filter((t): t is number => typeof t === 'number');
+      if (totals.length > 0) {
+        const sum = totals.reduce((a, b) => a + b, 0);
+        const avg = sum / totals.length;
+        const avgDisplay = Number.isInteger(avg) ? `${avg}` : `${avg.toFixed(1)}`;
+        // Show average only, do not include base information per request
+        this.lastRollDisplay = `AVG: ${avgDisplay}`;
       } else {
-        this.lastRollDisplay = `+${base}`;
+        this.lastRollDisplay = `+${this.humanBase}`;
       }
     }
   }
