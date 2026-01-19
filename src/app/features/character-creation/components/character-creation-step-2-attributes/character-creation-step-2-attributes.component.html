@@ -61,7 +61,7 @@
         </div>
 
         <div class="primary-grid" role="list">
-          <ng-container *ngFor="let s of primaryStats()">
+          @for (s of primaryStats(); track s.id) {
             <div
               class="stat-card"
               role="listitem"
@@ -86,12 +86,14 @@
                 </div>
               </div>
               <div class="stat-card__name">{{ s.fullName }}</div>
-              <div *ngIf="lowestRollTotal() !== undefined && s.rolledStat === lowestRollTotal()"
-                   class="stat-card__badge">LOW ROLL
-              </div>
-              <div *ngIf="s.shallyasMercy" class="stat-card__mercy-badge">MERCY</div>
+              @if (lowestRollTotal() !== undefined && s.rolledStat === lowestRollTotal()) {
+                <div class="stat-card__badge">LOW ROLL</div>
+              }
+              @if (s.shallyasMercy) {
+                <div class="stat-card__mercy-badge">MERCY</div>
+              }
             </div>
-          </ng-container>
+          }
 
         </div>
 
