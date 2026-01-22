@@ -51,6 +51,17 @@ export class ProfessionsApiService {
   }
 
   /**
+   * Draw a profession for a given race using backend action 'draw'.
+   * Returns the raw response from backend: { roll, matches, fallback, ... }
+   */
+  draw(race: string) {
+    const url = `${ProfessionsApiService.PATH}draw/`;
+    const params = race ? {race} : undefined;
+    // Use list() to perform a GET with params against the custom action URL.
+    return this.crud.list<any>(url, params);
+  }
+
+  /**
    * Wyszukiwanie profesji (autocomplete).
    * Jeżeli backend wspiera parametr `search`, można to wykorzystać w przyszłości.
    */

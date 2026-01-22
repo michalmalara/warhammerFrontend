@@ -1,0 +1,165 @@
+<section class="cc-root">
+  <main class="cc-main">
+    <app-breadcrumbs [currentStep]="3" [selectedRaceLabel]="selectedRaceLabel()"></app-breadcrumbs>
+    <!-- Headline & Instructions -->
+    <header class="hero">
+      <h1 class="hero__title">Step 3: Starting Career</h1>
+      <p class="hero__subtitle">Rolling for: {{ selectedRaceLabel() }} (Empire)</p>
+      <p class="hero__quote">
+        "Your fate is not your own. In the mud and blood of the Old World, you do what you must to survive another day.
+        Roll the bones and see what destiny awaits."
+      </p>
+    </header>
+
+    <!-- Rolling Interaction -->
+    <section class="roll">
+      <button class="roll__button" type="button" (click)="drawCareer()" [disabled]="isLoading()">
+        <span class="roll__buttonInner">
+          <mat-icon class="roll__icon" fontIcon="casino"></mat-icon>
+          Roll for Career
+        </span>
+        <span class="roll__hover"></span>
+      </button>
+      <p class="roll__req">Requires 2d10 Roll on Career Table</p>
+
+      <div class="roll__meta" *ngIf="lastRoll() !== null || candidates() !== null || fallback()">
+        <span *ngIf="lastRoll() !== null">Roll: {{ lastRoll() | number:'1.0-2' }}</span>
+        <span *ngIf="candidates() !== null">Candidates: {{ candidates() }}</span>
+        <span *ngIf="fallback()">Fallback</span>
+      </div>
+    </section>
+
+    <!-- Career Card Display -->
+    <section class="career" *ngIf="profession() as p">
+      <div class="career__accent"></div>
+
+      <div class="career__grid">
+        <!-- Left Column: Art and Description -->
+        <div class="career__left">
+          <div class="art">
+            <div class="art__img"></div>
+            <div class="art__overlay"></div>
+            <div class="art__text">
+              <h3 class="art__title">{{ p.name }}</h3>
+              <p class="art__subtitle">{{ p.type }}</p>
+            </div>
+          </div>
+
+          <div class="desc">
+            <p class="desc__quote" *ngIf="p.description">"{{ p.description }}"</p>
+
+            <div class="desc__block" *ngIf="p.trappings">
+              <h4 class="desc__h">Trappings</h4>
+              <p class="desc__p">{{ p.trappings }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Stats and Skills -->
+        <div class="career__right">
+          <div class="section">
+            <h4 class="section__title">
+              <mat-icon class="section__titleIcon" fontIcon="military_tech"></mat-icon>
+              Advance Scheme
+            </h4>
+
+            <!-- Placeholder grid (mockup-like). Jeśli backend doda advance scheme, podmienimy dane. -->
+            <div class="adv">
+              <div class="adv__head">
+                <span *ngFor="let h of ['WS','BS','S','T','Ag','Int','WP','Fel']">{{ h }}</span>
+              </div>
+              <div class="adv__row">
+                <span *ngFor="let v of ['+5%','+10%','-','+5%','+5%','-','+5%','-']"
+                      [class.adv__primary]="v==='+5%' && (v===v)">
+                  {{ v }}
+                </span>
+              </div>
+              <div class="adv__head adv__head--mt">
+                <span *ngFor="let h of ['A','W','SB','TB','M','Mag','IP','FP']">{{ h }}</span>
+              </div>
+              <div class="adv__row">
+                <span *ngFor="let v of ['-','+2','-','-','-','-','-','-']"
+                      [class.adv__primary]="v === '+2'">{{ v }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lists">
+            <div class="list" *ngIf="(p.skills ?? []).length">
+              <h4 class="list__title">Skills</h4>
+              <ul class="list__ul">
+                <li *ngFor="let s of displaySkills()">
+                  <ng-container *ngIf="skillAlternatives(s).length === 0; else skillAlt">
+                    {{ skillName(s) }}
+                  </ng-container>
+
+                  <ng-template #skillAlt>
+                    <div class="alt-box">
+                      <p class="alt-box__label">Alternative skills — choose one:</p>
+                      <ul class="alt-box__list">
+                        <li>{{ skillName(s) }}</li>
+                        <li *ngFor="let a of skillAlternatives(s)">{{ a }}</li>
+                      </ul>
+                    </div>
+                  </ng-template>
+                </li>
+              </ul>
+            </div>
+
+            <div class="list" *ngIf="(p.talents ?? []).length">
+              <h4 class="list__title">Talents</h4>
+              <ul class="list__ul">
+                <li *ngFor="let t of displayTalents()">
+                  <ng-container *ngIf="talentAlternatives(t).length === 0; else talentAlt">
+                    {{ talentName(t) }}
+                  </ng-container>
+
+                  <ng-template #talentAlt>
+                    <div class="alt-box">
+                      <p class="alt-box__label">Alternative talents — choose one:</p>
+                      <ul class="alt-box__list">
+                        <li>{{ talentName(t) }}</li>
+                        <li *ngFor="let a of talentAlternatives(t)">{{ a }}</li>
+                      </ul>
+                    </div>
+                  </ng-template>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="career__foot" *ngIf="(p.entryProfessions ?? []).length || (p.exitProfessions ?? []).length">
+            <span *ngIf="(p.entryProfessions ?? []).length">
+              Entry:
+              {{ entryText() }}
+            </span>
+            <span *ngIf="(p.exitProfessions ?? []).length">
+              Exit:
+              {{ exitText() }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Navigation -->
+    <footer class="footer">
+      <button type="button" class="footer__prev" (click)="goPrev()">
+        <mat-icon fontIcon="arrow_back"></mat-icon>
+        Previous Step
+      </button>
+
+      <div class="footer__actions">
+        <button type="button" class="footer__reroll" (click)="reroll()" [disabled]="isLoading()">
+          <mat-icon fontIcon="refresh"></mat-icon>
+          Reroll (Spend Fate)
+        </button>
+
+        <button type="button" class="footer__accept" (click)="acceptCareer()" [disabled]="!canAccept()">
+          Accept Career
+          <mat-icon fontIcon="arrow_forward"></mat-icon>
+        </button>
+      </div>
+    </footer>
+  </main>
+</section>

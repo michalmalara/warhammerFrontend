@@ -20,11 +20,11 @@ import {
   CharacterCreationStep1BioRaceComponent
 } from './features/character-creation/components/character-creation-step-1-bio-race/character-creation-step-1-bio-race.component';
 import {
-  CharacterCreationStepPlaceholderComponent
-} from './features/character-creation/components/character-creation-step-placeholder/character-creation-step-placeholder.component';
-import {
   CharacterCreationStep2AttributesComponent
 } from './features/character-creation/components/character-creation-step-2-attributes/character-creation-step-2-attributes.component';
+import {
+  CharacterCreationStep3CareerComponent
+} from './features/character-creation/components/character-creation-step-3-career/character-creation-step-3-career.component';
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'character'},
@@ -42,8 +42,8 @@ export const routes: Routes = [
       },
       {
         path: 'step-3',
-        component: CharacterCreationStepPlaceholderComponent,
-        data: {stepLabel: 'Step 3: Skills'},
+        component: CharacterCreationStep3CareerComponent,
+        data: {stepLabel: 'Step 3: Career'},
       },
     ],
   },
