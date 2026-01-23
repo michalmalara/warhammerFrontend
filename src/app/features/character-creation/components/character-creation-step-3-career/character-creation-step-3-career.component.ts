@@ -7,11 +7,12 @@ import {firstValueFrom} from 'rxjs';
 import {ProfessionsApiService} from '../../../professions/services/professions-api.service';
 import {CharacterDataService} from '../../services/character-data.service';
 import {BreadcrumbsComponent} from '../../../../shared/ui/breadcrumbs/breadcrumbs.component';
+import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 
 @Component({
   selector: 'app-character-creation-step-3-career',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule, BreadcrumbsComponent],
+  imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule, BreadcrumbsComponent, WaxSealButtonComponent],
   templateUrl: './character-creation-step-3-career.component.html',
   styleUrls: ['./character-creation-step-3-career.component.scss'],
 })

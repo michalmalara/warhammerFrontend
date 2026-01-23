@@ -137,21 +137,29 @@
 
     <!-- Footer Navigation -->
     <footer class="footer">
-      <button type="button" class="footer__prev" (click)="goPrev()">
-        <mat-icon fontIcon="arrow_back"></mat-icon>
-        Previous Step
-      </button>
+      <app-wax-seal-button
+        class="footer__prev"
+        variant="cancel"
+        icon="arrow_back"
+        label="Previous Step"
+        ariaLabel="Previous Step"
+        type="button"
+        (clicked)="goPrev()"
+        [disabled]="isLoading()"
+      ></app-wax-seal-button>
 
       <div class="footer__actions">
-        <button type="button" class="footer__reroll" (click)="reroll()" [disabled]="isLoading()">
-          <mat-icon fontIcon="refresh"></mat-icon>
-          Reroll (Spend Fate)
-        </button>
-
-        <button type="button" class="footer__accept" (click)="acceptCareer()" [disabled]="!canAccept()">
-          Accept Career
-          <mat-icon fontIcon="arrow_forward"></mat-icon>
-        </button>
+        <app-wax-seal-button
+          class="footer__accept"
+          variant="save"
+          icon="arrow_forward"
+          label="Accept Career"
+          ariaLabel="Accept Career"
+          type="button"
+          (clicked)="acceptCareer()"
+          [loading]="isLoading()"
+          [disabled]="!canAccept()"
+        ></app-wax-seal-button>
       </div>
     </footer>
   </main>

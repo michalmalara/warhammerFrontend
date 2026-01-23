@@ -371,6 +371,7 @@
   font-size: 0.875rem;
   display: grid;
   gap: 0.25rem;
+  list-style: none; /* usuń kropki */
 }
 
 /* Alternative skills/talents framing */
@@ -395,6 +396,7 @@
   display: grid;
   gap: 0.25rem;
   color: rgba(185, 157, 161, 1);
+  list-style: none; /* usuń kropki */
 }
 
 .career__foot {
@@ -478,8 +480,6 @@
 
 .footer__accept {
   padding: 0.65rem 1.75rem;
-  border: 1px solid rgba(189, 15, 44, 0.35);
-  background: var(--color-accent);
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -491,11 +491,8 @@
   transition: background 160ms ease, opacity 160ms ease;
 }
 
-.footer__accept:hover:not(:disabled) {
-  background: rgba(189, 15, 44, 0.92);
-}
-
 .footer__accept:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
