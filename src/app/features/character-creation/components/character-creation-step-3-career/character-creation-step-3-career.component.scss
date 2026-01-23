@@ -284,16 +284,10 @@
 
 /* Nagłówek karty kariery - wyrównany do siatki */
 .career__header {
-  padding: 1.25rem;
+  padding-bottom: 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-@media (min-width: 768px) {
-  .career__header {
-    padding: 2rem;
-  }
 }
 
 /* Left: art */
