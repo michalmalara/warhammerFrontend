@@ -54,18 +54,25 @@ export class CharacterCreationStep3CareerComponent {
     const skills = (p?.skills ?? []) as Array<any>;
 
     const hiddenIds = new Set<number>();
+    const hiddenNames = new Set<string>();
     for (const s of skills) {
       const alts = (s?.alternativeSkill ?? s?.alternative_skill ?? []) as Array<any>;
       for (const a of alts ?? []) {
         const id = a?.id;
         if (typeof id === 'number') hiddenIds.add(id);
+        const name = a?.name ?? a?.skill?.name ?? (typeof a === 'string' ? a : String(a));
+        if (name) hiddenNames.add(String(name).trim().toLowerCase());
       }
     }
 
     // Jeśli dany element występuje jako alternatywa u innego — nie wyświetlamy go jako osobnej pozycji.
     return skills.filter((s) => {
       const id = s?.id;
-      return !(typeof id === 'number' && hiddenIds.has(id));
+      const name = s?.name ?? s?.skill?.name ?? String(s);
+      const lname = name ? String(name).trim().toLowerCase() : null;
+      if (typeof id === 'number' && hiddenIds.has(id)) return false;
+      if (lname && hiddenNames.has(lname)) return false;
+      return true;
     });
   });
 

@@ -20,13 +20,6 @@
         </span>
         <span class="roll__hover"></span>
       </button>
-      <p class="roll__req">Requires 2d10 Roll on Career Table</p>
-
-      <div class="roll__meta" *ngIf="lastRoll() !== null || candidates() !== null || fallback()">
-        <span *ngIf="lastRoll() !== null">Roll: {{ lastRoll() | number:'1.0-2' }}</span>
-        <span *ngIf="candidates() !== null">Candidates: {{ candidates() }}</span>
-        <span *ngIf="fallback()">Fallback</span>
-      </div>
     </section>
 
     <!-- Career Card Display -->
