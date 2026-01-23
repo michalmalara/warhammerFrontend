@@ -68,6 +68,8 @@ export interface Profession {
   skills: ProfessionSkill[];
   entryProfessions: ProfessionSummary[];
   exitProfessions: ProfessionSummary[];
+
+  trappings?: string;
 }
 
 // Payload used when creating a Profession: backend expects lists of IDs for relations

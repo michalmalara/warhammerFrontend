@@ -11,129 +11,252 @@
       </p>
     </header>
 
-    <!-- Rolling Interaction -->
-    <section class="roll">
-      <button class="roll__button" type="button" (click)="drawCareer()" [disabled]="isLoading()">
-        <span class="roll__buttonInner">
-          <mat-icon class="roll__icon" fontIcon="casino"></mat-icon>
-          Roll for Career
-        </span>
-        <span class="roll__hover"></span>
-      </button>
-    </section>
-
     <!-- Career Card Display -->
-    <section class="career" *ngIf="profession() as p">
-      <div class="career__accent"></div>
-
-      <div class="career__grid">
-        <!-- Left Column: Art and Description -->
-        <div class="career__left">
-          <div class="art">
-            <div class="art__img"></div>
-            <div class="art__overlay"></div>
-            <div class="art__text">
-              <h3 class="art__title">{{ p.name }}</h3>
-              <p class="art__subtitle">{{ p.type }}</p>
-            </div>
-          </div>
-
-          <div class="desc">
-            <p class="desc__quote" *ngIf="p.description">"{{ p.description }}"</p>
-
-            <div class="desc__block" *ngIf="p.trappings">
-              <h4 class="desc__h">Trappings</h4>
-              <p class="desc__p">{{ p.trappings }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Column: Stats and Skills -->
-        <div class="career__right">
-          <div class="section">
-            <h4 class="section__title">
-              <mat-icon class="section__titleIcon" fontIcon="military_tech"></mat-icon>
-              Advance Scheme
-            </h4>
-
-            <!-- Placeholder grid (mockup-like). Jeśli backend doda advance scheme, podmienimy dane. -->
-            <div class="adv">
-              <div class="adv__head">
-                <span *ngFor="let h of ['WS','BS','S','T','Ag','Int','WP','Fel']">{{ h }}</span>
-              </div>
-              <div class="adv__row">
-                <span *ngFor="let v of ['+5%','+10%','-','+5%','+5%','-','+5%','-']"
-                      [class.adv__primary]="v==='+5%' && (v===v)">
-                  {{ v }}
-                </span>
-              </div>
-              <div class="adv__head adv__head--mt">
-                <span *ngFor="let h of ['A','W','SB','TB','M','Mag','IP','FP']">{{ h }}</span>
-              </div>
-              <div class="adv__row">
-                <span *ngFor="let v of ['-','+2','-','-','-','-','-','-']"
-                      [class.adv__primary]="v === '+2'">{{ v }}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="lists">
-            <div class="list" *ngIf="(p.skills ?? []).length">
-              <h4 class="list__title">Skills</h4>
-              <ul class="list__ul">
-                <li *ngFor="let s of displaySkills()">
-                  <ng-container *ngIf="skillAlternatives(s).length === 0; else skillAlt">
-                    {{ skillName(s) }}
-                  </ng-container>
-
-                  <ng-template #skillAlt>
-                    <div class="alt-box">
-                      <p class="alt-box__label">Alternative skills — choose one:</p>
-                      <ul class="alt-box__list">
-                        <li>{{ skillName(s) }}</li>
-                        <li *ngFor="let a of skillAlternatives(s)">{{ a }}</li>
-                      </ul>
-                    </div>
-                  </ng-template>
-                </li>
-              </ul>
-            </div>
-
-            <div class="list" *ngIf="(p.talents ?? []).length">
-              <h4 class="list__title">Talents</h4>
-              <ul class="list__ul">
-                <li *ngFor="let t of displayTalents()">
-                  <ng-container *ngIf="talentAlternatives(t).length === 0; else talentAlt">
-                    {{ talentName(t) }}
-                  </ng-container>
-
-                  <ng-template #talentAlt>
-                    <div class="alt-box">
-                      <p class="alt-box__label">Alternative talents — choose one:</p>
-                      <ul class="alt-box__list">
-                        <li>{{ talentName(t) }}</li>
-                        <li *ngFor="let a of talentAlternatives(t)">{{ a }}</li>
-                      </ul>
-                    </div>
-                  </ng-template>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="career__foot" *ngIf="(p.entryProfessions ?? []).length || (p.exitProfessions ?? []).length">
-            <span *ngIf="(p.entryProfessions ?? []).length">
-              Entry:
-              {{ entryText() }}
+    @if (profession(); as p) {
+      <section class="careerWrap">
+        <aside class="careerWrap__controls">
+          <button class="roll__button" type="button" (click)="drawCareer()" [disabled]="isLoading()">
+            <span class="roll__buttonInner">
+              <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
+              Roll for Career
             </span>
-            <span *ngIf="(p.exitProfessions ?? []).length">
-              Exit:
-              {{ exitText() }}
-            </span>
+            <span class="roll__hover"></span>
+          </button>
+        </aside>
+
+        <section class="career">
+          <div class="career__accent"></div>
+
+          <!-- Nazwa profesji przeniesiona nad tabelę -->
+
+          <div class="career__grid">
+
+            <!-- Right Column: Stats and Skills -->
+            <div class="career__right">
+              <header class="career__header">
+                <h3 class="art__title">{{ p.name }}</h3>
+              </header>
+
+              <div class="section">
+                <h4 class="section__title">
+                  <mat-icon class="section__titleIcon" fontIcon="military_tech"></mat-icon>
+                  Advance Scheme
+                </h4>
+
+                <!-- Placeholder grid (mockup-like). Jeśli backend doda advance scheme, podmienimy dane. -->
+                <div class="adv">
+                  <div class="adv__head">
+                    @for (h of primaryCharacteristicHeaders; track h) {
+                      <span (click)="selectCharacteristic(h)"
+                            [class.adv__selected]="isCharacteristicSelected(h)">{{ h }}</span>
+                    }
+                  </div>
+                  <div class="adv__row">
+                    @for (v of primaryAdvanceRow(); track v + $index) {
+                      <span [class.adv__primary]="v !== '-'">{{ v }}</span>
+                    }
+                  </div>
+                  <div class="adv__head adv__head--mt">
+                    @for (h of secondaryCharacteristicHeaders; track h) {
+                      <span (click)="selectCharacteristic(h)"
+                            [class.adv__selected]="isCharacteristicSelected(h)">{{ h }}</span>
+                    }
+                  </div>
+                  <div class="adv__row">
+                    @for (v of secondaryAdvanceRow(); track v + $index) {
+                      <span [class.adv__primary]="v !== '-'">{{ v }}</span>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="lists">
+                @if ((p.skills ?? []).length) {
+                  <div class="list">
+                    <h4 class="list__title">Skills</h4>
+                    <ul class="list__ul">
+                      @for (s of displaySkills(); track $index; let i = $index) {
+                        <li>
+                          @if (skillAlternatives(s).length === 0) {
+                            {{ skillName(s) }}
+                          } @else {
+                            <div class="alt-box">
+                              <p class="alt-box__label">Alternative skills — choose one:</p>
+                              <ul class="alt-box__list">
+                                <li>
+                                  <label class="alt-radio">
+                                    <input class="alt-radio__input" type="radio" name="skillChoice_{{ i }}"
+                                           [value]="skillName(s)"
+                                           (change)="setSkillChoice(i, skillName(s))"
+                                           [checked]="getSkillChoice(i) === skillName(s)"/>
+                                    <span class="alt-radio__text">{{ skillName(s) }}</span>
+                                  </label>
+                                </li>
+                                @for (a of skillAlternatives(s); track a) {
+                                  <li>
+                                    <label class="alt-radio">
+                                      <input class="alt-radio__input" type="radio" name="skillChoice_{{ i }}"
+                                             [value]="a"
+                                             (change)="setSkillChoice(i, a)"
+                                             [checked]="getSkillChoice(i) === a"/>
+                                      <span class="alt-radio__text">{{ a }}</span>
+                                    </label>
+                                  </li>
+                                }
+                              </ul>
+                            </div>
+                          }
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                }
+
+                @if ((p.talents ?? []).length) {
+                  <div class="list">
+                    <h4 class="list__title">Talents</h4>
+                    <ul class="list__ul">
+                      @for (t of displayTalents(); track $index; let j = $index) {
+                        <li>
+                          @if (talentAlternatives(t).length === 0) {
+                            {{ talentName(t) }}
+                          } @else {
+                            <div class="alt-box">
+                              <p class="alt-box__label">Alternative talents — choose one:</p>
+                              <ul class="alt-box__list">
+                                <li>
+                                  <label class="alt-radio">
+                                    <input class="alt-radio__input" type="radio" name="talentChoice_{{ j }}"
+                                           [value]="talentName(t)"
+                                           (change)="setTalentChoice(j, talentName(t))"
+                                           [checked]="getTalentChoice(j) === talentName(t)"/>
+                                    <span class="alt-radio__text">{{ talentName(t) }}</span>
+                                  </label>
+                                </li>
+                                @for (a of talentAlternatives(t); track a) {
+                                  <li>
+                                    <label class="alt-radio">
+                                      <input class="alt-radio__input" type="radio" name="talentChoice_{{ j }}"
+                                             [value]="a"
+                                             (change)="setTalentChoice(j, a)"
+                                             [checked]="getTalentChoice(j) === a"/>
+                                      <span class="alt-radio__text">{{ a }}</span>
+                                    </label>
+                                  </li>
+                                }
+                              </ul>
+                            </div>
+                          }
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                }
+              </div>
+
+              @if ((p.entryProfessions ?? []).length || (p.exitProfessions ?? []).length) {
+                <div class="career__foot">
+                  @if ((p.entryProfessions ?? []).length) {
+                    <span>
+                      Entry:
+                      {{ entryText() }}
+                    </span>
+                  }
+                  @if ((p.exitProfessions ?? []).length) {
+                    <span>
+                      Exit:
+                      {{ exitText() }}
+                    </span>
+                  }
+                </div>
+              }
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
+      </section>
+    } @else {
+      <!-- Placeholder when no profession is drawn yet (now matches drawn card layout) -->
+      <section class="careerWrap">
+        <aside class="careerWrap__controls">
+          <button class="roll__button" type="button" (click)="drawCareer()" [disabled]="isLoading()">
+            <span class="roll__buttonInner">
+              <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
+              Roll for Career
+            </span>
+            <span class="roll__hover"></span>
+          </button>
+        </aside>
+
+        <section class="career career--placeholder">
+          <div class="career__accent"></div>
+
+          <!-- Tytuł placeholdera przeniesiony nad tabelę, tak jak w wylosowanej karcie -->
+          <div class="career__grid">
+
+            <!-- Right Column: placeholder shows same sections as real card but with placeholder values -->
+            <div class="career__right">
+              <header class="career__header">
+                <h3 class="art__title">Unknown Career</h3>
+              </header>
+
+              <div class="section">
+                <h4 class="section__title">
+                  <mat-icon class="section__titleIcon" fontIcon="military_tech"></mat-icon>
+                  Advance Scheme
+                </h4>
+
+                <div class="adv">
+                  <div class="adv__head">
+                    @for (h of primaryCharacteristicHeaders; track h) {
+                      <span (click)="selectCharacteristic(h)"
+                            [class.adv__selected]="isCharacteristicSelected(h)">{{ h }}</span>
+                    }
+                  </div>
+                  <div class="adv__row">
+                    @for (v of primaryAdvanceRow(); track v + $index) {
+                      <span [class.adv__primary]="v !== '-'">{{ v }}</span>
+                    }
+                  </div>
+                  <div class="adv__head adv__head--mt">
+                    @for (h of secondaryCharacteristicHeaders; track h) {
+                      <span (click)="selectCharacteristic(h)"
+                            [class.adv__selected]="isCharacteristicSelected(h)">{{ h }}</span>
+                    }
+                  </div>
+                  <div class="adv__row">
+                    @for (v of secondaryAdvanceRow(); track v + $index) {
+                      <span [class.adv__primary]="v !== '-'">{{ v }}</span>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="lists">
+                <div class="list">
+                  <h4 class="list__title">Skills</h4>
+                  <ul class="list__ul">
+                    <li>—</li>
+                  </ul>
+                </div>
+
+                <div class="list">
+                  <h4 class="list__title">Talents</h4>
+                  <ul class="list__ul">
+                    <li>—</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="career__foot">
+                <span>Entry: —</span>
+                <span>Exit: —</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </section>
+    }
 
     <!-- Footer Navigation -->
     <footer class="footer">

@@ -177,14 +177,84 @@
 }
 
 /* --- Career card --- */
+
+/* Wrapper: button beside the card */
+.careerWrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.careerWrap__controls {
+  display: flex;
+  justify-content: center;
+}
+
+/* Make the roll button look like .dice in step 2 */
+.careerWrap__controls .roll__button {
+  width: 100%;
+  max-width: 320px;
+
+  /* Dice-like visuals */
+  border-radius: 18px;
+  border: 2px solid rgba(189, 15, 44, 1);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 1.25rem 1rem;
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(189, 15, 44, 0.25);
+  transition: transform 160ms ease, background 160ms ease, opacity 160ms ease;
+}
+
+.careerWrap__controls .roll__button:hover:not(:disabled) {
+  transform: scale(1.03);
+}
+
+/* Local dice icon sizing (copied from step 2) */
+.careerWrap__controls .dice__icon {
+  font-size: 2.6rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+@media (min-width: 768px) {
+  .careerWrap {
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+  }
+
+  .careerWrap__controls {
+    justify-content: flex-start;
+  }
+}
+
 .career {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto; /* centrowanie na mobilkach/siatce jednokolumnowej */
   border: 1px solid rgba(57, 40, 43, 1);
   background: #1d1415;
   position: relative;
   overflow: hidden;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Na szerszych ekranach .career jest w kolumnie siatki obok panelu z przyciskiem –
+   usuwamy centrowanie, tak by jej lewy brzeg był wyrównany z kolumną (wyrównanie marginesów) */
+@media (min-width: 768px) {
+  .career {
+    margin: 0; /* align to grid column without centering */
+    width: 100%;
+    max-width: none; /* allow the column to control width */
+  }
 }
 
 .career__accent {
@@ -200,12 +270,29 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-  padding: 2rem;
+  padding: 1.25rem;
+  /* Mniejsze wewnętrzne paddingi domyślnie, aby nagłówek mógł być osobno wyrównany */
 }
 
 @media (min-width: 768px) {
   .career__grid {
     grid-template-columns: 1fr 1fr;
+    /* Większe paddingi na większych ekranach */
+    padding: 2rem;
+  }
+}
+
+/* Nagłówek karty kariery - wyrównany do siatki */
+.career__header {
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .career__header {
+    padding: 2rem;
   }
 }
 
@@ -221,13 +308,13 @@
 .art__img {
   position: absolute;
   inset: 0;
+  /* Usunięto tło obrazka profesji — pozostawiamy stylowe gradienty */
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0.55) 70%),
-  linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(29, 20, 21, 0.95) 100%),
-  url('/assets/images/ratcatcher.png');
+  linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(29, 20, 21, 0.95) 100%);
   background-size: cover;
   background-position: center;
-  filter: grayscale(1) contrast(1.2);
-  opacity: 0.75;
+  /* Nie stosujemy filtrów odnośnie obrazu */
+  opacity: 1;
 }
 
 /* Jeśli nie ma obrazu w assets, gradient nadal wygląda OK. */
@@ -239,8 +326,9 @@
 
 .art__text {
   position: absolute;
-  left: 1rem;
-  bottom: 1rem;
+  /* Dopasuj odstępy do paddingów siatki/nagłówka */
+  left: 1.25rem;
+  bottom: 1.25rem;
 }
 
 .art__title {
@@ -318,34 +406,46 @@
   gap: 0.25rem;
 }
 
+/* Zmieniono: stała szerokość kolumn i większy rozmiar tekstu */
 .adv__head,
 .adv__row {
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: 0.25rem;
+  grid-template-columns: repeat(8, 56px);
+  gap: 0.5rem;
   text-align: center;
-  font-size: 0.625rem;
+  font-size: 0.95rem; /* większy tekst dla czytelności */
   font-weight: 800;
 }
 
 .adv__head span {
   background: rgba(57, 40, 43, 1);
   color: rgba(185, 157, 161, 1);
-  padding: 0.25rem;
+  /* Wypełnij całą komórkę i wycentruj tekst */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  box-sizing: border-box;
 }
 
 .adv__row span {
   border: 1px solid rgba(57, 40, 43, 1);
-  padding: 0.45rem 0.25rem;
+  /* Usuń szerokie paddingi — używamy stałej szerokości komórki */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.25rem;
+  box-sizing: border-box;
 }
 
-.adv__head--mt {
-  margin-top: 0.5rem;
-}
-
-.adv__primary {
-  color: var(--color-accent);
-  font-weight: 900;
+/* Responsywny fallback: na małych ekranach zmniejszamy szerokość komórki i rozmiar tekstu */
+@media (max-width: 520px) {
+  .adv__head,
+  .adv__row {
+    grid-template-columns: repeat(8, 40px);
+    gap: 0.25rem;
+    font-size: 0.78rem;
+  }
 }
 
 .lists {
@@ -496,3 +596,88 @@
   cursor: not-allowed;
 }
 
+/* Alternative radio look (grimdark) */
+.alt-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.25;
+}
+
+.alt-radio__input {
+  /* keep it accessible but visually hidden */
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+
+.alt-radio__text {
+  position: relative;
+  padding-left: 1.35rem;
+  color: rgba(185, 157, 161, 1);
+  font-size: 0.875rem;
+}
+
+/* Outer ring */
+.alt-radio__text::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(57, 40, 43, 1);
+  background: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+/* Inner dot */
+.alt-radio__text::after {
+  content: '';
+  position: absolute;
+  left: 0.275rem;
+  top: 0.425rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+/* Hover */
+.alt-radio:hover .alt-radio__text {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.alt-radio:hover .alt-radio__text::before {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Checked */
+.alt-radio__input:checked + .alt-radio__text::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.alt-radio__input:checked + .alt-radio__text::before {
+  border-color: rgba(255, 61, 94, 0.55);
+  box-shadow: 0 0 0 1px rgba(255, 61, 94, 0.18),
+  inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* Focus (keyboard) */
+.alt-radio__input:focus-visible + .alt-radio__text::before {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 61, 94, 0.22),
+  0 0 0 4px rgba(0, 0, 0, 0.6),
+  inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}

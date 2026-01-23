@@ -24,7 +24,7 @@ describe('CharacterCreationStep1BioRaceComponent', () => {
     const el: HTMLElement = fixture.nativeElement;
     expect(el.querySelectorAll('.race-card').length).toBeGreaterThanOrEqual(4);
     expect(el.querySelector('input[formControlName="name"]')).toBeTruthy();
-    expect(el.querySelector('select[formControlName="gender"]')).toBeTruthy();
+    expect(el.querySelector('[formControlName="gender"]')).toBeTruthy();
     expect(el.querySelector('input[formControlName="age"]')).toBeTruthy();
   });
 });
