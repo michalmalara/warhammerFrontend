@@ -44,27 +44,37 @@
                 </h4>
 
                 <!-- Placeholder grid (mockup-like). Jeśli backend doda advance scheme, podmienimy dane. -->
-                <div class="adv">
+                <div class="adv" role="grid" aria-label="Advance Scheme">
                   <div class="adv__head">
                     @for (h of primaryCharacteristicHeaders; track h) {
                       <span (click)="selectCharacteristic(h)"
-                            [class.adv__selected]="isCharacteristicSelected(h)">{{ h }}</span>
+                            [class.adv__selected]="isCharacteristicSelected(h)" role="columnheader">{{ h }}</span>
                     }
                   </div>
                   <div class="adv__row">
                     @for (v of primaryAdvanceRow(); track v + $index) {
-                      <span [class.adv__primary]="v !== '-'">{{ v }}</span>
+                      <span
+                        class="adv__cell"
+                        [class.adv__primary]="v !== '-'"
+                        [class.adv__selectable]="v !== '-'"
+                        [class.adv__cellSelected]="isCharacteristicSelectedByCell('primary', $index)"
+                        (click)="selectCharacteristicByCell('primary', $index)">{{ v }}</span>
                     }
                   </div>
                   <div class="adv__head adv__head--mt">
                     @for (h of secondaryCharacteristicHeaders; track h) {
                       <span (click)="selectCharacteristic(h)"
-                            [class.adv__selected]="isCharacteristicSelected(h)">{{ h }}</span>
+                            [class.adv__selected]="isCharacteristicSelected(h)" role="columnheader">{{ h }}</span>
                     }
                   </div>
                   <div class="adv__row">
                     @for (v of secondaryAdvanceRow(); track v + $index) {
-                      <span [class.adv__primary]="v !== '-'">{{ v }}</span>
+                      <span
+                        class="adv__cell"
+                        [class.adv__primary]="v !== '-'"
+                        [class.adv__selectable]="v !== '-'"
+                        [class.adv__cellSelected]="isCharacteristicSelectedByCell('secondary', $index)"
+                        (click)="selectCharacteristicByCell('secondary', $index)">{{ v }}</span>
                     }
                   </div>
                 </div>
@@ -205,27 +215,37 @@
                   Advance Scheme
                 </h4>
 
-                <div class="adv">
+                <div class="adv" role="grid" aria-label="Advance Scheme">
                   <div class="adv__head">
                     @for (h of primaryCharacteristicHeaders; track h) {
                       <span (click)="selectCharacteristic(h)"
-                            [class.adv__selected]="isCharacteristicSelected(h)">{{ h }}</span>
+                            [class.adv__selected]="isCharacteristicSelected(h)" role="columnheader">{{ h }}</span>
                     }
                   </div>
                   <div class="adv__row">
                     @for (v of primaryAdvanceRow(); track v + $index) {
-                      <span [class.adv__primary]="v !== '-'">{{ v }}</span>
+                      <span
+                        class="adv__cell"
+                        [class.adv__primary]="v !== '-'"
+                        [class.adv__selectable]="v !== '-'"
+                        [class.adv__cellSelected]="isCharacteristicSelectedByCell('primary', $index)"
+                        (click)="selectCharacteristicByCell('primary', $index)">{{ v }}</span>
                     }
                   </div>
                   <div class="adv__head adv__head--mt">
                     @for (h of secondaryCharacteristicHeaders; track h) {
                       <span (click)="selectCharacteristic(h)"
-                            [class.adv__selected]="isCharacteristicSelected(h)">{{ h }}</span>
+                            [class.adv__selected]="isCharacteristicSelected(h)" role="columnheader">{{ h }}</span>
                     }
                   </div>
                   <div class="adv__row">
                     @for (v of secondaryAdvanceRow(); track v + $index) {
-                      <span [class.adv__primary]="v !== '-'">{{ v }}</span>
+                      <span
+                        class="adv__cell"
+                        [class.adv__primary]="v !== '-'"
+                        [class.adv__selectable]="v !== '-'"
+                        [class.adv__cellSelected]="isCharacteristicSelectedByCell('secondary', $index)"
+                        (click)="selectCharacteristicByCell('secondary', $index)">{{ v }}</span>
                     }
                   </div>
                 </div>

@@ -191,13 +191,35 @@ export class CharacterCreationStep3CareerComponent {
 
   selectCharacteristic(name: string | null) {
     // Toggle selection: if already selected, deselect; otherwise select this name
-    if (!name) return;
+    if (name === null) {
+      this.selectedCharacteristic.set(null);
+      return;
+    }
     const cur = this.selectedCharacteristic();
     this.selectedCharacteristic.set(cur === name ? null : name);
   }
 
   isCharacteristicSelected(name: string) {
     return this.selectedCharacteristic() === name;
+  }
+
+  // Allow selecting/deselecting by clicking table cell
+  selectCharacteristicByCell(row: 'primary' | 'secondary', index: number) {
+    if (!this.isCharacteristicSelectable(row, index)) return;
+    const name = row === 'primary' ? this.primaryCharacteristicHeaders[index] : this.secondaryCharacteristicHeaders[index];
+    this.selectCharacteristic(name);
+  }
+
+  // Czy dana komórka jest wybieralna (nie jest '-')
+  isCharacteristicSelectable(row: 'primary' | 'secondary', index: number): boolean {
+    const val = row === 'primary' ? (this.primaryAdvanceRow()[index] ?? '-') : (this.secondaryAdvanceRow()[index] ?? '-');
+    return val !== '-' && val !== undefined && val !== null;
+  }
+
+  // Czy cecha powiązana z komórką jest wybrana
+  isCharacteristicSelectedByCell(row: 'primary' | 'secondary', index: number): boolean {
+    const name = row === 'primary' ? this.primaryCharacteristicHeaders[index] : this.secondaryCharacteristicHeaders[index];
+    return this.isCharacteristicSelected(name);
   }
 
   private formatAdvance(value: number | null | undefined, unitValue: number): string {
@@ -254,6 +276,8 @@ export class CharacterCreationStep3CareerComponent {
     // Clear previous selections
     this.skillSelections.set({});
     this.talentSelections.set({});
+    // Reset characteristic selection
+    this.selectedCharacteristic.set(null);
 
     try {
       const res = await firstValueFrom(this.api.draw(race));
@@ -280,6 +304,96 @@ export class CharacterCreationStep3CareerComponent {
   }
 
   acceptCareer() {
+    // Persist chosen primary characteristic to CharacterDataService if applicable
+    const sel = this.selectedCharacteristic();
+    const primaryIds = new Set(['WS', 'BS', 'S', 'T', 'Ag', 'Int', 'WP', 'Fel']);
+    if (sel && primaryIds.has(sel)) {
+      // call onSelectPrimary to toggle selection in CharacterDataService
+      // characterData expects PrimaryStatId type — runtime check above ensures valid value
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.charData.onSelectPrimary(sel);
+    }
+
+    // Save selected characteristic as free advance (primary -> +5, secondary -> +1)
+    const free = this.selectedCharacteristic();
+    if (free) {
+      const primaryHeaders = new Set(this.primaryCharacteristicHeaders);
+      const secondaryHeaders = new Set(this.secondaryCharacteristicHeaders);
+      if (primaryHeaders.has(free)) {
+        this.charData.setFreeAdvance({stat: free, kind: 'primary', delta: 5});
+      } else if (secondaryHeaders.has(free)) {
+        this.charData.setFreeAdvance({stat: free, kind: 'secondary', delta: 1});
+      }
+    }
+
+    // Build and persist chosen profession, skills and talents only when user accepts
+    const chosen = this.profession();
+    if (chosen) {
+      // Build skills list: for each profession skill, if it has alternatives use the user's selection,
+      // otherwise use the skill's name.
+      const finalSkills: any[] = [];
+      const displayedSkills = this.displaySkills();
+      for (let i = 0; i < displayedSkills.length; i++) {
+        const s = displayedSkills[i] as any;
+        // If this item wraps a skill object, prefer that
+        const mainSkill = s?.skill ?? s;
+        const alts = (s?.alternativeSkill ?? s?.alternative_skill ?? []) as Array<any>;
+        if (Array.isArray(alts) && alts.length > 0) {
+          const selName = this.getSkillChoice(i);
+          if (selName) {
+            // Find the alternative object whose name matches selName
+            const foundAlt = alts.find((a) => {
+              const n = a?.name ?? a?.skill?.name ?? (typeof a === 'string' ? a : String(a));
+              return String(n).trim().toLowerCase() === String(selName).trim().toLowerCase();
+            });
+            if (foundAlt) {
+              // alternative structure may be { id, skill } or { id, name }
+              const sk = foundAlt?.skill ?? {id: foundAlt.id, name: foundAlt.name};
+              finalSkills.push(sk);
+            } else {
+              // fallback: try to push mainSkill if available
+              if (mainSkill && mainSkill.id) finalSkills.push(mainSkill);
+            }
+          }
+        } else {
+          if (mainSkill && mainSkill.id) finalSkills.push(mainSkill);
+        }
+      }
+
+      // Build talents list similarly
+      const finalTalents: any[] = [];
+      const displayedTalents = this.displayTalents();
+      for (let j = 0; j < displayedTalents.length; j++) {
+        const t = displayedTalents[j] as any;
+        const mainTalent = t?.talent ?? t;
+        const alts = (t?.alternativeTalent ?? t?.alternative_talent ?? []) as Array<any>;
+        if (Array.isArray(alts) && alts.length > 0) {
+          const selName = this.getTalentChoice(j);
+          if (selName) {
+            const foundAlt = alts.find((a) => {
+              const n = a?.name ?? a?.talent?.name ?? (typeof a === 'string' ? a : String(a));
+              return String(n).trim().toLowerCase() === String(selName).trim().toLowerCase();
+            });
+            if (foundAlt) {
+              const tl = foundAlt?.talent ?? {id: foundAlt.id, name: foundAlt.name};
+              finalTalents.push(tl);
+            } else {
+              if (mainTalent && mainTalent.id) finalTalents.push(mainTalent);
+            }
+          }
+        } else {
+          if (mainTalent && mainTalent.id) finalTalents.push(mainTalent);
+        }
+      }
+
+      // Persist into shared CharacterDataService (store full objects)
+      this.charData.setProfession(chosen);
+      // Type expectation: arrays of Skill/Talent
+      this.charData.setProfessionSkills(finalSkills as any);
+      this.charData.setProfessionTalents(finalTalents as any);
+    }
+
     // TODO: Persist chosen career to CharacterDataService / backend in later step.
     // For now we just move forward.
     if (!this.canAccept()) return;

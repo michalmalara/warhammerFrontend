@@ -2,6 +2,7 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {DiceService} from '../../../shared/services/dice.service';
 import {type CharacterCreationBio, type CharacterRace, DEFAULT_STEP_1} from '../models/character-creation.models';
 import {RaceBaseService} from './race-bases.service';
+import type {Profession, Skill, Talent} from '../../professions/models/profession.models';
 
 export type PrimaryStatId = 'WS' | 'BS' | 'S' | 'T' | 'Ag' | 'Int' | 'WP' | 'Fel';
 
@@ -25,11 +26,64 @@ export type SecondaryStats = {
   FP: number;
 };
 
+export type FreeAdvance = {
+  stat: string; // e.g. 'WS'|'FP'|'M'
+  kind: 'primary' | 'secondary';
+  delta: number; // numeric increase (5 for primary, 1 for secondary)
+};
+
 @Injectable({providedIn: 'root'})
 export class CharacterDataService {
   private readonly dice = inject(DiceService);
   // Inject RaceBaseService to provide race-dependent base values
   private readonly raceBases = inject(RaceBaseService);
+
+  // Przechowywana (wylosowana / wybrana) profesja — dostępna dla innych kroków tworzenia postaci
+  readonly profession = signal<Profession | null>(null);
+
+  // Wybrane umiejętności i talenty dla aktualnie zaakceptowanej profesji.
+  // Przechowujemy pełne obiekty `Skill` i `Talent` (przydatne do dalszego zapisu na backend).
+  readonly professionSkills = signal<Skill[]>([]);
+  readonly professionTalents = signal<Talent[]>([]);
+
+  // Zapisana (zaakceptowana) darmowa rozwiniecie wybranej cechy
+  readonly freeAdvance = signal<FreeAdvance | null>(null);
+
+  setProfessionSkills(list: Skill[]) {
+    this.professionSkills.set(list ?? []);
+  }
+
+  getProfessionSkills(): Skill[] {
+    return this.professionSkills();
+  }
+
+  setProfessionTalents(list: Talent[]) {
+    this.professionTalents.set(list ?? []);
+  }
+
+  getProfessionTalents(): Talent[] {
+    return this.professionTalents();
+  }
+
+  setFreeAdvance(f: FreeAdvance | null) {
+    this.freeAdvance.set(f);
+  }
+
+  getFreeAdvance(): FreeAdvance | null {
+    return this.freeAdvance();
+  }
+
+  /**
+   * Ustawia aktualnie wybraną/wylosowaną profesję (może być null aby wyczyścić).
+   */
+  setProfession(p: Profession | null) {
+    this.profession.set(p);
+  }
+
+  /** Zwraca aktualnie zapisaną profesję. */
+  getProfession(): Profession | null {
+    return this.profession();
+  }
 
   // minimal UI: prezentujemy dane przykładowe z mockupa
   // Expose a reactive getter for the human/base value used by templates.
@@ -53,6 +107,13 @@ export class CharacterDataService {
     // When race changes update primary stat bases to race-specific defaults
     const bases = this.raceBases.getPrimaryBases(r);
     this.primaryStats.update(prev => prev.map(s => ({...s, base: bases[s.id]})));
+    // Changing race invalidates previously selected profession
+    this.profession.set(null);
+    // and clear profession skills/talents when race changes
+    this.setProfessionSkills([]);
+    this.setProfessionTalents([]);
+    // clear any previously-chosen free advance
+    this.setFreeAdvance(null);
   }
 
   // --- primary stats
