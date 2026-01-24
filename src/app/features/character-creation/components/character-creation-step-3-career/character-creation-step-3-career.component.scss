@@ -696,3 +696,166 @@
   color: #fff;
   box-shadow: 0 4px 18px rgba(189, 15, 44, 0.08) inset;
 }
+
+/* === Eligible professions panel (choose from list) === */
+
+/* Secondary action button under Roll */
+.roll__button--list {
+  margin-top: 0.6rem;
+  padding: 0.95rem 1rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.16em;
+
+  /* darker, secondary look */
+  background: rgba(0, 0, 0, 0.72);
+  border-color: rgba(57, 40, 43, 1);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.55);
+}
+
+.roll__button--list:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.82);
+  border-color: rgba(189, 15, 44, 0.85);
+}
+
+.roll__button:focus-visible {
+  outline: 2px solid rgba(199, 59, 59, 0.55);
+  outline-offset: 4px;
+}
+
+.eligiblePanel {
+  margin-top: 0.75rem;
+  width: 100%;
+  max-width: 320px; /* matches controls max width */
+
+  border: 1px solid rgba(57, 40, 43, 1);
+  background: linear-gradient(180deg, rgba(29, 20, 21, 0.98), rgba(15, 10, 10, 0.98));
+  box-shadow: 0 0 26px rgba(0, 0, 0, 0.75), inset 0 0 1px rgba(255, 255, 255, 0.08);
+
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.eligiblePanel__head {
+  padding: 0.85rem 0.9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.22);
+
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.eligiblePanel__head h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--header-text);
+}
+
+.eligiblePanel__head small {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.eligiblePanel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem;
+
+  /* long lists: keep panel compact */
+  max-height: min(52vh, 360px);
+  overflow: auto;
+}
+
+/* subtle scrollbar (Chromium/Edge + Firefox) */
+.eligiblePanel__list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(189, 15, 44, 0.55) rgba(255, 255, 255, 0.04);
+}
+
+.eligiblePanel__list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.eligiblePanel__list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.eligiblePanel__list::-webkit-scrollbar-thumb {
+  background: rgba(189, 15, 44, 0.55);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+}
+
+.eligiblePanel__item {
+  margin: 0;
+}
+
+.eligiblePanel__choose {
+  width: 100%;
+  text-align: left;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--color-text);
+
+  padding: 0.7rem 0.75rem;
+  cursor: pointer;
+
+  font-weight: 700;
+  letter-spacing: 0.03em;
+
+  transition: background 140ms ease, border-color 140ms ease, transform 120ms ease;
+}
+
+.eligiblePanel__choose:hover {
+  background: rgba(189, 15, 44, 0.12);
+  border-color: rgba(189, 15, 44, 0.5);
+}
+
+.eligiblePanel__choose:active {
+  transform: translateY(1px);
+}
+
+.eligiblePanel__choose:focus-visible {
+  outline: 2px solid rgba(199, 59, 59, 0.55);
+  outline-offset: 2px;
+}
+
+.eligiblePanel__empty {
+  padding: 1rem 0.9rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.eligiblePanel__actions {
+  padding: 0.75rem 0.9rem 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.16);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.eligiblePanel__actions .roll__button {
+  width: auto;
+  max-width: none;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  border-radius: 14px;
+}
+
+@media (max-width: 380px) {
+  .eligiblePanel__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

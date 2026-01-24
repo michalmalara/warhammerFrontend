@@ -15,13 +15,57 @@
     @if (profession(); as p) {
       <section class="careerWrap">
         <aside class="careerWrap__controls">
-          <button class="roll__button" type="button" (click)="drawCareer()" [disabled]="isLoading()">
-            <span class="roll__buttonInner">
-              <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
-              Roll for Career
-            </span>
-            <span class="roll__hover"></span>
-          </button>
+          <div class="careerWrap__controlsInner">
+            <button class="roll__button" type="button" (click)="drawCareer()" [disabled]="isLoading()">
+              <span class="roll__buttonInner">
+                <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
+                Roll for Career
+              </span>
+              <span class="roll__hover"></span>
+            </button>
+
+            <div class="careerWrap__controlsInner">
+              <div style="margin-top:0.6rem;">
+                <button class="roll__button roll__button--list" type="button" (click)="loadEligible()"
+                        [disabled]="isLoading()">
+                  <span class="roll__buttonInner">
+                    <mat-icon class="dice__icon wax-icon" aria-hidden="true">list</mat-icon>
+                    Wybierz z listy
+                  </span>
+                </button>
+
+                <!-- Selection panel (shows when isSelecting === true) - kept here so it appears directly under the button -->
+                @if (isSelecting()) {
+                  <div class="eligiblePanel">
+                    <header class="eligiblePanel__head">
+                      <h4>Wybierz profesję dla: {{ selectedRaceLabel() }}</h4>
+                      <small>{{ eligibleCount() }} dostępnych</small>
+                    </header>
+
+                    @if ((eligibleList() ?? []).length) {
+                      <ul class="eligiblePanel__list">
+                        @for (ep of eligibleList(); track ep.id) {
+                          <li class="eligiblePanel__item">
+                            <button type="button" class="eligiblePanel__choose" (click)="chooseFromList(ep)">
+                              {{ ep.name }}
+                            </button>
+                          </li>
+                        }
+                      </ul>
+                    } @else {
+                      <div class="eligiblePanel__empty">Brak profesji do wyboru dla tej rasy.</div>
+                    }
+
+                    <div class="eligiblePanel__actions">
+                      <button type="button" class="roll__button" (click)="cancelSelection()">Anuluj</button>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- duplicate panel removed: only panel under the button remains -->
         </aside>
 
         <section class="career">
@@ -188,13 +232,58 @@
       <!-- Placeholder when no profession is drawn yet (now matches drawn card layout) -->
       <section class="careerWrap">
         <aside class="careerWrap__controls">
-          <button class="roll__button" type="button" (click)="drawCareer()" [disabled]="isLoading()">
-            <span class="roll__buttonInner">
-              <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
-              Roll for Career
-            </span>
-            <span class="roll__hover"></span>
-          </button>
+          <div class="careerWrap__controlsInner">
+            <button class="roll__button" type="button" (click)="drawCareer()" [disabled]="isLoading()">
+              <span class="roll__buttonInner">
+                <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
+                Roll for Career
+              </span>
+              <span class="roll__hover"></span>
+            </button>
+
+            <!-- Also allow choosing from list in placeholder state -->
+            <div class="careerWrap__controlsInner">
+              <div style="margin-top:0.6rem;">
+                <button class="roll__button roll__button--list" type="button" (click)="loadEligible()"
+                        [disabled]="isLoading()">
+                  <span class="roll__buttonInner">
+                    <mat-icon class="dice__icon wax-icon" aria-hidden="true">list</mat-icon>
+                    Wybierz z listy
+                  </span>
+                </button>
+
+                <!-- Selection panel (shows when isSelecting === true) - kept here in placeholder branch -->
+                @if (isSelecting()) {
+                  <div class="eligiblePanel">
+                    <header class="eligiblePanel__head">
+                      <h4>Wybierz profesję dla: {{ selectedRaceLabel() }}</h4>
+                      <small>{{ eligibleCount() }} dostępnych</small>
+                    </header>
+
+                    @if ((eligibleList() ?? []).length) {
+                      <ul class="eligiblePanel__list">
+                        @for (ep of eligibleList(); track ep.id) {
+                          <li class="eligiblePanel__item">
+                            <button type="button" class="eligiblePanel__choose" (click)="chooseFromList(ep)">
+                              {{ ep.name }}
+                            </button>
+                          </li>
+                        }
+                      </ul>
+                    } @else {
+                      <div class="eligiblePanel__empty">Brak profesji do wyboru dla tej rasy.</div>
+                    }
+
+                    <div class="eligiblePanel__actions">
+                      <button type="button" class="roll__button" (click)="cancelSelection()">Anuluj</button>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- duplicate panel removed: only panel under the button remains -->
         </aside>
 
         <section class="career career--placeholder">

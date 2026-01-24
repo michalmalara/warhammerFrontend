@@ -69,4 +69,14 @@ export class ProfessionsApiService {
     const params = query ? {search: query} : undefined;
     return this.crud.list<Profession[]>(ProfessionsApiService.PATH, params);
   }
+
+  /**
+   * Pobiera listę profesji możliwych do wylosowania dla danej rasy (backend action 'eligible').
+   * Odpowiedź backendu to { race, count, eligible: Profession[] }.
+   */
+  eligible(race: string) {
+    const url = `${ProfessionsApiService.PATH}eligible/`;
+    const params = race ? {race} : undefined;
+    return this.crud.list<any>(url, params);
+  }
 }

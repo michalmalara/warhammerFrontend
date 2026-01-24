@@ -265,6 +265,45 @@ export class CharacterCreationStep3CareerComponent {
 
   // --- END: New state for selectable characteristics (cechy) ---
 
+  // New: UI state for selecting from list
+  readonly isSelecting = signal(false);
+  readonly eligibleList = signal<Profession[]>([]);
+  readonly eligibleCount = signal<number>(0);
+
+  // Load eligible professions for current race and show selection panel
+  async loadEligible() {
+    const race = this.selectedRace();
+    if (!race) return;
+    this.isLoading.set(true);
+    this.isSelecting.set(true);
+    this.eligibleList.set([]);
+    this.eligibleCount.set(0);
+    try {
+      const res = await firstValueFrom(this.api.eligible(race));
+      const list = Array.isArray(res?.eligible) ? (res.eligible as Profession[]) : (res?.eligible ?? []);
+      this.eligibleList.set(list);
+      this.eligibleCount.set(res?.count ?? list.length ?? 0);
+    } catch (err) {
+      console.error('Failed to load eligible professions', err);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  chooseFromList(p: Profession) {
+    if (!p) return;
+    this.profession.set(p);
+    // reset alternative selections and characteristic picks
+    this.skillSelections.set({});
+    this.talentSelections.set({});
+    this.selectedCharacteristic.set(null);
+    this.isSelecting.set(false);
+  }
+
+  cancelSelection() {
+    this.isSelecting.set(false);
+  }
+
   async drawCareer() {
     const race = this.selectedRace();
     this.isLoading.set(true);
