@@ -1,0 +1,177 @@
+@use '../../../../../_theme' as theme;
+
+:host {
+  display: block;
+}
+
+.cc-root {
+  color: #fff;
+}
+
+.cc-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+/* --- Hero --- */
+.hero {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+}
+
+.hero__title {
+  margin: 1.25rem 0 0.75rem;
+  font-size: clamp(2.4rem, 4vw, 3.1rem);
+  font-weight: 900;
+  font-style: italic;
+}
+
+.hero__subtitle {
+  margin: 0 0 1rem;
+  color: rgba(185, 157, 161, 1);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-style: italic;
+}
+
+.hero__quote {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.125rem;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* --- Card --- */
+.card {
+  position: relative;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2rem 2rem 1.5rem;
+  border-radius: 20px;
+  background: rgba(24, 18, 24, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.card__accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background: linear-gradient(180deg, var(--color-accent), rgba(255, 61, 94, 0));
+}
+
+.card__header {
+  padding-left: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.card__subtitle {
+  margin: 0.35rem 0 0;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.panel {
+  padding: 1rem 1rem 0.75rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.panel__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.9rem;
+}
+
+.panel__icon {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.list__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(255, 61, 94, 0.18);
+  border: 1px solid rgba(255, 61, 94, 0.35);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  min-width: 2.4rem;
+}
+
+.name {
+  font-weight: 650;
+}
+
+.empty {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+/* --- Footer --- */
+.footer {
+  max-width: 980px;
+  margin: 2rem auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
