@@ -28,6 +28,9 @@ import {
 import {
   CharacterCreationStep4SkillsTalentsComponent
 } from './features/character-creation/components/character-creation-step-4-skills-talents/character-creation-step-4-skills-talents.component';
+import {
+  CharacterCreationStep5FinalReviewWealthComponent
+} from './features/character-creation/components/character-creation-step-5-final-review-wealth/character-creation-step-5-final-review-wealth.component';
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'character'},
@@ -52,6 +55,11 @@ export const routes: Routes = [
         path: 'step-4',
         component: CharacterCreationStep4SkillsTalentsComponent,
         data: {stepLabel: 'Step 4: Skills & Talents'},
+      },
+      {
+        path: 'step-5',
+        component: CharacterCreationStep5FinalReviewWealthComponent,
+        data: {stepLabel: 'Step 5: Review'},
       },
     ],
   },

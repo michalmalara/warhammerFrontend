@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 import {firstValueFrom, of, throwError} from 'rxjs';
 
 import {NameService} from './name.service';
-import {CrudApiService} from '../shared/services/crud-api.service';
+import {CrudApiService} from '../../../shared/services/crud-api.service';
 
 describe('NameService', () => {
   let service: NameService;
@@ -13,8 +13,10 @@ describe('NameService', () => {
       list: (path: string, params?: any) => of({
         first_name: 'Jan',
         last_name: 'Kowalski',
+        firstName: 'Jan',
+        lastName: 'Kowalski',
         race: params?.race,
-        gender: params?.gender
+        gender: params?.gender,
       }) as any,
     };
 

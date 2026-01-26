@@ -159,6 +159,61 @@ export class CharacterDataService {
     this.bio.set(b);
   }
 
+  // --- step 5: wealth & trappings ---
+  readonly goldCrowns = signal<number | null>(null);
+
+  /** Rzut 2k10 na startowy majątek. Zwraca wynik 2..20 (deterministyczny przy seed). */
+  rollWealth2d10 = (seed?: number): number => {
+    const rng = this.dice.rngFactory(seed);
+    const {total} = this.dice.roll2d10(rng);
+    this.goldCrowns.set(total);
+    return total;
+  };
+
+  /**
+   * Parsuje `profession.trappings` do prostych pozycji listy.
+   * Format źródłowy bywa tekstowy (np. "Backpack, Cloak; Sword").
+   */
+  readonly startingTrappings = computed(() => {
+    const tr = (this.profession()?.trappings ?? '').trim();
+    if (!tr) return [] as string[];
+
+    return tr
+      .split(/[\n,;]+/g)
+      .map(s => s.trim())
+      .filter(Boolean);
+  });
+
+  readonly characterName = computed(() => this.bio().name?.trim() ?? '');
+
+  readonly selectedRaceLabel = computed(() => {
+    const r = this.race();
+    if (!r) return '—';
+    return r.charAt(0).toUpperCase() + r.slice(1);
+  });
+
+  readonly primaryTotals = computed(() => {
+    const ids: PrimaryStatId[] = ['WS', 'BS', 'S', 'T', 'Ag', 'Int', 'WP', 'Fel'];
+    return ids.map(id => ({
+      id,
+      value: this.getStat(id),
+    }));
+  });
+
+  readonly secondaryTotals = computed(() => {
+    const s = this.secondaryStats();
+    return [
+      {id: 'A', value: s.A},
+      {id: 'W', value: s.W},
+      {id: 'SB', value: s.SB},
+      {id: 'TB', value: s.TB},
+      {id: 'M', value: s.M},
+      {id: 'Mag', value: s.Mag},
+      {id: 'IP', value: s.IP},
+      {id: 'FP', value: s.FP},
+    ];
+  });
+
   // Cached values
   private lastMappedW: number | null = null;
   private lastComputedFP: number | null = null;

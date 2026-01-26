@@ -45,7 +45,7 @@ export class CharacterCreationStep4SkillsTalentsComponent {
   }
 
   goNext() {
-    // Placeholder for next step - keep flow usable.
-    void this.router.navigate(['/character']);
+    // Navigate to step-5 (Final Review & Wealth)
+    void this.router.navigate(['/character/create/step-5']);
   }
 }
