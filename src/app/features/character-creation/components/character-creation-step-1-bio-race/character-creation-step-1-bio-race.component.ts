@@ -136,6 +136,11 @@ export class CharacterCreationStep1BioRaceComponent {
 
   selectRace(race: CharacterRace) {
     this.charData.setRace(race);
+    // Po zmianie rasy wyczyść imię i wiek oraz zresetuj status pól, aby nie pokazywać od razu błędów
+    this.form.controls.name.setValue('');
+    this.form.controls.name.markAsUntouched();
+    this.form.controls.age.setValue(null);
+    this.form.controls.age.markAsUntouched();
   }
 
   goPrev() {
