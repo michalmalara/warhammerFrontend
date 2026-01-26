@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import {CrudApiService} from '../../../shared/services/crud-api.service';
 
-import {CrudApiService} from '../shared/services/crud-api.service';
 
 export interface RandomNameResponse {
   firstName: string;

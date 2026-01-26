@@ -13,7 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRippleModule} from '@angular/material/core';
 import {CharacterDataService} from '../../services/character-data.service';
-import {NameService} from '../../../../common/name.service';
+import {NameService} from '../../../common/services/name.service';
 
 type RaceCard = {
   id: CharacterRace;
