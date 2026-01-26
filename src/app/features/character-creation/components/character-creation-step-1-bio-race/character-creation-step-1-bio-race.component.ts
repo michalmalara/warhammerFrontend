@@ -118,6 +118,22 @@ export class CharacterCreationStep1BioRaceComponent {
     });
   }
 
+  // Losuje wiek w logicznym zakresie zależnym od rasy i ustawia kontrolkę age
+  onDrawRandomAge(): void {
+    const race = this.charData.race();
+    // define sensible age ranges per race
+    const ranges: Record<string, [number, number]> = {
+      human: [16, 50],
+      dwarf: [20, 150],
+      elf: [50, 700],
+      halfling: [20, 120],
+    } as any;
+
+    const [min, max] = ranges[race ?? 'human'] ?? [16, 80];
+    const roll = Math.floor(Math.random() * (max - min + 1)) + min;
+    this.form.controls.age.setValue(roll);
+  }
+
   selectRace(race: CharacterRace) {
     this.charData.setRace(race);
   }
