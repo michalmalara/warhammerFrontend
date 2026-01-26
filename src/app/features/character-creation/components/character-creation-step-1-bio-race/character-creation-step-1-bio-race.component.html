@@ -56,6 +56,9 @@
           <mat-form-field class="ledger__field" appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput id="cc-name" type="text" formControlName="name"/>
+            <button mat-icon-button matSuffix type="button" aria-label="Draw random name" (click)="onDrawRandomName()">
+              <mat-icon>autorenew</mat-icon>
+            </button>
             <mat-hint align="start">Character's given name</mat-hint>
           </mat-form-field>
 

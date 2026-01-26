@@ -13,6 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRippleModule} from '@angular/material/core';
 import {CharacterDataService} from '../../services/character-data.service';
+import {NameService} from '../../../../common/name.service';
 
 type RaceCard = {
   id: CharacterRace;
@@ -44,6 +45,7 @@ export class CharacterCreationStep1BioRaceComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly charData = inject(CharacterDataService);
+  private readonly nameService = inject(NameService);
 
   readonly races: RaceCard[] = [
     {
@@ -101,6 +103,18 @@ export class CharacterCreationStep1BioRaceComponent {
         hairColor: value.hairColor ?? 'Ash Blonde',
         physicalMarkings: value.physicalMarkings ?? '',
       });
+    });
+  }
+
+  // Wywoływane po kliknięciu przycisku 'losuj imię'
+  onDrawRandomName(): void {
+    const race = this.charData.race();
+    const gender = this.form.controls.gender.value;
+    if (!race || !gender) return;
+
+    this.nameService.getRandomName(race, gender).subscribe(res => {
+      const full = `${res.firstName}${res.lastName ? ' ' + res.lastName : ''}`;
+      this.form.controls.name.setValue(full);
     });
   }
 

@@ -404,19 +404,4 @@ export class CharacterDataService {
   get primaryStatsHasMercy(): boolean {
     return this.primaryStats().some(s => s.shallyasMercy);
   }
-
-  /**
-   * Wywołuje backendowy endpoint zwracający losowe imię i nazwisko.
-   * Zwraca Observable z odpowiedzią { first_name, last_name, race, gender }
-   */
-  public drawRandomName(race: string, gender: string): Observable<{
-    first_name: string;
-    last_name: string;
-    race: string;
-    gender?: string
-  }> {
-    const params = new HttpParams().set('race', race).set('gender', gender);
-    const url = `/character-sheet/random-name/`;
-    return this.http.get<{ first_name: string; last_name: string; race: string; gender?: string }>(url, {params});
-  }
 }
