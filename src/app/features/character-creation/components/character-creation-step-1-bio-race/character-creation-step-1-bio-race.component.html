@@ -28,7 +28,9 @@
             <div
               class="race-card__bg"
               [style.background-image]="
-                'linear-gradient(to top, rgba(0,0,0,0.9), transparent), url(' + r.imageUrl + ')'
+                'linear-gradient(to top, rgba(0,0,0,0.9), transparent), url(' +
+                  (form.controls.gender.value === 'female' ? r.femaleImageUrl : r.maleImageUrl) +
+                  ')'
               "
             >
               <span class="race-card__check" aria-hidden="true">
