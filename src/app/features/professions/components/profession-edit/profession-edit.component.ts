@@ -274,7 +274,7 @@ export class ProfessionEditComponent {
       .subscribe({
         next: (p) => this.patchFromProfession(p),
         error: () => {
-          this.snackBar.open('Nie udało się wczytać profesji', 'OK', {duration: 3500});
+          this.snackBar.open($localize`:Snackbar@@profession.edit.load.failed:Failed to load profession`, 'OK', {duration: 3500});
           this.router.navigate(['/professions']);
         },
       });
@@ -294,11 +294,11 @@ export class ProfessionEditComponent {
       .pipe(finalize(() => (this.isSaving = false)))
       .subscribe({
         next: (updated) => {
-          this.snackBar.open('Profesja zapisana', 'OK', {duration: 2500});
+          this.snackBar.open($localize`:Snackbar@@profession.edit.saved:Profession saved`, 'OK', {duration: 2500});
           this.router.navigate(['/professions', updated.id]);
         },
         error: () => {
-          this.snackBar.open('Nie udało się zapisać profesji', 'OK', {duration: 3500});
+          this.snackBar.open($localize`:Snackbar@@profession.edit.save.failed:Failed to save profession`, 'OK', {duration: 3500});
         },
       });
   }
@@ -402,13 +402,13 @@ export class ProfessionEditComponent {
   addSkillFromChip(event: MatChipInputEvent) {
     if (event.chipInput) event.chipInput.clear();
     this.skillSearchControl.setValue('');
-    this.snackBar.open('Wybierz umiejętność z listy (autocomplete).', 'OK', {duration: 2500});
+    this.snackBar.open($localize`:Snackbar@@profession.edit.chooseSkill.autocomplete:Choose a skill from the list (autocomplete).`, 'OK', {duration: 2500});
   }
 
   addTalentFromChip(event: MatChipInputEvent) {
     if (event.chipInput) event.chipInput.clear();
     this.talentSearchControl.setValue('');
-    this.snackBar.open('Wybierz talent z listy (autocomplete).', 'OK', {duration: 2500});
+    this.snackBar.open($localize`:Snackbar@@profession.edit.chooseTalent.autocomplete:Choose a talent from the list (autocomplete).`, 'OK', {duration: 2500});
   }
 
   removeSkill(index: number) {
@@ -458,7 +458,7 @@ export class ProfessionEditComponent {
         for (const [k, v] of nextVisible.entries()) this.altSkillPickerVisible.set(k, v);
       },
       error: () => {
-        this.snackBar.open('Nie udało się usunąć umiejętności z bazy.', 'OK', {duration: 3000});
+        this.snackBar.open($localize`:Snackbar@@profession.edit.remove.skill.failed:Failed to remove skill from server.`, 'OK', {duration: 3000});
       },
     });
   }
@@ -510,7 +510,7 @@ export class ProfessionEditComponent {
         for (const [k, v] of nextVisible.entries()) this.altTalentPickerVisible.set(k, v);
       },
       error: () => {
-        this.snackBar.open('Nie udało się usunąć talentu z bazy.', 'OK', {duration: 3000});
+        this.snackBar.open($localize`:Snackbar@@profession.edit.remove.talent.failed:Failed to remove talent from server.`, 'OK', {duration: 3000});
       },
     });
   }
@@ -536,7 +536,7 @@ export class ProfessionEditComponent {
         this.skills.push(new FormControl<ProfessionSkill>(created));
       },
       error: () => {
-        this.snackBar.open('Nie udało się dodać umiejętności do profesji.', 'OK', {duration: 3000});
+        this.snackBar.open($localize`:Snackbar@@profession.edit.add.skill.failed:Failed to add skill to profession.`, 'OK', {duration: 3000});
       },
     });
 
@@ -564,7 +564,7 @@ export class ProfessionEditComponent {
         this.talents.push(new FormControl<ProfessionTalent>(created));
       },
       error: () => {
-        this.snackBar.open('Nie udało się dodać talentu do profesji.', 'OK', {duration: 3000});
+        this.snackBar.open($localize`:Snackbar@@profession.edit.add.talent.failed:Failed to add talent to profession.`, 'OK', {duration: 3000});
       },
     });
 
@@ -626,7 +626,7 @@ export class ProfessionEditComponent {
         this.altSkillControl(skillIndex).setValue('');
       },
       error: () => {
-        this.snackBar.open('Nie udało się dodać alternatywnej umiejętności.', 'OK', {duration: 3000});
+        this.snackBar.open($localize`:Snackbar@@profession.edit.add.alternative.skill.failed:Failed to add alternative skill.`, 'OK', {duration: 3000});
         this.altSkillControl(skillIndex).setValue('');
       },
     });
@@ -648,7 +648,7 @@ export class ProfessionEditComponent {
         this.skills.at(skillIndex)?.setValue(updated);
       },
       error: () => {
-        this.snackBar.open('Nie udało się usunąć alternatywnej umiejętności.', 'OK', {duration: 3000});
+        this.snackBar.open($localize`:Snackbar@@profession.edit.remove.alternative.skill.failed:Failed to remove alternative skill.`, 'OK', {duration: 3000});
       },
     });
   }
@@ -683,7 +683,7 @@ export class ProfessionEditComponent {
         this.altTalentControl(talentIndex).setValue('');
       },
       error: () => {
-        this.snackBar.open('Nie udało się dodać alternatywnego talentu.', 'OK', {duration: 3000});
+        this.snackBar.open($localize`:Snackbar@@profession.edit.add.alternative.talent.failed:Failed to add alternative talent.`, 'OK', {duration: 3000});
         this.altTalentControl(talentIndex).setValue('');
       },
     });
@@ -705,7 +705,7 @@ export class ProfessionEditComponent {
         this.talents.at(talentIndex)?.setValue(updated);
       },
       error: () => {
-        this.snackBar.open('Nie udało się usunąć alternatywnego talentu.', 'OK', {duration: 3000});
+        this.snackBar.open($localize`:Snackbar@@profession.edit.remove.alternative.talent.failed:Failed to remove alternative talent.`, 'OK', {duration: 3000});
       },
     });
   }
@@ -717,7 +717,7 @@ export class ProfessionEditComponent {
 
     if (typeof baseId !== 'number' || typeof altSkillId !== 'number') return;
     if (typeof baseSkillId === 'number' && altSkillId === baseSkillId) {
-      this.snackBar.open('Nie możesz dodać jako alternatywy tej samej umiejętności.', 'OK', {duration: 2500});
+      this.snackBar.open($localize`:Snackbar@@profession.edit.alt.sameSkill:You cannot add the same skill as an alternative.`, 'OK', {duration: 2500});
       return;
     }
 
@@ -737,7 +737,7 @@ export class ProfessionEditComponent {
         this.skills.at(skillIndex)?.setValue(updated);
       },
       error: () => {
-        this.snackBar.open('Nie udało się dodać alternatywnej umiejętności.', 'OK', {duration: 3000});
+        this.snackBar.open($localize`:Snackbar@@profession.edit.add.alternative.skill.failed:Failed to add alternative skill.`, 'OK', {duration: 3000});
       },
     });
   }
@@ -749,7 +749,7 @@ export class ProfessionEditComponent {
 
     if (typeof baseId !== 'number' || typeof altTalentId !== 'number') return;
     if (typeof baseTalentId === 'number' && altTalentId === baseTalentId) {
-      this.snackBar.open('Nie możesz dodać jako alternatywy tego samego talentu.', 'OK', {duration: 2500});
+      this.snackBar.open($localize`:Snackbar@@profession.edit.alt.sameTalent:You cannot add the same talent as an alternative.`, 'OK', {duration: 2500});
       return;
     }
 
@@ -769,7 +769,7 @@ export class ProfessionEditComponent {
         this.talents.at(talentIndex)?.setValue(updated);
       },
       error: () => {
-        this.snackBar.open('Nie udało się dodać alternatywnego talentu.', 'OK', {duration: 3000});
+        this.snackBar.open($localize`:Snackbar@@profession.edit.add.alternative.talent.failed:Failed to add alternative talent.`, 'OK', {duration: 3000});
       },
     });
   }

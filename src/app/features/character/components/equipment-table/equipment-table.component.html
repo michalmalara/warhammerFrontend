@@ -2,7 +2,7 @@
 <div class="equipment-table mat-elevation-z1">
   <table mat-table [dataSource]="dataSource" class="mat-table equipment-table__table">
     <thead class="equipment-table__head">
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     </thead>
 
     <ng-container matColumnDef="name">
@@ -10,7 +10,7 @@
         mat-header-cell
         *matHeaderCellDef
         class="table-header"
-        i18n="Nagłówek kolumny: nazwa broni/ekwipunku@@equipment.col.name"
+        i18n="Column header: weapon or gear name@@equipment.col.name"
       >
         Weapon / Gear
       </th>
@@ -22,7 +22,7 @@
         mat-header-cell
         *matHeaderCellDef
         class="table-header"
-        i18n="Nagłówek kolumny: obciążenie@@equipment.col.enc"
+        i18n="Column header: encumbrance@@equipment.col.enc"
       >
         Enc
       </th>
@@ -34,7 +34,7 @@
         mat-header-cell
         *matHeaderCellDef
         class="table-header"
-        i18n="Nagłówek kolumny: obrażenia@@equipment.col.dmg"
+        i18n="Column header: damage@@equipment.col.dmg"
       >
         Dmg
       </th>
@@ -46,7 +46,7 @@
         mat-header-cell
         *matHeaderCellDef
         class="table-header"
-        i18n="Nagłówek kolumny: zasięg@@equipment.col.range"
+        i18n="Column header: range@@equipment.col.range"
       >
         Range
       </th>
@@ -58,7 +58,7 @@
         mat-header-cell
         *matHeaderCellDef
         class="table-header"
-        i18n="Nagłówek kolumny: cechy/jakości@@equipment.col.qualities"
+        i18n="Column header: qualities@@equipment.col.qualities"
       >
         Qualities
       </th>

@@ -14,8 +14,8 @@
     </div>
 
     <div class="header">
-      <h2 id="skill-delete-title" class="title">
-        Czy na pewno chcesz usunąć tę umiejętność?
+      <h2 id="skill-delete-title" class="title" i18n="Dialog title@@skillDelete.title">
+        Are you sure you want to delete this skill?
       </h2>
     </div>
 
@@ -24,8 +24,8 @@
     </div>
 
     <div class="body">
-      <p class="quote">
-        „Wiedza raz utracona może nigdy nie zostać odzyskana.”
+      <p class="quote" i18n="Quote@@skillDelete.quote">
+        "Knowledge once lost may never be reclaimed."
       </p>
     </div>
 
@@ -33,14 +33,16 @@
       <app-wax-seal-button
         variant="cancel"
         icon="close"
-        label="Anuluj"
+        label="Cancel"
+        i18n-label="Button@@skillDelete.cancel"
         (clicked)="cancel()"
       ></app-wax-seal-button>
 
       <app-wax-seal-button
         variant="save"
         icon="delete_forever"
-        label="Usuń"
+        label="Delete"
+        i18n-label="Button@@skillDelete.confirm"
         (clicked)="confirm()"
       ></app-wax-seal-button>
     </div>

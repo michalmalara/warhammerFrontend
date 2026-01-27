@@ -14,7 +14,8 @@
     </div>
 
     <div class="header">
-      <h2 id="profession-delete-title" class="title">Czy na pewno chcesz usunąć tę profesję?</h2>
+      <h2 id="profession-delete-title" class="title" i18n="Dialog title@@professionDelete.title">Are you sure you want
+        to delete this profession?</h2>
     </div>
 
     <div class="skill">
@@ -22,21 +23,24 @@
     </div>
 
     <div class="body">
-      <p class="quote">„Każda ścieżka może zostać przerwana jednym ruchem pióra.”</p>
+      <p class="quote" i18n="Quote@@professionDelete.quote">"Every path may be severed by a single stroke of the
+        quill."</p>
     </div>
 
     <div class="actions">
       <app-wax-seal-button
         variant="cancel"
         icon="close"
-        label="Anuluj"
+        label="Cancel"
+        i18n-label="Button@@professionDelete.cancel"
         (clicked)="cancel()"
       ></app-wax-seal-button>
 
       <app-wax-seal-button
         variant="save"
         icon="delete_forever"
-        label="Usuń"
+        label="Delete"
+        i18n-label="Button@@professionDelete.confirm"
         (clicked)="confirm()"
       ></app-wax-seal-button>
     </div>

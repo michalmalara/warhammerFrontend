@@ -1,236 +1,1960 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
     <body>
-      <!-- skill-create.component.html -->
-      <trans-unit id="skillCreate.title">
-        <source>Skill Creation Editor</source>
-        <target>Skill Creation Editor</target>
+      <trans-unit id="app.title" datatype="html">
+        <source>Warhammer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="description">App title</note>
       </trans-unit>
-      <trans-unit id="skillCreate.subtitle">
-        <source>Define a new skill for the grim world of perilous adventure.</source>
-        <target>Define a new skill for the grim world of perilous adventure.</target>
+      <trans-unit id="character.tags.race" datatype="html">
+        <source>Human</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+        <note priority="1" from="description">Tag rasy</note>
       </trans-unit>
-
-      <trans-unit id="skillCreate.skillName.label">
-        <source>Skill Name</source>
-        <target>Skill Name</target>
+      <trans-unit id="character.tags.heritage" datatype="html">
+        <source>Empire Heritage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
+          <context context-type="linenumber">23,26</context>
+        </context-group>
+        <note priority="1" from="description">Tag pochodzenia/kultury</note>
       </trans-unit>
-      <trans-unit id="skillCreate.skillName.placeholder">
-        <source>e.g., Strike to Stun</source>
-        <target>e.g., Strike to Stun</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.skillName.aria">
-        <source>Skill name</source>
-        <target>Skill name</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.skillName.error">
-        <source>Required name (max 100 characters)</source>
-        <target>Required name (max 100 characters)</target>
-      </trans-unit>
-
-      <trans-unit id="skillCreate.skillType.label">
-        <source>Skill Type</source>
-        <target>Skill Type</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.skillType.aria">
-        <source>Skill type</source>
-        <target>Skill type</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.skillType.error">
-        <source>Choose a skill type</source>
-        <target>Choose a skill type</target>
-      </trans-unit>
-
-      <trans-unit id="skillCreate.characteristic.aria">
-        <source>Related characteristic</source>
-        <target>Related characteristic</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.characteristic.label">
-        <source>Related Characteristic</source>
-        <target>Related Characteristic</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.characteristic.groupAria">
-        <source>Choose related characteristic</source>
-        <target>Choose related characteristic</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.characteristic.error">
-        <source>Choose a characteristic</source>
-        <target>Choose a characteristic</target>
-      </trans-unit>
-
-      <trans-unit id="skillCreate.description.label">
-        <source>Skill Description &amp; Lore</source>
-        <target>Skill Description &amp; Lore</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.description.placeholder">
-        <source>Detail the mechanics and the flavor of this skill. How is it practiced in the Old World? What are the grim consequences of failure?</source>
-        <target>Detail the mechanics and the flavor of this skill. How is it practiced in the Old World? What are the grim consequences of failure?</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.description.aria">
-        <source>Skill description</source>
-        <target>Skill description</target>
-      </trans-unit>
-
-      <trans-unit id="skillCreate.actions.discard.aria">
-        <source>Discard</source>
-        <target>Discard</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.actions.discard">
-        <source>Discard</source>
-        <target>Discard</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.actions.save.aria">
-        <source>Affix seal</source>
-        <target>Affix seal</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.actions.save">
-        <source>Affix Seal</source>
-        <target>Affix Seal</target>
-      </trans-unit>
-
-      <!-- skill-create.component.ts ($localize) -->
-      <trans-unit id="skillCreate.snack.success">
-        <source>Skill created</source>
-        <target>Skill created</target>
-      </trans-unit>
-      <trans-unit id="skillCreate.snack.error">
-        <source>Failed to create skill</source>
-        <target>Failed to create skill</target>
-      </trans-unit>
-
-      <!-- skills-list.component.html -->
-      <trans-unit id="skillsList.srHeading">
+      <trans-unit id="tabs.skills" datatype="html">
         <source>Skills</source>
-        <target>Skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta zakładki umiejętności</note>
       </trans-unit>
-      <trans-unit id="skillsList.title">
+      <trans-unit id="tabs.talents" datatype="html">
+        <source>Talents</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta zakładki talentów</note>
+      </trans-unit>
+      <trans-unit id="tabs.combat" datatype="html">
+        <source>Combat</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta zakładki walki</note>
+      </trans-unit>
+      <trans-unit id="tabs.inventory" datatype="html">
+        <source>Inventory</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
+          <context context-type="linenumber">68,69</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta zakładki ekwipunku</note>
+      </trans-unit>
+      <trans-unit id="inventory.placeholder" datatype="html">
+        <source> Inventory view is under construction — move or copy items here as needed. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-card/character-card.component.html</context>
+          <context context-type="linenumber">75,78</context>
+        </context-group>
+        <note priority="1" from="description">Komunikat o braku widoku ekwipunku (placeholder)</note>
+      </trans-unit>
+      <trans-unit id="stats.primaryHeader" datatype="html">
+        <source> Primary Characteristics
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">3,6</context>
+        </context-group>
+        <note priority="1" from="description">Nagłówek sekcji cech głównych</note>
+      </trans-unit>
+      <trans-unit id="stats.baseLabel" datatype="html">
+        <source>Base:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta bazowej wartości statystyki</note>
+      </trans-unit>
+      <trans-unit id="stats.advLabel" datatype="html">
+        <source>Adv:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">23,25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">52,54</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta rozwinięcia (advances) statystyki</note>
+      </trans-unit>
+      <trans-unit id="stats.secondaryHeader" datatype="html">
+        <source> Secondary Characteristics
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/character-stats/character-stats.component.html</context>
+          <context context-type="linenumber">33,36</context>
+        </context-group>
+        <note priority="1" from="description">Nagłówek sekcji cech drugorzędnych</note>
+      </trans-unit>
+      <trans-unit id="equipment.col.name" datatype="html">
+        <source> Weapon / Gear </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/equipment-table/equipment-table.component.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+        <note priority="1" from="description">Nagłówek kolumny: nazwa broni/ekwipunku</note>
+      </trans-unit>
+      <trans-unit id="equipment.col.enc" datatype="html">
+        <source> Enc </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/equipment-table/equipment-table.component.html</context>
+          <context context-type="linenumber">27,29</context>
+        </context-group>
+        <note priority="1" from="description">Nagłówek kolumny: obciążenie</note>
+      </trans-unit>
+      <trans-unit id="equipment.col.dmg" datatype="html">
+        <source> Dmg </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/equipment-table/equipment-table.component.html</context>
+          <context context-type="linenumber">39,41</context>
+        </context-group>
+        <note priority="1" from="description">Nagłówek kolumny: obrażenia</note>
+      </trans-unit>
+      <trans-unit id="equipment.col.range" datatype="html">
+        <source> Range </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/equipment-table/equipment-table.component.html</context>
+          <context context-type="linenumber">51,53</context>
+        </context-group>
+        <note priority="1" from="description">Nagłówek kolumny: zasięg</note>
+      </trans-unit>
+      <trans-unit id="equipment.col.qualities" datatype="html">
+        <source> Qualities </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/equipment-table/equipment-table.component.html</context>
+          <context context-type="linenumber">63,65</context>
+        </context-group>
+        <note priority="1" from="description">Nagłówek kolumny: cechy/jakości</note>
+      </trans-unit>
+      <trans-unit id="fatePoints.title" datatype="html">
+        <source>Fate Points</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/fate-points/fate-points.component.html</context>
+          <context context-type="linenumber">4,9</context>
+        </context-group>
+        <note priority="1" from="description">Nagłówek panelu punktów losu</note>
+      </trans-unit>
+      <trans-unit id="fatePoints.aria" datatype="html">
+        <source>Fate points</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/fate-points/fate-points.component.html</context>
+          <context context-type="linenumber">10,13</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta dostępności dla wskaźnika punktów losu</note>
+      </trans-unit>
+      <trans-unit id="fatePoints.fateLabel" datatype="html">
+        <source>Fate</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/fate-points/fate-points.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta kolumny: Fate</note>
+      </trans-unit>
+      <trans-unit id="fatePoints.fortuneLabel" datatype="html">
+        <source> Fortune </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/fate-points/fate-points.component.html</context>
+          <context context-type="linenumber">27,29</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta kolumny: Fortune</note>
+      </trans-unit>
+      <trans-unit id="xp.title" datatype="html">
+        <source>Experience</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">4,7</context>
+        </context-group>
+        <note priority="1" from="description">Nagłówek panelu doświadczenia</note>
+      </trans-unit>
+      <trans-unit id="xp.currentProfessionLabel" datatype="html">
+        <source> Current profession </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">13,15</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta: aktualna profesja</note>
+      </trans-unit>
+      <trans-unit id="xp.toSpendLabel" datatype="html">
+        <source> To spend </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">22,24</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta: punkty do wydania</note>
+      </trans-unit>
+      <trans-unit id="xp.totalEarnedLabel" datatype="html">
+        <source> Total earned </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">32,34</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta: suma zdobytych punktów</note>
+      </trans-unit>
+      <trans-unit id="xp.toNextProfession" datatype="html">
+        <source> To next profession </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">40,45</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta: do następnej profesji</note>
+      </trans-unit>
+      <trans-unit id="xp.unit" datatype="html">
+        <source>XP</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">53,55</context>
+        </context-group>
+        <note priority="1" from="description">Skrót jednostki XP</note>
+      </trans-unit>
+      <trans-unit id="xp.remaining" datatype="html">
+        <source>remaining</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/profession-history/profession-xp-panel.component.html</context>
+          <context context-type="linenumber">55,56</context>
+        </context-group>
+        <note priority="1" from="description">Etykieta: pozostało</note>
+      </trans-unit>
+      <trans-unit id="skills.controlsAriaLabel" datatype="html">
+        <source>Skill controls</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/skills/skills.component.html</context>
+          <context context-type="linenumber">17,21</context>
+        </context-group>
+        <note priority="1" from="description">Accessible label: skill controls</note>
+      </trans-unit>
+      <trans-unit id="skills.taken" datatype="html">
+        <source>TAKEN</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/skills/skills.component.html</context>
+          <context context-type="linenumber">30,34</context>
+        </context-group>
+        <note priority="1" from="description">Button label: skill taken/selected</note>
+      </trans-unit>
+      <trans-unit id="skills.viewAll" datatype="html">
+        <source> VIEW ALL SKILLS (<x id="INTERPOLATION" equiv-text="{{ skills.length }}"/>) </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/skills/skills.component.html</context>
+          <context context-type="linenumber">67,69</context>
+        </context-group>
+        <note priority="1" from="description">Button: view all skills</note>
+      </trans-unit>
+      <trans-unit id="talents.empty" datatype="html">
+        <source> No talents. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/talents/talents.component.html</context>
+          <context context-type="linenumber">14,18</context>
+        </context-group>
+        <note priority="1" from="description">Message shown when the character has no talents</note>
+      </trans-unit>
+      <trans-unit id="wounds.title" datatype="html">
+        <source>Wounds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/wounds-panel/wounds-panel.component.html</context>
+          <context context-type="linenumber">13,15</context>
+        </context-group>
+        <note priority="1" from="description">Wounds panel title</note>
+      </trans-unit>
+      <trans-unit id="wounds.hpLabel" datatype="html">
+        <source> HP </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/wounds-panel/wounds-panel.component.html</context>
+          <context context-type="linenumber">19,23</context>
+        </context-group>
+        <note priority="1" from="description">Current hit points label (HP)</note>
+      </trans-unit>
+      <trans-unit id="wounds.decAria" datatype="html">
+        <source>Decrease wounds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/wounds-panel/wounds-panel.component.html</context>
+          <context context-type="linenumber">29,32</context>
+        </context-group>
+        <note priority="1" from="description">ARIA: decrease wounds</note>
+      </trans-unit>
+      <trans-unit id="wounds.maxLabel" datatype="html">
+        <source>Max:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/wounds-panel/wounds-panel.component.html</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+        <note priority="1" from="description">Maximum wounds label</note>
+      </trans-unit>
+      <trans-unit id="wounds.incAria" datatype="html">
+        <source>Increase wounds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/character/components/wounds-panel/wounds-panel.component.html</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+        <note priority="1" from="description">ARIA: increase wounds</note>
+      </trans-unit>
+      <trans-unit id="profession.create.hero.title" datatype="html">
+        <source>Create Profession</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+        <note priority="1" from="description">Profession create hero</note>
+        <note priority="1" from="meaning">Hero title</note>
+      </trans-unit>
+      <trans-unit id="profession.create.hero.subtitle" datatype="html">
+        <source>Quickly define a new profession and its development costs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">5,10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">5,10</context>
+        </context-group>
+        <note priority="1" from="description">Short hero subtitle</note>
+        <note priority="1" from="meaning">Hero subtitle</note>
+      </trans-unit>
+      <trans-unit id="profession.create.card.title" datatype="html">
+        <source> New Profession </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">22,25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">22,25</context>
+        </context-group>
+        <note priority="1" from="description">New profession card title</note>
+        <note priority="1" from="meaning">Card title</note>
+      </trans-unit>
+      <trans-unit id="profession.create.card.subtitle" datatype="html">
+        <source> Fill in basic information and development costs </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">27,31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">27,31</context>
+        </context-group>
+        <note priority="1" from="description">Short create profession subtitle</note>
+        <note priority="1" from="meaning">Card subtitle</note>
+      </trans-unit>
+      <trans-unit id="profession.create.name.label" datatype="html">
+        <source>Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">37,40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">37,40</context>
+        </context-group>
+        <note priority="1" from="description">Name field label</note>
+        <note priority="1" from="meaning">Label</note>
+      </trans-unit>
+      <trans-unit id="profession.create.name.aria" datatype="html">
+        <source>Profession name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+        <note priority="1" from="description">Profession name aria</note>
+        <note priority="1" from="meaning">Input aria-label</note>
+      </trans-unit>
+      <trans-unit id="profession.create.name.required" datatype="html">
+        <source>Name is required </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">45,48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">45,48</context>
+        </context-group>
+        <note priority="1" from="description">Name required message</note>
+        <note priority="1" from="meaning">Validation</note>
+      </trans-unit>
+      <trans-unit id="profession.create.description.label" datatype="html">
+        <source>Description </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">84,88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">84,88</context>
+        </context-group>
+        <note priority="1" from="description">Description field label</note>
+        <note priority="1" from="meaning">Label</note>
+      </trans-unit>
+      <trans-unit id="profession.create.description.aria" datatype="html">
+        <source>Profession description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">90,91</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">90,91</context>
+        </context-group>
+        <note priority="1" from="description">Profession description aria</note>
+        <note priority="1" from="meaning">Input aria-label</note>
+      </trans-unit>
+      <trans-unit id="profession.create.description.required" datatype="html">
+        <source> Description is required </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">95,98</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">95,98</context>
+        </context-group>
+        <note priority="1" from="description">Description required message</note>
+        <note priority="1" from="meaning">Validation</note>
+      </trans-unit>
+      <trans-unit id="profession.create.development.title" datatype="html">
+        <source> Development (cost per level)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">312,316</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">312,316</context>
+        </context-group>
+        <note priority="1" from="description">Development section heading</note>
+        <note priority="1" from="meaning">Section heading</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.ws" datatype="html">
+        <source>WS <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Weapon Skill)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">317,318</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">317,318</context>
+        </context-group>
+        <note priority="1" from="description">WS abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.ws.dec" datatype="html">
+        <source>Decrease Weapon Skill development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">323,324</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">323,324</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Weapon Skill development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.ws.inc" datatype="html">
+        <source>Increase Weapon Skill development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">333,334</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">333,334</context>
+        </context-group>
+        <note priority="1" from="description">Increase Weapon Skill development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.bs" datatype="html">
+        <source>BS <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Ballistic Skill)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">344,345</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">344,345</context>
+        </context-group>
+        <note priority="1" from="description">BS abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.bs.dec" datatype="html">
+        <source>Decrease Ballistic Skill development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">350,351</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">350,351</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Ballistic Skill development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.bs.inc" datatype="html">
+        <source>Increase Ballistic Skill development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">360,361</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">360,361</context>
+        </context-group>
+        <note priority="1" from="description">Increase Ballistic Skill development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.str" datatype="html">
+        <source>S <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Strength)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">373,374</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">373,374</context>
+        </context-group>
+        <note priority="1" from="description">Strength abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.str.dec" datatype="html">
+        <source>Decrease Strength development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">379,380</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">379,380</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Strength development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.str.inc" datatype="html">
+        <source>Increase Strength development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">389,390</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">389,390</context>
+        </context-group>
+        <note priority="1" from="description">Increase Strength development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.tgh" datatype="html">
+        <source>T <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Toughness)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">402,403</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">402,403</context>
+        </context-group>
+        <note priority="1" from="description">Toughness abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.tgh.dec" datatype="html">
+        <source>Decrease Toughness development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">408,410</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">408,410</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Toughness development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.tgh.inc" datatype="html">
+        <source>Increase Toughness development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">419,421</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">419,421</context>
+        </context-group>
+        <note priority="1" from="description">Increase Toughness development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.ag" datatype="html">
+        <source>Ag <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Agility)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">433,434</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">433,434</context>
+        </context-group>
+        <note priority="1" from="description">Agility abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.ag.dec" datatype="html">
+        <source>Decrease Agility development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">439,440</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">439,440</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Agility development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.ag.inc" datatype="html">
+        <source>Increase Agility development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">449,450</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">449,450</context>
+        </context-group>
+        <note priority="1" from="description">Increase Agility development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.int" datatype="html">
+        <source>Int <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Intelligence)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">463,464</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">463,464</context>
+        </context-group>
+        <note priority="1" from="description">Intelligence abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.int.dec" datatype="html">
+        <source>Decrease Intelligence development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">469,471</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">469,471</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Intelligence development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.int.inc" datatype="html">
+        <source>Increase Intelligence development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">480,482</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">480,482</context>
+        </context-group>
+        <note priority="1" from="description">Increase Intelligence development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.wp" datatype="html">
+        <source>WP <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Willpower)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">494,495</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">494,495</context>
+        </context-group>
+        <note priority="1" from="description">Willpower abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.wp.dec" datatype="html">
+        <source>Decrease Willpower development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">500,501</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">500,501</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Willpower development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.wp.inc" datatype="html">
+        <source>Increase Willpower development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">510,511</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">510,511</context>
+        </context-group>
+        <note priority="1" from="description">Increase Willpower development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.fel" datatype="html">
+        <source>Fel <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Fellowship)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">523,524</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">523,524</context>
+        </context-group>
+        <note priority="1" from="description">Fellowship abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.fel.dec" datatype="html">
+        <source>Decrease Fellowship development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">529,531</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">529,531</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Fellowship development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.fel.inc" datatype="html">
+        <source>Increase Fellowship development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">540,542</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">540,542</context>
+        </context-group>
+        <note priority="1" from="description">Increase Fellowship development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.a" datatype="html">
+        <source>A <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Attacks)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">552,553</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">552,553</context>
+        </context-group>
+        <note priority="1" from="description">Attacks abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.a.dec" datatype="html">
+        <source>Decrease Attacks development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">558,559</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">558,559</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Attacks development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.a.inc" datatype="html">
+        <source>Increase Attacks development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">568,569</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">568,569</context>
+        </context-group>
+        <note priority="1" from="description">Increase Attacks development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.w" datatype="html">
+        <source>W <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Wounds)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">579,580</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">579,580</context>
+        </context-group>
+        <note priority="1" from="description">Wounds abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.w.dec" datatype="html">
+        <source>Decrease Wounds development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">585,586</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">585,586</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Wounds development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.w.inc" datatype="html">
+        <source>Increase Wounds development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">595,596</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">595,596</context>
+        </context-group>
+        <note priority="1" from="description">Increase Wounds development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.m" datatype="html">
+        <source>M <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Movement)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">608,609</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">608,609</context>
+        </context-group>
+        <note priority="1" from="description">Movement abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.m.dec" datatype="html">
+        <source>Decrease Movement development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">614,615</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">614,615</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Movement development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.m.inc" datatype="html">
+        <source>Increase Movement development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">624,625</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">624,625</context>
+        </context-group>
+        <note priority="1" from="description">Increase Movement development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.label.mag" datatype="html">
+        <source>MAG <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;muted&quot;&gt;"/>(Magic)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">635,636</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">635,636</context>
+        </context-group>
+        <note priority="1" from="description">Magic abbreviation and full name</note>
+        <note priority="1" from="meaning">Abbrev&amp;context</note>
+      </trans-unit>
+      <trans-unit id="profession.create.mag.dec" datatype="html">
+        <source>Decrease Magic development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">641,642</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">641,642</context>
+        </context-group>
+        <note priority="1" from="description">Decrease Magic development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.create.mag.inc" datatype="html">
+        <source>Increase Magic development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">651,652</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-create/profession-create.component.html</context>
+          <context context-type="linenumber">651,652</context>
+        </context-group>
+        <note priority="1" from="description">Increase Magic development</note>
+        <note priority="1" from="meaning">Button aria</note>
+      </trans-unit>
+      <trans-unit id="profession.card.title" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ p.name }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">6,8</context>
+        </context-group>
+        <note priority="1" from="description">Profession name</note>
+        <note priority="1" from="meaning">Card title</note>
+      </trans-unit>
+      <trans-unit id="profession.badge.type" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ p.type }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+        <note priority="1" from="description">Profession type</note>
+        <note priority="1" from="meaning">Profession type badge</note>
+      </trans-unit>
+      <trans-unit id="profession.card.subtitle" datatype="html">
+        <source> “<x id="INTERPOLATION" equiv-text="{{ p.description }}"/>” </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+        <note priority="1" from="description">Short profession description</note>
+        <note priority="1" from="meaning">Card subtitle</note>
+      </trans-unit>
+      <trans-unit id="profession.back.aria" datatype="html">
+        <source>Back to professions list</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+        <note priority="1" from="description">Back button aria-label</note>
+        <note priority="1" from="meaning">Link aria-label</note>
+      </trans-unit>
+      <trans-unit id="profession.back" datatype="html">
+        <source>Back to Library</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">29,33</context>
+        </context-group>
+        <note priority="1" from="description">Back button text</note>
+        <note priority="1" from="meaning">Action label</note>
+      </trans-unit>
+      <trans-unit id="profession.edit.aria" datatype="html">
+        <source>Edit profession</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+        <note priority="1" from="description">Edit profession</note>
+        <note priority="1" from="meaning">Link aria-label</note>
+      </trans-unit>
+      <trans-unit id="profession.edit" datatype="html">
+        <source>Edytuj</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">40,45</context>
+        </context-group>
+        <note priority="1" from="description">Edit profession</note>
+        <note priority="1" from="meaning">Action label</note>
+      </trans-unit>
+      <trans-unit id="profession.about.text" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{ p.description }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">48,50</context>
+        </context-group>
+        <note priority="1" from="description">Profession description block</note>
+        <note priority="1" from="meaning">Profession long description</note>
+      </trans-unit>
+      <trans-unit id="profession.development.title" datatype="html">
+        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;panel__icon&quot;&gt;"/>analytics<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Advance Scheme </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">55,59</context>
+        </context-group>
+        <note priority="1" from="description">Development section heading</note>
+        <note priority="1" from="meaning">Section heading</note>
+      </trans-unit>
+      <trans-unit id="label.ws" datatype="html">
+        <source>WS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <note priority="1" from="description">Weapon Skill abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: WS</note>
+      </trans-unit>
+      <trans-unit id="label.bs" datatype="html">
+        <source>BS </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+        <note priority="1" from="description">Ballistic Skill abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: BS</note>
+      </trans-unit>
+      <trans-unit id="label.s" datatype="html">
+        <source>S</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <note priority="1" from="description">Strength abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: S</note>
+      </trans-unit>
+      <trans-unit id="label.t" datatype="html">
+        <source>T</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <note priority="1" from="description">Toughness abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: T</note>
+      </trans-unit>
+      <trans-unit id="label.ag" datatype="html">
+        <source>Ag</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <note priority="1" from="description">Agility abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: Ag</note>
+      </trans-unit>
+      <trans-unit id="label.int" datatype="html">
+        <source>Int </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+        <note priority="1" from="description">Intelligence abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: Int</note>
+      </trans-unit>
+      <trans-unit id="label.wp" datatype="html">
+        <source>WP</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <note priority="1" from="description">Willpower abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: WP</note>
+      </trans-unit>
+      <trans-unit id="label.fel" datatype="html">
+        <source>Fel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">71,73</context>
+        </context-group>
+        <note priority="1" from="description">Fellowship abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: Fel</note>
+      </trans-unit>
+      <trans-unit id="label.a" datatype="html">
+        <source>A</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">135</context>
+        </context-group>
+        <note priority="1" from="description">Attacks abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: A</note>
+      </trans-unit>
+      <trans-unit id="label.w" datatype="html">
+        <source>W</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+        <note priority="1" from="description">Wounds abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: W</note>
+      </trans-unit>
+      <trans-unit id="label.sb" datatype="html">
+        <source>SB </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">137,138</context>
+        </context-group>
+        <note priority="1" from="description">Strength Bonus abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: SB</note>
+      </trans-unit>
+      <trans-unit id="label.tb" datatype="html">
+        <source>TB </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">139,140</context>
+        </context-group>
+        <note priority="1" from="description">Toughness Bonus abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: TB</note>
+      </trans-unit>
+      <trans-unit id="label.m" datatype="html">
+        <source>M</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+        <note priority="1" from="description">Movement abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: M</note>
+      </trans-unit>
+      <trans-unit id="label.mag" datatype="html">
+        <source>Mag</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">141,142</context>
+        </context-group>
+        <note priority="1" from="description">Magic abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: Mag</note>
+      </trans-unit>
+      <trans-unit id="label.ip" datatype="html">
+        <source>IP </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">143,144</context>
+        </context-group>
+        <note priority="1" from="description">Insanity Points abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: IP</note>
+      </trans-unit>
+      <trans-unit id="label.fp" datatype="html">
+        <source>FP</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">145,147</context>
+        </context-group>
+        <note priority="1" from="description">Fate Points abbreviation</note>
+        <note priority="1" from="meaning">Abbrev: FP</note>
+      </trans-unit>
+      <trans-unit id="profession.skills.title" datatype="html">
+        <source>Skills</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">186,188</context>
+        </context-group>
+        <note priority="1" from="description">Skills heading</note>
+        <note priority="1" from="meaning">Section heading</note>
+      </trans-unit>
+      <trans-unit id="profession.talents.title" datatype="html">
+        <source>Talents</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">197,199</context>
+        </context-group>
+        <note priority="1" from="description">Talents heading</note>
+        <note priority="1" from="meaning">Section heading</note>
+      </trans-unit>
+      <trans-unit id="profession.exits.title" datatype="html">
+        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;panel__icon&quot;&gt;"/>arrow_outward<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Career Exits </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">213,215</context>
+        </context-group>
+        <note priority="1" from="description">Career exits heading</note>
+        <note priority="1" from="meaning">Section heading</note>
+      </trans-unit>
+      <trans-unit id="profession.entries.title" datatype="html">
+        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;panel__icon&quot;&gt;"/>merge_type<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Entry Paths </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/professions/components/profession-detail/profession-detail.component.html</context>
+          <context context-type="linenumber">228,230</context>
+        </context-group>
+        <note priority="1" from="description">Entry paths heading</note>
+        <note priority="1" from="meaning">Section heading</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.title" datatype="html">
+        <source>Skill Creation Editor</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+        <note priority="1" from="description">Page title</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.subtitle" datatype="html">
+        <source> Define a new skill for the grim world of perilous adventure. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">6,10</context>
+        </context-group>
+        <note priority="1" from="description">Page subtitle</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillName.label" datatype="html">
+        <source>Skill Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">18,20</context>
+        </context-group>
+        <note priority="1" from="description">Section label</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillName.placeholder" datatype="html">
+        <source>e.g., Strike to Stun</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillName.aria" datatype="html">
+        <source>Skill name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillName.error" datatype="html">
+        <source>Required name (max 100 characters)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">30,32</context>
+        </context-group>
+        <note priority="1" from="description">Validation</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillType.label" datatype="html">
+        <source>Skill Type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">38,41</context>
+        </context-group>
+        <note priority="1" from="description">Section label</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillType.aria" datatype="html">
+        <source>Skill type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.skillType.error" datatype="html">
+        <source>Choose a skill type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">60,64</context>
+        </context-group>
+        <note priority="1" from="description">Validation</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.characteristic.aria" datatype="html">
+        <source>Related characteristic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.characteristic.label" datatype="html">
+        <source>Related Characteristic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">69,72</context>
+        </context-group>
+        <note priority="1" from="description">Section label</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.characteristic.groupAria" datatype="html">
+        <source>Choose related characteristic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">72,73</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.characteristic.error" datatype="html">
+        <source>Choose a characteristic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">94,97</context>
+        </context-group>
+        <note priority="1" from="description">Validation</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.description.label" datatype="html">
+        <source>Skill Description &amp; Lore</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">104,107</context>
+        </context-group>
+        <note priority="1" from="description">Section label</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.description.placeholder" datatype="html">
+        <source>Detail the mechanics and the flavor of this skill. How is it practiced in the Old World? What are the grim consequences of failure?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">112,113</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.description.aria" datatype="html">
+        <source>Skill description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">114,115</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.actions.discard" datatype="html">
+        <source>Discard</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">126,127</context>
+        </context-group>
+        <note priority="1" from="description">Action label</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.actions.discard.aria" datatype="html">
+        <source>Discard</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">129,130</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.actions.save" datatype="html">
+        <source>Affix Seal</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">136,137</context>
+        </context-group>
+        <note priority="1" from="description">Action label</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.actions.save.aria" datatype="html">
+        <source>Affix seal</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.html</context>
+          <context context-type="linenumber">141,142</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.snack.success" datatype="html">
+        <source>Skill created</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+        <note priority="1" from="description">Snack bar</note>
+      </trans-unit>
+      <trans-unit id="skillCreate.snack.error" datatype="html">
+        <source>Failed to create skill</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skill-create/skill-create.component.ts</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+        <note priority="1" from="description">Snack bar</note>
+      </trans-unit>
+      <trans-unit id="skillsList.srHeading" datatype="html">
+        <source>Skills</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">3,6</context>
+        </context-group>
+        <note priority="1" from="description">SR heading</note>
+      </trans-unit>
+      <trans-unit id="skillsList.title" datatype="html">
         <source>The Great Library of Skills</source>
-        <target>The Great Library of Skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+        <note priority="1" from="description">Title</note>
       </trans-unit>
-      <trans-unit id="skillsList.subtitle">
-        <source>Consult the ancient scrolls to master the crafts of survival, intrigue, and combat in the Old World.</source>
-        <target>Consult the ancient scrolls to master the crafts of survival, intrigue, and combat in the Old World.</target>
+      <trans-unit id="skillsList.subtitle" datatype="html">
+        <source> Consult the ancient scrolls to master the crafts of survival, intrigue, and combat in the Old World. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">9,12</context>
+        </context-group>
+        <note priority="1" from="description">Subtitle</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.filters.aria">
+      <trans-unit id="skillsList.filters.aria" datatype="html">
         <source>Search and filters</source>
-        <target>Search and filters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
       </trans-unit>
-      <trans-unit id="skillsList.search.placeholder">
+      <trans-unit id="skillsList.search.placeholder" datatype="html">
         <source>Search the archives for a skill...</source>
-        <target>Search the archives for a skill...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder</note>
       </trans-unit>
-      <trans-unit id="skillsList.search.aria">
+      <trans-unit id="skillsList.search.aria" datatype="html">
         <source>Search skills</source>
-        <target>Search skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.filters.toggle.aria">
+      <trans-unit id="skillsList.filters.toggle.aria" datatype="html">
         <source>Toggle filters</source>
-        <target>Toggle filters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
       </trans-unit>
-      <trans-unit id="skillsList.filters.toggle">
+      <trans-unit id="skillsList.filters.toggle" datatype="html">
         <source>Filter Results</source>
-        <target>Filter Results</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+        <note priority="1" from="description">Button</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.quickFilters.characteristic.aria">
+      <trans-unit id="skillsList.quickFilters.characteristic.aria" datatype="html">
         <source>Characteristic quick filter</source>
-        <target>Characteristic quick filter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
       </trans-unit>
-      <trans-unit id="skillsList.quickFilters.characteristic">
-        <source>Characteristic: <x id="INTERPOLATION"/></source>
-        <target>Characteristic: <x id="INTERPOLATION"/></target>
+      <trans-unit id="skillsList.quickFilters.characteristic" datatype="html">
+        <source> Characteristic: <x id="INTERPOLATION" equiv-text="{{ characteristicShortLabel(characteristicFilter()) }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">58,59</context>
+        </context-group>
+        <note priority="1" from="description">Quick filter label</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.count">
-        <source>Showing <x id="INTERPOLATION"/> Skills</source>
-        <target>Showing <x id="INTERPOLATION"/> Skills</target>
+      <trans-unit id="skillsList.count" datatype="html">
+        <source> Showing <x id="INTERPOLATION" equiv-text="{{ applyFilters(skillsForCount).length }}"/> Skills </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+        <note priority="1" from="description">Count label</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.filters.panel.aria">
+      <trans-unit id="skillsList.filters.panel.aria" datatype="html">
         <source>Filters panel</source>
-        <target>Filters panel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.filters.type.title">
+      <trans-unit id="skillsList.filters.type.title" datatype="html">
         <source>Type</source>
-        <target>Type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">82,84</context>
+        </context-group>
+        <note priority="1" from="description">Panel title</note>
       </trans-unit>
-      <trans-unit id="skillsList.filters.anyType">
-        <source>Any</source>
-        <target>Any</target>
+      <trans-unit id="skillsList.filters.anyType" datatype="html">
+        <source> Any </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">92,94</context>
+        </context-group>
+        <note priority="1" from="description">Option</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.filters.characteristic.title">
+      <trans-unit id="skillsList.filters.characteristic.title" datatype="html">
         <source>Characteristic</source>
-        <target>Characteristic</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">109,111</context>
+        </context-group>
+        <note priority="1" from="description">Panel title</note>
       </trans-unit>
-      <trans-unit id="skillsList.filters.anyCharacteristic">
-        <source>Any</source>
-        <target>Any</target>
+      <trans-unit id="skillsList.filters.anyCharacteristic" datatype="html">
+        <source> Any </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">119,121</context>
+        </context-group>
+        <note priority="1" from="description">Option</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.filters.clear">
-        <source>Clear filters</source>
-        <target>Clear filters</target>
+      <trans-unit id="skillsList.filters.clear" datatype="html">
+        <source> Clear filters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">138,140</context>
+        </context-group>
+        <note priority="1" from="description">Button</note>
       </trans-unit>
-      <trans-unit id="skillsList.filters.done">
-        <source>Done</source>
-        <target>Done</target>
+      <trans-unit id="skillsList.filters.done" datatype="html">
+        <source> Done </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">147,149</context>
+        </context-group>
+        <note priority="1" from="description">Button</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.error.loadFailed">
+      <trans-unit id="skillsList.error.loadFailed" datatype="html">
         <source>Failed to load the skills list.</source>
-        <target>Failed to load the skills list.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">156,158</context>
+        </context-group>
+        <note priority="1" from="description">Error</note>
       </trans-unit>
-      <trans-unit id="skillsList.empty.noSkills">
+      <trans-unit id="skillsList.empty.noSkills" datatype="html">
         <source>No skills.</source>
-        <target>No skills.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">158,160</context>
+        </context-group>
+        <note priority="1" from="description">Empty</note>
       </trans-unit>
-      <trans-unit id="skillsList.empty.noResults">
+      <trans-unit id="skillsList.empty.noResults" datatype="html">
         <source>No results for the selected filters.</source>
-        <target>No results for the selected filters.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">161,163</context>
+        </context-group>
+        <note priority="1" from="description">Empty</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.grid.aria">
+      <trans-unit id="skillsList.grid.aria" datatype="html">
         <source>Skills list</source>
-        <target>Skills list</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">163</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
       </trans-unit>
-      <trans-unit id="skillsList.skill.noDescription">
+      <trans-unit id="skillsList.skill.noDescription" datatype="html">
         <source>No description.</source>
-        <target>No description.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">180,183</context>
+        </context-group>
+        <note priority="1" from="description">Fallback</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.tags.aria">
+      <trans-unit id="skillsList.tags.aria" datatype="html">
         <source>Tags</source>
-        <target>Tags</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">184</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.delete.aria">
+      <trans-unit id="skillsList.delete.aria" datatype="html">
         <source>Delete skill</source>
-        <target>Delete skill</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">196,197</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.loading">
+      <trans-unit id="skillsList.loading" datatype="html">
         <source>Loading…</source>
-        <target>Loading…</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">212,216</context>
+        </context-group>
+        <note priority="1" from="description">Loading</note>
       </trans-unit>
-
-      <trans-unit id="skillsList.fab.add.aria">
+      <trans-unit id="skillsList.fab.add.aria" datatype="html">
         <source>Add skill</source>
-        <target>Add skill</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.html</context>
+          <context context-type="linenumber">222,223</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
       </trans-unit>
-
-      <!-- skills-list.component.ts ($localize) -->
-      <trans-unit id="skillsList.any">
+      <trans-unit id="skillsList.any" datatype="html">
         <source>Any</source>
-        <target>Any</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.ts</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+        <note priority="1" from="description">Option</note>
       </trans-unit>
-      <trans-unit id="skillsList.deleteConfirm.aria">
-        <source>Confirm deletion of skill <x id="INTERPOLATION" equiv-text="{{skillName}}"/></source>
-        <target>Confirm deletion of skill <x id="INTERPOLATION" equiv-text="{{skillName}}"/></target>
+      <trans-unit id="skillsList.deleteConfirm.aria" datatype="html">
+        <source>Confirm deletion of skill <x id="skillName" equiv-text="skill.name"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/skills/components/skills-list/skills-list.component.ts</context>
+          <context context-type="linenumber">170</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.title" datatype="html">
+        <source>Talent Creation Editor</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+        <note priority="1" from="description">Page title</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.subtitle" datatype="html">
+        <source> Define a new talent for the grim world of perilous adventure. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">6,10</context>
+        </context-group>
+        <note priority="1" from="description">Page subtitle</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.name.label" datatype="html">
+        <source>Talent Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">17,19</context>
+        </context-group>
+        <note priority="1" from="description">Section label</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.name.placeholder" datatype="html">
+        <source>e.g., Hardy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.name.aria" datatype="html">
+        <source>Talent name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.name.error" datatype="html">
+        <source>Required name (max 100 characters)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">29,31</context>
+        </context-group>
+        <note priority="1" from="description">Validation</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.description.label" datatype="html">
+        <source>Talent Description &amp; Lore</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">37,40</context>
+        </context-group>
+        <note priority="1" from="description">Section label</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.description.placeholder" datatype="html">
+        <source>Describe what this talent grants and how it manifests.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.description.aria" datatype="html">
+        <source>Talent description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.actions.discard" datatype="html">
+        <source>Discard</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+        <note priority="1" from="description">Action label</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.actions.discard.aria" datatype="html">
+        <source>Discard</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">63,64</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.actions.save" datatype="html">
+        <source>Affix Seal</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">70,71</context>
+        </context-group>
+        <note priority="1" from="description">Action label</note>
+      </trans-unit>
+      <trans-unit id="talentCreate.actions.save.aria" datatype="html">
+        <source>Affix seal</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talent-create/talent-create.component.html</context>
+          <context context-type="linenumber">75,76</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentsList.srHeading" datatype="html">
+        <source>Talents</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">3,6</context>
+        </context-group>
+        <note priority="1" from="description">SR heading</note>
+      </trans-unit>
+      <trans-unit id="talentsList.title" datatype="html">
+        <source>The Great Library of Talents</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+        <note priority="1" from="description">Title</note>
+      </trans-unit>
+      <trans-unit id="talentsList.subtitle" datatype="html">
+        <source> Browse the gifts and hard-won tricks that set heroes apart in the Old World. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">9,12</context>
+        </context-group>
+        <note priority="1" from="description">Subtitle</note>
+      </trans-unit>
+      <trans-unit id="talentsList.filters.aria" datatype="html">
+        <source>Search</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentsList.search.placeholder" datatype="html">
+        <source>Search the archives for a talent...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder</note>
+      </trans-unit>
+      <trans-unit id="talentsList.search.aria" datatype="html">
+        <source>Search talents</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentsList.add.aria" datatype="html">
+        <source>Add talent</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentsList.add" datatype="html">
+        <source>Add Talent</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+        <note priority="1" from="description">Button</note>
+      </trans-unit>
+      <trans-unit id="talentsList.count" datatype="html">
+        <source> Showing <x id="INTERPOLATION" equiv-text="{{ applyFilters(talentsForCount).length }}"/> Talents </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+        <note priority="1" from="description">Count label</note>
+      </trans-unit>
+      <trans-unit id="talentsList.error.loadFailed" datatype="html">
+        <source>Failed to load the talents list.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">56,58</context>
+        </context-group>
+        <note priority="1" from="description">Error</note>
+      </trans-unit>
+      <trans-unit id="talentsList.empty.noTalents" datatype="html">
+        <source>No talents.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">58,60</context>
+        </context-group>
+        <note priority="1" from="description">Empty</note>
+      </trans-unit>
+      <trans-unit id="talentsList.empty.noResults" datatype="html">
+        <source>No results for the selected search.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">61,63</context>
+        </context-group>
+        <note priority="1" from="description">Empty</note>
+      </trans-unit>
+      <trans-unit id="talentsList.grid.aria" datatype="html">
+        <source>Talents list</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentsList.meta" datatype="html">
+        <source>Talent</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">69,72</context>
+        </context-group>
+        <note priority="1" from="description">Meta</note>
+      </trans-unit>
+      <trans-unit id="talentsList.talent.noDescription" datatype="html">
+        <source>No description.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">80,83</context>
+        </context-group>
+        <note priority="1" from="description">Fallback</note>
+      </trans-unit>
+      <trans-unit id="talentsList.tags.aria" datatype="html">
+        <source>Tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentsList.delete.aria" datatype="html">
+        <source>Delete talent</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">93,94</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="talentsList.loading" datatype="html">
+        <source>Loading…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">109,114</context>
+        </context-group>
+        <note priority="1" from="description">Loading</note>
+      </trans-unit>
+      <trans-unit id="talentsList.fab.add.aria" datatype="html">
+        <source>Add talent</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/talents/components/talents-list/talents-list.component.html</context>
+          <context context-type="linenumber">118,119</context>
+        </context-group>
+        <note priority="1" from="description">Aria</note>
+      </trans-unit>
+      <trans-unit id="professionDelete.title" datatype="html">
+        <source>Are you sure you want to delete this profession?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/profession-delete-confirm-dialog/profession-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">17,21</context>
+        </context-group>
+        <note priority="1" from="description">Dialog title</note>
+      </trans-unit>
+      <trans-unit id="professionDelete.quote" datatype="html">
+        <source>&quot;Every path may be severed by a single stroke of the quill.&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/profession-delete-confirm-dialog/profession-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">26,30</context>
+        </context-group>
+        <note priority="1" from="description">Quote</note>
+      </trans-unit>
+      <trans-unit id="professionDelete.cancel" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/profession-delete-confirm-dialog/profession-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="description">Button</note>
+      </trans-unit>
+      <trans-unit id="professionDelete.confirm" datatype="html">
+        <source>Delete</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/profession-delete-confirm-dialog/profession-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <note priority="1" from="description">Button</note>
+      </trans-unit>
+      <trans-unit id="skillDelete.title" datatype="html">
+        <source> Are you sure you want to delete this skill? </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/skill-delete-confirm-dialog/skill-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">18,22</context>
+        </context-group>
+        <note priority="1" from="description">Dialog title</note>
+      </trans-unit>
+      <trans-unit id="skillDelete.quote" datatype="html">
+        <source> &quot;Knowledge once lost may never be reclaimed.&quot; </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/skill-delete-confirm-dialog/skill-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">28,32</context>
+        </context-group>
+        <note priority="1" from="description">Quote</note>
+      </trans-unit>
+      <trans-unit id="skillDelete.cancel" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/skill-delete-confirm-dialog/skill-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <note priority="1" from="description">Button</note>
+      </trans-unit>
+      <trans-unit id="skillDelete.confirm" datatype="html">
+        <source>Delete</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/skill-delete-confirm-dialog/skill-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <note priority="1" from="description">Button</note>
+      </trans-unit>
+      <trans-unit id="talentDelete.title" datatype="html">
+        <source>Are you sure you want to delete this talent?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/talent-delete-confirm-dialog/talent-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">17,21</context>
+        </context-group>
+        <note priority="1" from="description">Dialog title</note>
+      </trans-unit>
+      <trans-unit id="talentDelete.quote" datatype="html">
+        <source>&quot;Knowledge once lost may never be reclaimed.&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/talent-delete-confirm-dialog/talent-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">26,29</context>
+        </context-group>
+        <note priority="1" from="description">Quote</note>
+      </trans-unit>
+      <trans-unit id="talentDelete.cancel" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/talent-delete-confirm-dialog/talent-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <note priority="1" from="description">Button</note>
+      </trans-unit>
+      <trans-unit id="talentDelete.confirm" datatype="html">
+        <source>Delete</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/talent-delete-confirm-dialog/talent-delete-confirm-dialog.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <note priority="1" from="description">Button</note>
+      </trans-unit>
+      <trans-unit id="app.home" datatype="html">
+        <source>Strona główna</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/top-navbar/top-navbar.component.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+        <note priority="1" from="description">ARIA</note>
+      </trans-unit>
+      <trans-unit id="app.nav.aria" datatype="html">
+        <source>Nawigacja główna</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/ui/top-navbar/top-navbar.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">ARIA</note>
       </trans-unit>
     </body>
   </file>

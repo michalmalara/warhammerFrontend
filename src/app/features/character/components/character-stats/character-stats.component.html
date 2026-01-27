@@ -1,5 +1,5 @@
 <!-- przeniesione 1:1 z app/character-stats -->
-<h2 class="section-title" i18n="Nagłówek sekcji cech głównych@@stats.primaryHeader">
+<h2 class="section-title" i18n="Primary characteristics section heading@@stats.primaryHeader">
   Primary Characteristics
 </h2>
 <div class="stats-row-wrapper">
@@ -16,11 +16,11 @@
 
         <div class="sub-values muted">
           <span class="sub sub-base"
-          ><span i18n="Etykieta bazowej wartości statystyki@@stats.baseLabel">Base:</span> &nbsp;
+          ><span i18n="Label: base value of stat@@stats.baseLabel">Base:</span> &nbsp;
             <strong>{{ s.base ?? statTotal(s, 'primary') }}</strong></span
           >
           <span class="sub sub-adv"
-          ><span i18n="Etykieta rozwinięcia (advances) statystyki@@stats.advLabel">Adv:</span>&nbsp;
+          ><span i18n="Label: advances (adv) of stat@@stats.advLabel">Adv:</span>&nbsp;
             <strong>{{ s.adv ?? 0 }}</strong></span
           >
         </div>
@@ -29,7 +29,7 @@
   </div>
 </div>
 
-<h2 class="section-title" i18n="Nagłówek sekcji cech drugorzędnych@@stats.secondaryHeader">
+<h2 class="section-title" i18n="Secondary characteristics section heading@@stats.secondaryHeader">
   Secondary Characteristics
 </h2>
 <div class="stats-row">
@@ -45,11 +45,11 @@
 
       <div class="sub-values muted">
         <span class="sub sub-base"
-        ><span i18n="Etykieta bazowej wartości statystyki@@stats.baseLabel">Base:</span>&nbsp;
+        ><span i18n="Label: base value of stat@@stats.baseLabel">Base:</span>&nbsp;
           <strong>{{ sc.base ?? statTotal(sc, 'secondary') }}</strong></span
         >
         <span class="sub sub-adv"
-        ><span i18n="Etykieta rozwinięcia (advances) statystyki@@stats.advLabel">Adv:</span>&nbsp;
+        ><span i18n="Label: advances (adv) of stat@@stats.advLabel">Adv:</span>&nbsp;
           <strong>{{ sc.adv ?? 0 }}</strong></span
         >
       </div>

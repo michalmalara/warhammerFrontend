@@ -151,6 +151,18 @@
         <source>Skill Creation Editor</source>
         <target>Skill Creation Editor</target>
       </trans-unit>
+      <trans-unit id="app.title" datatype="html">
+        <source>Warhammer</source>
+        <target>Warhammer</target>
+      </trans-unit>
+      <trans-unit id="app.home" datatype="html">
+        <source>Home</source>
+        <target>Home</target>
+      </trans-unit>
+      <trans-unit id="app.nav.aria" datatype="html">
+        <source>Main navigation</source>
+        <target>Main navigation</target>
+      </trans-unit>
       <trans-unit id="skillCreate.subtitle" datatype="html">
         <source> Define a new skill for the grim world of perilous adventure. </source>
         <target> Define a new skill for the grim world of perilous adventure. </target>
@@ -416,11 +428,129 @@
         <source>Increase Magic development</source>
         <target>Increase Magic development</target>
       </trans-unit>
-
-      <!-- Profession Detail -->
-      <trans-unit id="profession.back.aria" datatype="html">
-        <source>Back to professions list</source>
-        <target>Back to professions list</target>
+      <trans-unit id="profession.create.type.basic" datatype="html">
+        <source>Basic</source>
+        <target>Basic</target>
+      </trans-unit>
+      <trans-unit id="profession.create.type.advanced" datatype="html">
+        <source>Advanced</source>
+        <target>Advanced</target>
+      </trans-unit>
+      <trans-unit id="profession.create.type.basic.label" datatype="html">
+        <source>Basic</source>
+        <target>Basic</target>
+      </trans-unit>
+      <trans-unit id="profession.create.type.advanced.label" datatype="html">
+        <source>Advanced</source>
+        <target>Advanced</target>
+      </trans-unit>
+      <trans-unit id="profession.create.skills.label" datatype="html">
+        <source>Skills</source>
+        <target>Skills</target>
+      </trans-unit>
+      <trans-unit id="profession.create.talents.label" datatype="html">
+        <source>Talents</source>
+        <target>Talents</target>
+      </trans-unit>
+      <trans-unit id="profession.create.skills.search.placeholder" datatype="html">
+        <source>Search skills...</source>
+        <target>Search skills...</target>
+      </trans-unit>
+      <trans-unit id="profession.create.talents.search.placeholder" datatype="html">
+        <source>Search talents...</source>
+        <target>Search talents...</target>
+      </trans-unit>
+      <trans-unit id="profession.create.skills.list.aria" datatype="html">
+        <source>Skills</source>
+        <target>Skills</target>
+      </trans-unit>
+      <trans-unit id="profession.create.talents.list.aria" datatype="html">
+        <source>Talents</source>
+        <target>Talents</target>
+      </trans-unit>
+      <trans-unit id="profession.create.alt.toggle" datatype="html">
+        <source>Show/Hide alternatives</source>
+        <target>Show/Hide alternatives</target>
+      </trans-unit>
+      <trans-unit id="profession.create.remove.skill" datatype="html">
+        <source>Remove</source>
+        <target>Remove</target>
+      </trans-unit>
+      <trans-unit id="profession.create.remove.talent" datatype="html">
+        <source>Remove</source>
+        <target>Remove</target>
+      </trans-unit>
+      <trans-unit id="profession.create.alternatives.skills" datatype="html">
+        <source>Alternative skills</source>
+        <target>Alternative skills</target>
+      </trans-unit>
+      <trans-unit id="profession.create.alternatives.talents" datatype="html">
+        <source>Alternative talents</source>
+        <target>Alternative talents</target>
+      </trans-unit>
+      <trans-unit id="profession.create.alternatives.title" datatype="html">
+        <source>Alternatives</source>
+        <target>Alternatives</target>
+      </trans-unit>
+      <trans-unit id="profession.create.remove.alternative" datatype="html">
+        <source>Remove alternative</source>
+        <target>Remove alternative</target>
+      </trans-unit>
+      <trans-unit id="profession.create.addAlternativeSkill.label" datatype="html">
+        <source>Add alternative skill (from already added)</source>
+        <target>Add alternative skill (from already added)</target>
+      </trans-unit>
+      <trans-unit id="profession.create.addAlternativeTalent.label" datatype="html">
+        <source>Add alternative talent (from already added)</source>
+        <target>Add alternative talent (from already added)</target>
+      </trans-unit>
+      <trans-unit id="profession.create.choose" datatype="html">
+        <source>Choose...</source>
+        <target>Choose...</target>
+      </trans-unit>
+      <trans-unit id="cc.chooseFor" datatype="html">
+        <source>Choose a profession for: <x id="INTERPOLATION" equiv-text="{{ selectedRaceLabel() }}"/></source>
+        <target>Choose a profession for: <x id="INTERPOLATION" equiv-text="{{ selectedRaceLabel() }}"/></target>
+      </trans-unit>
+      <trans-unit id="cc.availableCount" datatype="html">
+        <source><x id="INTERPOLATION"/> available</source>
+        <target><x id="INTERPOLATION"/> available</target>
+      </trans-unit>
+      <trans-unit id="cc.cancel" datatype="html">
+        <source>Cancel</source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="cc.noEligible" datatype="html">
+        <source>No professions available for this race.</source>
+        <target>No professions available for this race.</target>
+      </trans-unit>
+      <trans-unit id="cc.noEligiblePlaceholder" datatype="html">
+        <source>No professions available for this race.</source>
+        <target>No professions available for this race.</target>
+      </trans-unit>
+      <trans-unit id="cc.step4.noSkills" datatype="html">
+        <source>No skills saved for this profession.</source>
+        <target>No skills saved for this profession.</target>
+      </trans-unit>
+      <trans-unit id="cc.step4.noTalents" datatype="html">
+        <source>No talents saved for this profession.</source>
+        <target>No talents saved for this profession.</target>
+      </trans-unit>
+      <trans-unit id="cc.step4.returnToStep" datatype="html">
+        <source>Return to step 3 and accept a profession to see skills and talents.</source>
+        <target>Return to step 3 and accept a profession to see skills and talents.</target>
+      </trans-unit>
+      <trans-unit id="cc.final.trappings.empty" datatype="html">
+        <source>No trappings on the profession. Please fill the "trappings" field on the profession.</source>
+        <target>No trappings on the profession. Please fill the "trappings" field on the profession.</target>
+      </trans-unit>
+      <trans-unit id="cc.final.noSkills" datatype="html">
+        <source>No selected skills.</source>
+        <target>No selected skills.</target>
+      </trans-unit>
+      <trans-unit id="cc.final.noTalents" datatype="html">
+        <source>No selected talents.</source>
+        <target>No selected talents.</target>
       </trans-unit>
       <trans-unit id="profession.card.title" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{
@@ -438,6 +568,7 @@
         <source>Back</source>
         <target>Back</target>
       </trans-unit>
+      <trans-unit id="profession.back.aria" datatype="html"><source>Back to professions list</source><target>Back to professions list</target></trans-unit>
       <trans-unit id="profession.development.title" datatype="html">
         <source> Development </source>
         <target> Development </target>
@@ -470,7 +601,32 @@
       <trans-unit id="label.mag.full" datatype="html"><source>(Magic)</source><target>(Magic)</target></trans-unit>
 
       <trans-unit id="profession.skills.title" datatype="html"><source>Skills</source><target>Skills</target></trans-unit>
+      <trans-unit id="profession.talents.title" datatype="html"><source>Talents</source><target>Talents</target></trans-unit>
       <trans-unit id="profession.skills.none" datatype="html"><source>None.</source><target>None.</target></trans-unit>
+      <trans-unit id="skillDelete.title" datatype="html">
+        <source>Are you sure you want to delete this skill?</source>
+        <target>Are you sure you want to delete this skill?</target>
+      </trans-unit>
+      <trans-unit id="skillDelete.quote" datatype="html">
+        <source>"Knowledge once lost may never be reclaimed."</source>
+        <target>"Knowledge once lost may never be reclaimed."</target>
+      </trans-unit>
+      <trans-unit id="skillDelete.cancel" datatype="html"><source>Cancel</source><target>Cancel</target></trans-unit>
+      <trans-unit id="skillDelete.confirm" datatype="html"><source>Delete</source><target>Delete</target></trans-unit>
+      <trans-unit id="talentDelete.title" datatype="html">
+        <source>Are you sure you want to delete this talent?</source>
+        <target>Are you sure you want to delete this talent?</target>
+      </trans-unit>
+      <trans-unit id="talentDelete.quote" datatype="html">
+        <source>"Knowledge once lost may never be reclaimed."</source>
+        <target>"Knowledge once lost may never be reclaimed."</target>
+      </trans-unit>
+      <trans-unit id="talentDelete.cancel" datatype="html"><source>Cancel</source><target>Cancel</target></trans-unit>
+      <trans-unit id="talentDelete.confirm" datatype="html"><source>Delete</source><target>Delete</target></trans-unit>
+      <trans-unit id="professionDelete.title" datatype="html"><source>Are you sure you want to delete this profession?</source><target>Are you sure you want to delete this profession?</target></trans-unit>
+      <trans-unit id="professionDelete.quote" datatype="html"><source>"Every path may be severed by a single stroke of the quill."</source><target>"Every path may be severed by a single stroke of the quill."</target></trans-unit>
+      <trans-unit id="professionDelete.cancel" datatype="html"><source>Cancel</source><target>Cancel</target></trans-unit>
+      <trans-unit id="professionDelete.confirm" datatype="html"><source>Delete</source><target>Delete</target></trans-unit>
       <trans-unit id="profession.skill.item" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ ps.skill.name }}"/> (<x id="INTERPOLATION_1" equiv-text="{{ ps.skill.associatedCharacteristic }}"/>)</source>
         <target><x id="INTERPOLATION" equiv-text="{{ ps.skill.name }}"/> (<x id="INTERPOLATION_1" equiv-text="{{ ps.skill.associatedCharacteristic }}"/>)</target>
@@ -479,25 +635,155 @@
         <source> or: <x id="INTERPOLATION" equiv-text="{{ alt.skill.name }}"/> </source>
         <target> or: <x id="INTERPOLATION" equiv-text="{{ alt.skill.name }}"/> </target>
       </trans-unit>
-      <trans-unit id="profession.talents.title" datatype="html"><source>Talents</source><target>Talents</target></trans-unit>
-      <trans-unit id="profession.talents.none" datatype="html"><source>None.</source><target>None.</target></trans-unit>
-      <trans-unit id="profession.talent.item" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{
-                  pt.talent.name
-                }}"/></source>
-        <target><x id="INTERPOLATION" equiv-text="{{
-                  pt.talent.name
-                }}"/></target>
+      <trans-unit id="profession.edit.aria" datatype="html"><source>Edit profession</source><target>Edit profession</target></trans-unit>
+      <trans-unit id="profession.edit" datatype="html"><source>Edit</source><target>Edit</target></trans-unit>
+      <trans-unit id="label.sb" datatype="html"><source>SB</source><target>SB</target></trans-unit>
+      <trans-unit id="label.tb" datatype="html"><source>TB</source><target>TB</target></trans-unit>
+      <trans-unit id="label.ip" datatype="html"><source>IP</source><target>IP</target></trans-unit>
+      <trans-unit id="label.fp" datatype="html"><source>FP</source><target>FP</target></trans-unit>
+      <trans-unit id="profession.badge.type" datatype="html"><source><x id="INTERPOLATION" equiv-text="{{ p.type }}"/></source><target><x id="INTERPOLATION" equiv-text="{{ p.type }}"/></target></trans-unit>
+      <trans-unit id="profession.about.text" datatype="html"><source><x id="INTERPOLATION" equiv-text="{{ p.about }}"/></source><target><x id="INTERPOLATION" equiv-text="{{ p.about }}"/></target></trans-unit>
+      <trans-unit id="profession.exits.title" datatype="html"><source>{$START_TAG_MAT_ICON}arrow_outward{$CLOSE_TAG_MAT_ICON} Career Exits </source><target>{$START_TAG_MAT_ICON}arrow_outward{$CLOSE_TAG_MAT_ICON} Career Exits </target></trans-unit>
+      <trans-unit id="profession.entries.title" datatype="html"><source>{$START_TAG_MAT_ICON}merge_type{$CLOSE_TAG_MAT_ICON} Entry Paths </source><target>{$START_TAG_MAT_ICON}merge_type{$CLOSE_TAG_MAT_ICON} Entry Paths </target></trans-unit>
+      <trans-unit id="skillCreate.snack.success" datatype="html"><source>Skill created</source><target>Skill created</target></trans-unit>
+      <trans-unit id="skillCreate.snack.error" datatype="html"><source>Failed to create skill</source><target>Failed to create skill</target></trans-unit>
+      <trans-unit id="skillsList.any" datatype="html"><source>Any</source><target>Any</target></trans-unit>
+      <trans-unit id="skillsList.deleteConfirm.aria" datatype="html"><source>Confirm deletion of skill <x id="skillName" equiv-text="{{skillName}}"/></source><target>Confirm deletion of skill <x id="skillName" equiv-text="{{skillName}}"/></target></trans-unit>
+      <trans-unit id="skillsList.filters.aria" datatype="html"><source>Search and filters</source><target>Search and filters</target></trans-unit>
+      <trans-unit id="skillsList.search.placeholder" datatype="html"><source>Search the archives for a skill...</source><target>Search the archives for a skill...</target>
       </trans-unit>
-      <trans-unit id="profession.talent.alt" datatype="html">
-        <source> or: <x id="INTERPOLATION" equiv-text="{{ alt.talent.name }}"/> </source>
-        <target> or: <x id="INTERPOLATION" equiv-text="{{ alt.talent.name }}"/> </target>
+      <trans-unit id="skillsList.search.aria" datatype="html"><source>Search skills</source><target>Search skills</target></trans-unit>
+      <trans-unit id="skillsList.filters.toggle.aria" datatype="html"><source>Toggle filters</source><target>Toggle filters</target></trans-unit>
+      <trans-unit id="skillsList.quickFilters.characteristic.aria" datatype="html"><source>Characteristic quick filter</source><target>Characteristic quick filter</target></trans-unit>
+      <trans-unit id="skillsList.filters.panel.aria" datatype="html"><source>Filters panel</source><target>Filters panel</target></trans-unit>
+      <trans-unit id="skillsList.fab.add.aria" datatype="html"><source>Add skill</source><target>Add skill</target></trans-unit>
+      <trans-unit id="skillsList.srHeading" datatype="html"><source>Skills</source><target>Skills</target></trans-unit>
+      <trans-unit id="skillsList.title" datatype="html"><source>The Great Library of Skills</source><target>The Great Library of Skills</target></trans-unit>
+      <trans-unit id="skillsList.subtitle" datatype="html"><source> Consult the ancient scrolls to master the crafts of survival, intrigue, and combat in the Old World. </source>
+        <target> Consult the ancient scrolls to master the crafts of survival, intrigue, and combat in the Old World. </target>
       </trans-unit>
-      <trans-unit id="profession.entryexit.title" datatype="html"><source> Entry / Exit Professions </source><target> Entry / Exit Professions </target></trans-unit>
-      <trans-unit id="profession.entry.title" datatype="html"><source>Entry</source><target>Entry</target></trans-unit>
-      <trans-unit id="profession.entry.none" datatype="html"><source>None.</source><target>None.</target></trans-unit>
-      <trans-unit id="profession.exit.title" datatype="html"><source>Exit</source><target>Exit</target></trans-unit>
-      <trans-unit id="profession.exit.none" datatype="html"><source>None.</source><target>None.</target></trans-unit>
+      <trans-unit id="skillsList.filters.toggle" datatype="html"><source>Filter Results</source><target>Filter Results</target></trans-unit>
+      <trans-unit id="skillsList.quickFilters.characteristic" datatype="html"><source> Characteristic: <x id="INTERPOLATION"/></source><target> Characteristic: <x id="INTERPOLATION"/></target></trans-unit>
+      <trans-unit id="skillsList.count" datatype="html"><source> Showing <x id="INTERPOLATION"/> Skills </source><target> Showing <x id="INTERPOLATION"/> Skills </target></trans-unit>
+      <trans-unit id="skillsList.filters.type.title" datatype="html"><source>Type</source><target>Type</target></trans-unit>
+      <trans-unit id="skillsList.filters.anyType" datatype="html"><source> Any </source><target> Any </target></trans-unit>
+      <trans-unit id="skillsList.filters.characteristic.title" datatype="html"><source>Characteristic</source><target>Characteristic</target></trans-unit>
+      <trans-unit id="skillsList.filters.anyCharacteristic" datatype="html"><source> Any </source><target> Any </target></trans-unit>
+      <trans-unit id="skillsList.filters.clear" datatype="html"><source> Clear filters </source><target> Clear filters </target></trans-unit>
+      <trans-unit id="skillsList.filters.done" datatype="html"><source> Done </source><target> Done </target></trans-unit>
+      <trans-unit id="skillsList.error.loadFailed" datatype="html"><source>Failed to load the skills list.</source><target>Failed to load the skills list.</target></trans-unit>
+      <trans-unit id="skillsList.empty.noSkills" datatype="html"><source>No skills.</source><target>No skills.</target></trans-unit>
+      <trans-unit id="skillsList.grid.aria" datatype="html"><source>Skills list</source><target>Skills list</target></trans-unit>
+      <trans-unit id="skillsList.empty.noResults" datatype="html"><source>No results for the selected filters.</source><target>No results for the selected filters.</target></trans-unit>
+      <trans-unit id="skillsList.tags.aria" datatype="html"><source>Tags</source><target>Tags</target></trans-unit>
+      <trans-unit id="skillsList.delete.aria" datatype="html"><source>Delete skill</source><target>Delete skill</target></trans-unit>
+      <trans-unit id="skillsList.skill.noDescription" datatype="html"><source>No description.</source><target>No description.</target></trans-unit>
+      <trans-unit id="skillsList.loading" datatype="html"><source>Loading…</source><target>Loading…</target></trans-unit>
+      <trans-unit id="talentCreate.title" datatype="html"><source>Talent Creation Editor</source>
+        <target>Talent Creation Editor</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.subtitle" datatype="html"><source> Define a new talent for the grim world of perilous adventure. </source>
+        <target> Define a new talent for the grim world of perilous adventure. </target>
+      </trans-unit>
+      <trans-unit id="talentCreate.name.label" datatype="html">
+        <source>Talent Name</source>
+        <target>Talent Name</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.name.placeholder" datatype="html">
+        <source>e.g., Hardy</source>
+        <target>e.g., Hardy</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.name.aria" datatype="html">
+        <source>Talent name</source>
+        <target>Talent name</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.name.error" datatype="html">
+        <source>Required name (max 100 characters)</source>
+        <target>Required name (max 100 characters)</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.description.label" datatype="html">
+        <source>Talent Description &amp; Lore</source>
+        <target>Talent Description &amp; Lore</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.description.placeholder" datatype="html">
+        <source>Describe what this talent grants and how it manifests.</source>
+        <target>Describe what this talent grants and how it manifests.</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.description.aria" datatype="html">
+        <source>Talent description</source>
+        <target>Talent description</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.actions.discard" datatype="html">
+        <source>Discard</source>
+        <target>Discard</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.actions.discard.aria" datatype="html">
+        <source>Discard</source>
+        <target>Discard</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.actions.save" datatype="html">
+        <source>Affix Seal</source>
+        <target>Affix Seal</target>
+      </trans-unit>
+      <trans-unit id="talentCreate.actions.save.aria" datatype="html">
+        <source>Affix seal</source>
+        <target>Affix seal</target>
+      </trans-unit>
+      <trans-unit id="talentsList.filters.aria" datatype="html"><source>Search</source><target>Search</target></trans-unit>
+      <trans-unit id="talentsList.search.placeholder" datatype="html"><source>Search the archives for a talent...</source><target>Search the archives for a talent...</target></trans-unit>
+      <trans-unit id="talentsList.search.aria" datatype="html"><source>Search talents</source><target>Search talents</target></trans-unit>
+      <trans-unit id="talentsList.add.aria" datatype="html"><source>Add talent</source><target>Add talent</target></trans-unit>
+      <trans-unit id="talentsList.fab.add.aria" datatype="html"><source>Add talent</source><target>Add talent</target></trans-unit>
+      <trans-unit id="talentsList.srHeading" datatype="html"><source>Talents</source><target>Talents</target></trans-unit>
+      <trans-unit id="talentsList.title" datatype="html"><source>The Great Library of Talents</source><target>The Great Library of Talents</target></trans-unit>
+      <trans-unit id="talentsList.subtitle" datatype="html"><source> Browse the gifts and hard-won tricks that set heroes apart in the Old World. </source>
+        <target> Browse the gifts and hard-won tricks that set heroes apart in the Old World. </target>
+      </trans-unit>
+      <trans-unit id="talentsList.add" datatype="html"><source>Add Talent</source><target>Add Talent</target></trans-unit>
+      <trans-unit id="talentsList.count" datatype="html"><source> Showing <x id="INTERPOLATION"/> Talents </source><target> Showing <x id="INTERPOLATION"/> Talents </target></trans-unit>
+      <trans-unit id="talentsList.error.loadFailed" datatype="html"><source>Failed to load the talents list.</source><target>Failed to load the talents list.</target></trans-unit>
+      <trans-unit id="talentsList.empty.noTalents" datatype="html"><source>No talents.</source><target>No talents.</target></trans-unit>
+      <trans-unit id="talentsList.grid.aria" datatype="html"><source>Talents list</source><target>Talents list</target></trans-unit>
+      <trans-unit id="talentsList.empty.noResults" datatype="html"><source>No results for the selected search.</source><target>No results for the selected search.</target></trans-unit>
+      <trans-unit id="talentsList.tags.aria" datatype="html"><source>Tags</source><target>Tags</target></trans-unit>
+      <trans-unit id="talentsList.delete.aria" datatype="html"><source>Delete talent</source><target>Delete talent</target></trans-unit>
+      <trans-unit id="talentsList.meta" datatype="html"><source>Talent</source><target>Talent</target></trans-unit>
+      <trans-unit id="talentsList.talent.noDescription" datatype="html"><source>No description.</source><target>No description.</target></trans-unit>
+      <trans-unit id="talentsList.loading" datatype="html"><source>Loading…</source><target>Loading…</target></trans-unit>
+      <trans-unit id="profession.create.success" datatype="html"><source>Profession created</source><target>Profession created</target></trans-unit>
+      <trans-unit id="profession.create.failed" datatype="html"><source>Failed to create profession</source><target>Failed to create profession</target></trans-unit>
+      <trans-unit id="profession.create.chooseSkill.autocomplete" datatype="html"><source>Choose a skill from the list (autocomplete).</source><target>Choose a skill from the list (autocomplete).</target></trans-unit>
+      <trans-unit id="profession.create.chooseTalent.autocomplete" datatype="html"><source>Choose a talent from the list (autocomplete).</source><target>Choose a talent from the list (autocomplete).</target></trans-unit>
+      <trans-unit id="profession.create.remove.skill.failed" datatype="html"><source>Failed to remove skill from server.</source><target>Failed to remove skill from server.</target></trans-unit>
+      <trans-unit id="profession.create.remove.talent.failed" datatype="html"><source>Failed to remove talent from server.</source><target>Failed to remove talent from server.</target></trans-unit>
+      <trans-unit id="profession.create.add.skill.failed" datatype="html"><source>Failed to add skill to profession.</source><target>Failed to add skill to profession.</target></trans-unit>
+      <trans-unit id="profession.create.add.talent.failed" datatype="html"><source>Failed to add talent to profession.</source><target>Failed to add talent to profession</target></trans-unit>
+      <trans-unit id="profession.create.alt.skill.same" datatype="html"><source>You cannot add the same skill as an alternative.</source><target>You cannot add the same skill as an alternative.</target></trans-unit>
+      <trans-unit id="profession.create.add.alternative.skill.failed" datatype="html"><source>Failed to add alternative skill.</source><target>Failed to add alternative skill.</target></trans-unit>
+      <trans-unit id="profession.create.remove.alternative.skill.failed" datatype="html"><source>Failed to remove alternative skill.</source><target>Failed to remove alternative skill.</target></trans-unit>
+      <trans-unit id="profession.create.alt.talent.same" datatype="html"><source>You cannot add the same talent as an alternative.</source><target>You cannot add the same talent as an alternative.</target></trans-unit>
+      <trans-unit id="profession.create.add.alternative.talent.failed" datatype="html"><source>Failed to add alternative talent.</source><target>Failed to add alternative talent.</target></trans-unit>
+      <trans-unit id="profession.create.remove.alternative.talent.failed" datatype="html"><source>Failed to remove alternative talent.</source><target>Failed to remove alternative talent.</target></trans-unit>
+      <trans-unit id="profession.edit.load.failed" datatype="html"><source>Failed to load profession</source><target>Failed to load profession</target></trans-unit>
+      <trans-unit id="profession.edit.saved" datatype="html"><source>Profession saved</source><target>Profession saved</target></trans-unit>
+      <trans-unit id="profession.edit.save.failed" datatype="html"><source>Failed to save profession</source><target>Failed to save profession</target></trans-unit>
+      <trans-unit id="profession.edit.chooseSkill.autocomplete" datatype="html"><source>Choose a skill from the list (autocomplete).</source><target>Choose a skill from the list (autocomplete).</target></trans-unit>
+      <trans-unit id="profession.edit.chooseTalent.autocomplete" datatype="html"><source>Choose a talent from the list (autocomplete).</source><target>Choose a talent from the list (autocomplete).</target></trans-unit>
+      <trans-unit id="profession.edit.remove.skill.failed" datatype="html"><source>Failed to remove skill from server.</source><target>Failed to remove skill from server.</target></trans-unit>
+      <trans-unit id="profession.edit.remove.talent.failed" datatype="html"><source>Failed to remove talent from server.</source><target>Failed to remove talent from server.</target></trans-unit>
+      <trans-unit id="profession.edit.add.skill.failed" datatype="html"><source>Failed to add skill to profession.</source><target>Failed to add skill to profession.</target></trans-unit>
+      <trans-unit id="profession.edit.add.talent.failed" datatype="html"><source>Failed to add talent to profession.</source><target>Failed to add talent to profession.</target></trans-unit>
+      <trans-unit id="profession.edit.add.alternative.skill.failed" datatype="html"><source>Failed to add alternative skill.</source><target>Failed to add alternative skill.</target></trans-unit>
+      <trans-unit id="profession.edit.remove.alternative.skill.failed" datatype="html"><source>Failed to remove alternative skill.</source><target>Failed to remove alternative skill.</target></trans-unit>
+      <trans-unit id="profession.edit.add.alternative.talent.failed" datatype="html"><source>Failed to add alternative talent.</source><target>Failed to add alternative talent.</target></trans-unit>
+      <trans-unit id="profession.edit.remove.alternative.talent.failed" datatype="html"><source>Failed to remove alternative talent.</source><target>Failed to remove alternative talent.</target></trans-unit>
+      <trans-unit id="profession.edit.alt.sameSkill" datatype="html"><source>You cannot add the same skill as an alternative.</source><target>You cannot add the same skill as an alternative.</target></trans-unit>
+      <trans-unit id="profession.edit.alt.sameTalent" datatype="html"><source>You cannot add the same talent as an alternative.</source><target>You cannot add the same talent as an alternative.</target></trans-unit>
+      <trans-unit id="nav.character" datatype="html"><source>Character sheet</source><target>Character sheet</target></trans-unit>
+      <trans-unit id="nav.characterCreation" datatype="html"><source>Character creation</source><target>Character creation</target></trans-unit>
+      <trans-unit id="nav.professions" datatype="html"><source>Professions</source><target>Professions</target></trans-unit>
+      <trans-unit id="nav.skills" datatype="html"><source>Skills</source><target>Skills</target></trans-unit>
+      <trans-unit id="nav.talents" datatype="html"><source>Talents</source><target>Talents</target></trans-unit>
     </body>
   </file>
 </xliff>

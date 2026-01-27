@@ -1,14 +1,14 @@
 <!-- przeniesione 1:1 z app/profession-history -->
 
 <mat-card class="xp-panel">
-  <div class="xp-label muted" i18n="Nagłówek panelu doświadczenia@@xp.title">Experience</div>
+  <div class="xp-label muted" i18n="Experience panel heading@@xp.title">Experience</div>
 
   <div class="xp-top-row">
     @if (currentProfession) {
       <div class="xp-current-profession">
         <div
           class="xp-current-profession-label muted"
-          i18n="Etykieta: aktualna profesja@@xp.currentProfessionLabel"
+          i18n="Label: current profession@@xp.currentProfessionLabel"
         >
           Current profession
         </div>
@@ -18,7 +18,7 @@
 
     <div class="xp-metrics">
       <div class="xp-metric">
-        <div class="xp-metric-label muted" i18n="Etykieta: punkty do wydania@@xp.toSpendLabel">
+        <div class="xp-metric-label muted" i18n="Label: to spend XP@@xp.toSpendLabel">
           To spend
         </div>
         <div class="xp-metric-value">{{ xpToSpend }}</div>
@@ -27,7 +27,7 @@
       <div class="xp-metric">
         <div
           class="xp-metric-label muted"
-          i18n="Etykieta: suma zdobytych punktów@@xp.totalEarnedLabel"
+          i18n="Label: total earned XP@@xp.totalEarnedLabel"
         >
           Total earned
         </div>
@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <div class="xp-progress-label muted" i18n="Etykieta: do następnej profesji@@xp.toNextProfession">
+  <div class="xp-progress-label muted" i18n="Label: to next profession@@xp.toNextProfession">
     To next profession
   </div>
   <div
@@ -50,9 +50,9 @@
   </div>
 
   <div class="xp-numbers">
-    {{ xpCurrent }} / {{ xpMax }} <span i18n="Skrót jednostki XP@@xp.unit">XP</span> •
+    {{ xpCurrent }} / {{ xpMax }} <span i18n="XP unit abbreviation@@xp.unit">XP</span> •
     <span class="muted"
-      >(<span i18n="Etykieta: pozostało@@xp.remaining">remaining</span>
+    >(<span i18n="Label: remaining@@xp.remaining">remaining</span>
       {{ xpMissingToProfession }})</span
     >
   </div>

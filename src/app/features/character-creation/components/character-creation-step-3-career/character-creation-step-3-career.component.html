@@ -29,7 +29,7 @@
                         [disabled]="isLoading()">
                   <span class="roll__buttonInner">
                     <mat-icon class="dice__icon wax-icon" aria-hidden="true">list</mat-icon>
-                    Wybierz z listy
+                    Choose from list
                   </span>
                 </button>
 
@@ -37,8 +37,8 @@
                 @if (isSelecting()) {
                   <div class="eligiblePanel">
                     <header class="eligiblePanel__head">
-                      <h4>Wybierz profesję dla: {{ selectedRaceLabel() }}</h4>
-                      <small>{{ eligibleCount() }} dostępnych</small>
+                      <h4 i18n="Heading@@cc.chooseFor">Choose a profession for: {{ selectedRaceLabel() }}</h4>
+                      <small i18n="Count@@cc.availableCount">{{ eligibleCount() }} available</small>
                     </header>
 
                     @if (eligibleList().length) {
@@ -52,11 +52,15 @@
                         }
                       </ul>
                     } @else {
-                      <div class="eligiblePanel__empty">Brak profesji do wyboru dla tej rasy.</div>
+                      <div class="eligiblePanel__empty" i18n="Empty@@cc.noEligible">No professions available for this
+                        race.
+                      </div>
                     }
 
                     <div class="eligiblePanel__actions">
-                      <button type="button" class="roll__button" (click)="cancelSelection()">Anuluj</button>
+                      <button type="button" class="roll__button" (click)="cancelSelection()" i18n="Button@@cc.cancel">
+                        Cancel
+                      </button>
                     </div>
                   </div>
                 }
@@ -257,7 +261,7 @@
                         [disabled]="isLoading()">
                   <span class="roll__buttonInner">
                     <mat-icon class="dice__icon wax-icon" aria-hidden="true">list</mat-icon>
-                    Wybierz z listy
+                    Choose from list
                   </span>
                 </button>
 
@@ -265,8 +269,8 @@
                 @if (isSelecting()) {
                   <div class="eligiblePanel">
                     <header class="eligiblePanel__head">
-                      <h4>Wybierz profesję dla: {{ selectedRaceLabel() }}</h4>
-                      <small>{{ eligibleCount() }} dostępnych</small>
+                      <h4 i18n="Heading@@cc.chooseFor">Choose a profession for: {{ selectedRaceLabel() }}</h4>
+                      <small i18n="Count@@cc.availableCount">{{ eligibleCount() }} available</small>
                     </header>
 
                     @if (eligibleList().length) {
@@ -280,11 +284,15 @@
                         }
                       </ul>
                     } @else {
-                      <div class="eligiblePanel__empty">Brak profesji do wyboru dla tej rasy.</div>
+                      <div class="eligiblePanel__empty" i18n="Empty@@cc.noEligiblePlaceholder">No professions available
+                        for this race.
+                      </div>
                     }
 
                     <div class="eligiblePanel__actions">
-                      <button type="button" class="roll__button" (click)="cancelSelection()">Anuluj</button>
+                      <button type="button" class="roll__button" (click)="cancelSelection()" i18n="Button@@cc.cancel">
+                        Cancel
+                      </button>
                     </div>
                   </div>
                 }

@@ -14,7 +14,8 @@
     </div>
 
     <div class="header">
-      <h2 id="talent-delete-title" class="title">Czy na pewno chcesz usunąć ten talent?</h2>
+      <h2 id="talent-delete-title" class="title" i18n="Dialog title@@talentDelete.title">Are you sure you want to delete
+        this talent?</h2>
     </div>
 
     <div class="talent">
@@ -22,21 +23,23 @@
     </div>
 
     <div class="body">
-      <p class="quote">„Wiedza raz utracona może nigdy nie zostać odzyskana.”</p>
+      <p class="quote" i18n="Quote@@talentDelete.quote">"Knowledge once lost may never be reclaimed."</p>
     </div>
 
     <div class="actions">
       <app-wax-seal-button
         variant="cancel"
         icon="close"
-        label="Anuluj"
+        label="Cancel"
+        i18n-label="Button@@talentDelete.cancel"
         (clicked)="cancel()"
       ></app-wax-seal-button>
 
       <app-wax-seal-button
         variant="save"
         icon="delete_forever"
-        label="Usuń"
+        label="Delete"
+        i18n-label="Button@@talentDelete.confirm"
         (clicked)="confirm()"
       ></app-wax-seal-button>
     </div>

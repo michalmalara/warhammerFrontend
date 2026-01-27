@@ -56,11 +56,12 @@
                   class="type-toggle__btn"
                   [class.is-active]="!form.controls.isAdvanced.value"
                   [attr.aria-pressed]="!form.controls.isAdvanced.value"
-                  aria-label="Podstawowa"
+                  aria-label="Basic"
+                  i18n-aria-label="ARIA@@profession.create.type.basic"
                   (click)="form.controls.isAdvanced.setValue(false)"
                 >
                   <mat-icon class="type-toggle__icon" fontIcon="person_search"></mat-icon>
-                  <span class="type-toggle__label">Podstawowa</span>
+                  <span class="type-toggle__label" i18n="Label@@profession.create.type.basic.label">Basic</span>
                 </button>
 
                 <button
@@ -68,11 +69,12 @@
                   class="type-toggle__btn"
                   [class.is-active]="form.controls.isAdvanced.value"
                   [attr.aria-pressed]="form.controls.isAdvanced.value"
-                  aria-label="Zaawansowana"
+                  aria-label="Advanced"
+                  i18n-aria-label="ARIA@@profession.create.type.advanced"
                   (click)="form.controls.isAdvanced.setValue(true)"
                 >
                   <mat-icon class="type-toggle__icon" fontIcon="military_tech"></mat-icon>
-                  <span class="type-toggle__label">Zaawansowana</span>
+                  <span class="type-toggle__label" i18n="Label@@profession.create.type.advanced.label">Advanced</span>
                 </button>
               </div>
             </div>
@@ -109,11 +111,13 @@
 
           <div class="search-input">
             <mat-form-field appearance="outline" class="full">
-              <mat-label>Umiejętności</mat-label>
+              <mat-label i18n="Label@@profession.create.skills.label">Skills</mat-label>
               <input
                 matInput
                 [formControl]="skillSearchControl"
                 [matAutocomplete]="skillAuto"
+                i18n-placeholder="Placeholder@@profession.create.skills.search.placeholder"
+                placeholder="Search skills..."
               />
 
               <mat-autocomplete #skillAuto="matAutocomplete" (optionSelected)="selectSkill($event)">
@@ -125,8 +129,8 @@
               </mat-autocomplete>
             </mat-form-field>
 
-            <!-- (kafelki) -->
-            <div class="tiles" aria-label="Skills">
+            <!-- (tiles) -->
+            <div class="tiles" aria-label="Skills" i18n-aria-label="ARIA@@profession.create.skills.list.aria">
               @for (s of skills.controls; track s; let i = $index) {
                 @if (!isSkillRenderedAsAlternative(i)) {
                   <div
@@ -143,22 +147,27 @@
                         <button
                           mat-icon-button
                           type="button"
-                          aria-label="Pokaż/ukryj alternatywy"
+                          aria-label="Show/Hide alternatives"
+                          i18n-aria-label="ARIA@@profession.create.alt.toggle"
                           (click)="toggleAltSkillPicker(i)"
                         >
                           <mat-icon [fontIcon]="isAltSkillPickerVisible(i) ? 'expand_less' : 'expand_more'"></mat-icon>
                         </button>
 
-                        <button mat-icon-button type="button" aria-label="Usuń" (click)="removeSkill(i)">
+                        <button mat-icon-button type="button" aria-label="Remove"
+                                i18n-aria-label="ARIA@@profession.create.remove.skill" (click)="removeSkill(i)">
                           <mat-icon fontIcon="close"></mat-icon>
                         </button>
                       </div>
                     </div>
 
-                    <!-- Alternatywne umiejętności dla tego skilla -->
+                    <!-- Alternative skills for this skill -->
                     @if (s.value?.alternativeSkill?.length) {
-                      <div class="tile__section" aria-label="Alternative skills">
-                        <div class="tile__section-title">Alternatywy</div>
+                      <div class="tile__section" aria-label="Alternative skills"
+                           i18n-aria-label="ARIA@@profession.create.alternatives.skills">
+                        <div class="tile__section-title" i18n="Section title@@profession.create.alternatives.title">
+                          Alternatives
+                        </div>
                         <div class="tile__subtiles">
                           @for (a of s.value.alternativeSkill; track a?.id ?? a?.skill?.id ?? a; let ai = $index) {
                             <div class="subtile">
@@ -166,7 +175,8 @@
                               <button
                                 mat-icon-button
                                 type="button"
-                                aria-label="Usuń alternatywę"
+                                aria-label="Remove alternative"
+                                i18n-aria-label="ARIA@@profession.create.remove.alternative"
                                 (click)="removeAlternativeSkill(i, ai)"
                               >
                                 <mat-icon>close</mat-icon>
@@ -180,12 +190,15 @@
                     @if (isAltSkillPickerVisible(i)) {
                       <div class="tile__section">
                         <mat-form-field appearance="outline" class="full" style="margin-top: 8px;">
-                          <mat-label>Dodaj alternatywną umiejętność (z już dodanych)</mat-label>
+                          <mat-label i18n="Label@@profession.create.addAlternativeSkill.label">Add alternative skill
+                            (from already added)
+                          </mat-label>
                           <select
                             matNativeControl
                             (change)="addAlternativeSkillFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
                           >
-                            <option value="" selected disabled>Wybierz...</option>
+                            <option value="" selected disabled i18n="Placeholder@@profession.create.choose">Choose...
+                            </option>
                             @for (ss of skills.controls; track ss; let si = $index) {
                               @if (si !== i) {
                                 <option [value]="ss.value?.id">{{ ss.value?.skill?.name }}</option>
@@ -209,11 +222,13 @@
 
           <div class="search-input">
             <mat-form-field appearance="outline" class="full">
-              <mat-label>Talenty</mat-label>
+              <mat-label i18n="Label@@profession.create.talents.label">Talents</mat-label>
               <input
                 matInput
                 [formControl]="talentSearchControl"
                 [matAutocomplete]="talentAuto"
+                i18n-placeholder="Placeholder@@profession.create.talents.search.placeholder"
+                placeholder="Search talents..."
               />
 
               <mat-autocomplete #talentAuto="matAutocomplete" (optionSelected)="selectTalent($event)">
@@ -225,8 +240,8 @@
               </mat-autocomplete>
             </mat-form-field>
 
-            <!-- zamiast mat-chip-grid: kafelki -->
-            <div class="tiles" aria-label="Talents">
+            <!-- tiles -->
+            <div class="tiles" aria-label="Talents" i18n-aria-label="ARIA@@profession.create.talents.list.aria">
               @for (t of talents.controls; track t; let i = $index) {
                 @if (!isTalentRenderedAsAlternative(i)) {
                   <div
@@ -243,22 +258,27 @@
                         <button
                           mat-icon-button
                           type="button"
-                          aria-label="Pokaż/ukryj alternatywy"
+                          aria-label="Show/Hide alternatives"
+                          i18n-aria-label="ARIA@@profession.create.alt.toggle"
                           (click)="toggleAltTalentPicker(i)"
                         >
                           <mat-icon [fontIcon]="isAltTalentPickerVisible(i) ? 'expand_less' : 'expand_more'"></mat-icon>
                         </button>
 
-                        <button mat-icon-button type="button" aria-label="Usuń" (click)="removeTalent(i)">
+                        <button mat-icon-button type="button" aria-label="Remove"
+                                i18n-aria-label="ARIA@@profession.create.remove.talent" (click)="removeTalent(i)">
                           <mat-icon fontIcon="close"></mat-icon>
                         </button>
                       </div>
                     </div>
 
-                    <!-- Alternatywne talenty dla tego talentu -->
+                    <!-- Alternative talents for this talent -->
                     @if (t.value?.alternativeTalent?.length) {
-                      <div class="tile__section" aria-label="Alternative talents">
-                        <div class="tile__section-title">Alternatywy</div>
+                      <div class="tile__section" aria-label="Alternative talents"
+                           i18n-aria-label="ARIA@@profession.create.alternatives.talents">
+                        <div class="tile__section-title" i18n="Section title@@profession.create.alternatives.title">
+                          Alternatives
+                        </div>
                         <div class="tile__subtiles">
                           @for (a of t.value.alternativeTalent; track a?.id ?? a?.talent?.id ?? a; let ai = $index) {
                             <div class="subtile">
@@ -266,7 +286,8 @@
                               <button
                                 mat-icon-button
                                 type="button"
-                                aria-label="Usuń alternatywę"
+                                aria-label="Remove alternative"
+                                i18n-aria-label="ARIA@@profession.create.remove.alternative"
                                 (click)="removeAlternativeTalent(i, ai)"
                               >
                                 <mat-icon>close</mat-icon>
@@ -280,12 +301,15 @@
                     @if (isAltTalentPickerVisible(i)) {
                       <div class="tile__section">
                         <mat-form-field appearance="outline" class="full" style="margin-top: 8px;">
-                          <mat-label>Dodaj alternatywny talent (z już dodanych)</mat-label>
+                          <mat-label i18n="Label@@profession.create.addAlternativeTalent.label">Add alternative talent
+                            (from already added)
+                          </mat-label>
                           <select
                             matNativeControl
                             (change)="addAlternativeTalentFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
                           >
-                            <option value="" selected disabled>Wybierz...</option>
+                            <option value="" selected disabled i18n="Placeholder@@profession.create.choose">Choose...
+                            </option>
                             @for (tt of talents.controls; track tt; let ti = $index) {
                               @if (ti !== i) {
                                 <option [value]="tt.value?.id">{{ tt.value?.talent?.name }}</option>

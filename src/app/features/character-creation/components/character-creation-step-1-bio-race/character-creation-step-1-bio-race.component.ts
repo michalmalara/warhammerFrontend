@@ -112,7 +112,7 @@ export class CharacterCreationStep1BioRaceComponent {
     });
   }
 
-  // Wywoływane po kliknięciu przycisku 'losuj imię'
+  // Called after clicking the 'draw name' button
   onDrawRandomName(): void {
     const race = this.charData.race();
     const gender = this.form.controls.gender.value;
@@ -124,7 +124,7 @@ export class CharacterCreationStep1BioRaceComponent {
     });
   }
 
-  // Losuje wiek w logicznym zakresie zależnym od rasy i ustawia kontrolkę age
+  // Draws an age in a sensible range depending on race and sets the age control
   onDrawRandomAge(): void {
     const race = this.charData.race();
     // define sensible age ranges per race
@@ -142,7 +142,7 @@ export class CharacterCreationStep1BioRaceComponent {
 
   selectRace(race: CharacterRace) {
     this.charData.setRace(race);
-    // Po zmianie rasy wyczyść imię i wiek oraz zresetuj status pól, aby nie pokazywać od razu błędów
+    // After changing race, clear name and age and reset touched status to avoid showing errors immediately
     this.form.controls.name.setValue('');
     this.form.controls.name.markAsUntouched();
     this.form.controls.age.setValue(null);

@@ -150,7 +150,7 @@ describe('SkillsListComponent', () => {
     await fixture.whenStable();
 
     const el: HTMLElement = fixture.nativeElement;
-    // Stabilny smoke-check: widok się renderuje, a elementy z listy nie.
+    // Stable smoke-check: view renders, list items are not present.
     expect(el.textContent).toContain('The Great Library of Skills');
     expect(el.textContent).not.toContain('Stealth');
   });

@@ -30,7 +30,7 @@ describe('NameService', () => {
     service = TestBed.inject(NameService);
   });
 
-  it('powinien zwracać imię z endpointu', async () => {
+  it('returns name from endpoint', async () => {
     const value = await firstValueFrom(service.getRandomName('Human', 'male'));
     expect(value.firstName).toBe('Jan');
     expect(value.lastName).toBe('Kowalski');
@@ -38,7 +38,7 @@ describe('NameService', () => {
     expect(value.gender).toBe('male');
   });
 
-  it('powinien zwracać fallback przy błędzie', async () => {
+  it('returns fallback on error', async () => {
     (crudStub as any).list = () => throwError(() => new Error('boom'));
     const value = await firstValueFrom(service.getRandomName('Orc', 'female', 'Fallback'));
     expect(value.firstName).toBe('Fallback');
