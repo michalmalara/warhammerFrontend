@@ -1,0 +1,75 @@
+@use '../../../../_theme' as theme;
+
+/* Wspólny "chrom" kreatora postaci (krok 2 jako wzorzec).
+   Importuj w krokach 3–5, żeby ujednolicić nagłówki, breadcrumbs i nawigację. */
+
+:host {
+  display: block;
+}
+
+.cc-root {
+  color: #fff;
+}
+
+.cc-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 3rem;
+}
+
+.cc-heading {
+  margin: 1rem 0 2rem;
+}
+
+.cc-heading--left {
+  text-align: left;
+}
+
+.cc-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  font-style: italic;
+}
+
+.cc-subtitle {
+  margin: 0;
+  max-width: 44rem;
+  color: rgba(185, 157, 161, 1);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.45;
+}
+
+.cc-footer-nav {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cc-footer-nav__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.decor {
+  position: fixed;
+  bottom: 18px;
+  left: 18px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+.decor mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+}

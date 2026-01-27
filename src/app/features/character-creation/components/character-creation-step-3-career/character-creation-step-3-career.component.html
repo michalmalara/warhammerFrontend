@@ -1,11 +1,10 @@
 <section class="cc-root">
   <main class="cc-main">
     <app-breadcrumbs [currentStep]="3" [selectedRaceLabel]="selectedRaceLabel()"></app-breadcrumbs>
-    <!-- Headline & Instructions -->
-    <header class="hero">
-      <h1 class="hero__title">Step 3: Starting Career</h1>
-      <p class="hero__subtitle">Rolling for: {{ selectedRaceLabel() }} (Empire)</p>
-      <p class="hero__quote">
+
+    <header class="cc-heading cc-heading--left">
+      <h1 class="cc-title">Starting Career</h1>
+      <p class="cc-subtitle">
         "Your fate is not your own. In the mud and blood of the Old World, you do what you must to survive another day.
         Roll the bones and see what destiny awaits."
       </p>
@@ -68,7 +67,7 @@
           <!-- duplicate panel removed: only panel under the button remains -->
         </aside>
 
-        <section class="career">
+        <section class="career cc-card">
           <div class="career__accent"></div>
 
           <!-- Nazwa profesji przeniesiona nad tabelę -->
@@ -87,6 +86,8 @@
                   Advance Scheme
                 </h4>
 
+                <p class="section__hint">Choose a characteristic for a free advance</p>
+
                 <!-- Placeholder grid (mockup-like). Jeśli backend doda advance scheme, podmienimy dane. -->
                 <div class="adv" role="grid" aria-label="Advance Scheme">
                   <div class="adv__head">
@@ -100,8 +101,12 @@
                       <span
                         class="adv__cell"
                         [class.adv__primary]="v !== '-'"
-                        [class.adv__selectable]="v !== '-'"
+                        [class.adv__selectable]="isCharacteristicSelectable('primary', $index)"
                         [class.adv__cellSelected]="isCharacteristicSelectedByCell('primary', $index)"
+                        [attr.role]="isCharacteristicSelectable('primary', $index) ? 'button' : null"
+                        [attr.tabindex]="isCharacteristicSelectable('primary', $index) ? 0 : null"
+                        [attr.aria-pressed]="isCharacteristicSelectable('primary', $index) ? isCharacteristicSelectedByCell('primary', $index) : null"
+                        [attr.aria-disabled]="isCharacteristicSelectable('primary', $index) ? null : true"
                         (click)="selectCharacteristicByCell('primary', $index)">{{ v }}</span>
                     }
                   </div>
@@ -116,8 +121,12 @@
                       <span
                         class="adv__cell"
                         [class.adv__primary]="v !== '-'"
-                        [class.adv__selectable]="v !== '-'"
+                        [class.adv__selectable]="isCharacteristicSelectable('secondary', $index)"
                         [class.adv__cellSelected]="isCharacteristicSelectedByCell('secondary', $index)"
+                        [attr.role]="isCharacteristicSelectable('secondary', $index) ? 'button' : null"
+                        [attr.tabindex]="isCharacteristicSelectable('secondary', $index) ? 0 : null"
+                        [attr.aria-pressed]="isCharacteristicSelectable('secondary', $index) ? isCharacteristicSelectedByCell('secondary', $index) : null"
+                        [attr.aria-disabled]="isCharacteristicSelectable('secondary', $index) ? null : true"
                         (click)="selectCharacteristicByCell('secondary', $index)">{{ v }}</span>
                     }
                   </div>
@@ -286,7 +295,7 @@
           <!-- duplicate panel removed: only panel under the button remains -->
         </aside>
 
-        <section class="career career--placeholder">
+        <section class="career career--placeholder cc-card">
           <div class="career__accent"></div>
 
           <!-- Tytuł placeholdera przeniesiony nad tabelę, tak jak w wylosowanej karcie -->
@@ -367,10 +376,8 @@
       </section>
     }
 
-    <!-- Footer Navigation -->
-    <footer class="footer">
+    <div class="cc-footer-nav">
       <app-wax-seal-button
-        class="footer__prev"
         variant="cancel"
         icon="arrow_back"
         label="Previous Step"
@@ -380,9 +387,8 @@
         [disabled]="isLoading()"
       ></app-wax-seal-button>
 
-      <div class="footer__actions">
+      <div class="cc-footer-nav__right">
         <app-wax-seal-button
-          class="footer__accept"
           variant="save"
           icon="arrow_forward"
           label="Accept Career"
@@ -393,6 +399,10 @@
           [disabled]="!canAccept()"
         ></app-wax-seal-button>
       </div>
-    </footer>
+    </div>
   </main>
+
+  <div class="decor decor--bl" aria-hidden="true">
+    <mat-icon aria-hidden="true">skull</mat-icon>
+  </div>
 </section>

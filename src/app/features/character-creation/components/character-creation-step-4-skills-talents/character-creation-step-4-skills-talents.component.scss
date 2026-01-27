@@ -1,88 +1,12 @@
 @use '../../../../../_theme' as theme;
+@use '../../styles/character-creation-step-base' as stepBase;
+@use '../../styles/character-creation-cards' as ccCards;
 
 :host {
   display: block;
 }
 
-.cc-root {
-  color: #fff;
-}
-
-.cc-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem 3rem;
-}
-
-/* --- Hero --- */
-.hero {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto 3rem;
-}
-
-.hero__title {
-  margin: 1.25rem 0 0.75rem;
-  font-size: clamp(2.4rem, 4vw, 3.1rem);
-  font-weight: 900;
-  font-style: italic;
-}
-
-.hero__subtitle {
-  margin: 0 0 1rem;
-  color: rgba(185, 157, 161, 1);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-style: italic;
-}
-
-.hero__quote {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.125rem;
-  line-height: 1.55;
-  font-style: italic;
-}
-
-/* --- Card --- */
-.card {
-  position: relative;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 2rem 2rem 1.5rem;
-  border-radius: 20px;
-  background: rgba(24, 18, 24, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
-  overflow: hidden;
-}
-
-.card__accent {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 8px;
-  background: linear-gradient(180deg, var(--color-accent), rgba(255, 61, 94, 0));
-}
-
-.card__header {
-  padding-left: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.card__title {
-  margin: 0;
-  font-size: 1.65rem;
-  font-weight: 900;
-  font-style: italic;
-}
-
-.card__subtitle {
-  margin: 0.35rem 0 0;
-  color: rgba(255, 255, 255, 0.75);
-}
+/* Lokalne style dla grid/list zostają; .card/.panel zastąpione przez ccCards. */
 
 .grid {
   display: grid;
@@ -94,13 +18,6 @@
   .grid {
     grid-template-columns: 1fr 1fr;
   }
-}
-
-.panel {
-  padding: 1rem 1rem 0.75rem;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .panel__title {
@@ -127,14 +44,11 @@
   gap: 0.5rem;
 }
 
+/* list__item jest teraz cc-tile, więc zostawiamy tylko layout wewnętrzny */
 .list__item {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.6rem 0.7rem;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .pill {
@@ -160,18 +74,24 @@
   font-style: italic;
 }
 
-/* --- Footer --- */
-.footer {
-  max-width: 980px;
-  margin: 2rem auto 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+.card__header {
+  margin-bottom: 1rem;
 }
 
-.footer__actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+.card__title {
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.card__subtitle {
+  margin: 0.35rem 0 0;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Stare hero/footer nie są już używane po ujednoliceniu do kroku 2. */
+.hero,
+.footer {
+  display: none;
 }

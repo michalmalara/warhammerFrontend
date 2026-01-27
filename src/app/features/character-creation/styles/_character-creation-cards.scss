@@ -1,0 +1,66 @@
+/* Wspólne "karty" i kafelki kreatora – styl z kroku 2 jako wzorzec.
+   Importuj w krokach 3–5 i używaj klas .cc-card/.cc-panel/.cc-tile. */
+
+.cc-card {
+  padding: 1.5rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(22, 14, 15, 0.55);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.cc-card--tight {
+  padding: 1.15rem;
+}
+
+.cc-panel {
+  padding: 1.5rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(22, 14, 15, 0.55);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.cc-panel--muted {
+  background: rgba(22, 14, 15, 0.42);
+}
+
+/* Mały kafelek w stylu stat-card z kroku 2 (do itemków/list). */
+.cc-tile {
+  background: rgba(217, 200, 176, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 0.9rem;
+}
+
+.cc-tile--hover {
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.cc-tile--hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(189, 15, 44, 0.55);
+  box-shadow: 0 10px 26px rgba(189, 15, 44, 0.08);
+}
+
+.cc-tile__k {
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.cc-tile__v {
+  margin-top: 0.25rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.cc-tile__meta {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}

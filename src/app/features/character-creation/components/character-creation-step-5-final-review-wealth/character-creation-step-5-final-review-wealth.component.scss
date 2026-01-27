@@ -1,122 +1,11 @@
-.cr-root {
-  min-height: 100vh;
-  background: radial-gradient(1200px 700px at 40% 0%, rgba(189, 15, 44, 0.18), transparent 55%),
-  linear-gradient(180deg, rgba(34, 16, 19, 1), rgba(34, 16, 19, 0.96));
-  color: #efe7e7;
-}
+@use '../../styles/character-creation-step-base' as stepBase;
+@use '../../styles/character-creation-cards' as ccCards;
+
+/* Krok 5 po refaktorze używa cc-root/cc-main/cc-heading/cc-footer-nav.
+   Poniżej zostawiamy wyłącznie style używane przez aktualny template. */
 
 .cc-root {
   color: #fff;
-}
-
-.top-nav {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(6px);
-  background: rgba(34, 16, 19, 0.85);
-}
-
-.top-nav__brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.top-nav__icon {
-  color: #bd0f2c;
-}
-
-.top-nav__title {
-  margin: 0;
-  font-size: 18px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-weight: 800;
-}
-
-.top-nav__steps {
-  display: none;
-  gap: 18px;
-}
-
-.top-nav__step {
-  color: rgba(255, 255, 255, 0.65);
-  text-decoration: none;
-  font-size: 13px;
-}
-
-.top-nav__step--active {
-  color: #bd0f2c;
-  font-weight: 800;
-}
-
-.top-nav__actions {
-  display: flex;
-  gap: 8px;
-}
-
-.icon-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  border: 0;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.icon-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.cr-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 22px 16px 40px;
-}
-
-.heading {
-  margin: 18px 0 26px;
-}
-
-.heading__crumbs {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
-  margin-bottom: 10px;
-}
-
-.heading__chev {
-  font-size: 16px;
-  opacity: 0.7;
-}
-
-.heading__current {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.heading__title {
-  margin: 0 0 10px;
-  font-size: 44px;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-}
-
-.heading__subtitle {
-  margin: 0;
-  max-width: 720px;
-  color: rgba(255, 255, 255, 0.65);
-  line-height: 1.45;
 }
 
 .grid {
@@ -125,18 +14,7 @@
   gap: 24px;
 }
 
-.left {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 18px;
-  padding: 18px;
-}
+/* .card i .panel zostały zastąpione przez .cc-card / .cc-panel */
 
 .card--left {
   padding: 20px 22px 22px;
@@ -150,13 +28,6 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-.panel {
-  padding: 16px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .wealth {
@@ -297,49 +168,6 @@
   opacity: 0.55;
 }
 
-.actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.back {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  border: 0;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 800;
-  padding: 10px 12px;
-  border-radius: 12px;
-}
-
-.back:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.actions__right {
-  display: flex;
-  gap: 10px;
-}
-
-.ghost {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  border: 0;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.right {
-  position: relative;
-}
-
 .sheet {
   border: 2px solid rgba(255, 255, 255, 0.18);
   background: radial-gradient(circle at 45px 45px, rgba(255, 255, 255, 0.08), transparent 42%),
@@ -456,84 +284,13 @@
   opacity: 0.92;
 }
 
-.commit {
-  margin-top: 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.seal {
-  width: 110px;
-  height: 110px;
-  border-radius: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.18);
-  background: radial-gradient(circle at 30% 30%, #e6193c, #bd0f2c, #7a0a1c);
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.55), inset 0 2px 4px rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.9);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.seal:disabled {
-  opacity: 0.6;
-}
-
-.commit__text {
-  text-align: center;
-}
-
-.commit__title {
-  display: block;
-  font-weight: 900;
-  font-size: 18px;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-}
-
-.commit__subtitle {
-  display: block;
-  font-size: 11px;
-  opacity: 0.6;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
 .empty {
   opacity: 0.7;
   font-size: 13px;
   padding: 10px 0;
 }
 
-.footer {
-  max-width: 980px;
-  margin: 2rem auto 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: nowrap;
-}
-
-.footer .action {
-  flex: 0 0 auto;
-}
-
-.footer__actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: nowrap;
-}
-
 @media (min-width: 1024px) {
-  .top-nav__steps {
-    display: flex;
-  }
-
   .grid {
     grid-template-columns: 7fr 5fr;
     align-items: start;

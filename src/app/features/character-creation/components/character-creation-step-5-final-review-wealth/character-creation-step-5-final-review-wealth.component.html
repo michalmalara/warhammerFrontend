@@ -3,25 +3,22 @@
   <main class="cc-main">
     <app-breadcrumbs [currentStep]="5" [selectedRaceLabel]="selectedRaceLabel()"></app-breadcrumbs>
 
-    <header class="hero">
-      <h1 class="hero__title">The Final Reckoning</h1>
-      <p class="hero__subtitle">For: {{ selectedRaceLabel() }}</p>
-      <p class="hero__quote">
+    <header class="cc-heading cc-heading--left">
+      <h1 class="cc-title">The Final Reckoning</h1>
+      <p class="cc-subtitle">
         Equip your adventurer and roll for starting wealth before entering the grim reality of the Old World.
       </p>
     </header>
 
     <div class="grid">
-      <section class="card card--left">
-        <div class="card__accent"></div>
-
+      <section class="cc-card card--left">
         <header class="card__header">
           <h3 class="card__title">Final Review &amp; Provisioning</h3>
           <p class="card__subtitle">Review your starting wealth and trappings before you commit the character.</p>
         </header>
 
         <div class="card__body">
-          <section class="panel wealth">
+          <section class="cc-panel wealth">
             <div class="wealth__copy">
               <h3 class="wealth__title">Starting Wealth</h3>
               <p class="wealth__desc">Roll 2d10 Gold Crowns (gc) to see what Sigmar has provided.</p>
@@ -44,7 +41,7 @@
             </div>
           </section>
 
-          <section class="panel trappings">
+          <section class="cc-panel trappings">
             <div class="trappings__head">
               <h3 class="trappings__title">
                 <mat-icon fontIcon="backpack"></mat-icon>
@@ -75,9 +72,7 @@
         </div>
       </section>
 
-      <aside class="card card--right">
-        <div class="card__accent card__accent--muted"></div>
-
+      <aside class="cc-card card--right">
         <header class="card__header">
           <h3 class="card__title">Character Sheet</h3>
           <p class="card__subtitle">Final preview before you enter the Old World.</p>
@@ -167,9 +162,8 @@
       </aside>
     </div>
 
-    <footer class="footer">
+    <div class="cc-footer-nav">
       <app-wax-seal-button
-        class="footer__prev"
         variant="cancel"
         icon="arrow_back"
         label="Previous Step"
@@ -178,9 +172,8 @@
         (clicked)="goPrev()"
       ></app-wax-seal-button>
 
-      <div class="footer__actions">
+      <div class="cc-footer-nav__right">
         <app-wax-seal-button
-          class="footer__accept"
           variant="save"
           icon="verified"
           label="Commit Character"
@@ -190,6 +183,10 @@
           [disabled]="isSaving()"
         ></app-wax-seal-button>
       </div>
-    </footer>
+    </div>
   </main>
+
+  <div class="decor decor--bl" aria-hidden="true">
+    <mat-icon aria-hidden="true">skull</mat-icon>
+  </div>
 </section>

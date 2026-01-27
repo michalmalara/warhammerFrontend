@@ -2,26 +2,23 @@
   <main class="cc-main">
     <app-breadcrumbs [currentStep]="4" [selectedRaceLabel]="selectedRaceLabel()"></app-breadcrumbs>
 
-    <header class="hero">
-      <h1 class="hero__title">Step 4: Skills & Talents</h1>
-      <p class="hero__subtitle">For: {{ selectedRaceLabel() }}</p>
-      <p class="hero__quote">
+    <header class="cc-heading cc-heading--left">
+      <h1 class="cc-title">Skills &amp; Talents</h1>
+      <p class="cc-subtitle">
         "A sharp wit and a steady hand can be worth more than a blade. Take stock of what you know — and what you can
         become."
       </p>
     </header>
 
     @if (profession(); as p) {
-      <section class="card">
-        <div class="card__accent"></div>
-
+      <section class="cc-card">
         <header class="card__header">
           <h3 class="card__title">{{ p.name }}</h3>
           <p class="card__subtitle">Your starting options, locked in after accepting your career.</p>
         </header>
 
         <div class="grid">
-          <div class="panel">
+          <div class="cc-panel cc-panel--muted">
             <h4 class="panel__title">
               <mat-icon class="panel__icon" fontIcon="school"></mat-icon>
               Skills
@@ -30,7 +27,7 @@
             @if (skills().length) {
               <ul class="list">
                 @for (s of skills(); track s.id) {
-                  <li class="list__item">
+                  <li class="cc-tile cc-tile--hover list__item">
                     <span class="pill">{{ s.associatedCharacteristic }}</span>
                     <span class="name">{{ s.name }}</span>
                   </li>
@@ -41,7 +38,7 @@
             }
           </div>
 
-          <div class="panel">
+          <div class="cc-panel cc-panel--muted">
             <h4 class="panel__title">
               <mat-icon class="panel__icon" fontIcon="auto_awesome"></mat-icon>
               Talents
@@ -50,7 +47,7 @@
             @if (talents().length) {
               <ul class="list">
                 @for (t of talents(); track t.id) {
-                  <li class="list__item">
+                  <li class="cc-tile cc-tile--hover list__item">
                     <span class="name">{{ t.name }}</span>
                   </li>
                 }
@@ -62,23 +59,21 @@
         </div>
       </section>
     } @else {
-      <section class="card card--placeholder">
-        <div class="card__accent"></div>
-
+      <section class="cc-card cc-card--tight">
         <header class="card__header">
           <h3 class="card__title">No career selected</h3>
           <p class="card__subtitle">Wróć do kroku 3 i zaakceptuj profesję, aby zobaczyć umiejętności i talenty.</p>
         </header>
 
         <div class="grid">
-          <div class="panel">
+          <div class="cc-panel cc-panel--muted">
             <h4 class="panel__title">
               <mat-icon class="panel__icon" fontIcon="school"></mat-icon>
               Skills
             </h4>
             <p class="empty">—</p>
           </div>
-          <div class="panel">
+          <div class="cc-panel cc-panel--muted">
             <h4 class="panel__title">
               <mat-icon class="panel__icon" fontIcon="auto_awesome"></mat-icon>
               Talents
@@ -89,9 +84,8 @@
       </section>
     }
 
-    <footer class="footer">
+    <div class="cc-footer-nav">
       <app-wax-seal-button
-        class="footer__prev"
         variant="cancel"
         icon="arrow_back"
         label="Previous Step"
@@ -100,9 +94,8 @@
         (clicked)="goPrev()"
       ></app-wax-seal-button>
 
-      <div class="footer__actions">
+      <div class="cc-footer-nav__right">
         <app-wax-seal-button
-          class="footer__accept"
           variant="save"
           icon="arrow_forward"
           label="Finish"
@@ -111,6 +104,10 @@
           (clicked)="goNext()"
         ></app-wax-seal-button>
       </div>
-    </footer>
+    </div>
   </main>
+
+  <div class="decor decor--bl" aria-hidden="true">
+    <mat-icon aria-hidden="true">skull</mat-icon>
+  </div>
 </section>
