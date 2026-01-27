@@ -64,7 +64,26 @@ export class CharacterCreationStep3CareerComponent {
     return true;
   });
 
-  readonly canAccept = computed(() => !!this.profession() && this.requiredAlternativesSelected());
+  // Czy w aktualnej profesji istnieje co najmniej jedna wybieralna cecha (nie jest "-")
+  readonly hasSelectableCharacteristic = computed(() => {
+    const primary = this.primaryAdvanceRow() ?? [];
+    const secondary = this.secondaryAdvanceRow() ?? [];
+    const anyPrimary = primary.some((v) => v !== '-' && v !== null && v !== undefined);
+    const anySecondary = secondary.some((v) => v !== '-' && v !== null && v !== undefined);
+    return anyPrimary || anySecondary;
+  });
+
+  // Umożliwiamy akceptację tylko jeśli:
+  // - mamy wylosowaną profesję,
+  // - wybrano wszystkie wymagane alternatywy (skills/talents),
+  // - oraz jeśli profesja ma wybieralną cechę -> użytkownik musiał wybrać jedną cechę.
+  readonly canAccept = computed(() => {
+    if (!this.profession()) return false;
+    if (!this.requiredAlternativesSelected()) return false;
+    const hasSelect = this.hasSelectableCharacteristic();
+    if (!hasSelect) return true; // brak cech do wyboru
+    return !!this.selectedCharacteristic();
+  });
 
   readonly entryText = computed(() => {
     const p = this.profession();
