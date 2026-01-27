@@ -5,6 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {firstValueFrom} from 'rxjs';
 
 import {BreadcrumbsComponent} from '../../../../shared/ui/breadcrumbs/breadcrumbs.component';
+import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 import {CharacterDataService} from '../../services/character-data.service';
 import {CharactersApiService} from '../../../character/services/characters-api.service';
 import type {CharacterCreatePayload} from '../../../character/models/character.models';
@@ -12,7 +13,7 @@ import type {CharacterCreatePayload} from '../../../character/models/character.m
 @Component({
   selector: 'app-character-creation-step-5-final-review-wealth',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule, BreadcrumbsComponent],
+  imports: [CommonModule, RouterModule, MatIconModule, BreadcrumbsComponent, WaxSealButtonComponent],
   templateUrl: './character-creation-step-5-final-review-wealth.component.html',
   styleUrls: ['./character-creation-step-5-final-review-wealth.component.scss'],
 })

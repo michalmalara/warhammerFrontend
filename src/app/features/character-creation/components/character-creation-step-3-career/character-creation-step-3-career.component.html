@@ -42,7 +42,7 @@
                       <small>{{ eligibleCount() }} dostępnych</small>
                     </header>
 
-                    @if ((eligibleList() ?? []).length) {
+                    @if (eligibleList().length) {
                       <ul class="eligiblePanel__list">
                         @for (ep of eligibleList(); track ep.id) {
                           <li class="eligiblePanel__item">
@@ -125,7 +125,7 @@
               </div>
 
               <div class="lists">
-                @if ((p.skills ?? []).length) {
+                @if (p.skills.length) {
                   <div class="list">
                     <h4 class="list__title">Skills</h4>
                     <ul class="list__ul">
@@ -166,7 +166,7 @@
                   </div>
                 }
 
-                @if ((p.talents ?? []).length) {
+                @if (p.talents.length) {
                   <div class="list">
                     <h4 class="list__title">Talents</h4>
                     <ul class="list__ul">
@@ -208,15 +208,15 @@
                 }
               </div>
 
-              @if ((p.entryProfessions ?? []).length || (p.exitProfessions ?? []).length) {
+              @if (p.entryProfessions.length || p.exitProfessions.length) {
                 <div class="career__foot">
-                  @if ((p.entryProfessions ?? []).length) {
+                  @if (p.entryProfessions.length) {
                     <span>
                       Entry:
                       {{ entryText() }}
                     </span>
                   }
-                  @if ((p.exitProfessions ?? []).length) {
+                  @if (p.exitProfessions.length) {
                     <span>
                       Exit:
                       {{ exitText() }}
@@ -260,7 +260,7 @@
                       <small>{{ eligibleCount() }} dostępnych</small>
                     </header>
 
-                    @if ((eligibleList() ?? []).length) {
+                    @if (eligibleList().length) {
                       <ul class="eligiblePanel__list">
                         @for (ep of eligibleList(); track ep.id) {
                           <li class="eligiblePanel__item">

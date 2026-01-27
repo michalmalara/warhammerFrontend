@@ -5,6 +5,10 @@
   color: #efe7e7;
 }
 
+.cc-root {
+  color: #fff;
+}
+
 .top-nav {
   position: sticky;
   top: 0;
@@ -134,11 +138,32 @@
   padding: 18px;
 }
 
+.card--left {
+  padding: 20px 22px 22px;
+}
+
+.card__header {
+  margin-bottom: 16px;
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel {
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .wealth {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
 }
 
 .wealth__title {
@@ -156,7 +181,7 @@
 .wealth__actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .wealth__current {
@@ -204,7 +229,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .trappings__title {
@@ -480,6 +505,23 @@
   opacity: 0.7;
   font-size: 13px;
   padding: 10px 0;
+}
+
+.footer {
+  max-width: 980px;
+  margin: 2rem auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+.footer__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
 }
 
 @media (min-width: 1024px) {

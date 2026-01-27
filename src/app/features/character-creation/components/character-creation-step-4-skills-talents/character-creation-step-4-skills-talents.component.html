@@ -27,7 +27,7 @@
               Skills
             </h4>
 
-            @if ((skills() ?? []).length) {
+            @if (skills().length) {
               <ul class="list">
                 @for (s of skills(); track s.id) {
                   <li class="list__item">
@@ -47,7 +47,7 @@
               Talents
             </h4>
 
-            @if ((talents() ?? []).length) {
+            @if (talents().length) {
               <ul class="list">
                 @for (t of talents(); track t.id) {
                   <li class="list__item">
