@@ -14,11 +14,11 @@ export class CharacterProfileApiService {
   private readonly http = inject(HttpClient);
 
   /**
-   * Default base URL for the backend API.
-   * If the app already provides a better URL via an interceptor, you can keep this as-is.
+   * Backend base URL.
+   * API routes are mounted in Django under `/character-sheet/`.
    */
-  private readonly baseUrl = '/api';
+  private readonly baseUrl = '';
 
   getCharacterProfile = (id: number): Observable<CharacterProfileDto> =>
-    this.http.get<CharacterProfileDto>(`${this.baseUrl}/character-sheet/characters/${id}/`);
+    this.http.get<CharacterProfileDto>(`${this.baseUrl}/character-sheet/characters/${id}/profile/`);
 }

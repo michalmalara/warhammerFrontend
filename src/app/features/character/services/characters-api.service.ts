@@ -7,10 +7,11 @@ export class CharactersApiService {
   private readonly crud = inject(CrudApiService);
 
   /**
-   * Backend: `characterSheet/urls.py` -> router.register('characters', CharacterViewSet)
-   * => /characters/
+   * Backend: `warhammer/urls.py` mounts CharacterSheet under `/character-sheet/`.
+   * CharacterSheet router: `router.register('characters', CharacterViewSet)`
+   * => `/character-sheet/characters/`
    */
-  private static readonly PATH = '/characters/';
+  private static readonly PATH = '/character-sheet/characters/';
 
   list() {
     return this.crud.list<Character[]>(CharactersApiService.PATH);
