@@ -28,6 +28,15 @@
   gap: 1rem;
 }
 
+/* Make cards feel clickable */
+.grid > * {
+  cursor: pointer;
+}
+
+.grid > *:hover {
+  filter: brightness(1.03);
+}
+
 .loading,
 .empty {
   display: flex;
