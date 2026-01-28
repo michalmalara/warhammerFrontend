@@ -129,13 +129,13 @@ describe('CharacterCardComponent', () => {
   it('renders placeholder when portraitUrl is not provided', async () => {
     const fixture = TestBed.createComponent(CharacterCardComponent);
     fixture.componentInstance.portraitUrl = undefined;
-    fixture.componentInstance.avatarUrl = '/assets/avatar-placeholder.png';
+    fixture.componentInstance.avatarUrl = './assetsassets/img/character-portrait-placeholder.png';
     fixture.detectChanges();
     await fixture.whenStable();
 
     const img = (fixture.nativeElement as HTMLElement).querySelector('.portrait img') as HTMLImageElement | null;
     expect(img).toBeTruthy();
-    expect(img!.getAttribute('src')).toBe('/assets/avatar-placeholder.png');
+    expect(img!.getAttribute('src')).toBe('src/src/assets/img/character-portrait-placeholder.png');
     expect(img!.getAttribute('alt')).toContain('Portrait');
   });
 

@@ -309,7 +309,7 @@ export class CharacterCardComponent {
    * Wsteczna kompatybilność (używane też w sidebarze). Jeśli nie podasz `portraitUrl`,
    * komponent spróbuje użyć `avatarUrl`.
    */
-  @Input() avatarUrl = '/assets/avatar-placeholder.png';
+  @Input() avatarUrl = 'src/assets/img/character-portrait-placeholder.png';
 
   /** URL portretu postaci do wyświetlenia obok imienia. */
   @Input() portraitUrl?: string;
@@ -319,7 +319,7 @@ export class CharacterCardComponent {
 
   get effectivePortraitUrl(): string {
     const url = (this.portraitUrl ?? '').trim() || (this.avatarUrl ?? '').trim();
-    return url || '/assets/avatar-placeholder.png';
+    return url || 'src/assets/img/character-portrait-placeholder.png';
   }
 
   get effectivePortraitAlt(): string {
@@ -472,7 +472,7 @@ export class CharacterCardComponent {
     if (!img) return;
 
     // unikamy pętli, jeżeli placeholder też byłby niedostępny
-    if (img.src.endsWith('/assets/avatar-placeholder.png')) return;
-    img.src = '/assets/avatar-placeholder.png';
+    if (img.src.endsWith('src/assets/img/character-portrait-placeholder.png')) return;
+    img.src = 'src/assets/img/character-portrait-placeholder.png';
   }
 }
