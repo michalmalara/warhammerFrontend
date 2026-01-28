@@ -2,6 +2,7 @@ import {CommonModule} from '@angular/common';
 import {Component, inject} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {CharacterListService} from '../../services/character-list.service';
@@ -15,6 +16,7 @@ import type {CharacterListItem} from '../../models/character-list-item.models';
     CommonModule,
     RouterModule,
     MatButtonModule,
+    MatIconModule,
     MatProgressSpinnerModule,
     CharacterTileComponent,
   ],

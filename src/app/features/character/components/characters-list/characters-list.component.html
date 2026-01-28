@@ -6,15 +6,6 @@
         Browse all saved characters.
       </p>
     </div>
-
-    <a
-      mat-flat-button
-      color="primary"
-      [routerLink]="['/character/create']"
-      i18n="@@characterList.createButton|Create character button"
-    >
-      Create character
-    </a>
   </header>
 
   @if (characters$ | async; as characters) {
@@ -35,4 +26,15 @@
       <span i18n="@@characterList.loading|Loading label">Loading…</span>
     </div>
   }
+
+  <a
+    class="fab"
+    mat-fab
+    color="primary"
+    [routerLink]="['/character/create']"
+    aria-label="Create character"
+    i18n-aria-label="Aria@@characterList.fab.create.aria"
+  >
+    <mat-icon fontIcon="add"></mat-icon>
+  </a>
 </section>
