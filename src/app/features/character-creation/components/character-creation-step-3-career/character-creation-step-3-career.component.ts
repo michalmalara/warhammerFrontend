@@ -212,10 +212,15 @@ export class CharacterCreationStep3CareerComponent {
     // Toggle selection: if already selected, deselect; otherwise select this name
     if (name === null) {
       this.selectedCharacteristic.set(null);
+      // persist
+      this.charData.setSelectedCharacteristic(null);
       return;
     }
     const cur = this.selectedCharacteristic();
-    this.selectedCharacteristic.set(cur === name ? null : name);
+    const newVal = cur === name ? null : name;
+    this.selectedCharacteristic.set(newVal);
+    // Persist selection to service so other steps can read it
+    this.charData.setSelectedCharacteristic(newVal);
   }
 
   isCharacteristicSelected(name: string) {
@@ -316,6 +321,8 @@ export class CharacterCreationStep3CareerComponent {
     this.skillSelections.set({});
     this.talentSelections.set({});
     this.selectedCharacteristic.set(null);
+    // Persist cleared selection
+    this.charData.setSelectedCharacteristic(null);
     this.isSelecting.set(false);
   }
 
@@ -336,6 +343,8 @@ export class CharacterCreationStep3CareerComponent {
     this.talentSelections.set({});
     // Reset characteristic selection
     this.selectedCharacteristic.set(null);
+    // Persist cleared selection
+    this.charData.setSelectedCharacteristic(null);
 
     try {
       const res = await firstValueFrom(this.api.draw(race));
@@ -384,6 +393,9 @@ export class CharacterCreationStep3CareerComponent {
         this.charData.setFreeAdvance({stat: free, kind: 'secondary', delta: 1});
       }
     }
+
+    // Also persist selectedCharacteristic into CharacterDataService to keep global state
+    this.charData.setSelectedCharacteristic(this.selectedCharacteristic());
 
     // Build and persist chosen profession, skills and talents only when user accepts
     const chosen = this.profession();
@@ -457,4 +469,13 @@ export class CharacterCreationStep3CareerComponent {
     if (!this.canAccept()) return;
     void this.router.navigate(['/character/create/step-4']);
   }
+
+  // Add a small initialization block to sync selection from the service when component is created
+  constructor() {
+    const persisted = this.charData.getSelectedCharacteristic?.();
+    if (typeof persisted !== 'undefined') {
+      this.selectedCharacteristic.set(persisted ?? null);
+    }
+  }
+
 }

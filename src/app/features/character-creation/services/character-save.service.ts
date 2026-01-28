@@ -25,6 +25,21 @@ type CharacterProfileCreateDto = {
 
   strengthBonusModifier?: number;
   toughnessBonusModifier?: number;
+
+  // optional development fields - incremented when a free advance is selected
+  weaponSkillsDevelopment?: number;
+  ballisticSkillsDevelopment?: number;
+  strengthDevelopment?: number;
+  toughnessDevelopment?: number;
+  agilityDevelopment?: number;
+  intelligenceDevelopment?: number;
+  willpowerDevelopment?: number;
+  fellowshipDevelopment?: number;
+
+  attacksDevelopment?: number;
+  woundsDevelopment?: number;
+  movementDevelopment?: number;
+  magicDevelopment?: number;
 };
 
 type CharacterSkillCreateDto = { skill: number; level?: number };
@@ -56,7 +71,7 @@ export class CharacterSaveService {
     const getSecondary = (id: string) => secondary.find(s => s.id === id)?.value ?? 0;
 
     // attacks and magic are currently derived as constants in CharacterDataService
-    return {
+    const baseDto: CharacterProfileCreateDto = {
       weaponSkills: getPrimary('WS'),
       ballisticSkills: getPrimary('BS'),
       strength: getPrimary('S'),
@@ -75,17 +90,78 @@ export class CharacterSaveService {
 
       strengthBonusModifier: 0,
       toughnessBonusModifier: 0,
+
+      // start development values at 0 (optional)
+      weaponSkillsDevelopment: 0,
+      ballisticSkillsDevelopment: 0,
+      strengthDevelopment: 0,
+      toughnessDevelopment: 0,
+      agilityDevelopment: 0,
+      intelligenceDevelopment: 0,
+      willpowerDevelopment: 0,
+      fellowshipDevelopment: 0,
+
+      attacksDevelopment: 0,
+      woundsDevelopment: 0,
+      movementDevelopment: 0,
+      magicDevelopment: 0,
     };
+
+    // If user selected a free advance (selectedCharacteristic), increment appropriate development
+    const selected = this.charData.getSelectedCharacteristic();
+    if (selected) {
+      switch (selected) {
+        // primary stats -> increment corresponding *Development
+        case 'WS':
+          baseDto.weaponSkillsDevelopment = (baseDto.weaponSkillsDevelopment ?? 0) + 1;
+          break;
+        case 'BS':
+          baseDto.ballisticSkillsDevelopment = (baseDto.ballisticSkillsDevelopment ?? 0) + 1;
+          break;
+        case 'S':
+          baseDto.strengthDevelopment = (baseDto.strengthDevelopment ?? 0) + 1;
+          break;
+        case 'T':
+          baseDto.toughnessDevelopment = (baseDto.toughnessDevelopment ?? 0) + 1;
+          break;
+        case 'Ag':
+          baseDto.agilityDevelopment = (baseDto.agilityDevelopment ?? 0) + 1;
+          break;
+        case 'Int':
+          baseDto.intelligenceDevelopment = (baseDto.intelligenceDevelopment ?? 0) + 1;
+          break;
+        case 'WP':
+          baseDto.willpowerDevelopment = (baseDto.willpowerDevelopment ?? 0) + 1;
+          break;
+        case 'Fel':
+          baseDto.fellowshipDevelopment = (baseDto.fellowshipDevelopment ?? 0) + 1;
+          break;
+
+        // secondary stats -> map to their development fields
+        case 'A':
+          baseDto.attacksDevelopment = (baseDto.attacksDevelopment ?? 0) + 1;
+          break;
+        case 'W':
+          baseDto.woundsDevelopment = (baseDto.woundsDevelopment ?? 0) + 1;
+          break;
+        case 'M':
+          baseDto.movementDevelopment = (baseDto.movementDevelopment ?? 0) + 1;
+          break;
+        case 'Mag':
+          baseDto.magicDevelopment = (baseDto.magicDevelopment ?? 0) + 1;
+          break;
+
+        // SB, TB, IP, FP do not have backend development fields - ignore them
+        default:
+          // no-op for unsupported selections
+          break;
+      }
+    }
+
+    return baseDto;
   };
 
   private readonly createProfile = async (): Promise<number> => {
-    // Brak osobnego endpointu create dla profilu, więc tworzymy „pustą” postać? Nie.
-    // Żeby zachować zgodność z zadaniem (użyć podanych endpointów), tworzymy profile w CharacterViewSet
-    // przez minimalny POST potrzebujący character_profile. W backendzie nie ma create profilu.
-    // Dlatego id profilu musimy uzyskać z backendu inaczej.
-    // Najprostsze: stworzyć CharacterProfile bezpośrednio przez admin API? Tego nie ma.
-    // => implementujemy minimalny endpoint w backendzie: POST /character-sheet/profiles/.
-    // (Zrobimy to w backendzie w tej samej zmianie.)
     const path = `${CharacterSaveService.CHARACTER_SHEET_PREFIX}/profiles/`;
     const dto = this.toProfileDto();
     const created = await firstValueFrom(this.crud.create<{ id: number }, CharacterProfileCreateDto>(path, dto));

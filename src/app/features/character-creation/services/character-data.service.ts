@@ -131,6 +131,21 @@ export class CharacterDataService {
   // selected primary stat for UI (click / toggle)
   readonly selectedStat = signal<PrimaryStatId | null>(null);
 
+  // Persisted selected characteristic from career step (e.g. 'WS' | 'FP' | 'M' | null)
+  // This signal stores the currently selected characteristic choice made in
+  // the career selection UI so other steps/components can observe it.
+  readonly selectedCharacteristic = signal<string | null>(null);
+
+  /** Persist the selected characteristic (from Career step) */
+  setSelectedCharacteristic(stat: string | null) {
+    this.selectedCharacteristic.set(stat);
+  }
+
+  /** Read the selected characteristic previously stored */
+  getSelectedCharacteristic(): string | null {
+    return this.selectedCharacteristic();
+  }
+
   // Secondary stats used by template
   readonly secondaryStats = signal<SecondaryStats>({
     A: 1,
