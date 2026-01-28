@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {Component, inject} from '@angular/core';
-import {RouterModule} from '@angular/router';
+import {RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -14,7 +14,7 @@ import type {CharacterListItem} from '../../models/character-list-item.models';
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
+    RouterLink,
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,

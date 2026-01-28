@@ -160,6 +160,6 @@ export class CharacterCreationStep1BioRaceComponent {
     }
 
     // placeholder for step-2
-    void this.router.navigate(['/character/create/step-2']);
+    void this.router.navigate(['/character-create/step-2']);
   }
 }

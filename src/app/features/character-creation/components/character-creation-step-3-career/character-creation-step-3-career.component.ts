@@ -363,7 +363,7 @@ export class CharacterCreationStep3CareerComponent {
   }
 
   goPrev() {
-    void this.router.navigate(['/character/create/step-2']);
+    void this.router.navigate(['/character-create/step-2']);
   }
 
   reroll() {
@@ -467,7 +467,7 @@ export class CharacterCreationStep3CareerComponent {
     // TODO: Persist chosen career to CharacterDataService / backend in later step.
     // For now we just move forward.
     if (!this.canAccept()) return;
-    void this.router.navigate(['/character/create/step-4']);
+    void this.router.navigate(['/character-create/step-4']);
   }
 
   // Add a small initialization block to sync selection from the service when component is created

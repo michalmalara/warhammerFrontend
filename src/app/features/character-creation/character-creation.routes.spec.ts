@@ -6,7 +6,7 @@ import {routes} from '../../app.routes';
 import {AuthSessionService} from '../auth/services/auth-session.service';
 
 describe('Character creation routing', () => {
-  it('navigates /character/create to step-1', async () => {
+  it('navigates /character-create to step-1', async () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter(routes),
@@ -25,9 +25,9 @@ describe('Character creation routing', () => {
     // Ensure router performs initial navigation + redirects.
     router.initialNavigation();
 
-    await router.navigateByUrl('/character/create');
-    await router.navigateByUrl('/character/create/step-1');
+    await router.navigateByUrl('/character-create');
+    await router.navigateByUrl('/character-create/step-1');
 
-    expect(location.path()).toBe('/character/create/step-1');
+    expect(location.path()).toBe('/character-create/step-1');
   });
 });

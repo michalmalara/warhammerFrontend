@@ -51,7 +51,7 @@ export class CharacterCreationStep5FinalReviewWealthComponent {
   };
 
   goPrev = () => {
-    this.router.navigate(['/character/create/step-4']);
+    this.router.navigate(['/character-create/step-4']);
   };
 
   commitCharacter = async () => {
@@ -59,7 +59,7 @@ export class CharacterCreationStep5FinalReviewWealthComponent {
 
     const p = this.profession();
     if (!p) {
-      await this.router.navigate(['/character/create/step-3']);
+      await this.router.navigate(['/character-create/step-3']);
       return;
     }
 

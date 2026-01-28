@@ -41,11 +41,11 @@ export class CharacterCreationStep4SkillsTalentsComponent {
   });
 
   goPrev() {
-    void this.router.navigate(['/character/create/step-3']);
+    void this.router.navigate(['/character-create/step-3']);
   }
 
   goNext() {
     // Navigate to step-5 (Final Review & Wealth)
-    void this.router.navigate(['/character/create/step-5']);
+    void this.router.navigate(['/character-create/step-5']);
   }
 }

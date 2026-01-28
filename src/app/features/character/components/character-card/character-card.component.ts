@@ -110,8 +110,35 @@ export class CharacterCardComponent {
   private readonly listTalentDefinitionsByIds = (ids: number[]) =>
     this.talentsApi.list().pipe(map((list) => list.filter((t) => ids.includes(t.id))));
 
-  private readonly mapCharacterSkillsToUi = (wrappers: CharacterSkillDto[], defs: Skill[]): CharacterSkill[] => {
+  private readonly mapCharacterSkillsToUi = (
+    wrappers: CharacterSkillDto[],
+    defs: Skill[],
+    profile: CharacterProfileDto,
+  ): CharacterSkill[] => {
     const byId = new Map<number, Skill>(defs.map((s) => [s.id, s]));
+
+    const getCharacteristicValue = (assoc: string): number => {
+      switch (assoc) {
+        case 'weapon_skills':
+          return (profile.weaponSkills ?? 0) + (profile.weaponSkillsDevelopment ?? 0) * 5;
+        case 'ballistic_skills':
+          return (profile.ballisticSkills ?? 0) + (profile.ballisticSkillsDevelopment ?? 0) * 5;
+        case 'strength':
+          return (profile.strength ?? 0) + (profile.strengthDevelopment ?? 0) * 5;
+        case 'toughness':
+          return (profile.toughness ?? 0) + (profile.toughnessDevelopment ?? 0) * 5;
+        case 'agility':
+          return (profile.agility ?? 0) + (profile.agilityDevelopment ?? 0) * 5;
+        case 'intelligence':
+          return (profile.intelligence ?? 0) + (profile.intelligenceDevelopment ?? 0) * 5;
+        case 'willpower':
+          return (profile.willpower ?? 0) + (profile.willpowerDevelopment ?? 0) * 5;
+        case 'fellowship':
+          return (profile.fellowship ?? 0) + (profile.fellowshipDevelopment ?? 0) * 5;
+        default:
+          return 0;
+      }
+    };
 
     return wrappers.flatMap((w) => {
       const def = byId.get(w.skill);
@@ -139,6 +166,8 @@ export class CharacterCardComponent {
       const advPlus10 = w.level >= 1;
       const advPlus20 = w.level >= 2;
 
+      const basePercent = getCharacteristicValue(def.associatedCharacteristic);
+
       const ui: CharacterSkill = {
         id: String(w.id),
         skill: {
@@ -146,7 +175,7 @@ export class CharacterCardComponent {
           name: def.name,
           characteristic,
         },
-        basePercent: 0,
+        basePercent,
         taken: true,
         advPlus10,
         advPlus20,
@@ -193,7 +222,7 @@ export class CharacterCardComponent {
             character: of(character),
             profile: of(profile),
             skillsUi: skillIds.length
-              ? this.listSkillDefinitionsByIds(skillIds).pipe(map((defs) => this.mapCharacterSkillsToUi(skillWrappers, defs)))
+              ? this.listSkillDefinitionsByIds(skillIds).pipe(map((defs) => this.mapCharacterSkillsToUi(skillWrappers, defs, profile)))
               : of([] as CharacterSkill[]),
             talentsUi: talentIds.length
               ? this.listTalentDefinitionsByIds(talentIds).pipe(map((defs) => this.mapCharacterTalentsToUi(talentWrappers, defs)))

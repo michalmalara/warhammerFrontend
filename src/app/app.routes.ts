@@ -45,7 +45,7 @@ export const routes: Routes = [
   {path: 'character/:id', component: CharacterCardComponent, canActivate: [AUTH_GUARD]},
 
   {
-    path: 'character/create',
+    path: 'character-create',
     component: CharacterCreationShellComponent,
     canActivate: [AUTH_GUARD],
     children: [

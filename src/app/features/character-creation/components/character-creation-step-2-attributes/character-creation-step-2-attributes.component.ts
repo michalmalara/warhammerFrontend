@@ -47,11 +47,11 @@ export class CharacterCreationStep2AttributesComponent {
   });
 
   goPrev() {
-    void this.router.navigate(['/character/create/step-1']);
+    void this.router.navigate(['/character-create/step-1']);
   }
 
   goNext() {
-    void this.router.navigate(['/character/create/step-3']);
+    void this.router.navigate(['/character-create/step-3']);
   }
 
   // Forward UI actions to service
