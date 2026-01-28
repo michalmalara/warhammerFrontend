@@ -54,11 +54,11 @@
               <div class="dashboard-right header-right-panels">
                 <profession-xp-panel
                   class="header-panel"
-                  [currentProfession]="vm.character?.currentProfessionName ?? currentProfession"
-                  [xpCurrent]="vm.character?.experiencePoints ?? xpCurrent"
+                  [currentProfession]="vm.currentProfession ?? currentProfession"
+                  [xpCurrent]="vm.xpCurrent ?? xpCurrent"
                   [xpMax]="xpMax"
                   [xpToSpend]="xpToSpend"
-                  [xpTotalEarned]="vm.character?.totalExperiencePoints ?? xpTotalEarned"
+                  [xpTotalEarned]="vm.xpTotalEarned ?? xpTotalEarned"
                 ></profession-xp-panel>
               </div>
             </header>

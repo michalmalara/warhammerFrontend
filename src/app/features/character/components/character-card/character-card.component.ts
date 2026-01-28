@@ -6,7 +6,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
 import {ActivatedRoute} from '@angular/router';
-import {catchError, filter, forkJoin, map, of, startWith, switchMap} from 'rxjs';
+import {catchError, filter, forkJoin, map, Observable, of, startWith, switchMap} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 
 import {CharactersApiService} from '../../services/characters-api.service';
@@ -28,6 +28,25 @@ import {TalentsComponent} from '../talents/talents.component';
 import {Talent} from '../talents/talents.types';
 import {FatePointsComponent} from '../fate-points/fate-points.component';
 import {ProfessionXpPanelComponent} from '../profession-history/profession-xp-panel.component';
+
+// View model exposed to the template
+type CharacterCardVm = {
+  loading: boolean;
+  error: string | null;
+  character: Character | null;
+  profile: CharacterProfileDto | null;
+  skillsUi: CharacterSkill[];
+  talentsUi: Talent[];
+  primaryStats: { label: string; base: number; adv: number; total?: number }[];
+  secondaryStats: { label: string; base: number; adv: number; total?: number }[];
+  woundsMax: number;
+  woundsCurrent: number;
+  fateMax: number;
+  fateCurrent: number;
+  xpCurrent: number;
+  xpTotalEarned: number;
+  currentProfession: string;
+};
 
 @Component({
   selector: 'character-card',
@@ -202,7 +221,7 @@ export class CharacterCardComponent {
     });
   };
 
-  readonly vm$ = this.route.paramMap.pipe(
+  readonly vm$: Observable<CharacterCardVm> = this.route.paramMap.pipe(
     map((pm) => pm.get('id')),
     filter((id): id is string => !!id),
     map((id) => Number(id)),
@@ -242,6 +261,10 @@ export class CharacterCardComponent {
           woundsCurrent: profile.wounds,
           fateMax: profile.fatePoints,
           fateCurrent: profile.fatePoints,
+          // expose XP and current profession at top-level of the VM for simpler bindings
+          xpCurrent: character?.experiencePoints ?? this.xpCurrent,
+          xpTotalEarned: character?.totalExperiencePoints ?? this.xpTotalEarned,
+          currentProfession: character?.currentProfessionName ?? this.currentProfession,
         })),
         startWith({
           loading: true,
@@ -256,6 +279,10 @@ export class CharacterCardComponent {
           woundsCurrent: this.woundsCurrent,
           fateMax: this.fateMax,
           fateCurrent: this.fateCurrent,
+          // initial XP/profession values come from component inputs
+          xpCurrent: this.xpCurrent,
+          xpTotalEarned: this.xpTotalEarned,
+          currentProfession: this.currentProfession,
         }),
         catchError((err) => {
           const http = err instanceof HttpErrorResponse ? err : null;
@@ -283,6 +310,10 @@ export class CharacterCardComponent {
             woundsCurrent: this.woundsCurrent,
             fateMax: this.fateMax,
             fateCurrent: this.fateCurrent,
+            // ensure XP/profession fields are present on error branch
+            xpCurrent: this.xpCurrent,
+            xpTotalEarned: this.xpTotalEarned,
+            currentProfession: this.currentProfession,
           });
         }),
       ),
@@ -293,17 +324,17 @@ export class CharacterCardComponent {
   @Input() name = 'Gottfried von Hollen';
   @Input() title = 'Roadwarden';
   @Input() subtitle = 'CHARACTER DASHBOARD';
-  @Input() xpCurrent = 450;
-  @Input() xpMax = 1000;
+  @Input() xpCurrent = 0;
+  @Input() xpMax = 0;
 
   /** Aktualna profesja postaci (wyświetlana w karcie Experience). */
   @Input() currentProfession = this.title;
 
   /** Punkty doświadczenia dostępne do wydania (niewydane). */
-  @Input() xpToSpend = 120;
+  @Input() xpToSpend = 0;
 
   /** Suma wszystkich zdobytych punktów doświadczenia (łącznie). */
-  @Input() xpTotalEarned = 1870;
+  @Input() xpTotalEarned = 0;
 
   /**
    * Wsteczna kompatybilność (używane też w sidebarze). Jeśli nie podasz `portraitUrl`,
