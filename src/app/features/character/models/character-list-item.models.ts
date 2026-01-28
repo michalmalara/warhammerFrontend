@@ -4,5 +4,5 @@ export type CharacterListItem = {
   lastName?: string | null;
   race?: string | null;
   allowDraft?: boolean | null;
-  currantProfessionName?: string | null;
+  currentProfessionName?: string | null;
 };

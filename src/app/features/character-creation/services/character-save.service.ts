@@ -210,11 +210,11 @@ export class CharacterSaveService {
   };
 
   save = async (): Promise<void> => {
-    const bio = this.charData.bio();
-    const race = this.charData.race() ?? 'human';
+    const b = this.charData.bio();
+    const p = this.charData.getProfession() ?? {id: 0, trappings: ''};
 
     // 1) create dependent records
-    const [characterProfileId, currantProfessionId, skillIds, talentIds] = await Promise.all([
+    const [characterProfileId, currentProfessionId, skillIds, talentIds] = await Promise.all([
       this.createProfile(),
       this.createProfessionWrapper(),
       this.createSkillWrappers(),
@@ -223,19 +223,19 @@ export class CharacterSaveService {
 
     // 2) create character
     const payload: CharacterCreatePayload = {
-      name: (bio.name || 'Unnamed').trim(),
-      race: race as string,
-      gender: bio.gender,
-      age: bio.age,
-      eyes: bio.eyeColor,
-      hair: bio.hairColor,
-      currantProfession: currantProfessionId,
-      careerPath: [currantProfessionId],
+      name: (b.name || 'Unnamed').trim(),
+      race: (this.charData.race() ?? 'human') as string,
+      gender: b.gender,
+      age: b.age,
+      eyes: b.eyeColor,
+      hair: b.hairColor,
+      currentProfession: currentProfessionId,
       characterProfile: characterProfileId,
+      equipment: (p.trappings ?? '').trim(),
+      goldCrowns: this.charData.goldCrowns?.() ?? undefined,
       characterSkills: skillIds,
       characterTalents: talentIds,
-      equipment: (this.charData.getProfession()?.trappings ?? '').trim(),
-      goldCrowns: this.charData.goldCrowns() ?? undefined,
+      careerPath: [currentProfessionId],
     };
 
     await firstValueFrom(this.charactersApi.create(payload));

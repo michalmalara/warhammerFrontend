@@ -25,7 +25,7 @@ export class CharacterListService {
       last_name?: string | null;
       allowDraft?: boolean | null;
       allow_draft?: boolean | null;
-      currant_profession_name?: string | null;
+      current_profession_name?: string | null;
     };
 
     return {
@@ -34,7 +34,7 @@ export class CharacterListService {
       lastName: anyC.lastName ?? anyC.last_name ?? null,
       race: c.race ?? null,
       allowDraft: anyC.allowDraft ?? anyC.allow_draft ?? null,
-      currantProfessionName: anyC.currant_profession_name ?? null,
+      currentProfessionName: anyC.current_profession_name ?? null,
     };
   };
 }

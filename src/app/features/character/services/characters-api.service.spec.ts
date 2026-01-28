@@ -26,7 +26,7 @@ describe('CharactersApiService', () => {
       .create({
         name: 'Klaus von Reuter',
         race: 'human',
-        currantProfession: 1,
+        currentProfession: 1,
         characterProfile: 1,
       })
       .subscribe();
@@ -42,5 +42,20 @@ describe('CharactersApiService', () => {
     const req = httpMock.expectOne(`${environment.apiBaseUrl}/character-sheet/characters/123/`);
     expect(req.request.method).toBe('PATCH');
     req.flush({id: 123, goldCrowns: 11});
+  });
+
+  it('list returns mapped character objects', () => {
+    httpMock
+      .expectOne(`${environment.apiBaseUrl}/character-sheet/characters/`)
+      .flush([{id: 1, name: 'A', current_profession_name: 'Warrior'}]);
+
+    service
+      .list()
+      .subscribe((characters) => {
+        expect(characters.length).toBe(1);
+        expect(characters[0].id).toBe(1);
+        expect(characters[0].name).toBe('A');
+        expect((characters[0] as any).currentProfessionName).toBe('Warrior');
+      });
   });
 });

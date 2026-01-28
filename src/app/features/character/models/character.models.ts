@@ -2,7 +2,7 @@ export type CharacterCreatePayload = {
   name: string;
   race: string;
   isPc?: boolean;
-  currantProfession: number;
+  currentProfession: number;
   careerPath?: number[];
   experiencePoints?: number;
   totalExperiencePoints?: number;
