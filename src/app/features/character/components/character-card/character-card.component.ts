@@ -1,10 +1,23 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
+import {ActivatedRoute} from '@angular/router';
+import {catchError, filter, forkJoin, map, of, startWith, switchMap} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+
+import {CharactersApiService} from '../../services/characters-api.service';
+import {CharacterProfileApiService, CharacterProfileDto} from '../../services/character-profile-api.service';
+import {CharacterSkillDto, CharacterSkillsApiService} from '../../services/character-skills-api.service';
+import {CharacterTalentDto, CharacterTalentsApiService} from '../../services/character-talents-api.service';
+import {SkillsApiService} from '../../../skills/services/skills-api.service';
+import {TalentsApiService} from '../../../talents/services/talents-api.service';
+import type {Character} from '../../models/character.models';
+import type {Skill} from '../../../skills/models/skill.models';
+import type {Talent as TalentDef} from '../../../talents/models/talent.models';
 
 import {CharacterStatsComponent} from '../character-stats/character-stats.component';
 import {WoundsPanelComponent} from '../wounds-panel/wounds-panel.component';
@@ -41,6 +54,213 @@ export class CharacterCardComponent {
   // expose global Math to the template (Angular templates only see component properties)
   readonly Math = Math;
 
+  private readonly api = inject(CharactersApiService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly profileApi = inject(CharacterProfileApiService);
+  private readonly charSkillsApi = inject(CharacterSkillsApiService);
+  private readonly charTalentsApi = inject(CharacterTalentsApiService);
+  private readonly skillsApi = inject(SkillsApiService);
+  private readonly talentsApi = inject(TalentsApiService);
+
+  private readonly mapProfileToPrimaryStats = (p: CharacterProfileDto): {
+    label: string;
+    base: number;
+    adv: number;
+    total?: number;
+  }[] => [
+    {label: 'WS', base: p.weaponSkills, adv: p.weaponSkillsDevelopment},
+    {label: 'BS', base: p.ballisticSkills, adv: p.ballisticSkillsDevelopment},
+    {label: 'S', base: p.strength, adv: p.strengthDevelopment},
+    {label: 'T', base: p.toughness, adv: p.toughnessDevelopment},
+    {label: 'Ag', base: p.agility, adv: p.agilityDevelopment},
+    {label: 'Int', base: p.intelligence, adv: p.intelligenceDevelopment},
+    {label: 'WP', base: p.willpower, adv: p.willpowerDevelopment},
+    {label: 'Fel', base: p.fellowship, adv: p.fellowshipDevelopment},
+  ];
+
+  private readonly mapProfileToSecondaryStats = (p: CharacterProfileDto): {
+    label: string;
+    base: number;
+    adv: number;
+    total?: number;
+  }[] => {
+    const strengthTotal = (p.strength ?? 0) + (p.strengthModifier ?? 0);
+    const toughnessTotal = (p.toughness ?? 0) + (p.toughnessModifier ?? 0);
+
+    const sb = Math.floor(strengthTotal / 10) + (p.strengthBonusModifier ?? 0);
+    const tb = Math.floor(toughnessTotal / 10) + (p.toughnessBonusModifier ?? 0);
+
+    return [
+      {label: 'A', base: p.attacks, adv: p.attacksDevelopment},
+      {label: 'W', base: p.wounds, adv: p.woundsDevelopment},
+
+      {label: 'SB', base: 0, adv: 0, total: sb},
+      {label: 'TB', base: 0, adv: 0, total: tb},
+
+      {label: 'M', base: p.movement, adv: p.movementDevelopment},
+      {label: 'MAG', base: p.magic, adv: p.magicDevelopment},
+      {label: 'IP', base: p.insanityPoints, adv: 0},
+      {label: 'FP', base: p.fatePoints, adv: 0},
+    ];
+  };
+
+  private readonly listSkillDefinitionsByIds = (ids: number[]) =>
+    this.skillsApi.list().pipe(map((list) => list.filter((s) => ids.includes(s.id))));
+
+  private readonly listTalentDefinitionsByIds = (ids: number[]) =>
+    this.talentsApi.list().pipe(map((list) => list.filter((t) => ids.includes(t.id))));
+
+  private readonly mapCharacterSkillsToUi = (wrappers: CharacterSkillDto[], defs: Skill[]): CharacterSkill[] => {
+    const byId = new Map<number, Skill>(defs.map((s) => [s.id, s]));
+
+    return wrappers.flatMap((w) => {
+      const def = byId.get(w.skill);
+      if (!def) return [];
+
+      const characteristic =
+        def.associatedCharacteristic === 'weapon_skills'
+          ? 'WS'
+          : def.associatedCharacteristic === 'ballistic_skills'
+            ? 'BS'
+            : def.associatedCharacteristic === 'strength'
+              ? 'S'
+              : def.associatedCharacteristic === 'toughness'
+                ? 'T'
+                : def.associatedCharacteristic === 'agility'
+                  ? 'AG'
+                  : def.associatedCharacteristic === 'intelligence'
+                    ? 'INT'
+                    : def.associatedCharacteristic === 'willpower'
+                      ? 'WP'
+                      : def.associatedCharacteristic === 'fellowship'
+                        ? 'FEL'
+                        : String(def.associatedCharacteristic);
+
+      const advPlus10 = w.level >= 1;
+      const advPlus20 = w.level >= 2;
+
+      const ui: CharacterSkill = {
+        id: String(w.id),
+        skill: {
+          id: String(def.id),
+          name: def.name,
+          characteristic,
+        },
+        basePercent: 0,
+        taken: true,
+        advPlus10,
+        advPlus20,
+      };
+
+      return [ui];
+    });
+  };
+
+  private readonly mapCharacterTalentsToUi = (wrappers: CharacterTalentDto[], defs: TalentDef[]): Talent[] => {
+    const byId = new Map<number, TalentDef>(defs.map((t) => [t.id, t]));
+
+    return wrappers.flatMap((w) => {
+      const def = byId.get(w.talent);
+      if (!def) return [];
+
+      const ui: Talent = {
+        id: String(def.id),
+        name: def.name,
+        description: def.description ?? '',
+      };
+
+      return [ui];
+    });
+  };
+
+  readonly vm$ = this.route.paramMap.pipe(
+    map((pm) => pm.get('id')),
+    filter((id): id is string => !!id),
+    map((id) => Number(id)),
+    filter((id) => Number.isFinite(id) && id > 0),
+    switchMap((id) =>
+      forkJoin({
+        character: this.api.getById(id),
+        profile: this.profileApi.getCharacterProfile(id),
+        skillWrappers: this.charSkillsApi.list(id),
+        talentWrappers: this.charTalentsApi.list(id),
+      }).pipe(
+        switchMap(({character, profile, skillWrappers, talentWrappers}) => {
+          const skillIds = [...new Set(skillWrappers.map((w) => w.skill))];
+          const talentIds = [...new Set(talentWrappers.map((w) => w.talent))];
+
+          return forkJoin({
+            character: of(character),
+            profile: of(profile),
+            skillsUi: skillIds.length
+              ? this.listSkillDefinitionsByIds(skillIds).pipe(map((defs) => this.mapCharacterSkillsToUi(skillWrappers, defs)))
+              : of([] as CharacterSkill[]),
+            talentsUi: talentIds.length
+              ? this.listTalentDefinitionsByIds(talentIds).pipe(map((defs) => this.mapCharacterTalentsToUi(talentWrappers, defs)))
+              : of([] as Talent[]),
+          });
+        }),
+        map(({character, profile, skillsUi, talentsUi}) => ({
+          loading: false,
+          error: null as string | null,
+          character,
+          profile,
+          skillsUi,
+          talentsUi,
+          primaryStats: this.mapProfileToPrimaryStats(profile),
+          secondaryStats: this.mapProfileToSecondaryStats(profile),
+          woundsMax: profile.wounds,
+          woundsCurrent: profile.wounds,
+          fateMax: profile.fatePoints,
+          fateCurrent: profile.fatePoints,
+        })),
+        startWith({
+          loading: true,
+          error: null as string | null,
+          character: null as Character | null,
+          profile: null as CharacterProfileDto | null,
+          skillsUi: [] as CharacterSkill[],
+          talentsUi: [] as Talent[],
+          primaryStats: this.primaryStats,
+          secondaryStats: this.secondaryStats,
+          woundsMax: this.woundsMax,
+          woundsCurrent: this.woundsCurrent,
+          fateMax: this.fateMax,
+          fateCurrent: this.fateCurrent,
+        }),
+        catchError((err) => {
+          const http = err instanceof HttpErrorResponse ? err : null;
+          if (http) {
+            console.error('[CharacterCardComponent] HTTP error', {
+              status: http.status,
+              statusText: http.statusText,
+              url: http.url,
+              error: http.error,
+            });
+          } else {
+            console.error('[CharacterCardComponent] Failed to load character dashboard', err);
+          }
+
+          return of({
+            loading: false,
+            error: 'Failed to load character. Please try again later.',
+            character: null as Character | null,
+            profile: null as CharacterProfileDto | null,
+            skillsUi: [] as CharacterSkill[],
+            talentsUi: [] as Talent[],
+            primaryStats: this.primaryStats,
+            secondaryStats: this.secondaryStats,
+            woundsMax: this.woundsMax,
+            woundsCurrent: this.woundsCurrent,
+            fateMax: this.fateMax,
+            fateCurrent: this.fateCurrent,
+          });
+        }),
+      ),
+    ),
+  );
+
+  // --- current API kept as fallbacks (used when component is embedded elsewhere)
   @Input() name = 'Gottfried von Hollen';
   @Input() title = 'Roadwarden';
   @Input() subtitle = 'CHARACTER DASHBOARD';
@@ -75,7 +295,7 @@ export class CharacterCardComponent {
 
   get effectivePortraitAlt(): string {
     const alt = (this.portraitAlt ?? '').trim();
-    return alt || `Portret: ${this.name}`;
+    return alt || `Portrait: ${this.name}`;
   }
 
   // Primary / Secondary stats moved to a separate component

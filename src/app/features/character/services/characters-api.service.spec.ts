@@ -1,7 +1,9 @@
 import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {environment} from '../../../../environments';
 import {CharactersApiService} from './characters-api.service';
+import {caseConverterInterceptor} from '../../../shared/http/case-converter.interceptor';
 
 describe('CharactersApiService', () => {
   let service: CharactersApiService;
@@ -9,8 +11,11 @@ describe('CharactersApiService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [CharactersApiService],
+      providers: [
+        CharactersApiService,
+        provideHttpClient(withInterceptors([caseConverterInterceptor])),
+        provideHttpClientTesting(),
+      ],
     });
 
     service = TestBed.inject(CharactersApiService);
@@ -45,17 +50,15 @@ describe('CharactersApiService', () => {
   });
 
   it('list returns mapped character objects', () => {
+    service.list().subscribe((characters) => {
+      expect(characters.length).toBe(1);
+      expect(characters[0].id).toBe(1);
+      expect(characters[0].name).toBe('A');
+      expect(characters[0].currentProfessionName).toBe('Warrior');
+    });
+
     httpMock
       .expectOne(`${environment.apiBaseUrl}/character-sheet/characters/`)
       .flush([{id: 1, name: 'A', current_profession_name: 'Warrior'}]);
-
-    service
-      .list()
-      .subscribe((characters) => {
-        expect(characters.length).toBe(1);
-        expect(characters[0].id).toBe(1);
-        expect(characters[0].name).toBe('A');
-        expect((characters[0] as any).currentProfessionName).toBe('Warrior');
-      });
   });
 });

@@ -39,7 +39,10 @@ export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'characters'},
   {path: 'login', component: LoginComponent},
   {path: 'characters', component: CharactersListComponent, canActivate: [AUTH_GUARD]},
-  {path: 'character', component: CharacterCardComponent, canActivate: [AUTH_GUARD]},
+
+  // Backward-compatible route: if someone hits /character without id, go back to list.
+  {path: 'character', pathMatch: 'full', redirectTo: 'characters'},
+  {path: 'character/:id', component: CharacterCardComponent, canActivate: [AUTH_GUARD]},
 
   {
     path: 'character/create',

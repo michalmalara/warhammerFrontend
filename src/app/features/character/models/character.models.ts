@@ -6,6 +6,7 @@ export type CharacterCreatePayload = {
   careerPath?: number[];
   experiencePoints?: number;
   totalExperiencePoints?: number;
+  currentProfessionName?: string | null;
   age?: number | null;
   height?: number | null;
   weight?: number | null;

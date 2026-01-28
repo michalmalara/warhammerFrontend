@@ -1,24 +1,72 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+
+import {CrudApiService} from '../../../shared/services/crud-api.service';
 
 export interface CharacterProfileDto {
   id: number;
-  name: string;
-  last_name?: string | null;
-  allow_draft?: boolean;
+
+  weaponSkills: number;
+  weaponSkillsDevelopment: number;
+  weaponSkillsModifier: number;
+
+  ballisticSkills: number;
+  ballisticSkillsDevelopment: number;
+  ballisticSkillsModifier: number;
+
+  strength: number;
+  strengthDevelopment: number;
+  strengthModifier: number;
+
+  toughness: number;
+  toughnessDevelopment: number;
+  toughnessModifier: number;
+
+  agility: number;
+  agilityDevelopment: number;
+  agilityModifier: number;
+
+  intelligence: number;
+  intelligenceDevelopment: number;
+  intelligenceModifier: number;
+
+  willpower: number;
+  willpowerDevelopment: number;
+  willpowerModifier: number;
+
+  fellowship: number;
+  fellowshipDevelopment: number;
+  fellowshipModifier: number;
+
+  attacks: number;
+  attacksDevelopment: number;
+  attacksModifier: number;
+
+  wounds: number;
+  woundsDevelopment: number;
+  woundsModifier: number;
+
+  movement: number;
+  movementDevelopment: number;
+  movementModifier: number;
+
+  magic: number;
+  magicDevelopment: number;
+  magicModifier: number;
+
+  insanityPoints: number;
+  fatePoints: number;
+
+  strengthBonusModifier: number;
+  toughnessBonusModifier: number;
 }
 
 @Injectable({providedIn: 'root'})
 export class CharacterProfileApiService {
-  private readonly http = inject(HttpClient);
+  private readonly crud = inject(CrudApiService);
 
-  /**
-   * Backend base URL.
-   * API routes are mounted in Django under `/character-sheet/`.
-   */
-  private readonly baseUrl = '';
+  private static readonly PATH = '/character-sheet/characters';
 
   getCharacterProfile = (id: number): Observable<CharacterProfileDto> =>
-    this.http.get<CharacterProfileDto>(`${this.baseUrl}/character-sheet/characters/${id}/profile/`);
+    this.crud.list<CharacterProfileDto>(`${CharacterProfileApiService.PATH}/${id}/profile/`);
 }

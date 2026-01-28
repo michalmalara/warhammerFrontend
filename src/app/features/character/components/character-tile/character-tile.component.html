@@ -1,4 +1,4 @@
-<mat-card class="tile">
+<mat-card class="tile" [routerLink]="['/character', character.id]">
   <mat-card-header>
     <mat-card-title i18n="@@characterList.tile.title|Character tile title">{{ displayName }}</mat-card-title>
     @if (character.race) {
