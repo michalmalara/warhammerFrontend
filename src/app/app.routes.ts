@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {CharacterCardComponent} from './features/character/components/character-card/character-card.component';
+import {CharactersListComponent} from './features/character/components/characters-list/characters-list.component';
 import {ProfessionsListComponent} from './features/professions/components/professions-list/professions-list.component';
 import {
   ProfessionCreateComponent
@@ -31,14 +32,19 @@ import {
 import {
   CharacterCreationStep5FinalReviewWealthComponent
 } from './features/character-creation/components/character-creation-step-5-final-review-wealth/character-creation-step-5-final-review-wealth.component';
+import {LoginComponent} from './features/auth/components/login/login.component';
+import {AUTH_GUARD} from './features/auth/guards/auth.guard';
 
 export const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'character'},
-  {path: 'character', component: CharacterCardComponent},
+  {path: '', pathMatch: 'full', redirectTo: 'characters'},
+  {path: 'login', component: LoginComponent},
+  {path: 'characters', component: CharactersListComponent, canActivate: [AUTH_GUARD]},
+  {path: 'character', component: CharacterCardComponent, canActivate: [AUTH_GUARD]},
 
   {
     path: 'character/create',
     component: CharacterCreationShellComponent,
+    canActivate: [AUTH_GUARD],
     children: [
       {path: '', pathMatch: 'full', redirectTo: 'step-1'},
       {path: 'step-1', component: CharacterCreationStep1BioRaceComponent},
@@ -75,5 +81,5 @@ export const routes: Routes = [
   {path: 'talents', component: TalentsListComponent},
   {path: 'talents/new', component: TalentCreateComponent},
 
-  {path: '**', redirectTo: 'character'},
+  {path: '**', redirectTo: 'characters'},
 ];

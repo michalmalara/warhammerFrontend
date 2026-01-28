@@ -1,0 +1,69 @@
+<section class="login-page">
+  <div class="login-card">
+    <header class="login-card__header">
+      <h1 class="login-card__title" i18n="Login page title@@auth.login.title">Sign in</h1>
+      <p class="login-card__subtitle" i18n="Login page subtitle@@auth.login.subtitle">
+        Use your account credentials to access your characters.
+      </p>
+    </header>
+
+    <div class="login-card__content">
+      <form class="login-form" (ngSubmit)="onSubmit()">
+        @if (hasError()) {
+          <p class="login-form__error" i18n="Login error message@@auth.login.error">
+            Invalid username or password.
+          </p>
+        }
+
+        <div class="login-form__field">
+          <label
+            class="login-form__label"
+            for="username"
+            i18n="Username label@@auth.login.usernameLabel"
+          >
+            Username
+          </label>
+          <input
+            class="login-form__input"
+            id="username"
+            name="username"
+            type="text"
+            [(ngModel)]="username"
+            autocomplete="username"
+            required
+          />
+        </div>
+
+        <div class="login-form__field">
+          <label
+            class="login-form__label"
+            for="password"
+            i18n="Password label@@auth.login.passwordLabel"
+          >
+            Password
+          </label>
+          <input
+            class="login-form__input"
+            id="password"
+            name="password"
+            type="password"
+            [(ngModel)]="password"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <div class="login-form__actions">
+          <button
+            class="login-button"
+            type="submit"
+            [disabled]="busy()"
+            i18n="Login submit button@@auth.login.submit"
+          >
+            Sign in
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

@@ -31,7 +31,7 @@ describe('CharactersApiService', () => {
       })
       .subscribe();
 
-    const req = httpMock.expectOne(`${environment.apiBaseUrl}/characters/`);
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/character-sheet/characters/`);
     expect(req.request.method).toBe('POST');
     req.flush({id: 123});
   });
@@ -39,7 +39,7 @@ describe('CharactersApiService', () => {
   it('patches a character', () => {
     service.patch(123, {goldCrowns: 11}).subscribe();
 
-    const req = httpMock.expectOne(`${environment.apiBaseUrl}/characters/123/`);
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/character-sheet/characters/123/`);
     expect(req.request.method).toBe('PATCH');
     req.flush({id: 123, goldCrowns: 11});
   });

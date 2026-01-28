@@ -1,0 +1,68 @@
+.tile {
+  /* Match profession-card look */
+  --primary: var(--color-accent, #bd0f2c);
+  --card-dark: var(--color-surface, #2a181a);
+  --border-dark: var(--color-panel-border, rgba(255, 255, 255, 0.06));
+
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid var(--border-dark);
+  background: var(--card-dark);
+  color: #ffffff; /* force white text */
+  overflow: hidden;
+
+  /* add bottom padding so the card has space at the bottom */
+  padding-bottom: 16px;
+
+  box-shadow: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+// Make the race subtitle explicit white
+.tile mat-card-subtitle,
+.tile .mat-card-subtitle {
+  color: #ffffff; /* white race text */
+}
+
+.tile::before {
+  content: '';
+  position: absolute;
+  right: -24px;
+  top: -24px;
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  background: rgba(189, 15, 44, 0.08);
+  filter: blur(18px);
+  pointer-events: none;
+  transition: background 150ms ease;
+}
+
+.tile:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 18px rgba(189, 15, 44, 0.25);
+  transform: translateY(-1px);
+}
+
+.tile:hover::before {
+  background: rgba(189, 15, 44, 0.18);
+}
+
+.tile:focus-visible {
+  outline: 2px solid rgba(189, 15, 44, 0.65);
+  outline-offset: 3px;
+}
+
+.tile__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff; /* force meta text white */
+}
+
+.tile__metaLabel {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 12px;
+}

@@ -1,0 +1,122 @@
+@use '../../../../../_theme' as theme;
+
+.login-page {
+  min-height: calc(100vh - 64px);
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: var(--color-bg);
+}
+
+.login-card {
+  width: min(520px, 100%);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.login-card__header {
+  padding: 1.25rem 1.25rem 0.75rem;
+}
+
+.login-card__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.login-card__subtitle {
+  margin: 0.5rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.login-card__content {
+  padding: 0 1.25rem 1.25rem;
+}
+
+.login-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.login-form__field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.login-form__label {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.login-form__input {
+  height: 2.75rem;
+  border-radius: 10px;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.22);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.login-form__input:focus {
+  border-color: rgba(199, 59, 59, 0.65);
+  box-shadow: 0 0 0 3px rgba(199, 59, 59, 0.18);
+}
+
+.login-form__error {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(199, 59, 59, 0.35);
+  background: rgba(199, 59, 59, 0.14);
+  color: var(--color-text);
+}
+
+.login-form__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.login-button {
+  height: 2.75rem;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  border: 4px solid rgba(0, 0, 0, 0.15);
+  background: radial-gradient(circle at 35% 25%, #ff6b6b 0%, #b32222 55%, #781515 100%);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35), 0 4px 10px rgba(0, 0, 0, 0.55);
+  transition: transform 140ms ease, filter 140ms ease, opacity 140ms ease;
+}
+
+.login-button:hover {
+  transform: scale(1.03);
+}
+
+.login-button:active {
+  transform: scale(0.97);
+}
+
+.login-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.login-button:focus-visible {
+  outline: 2px solid rgba(199, 59, 59, 0.55);
+  outline-offset: 4px;
+}

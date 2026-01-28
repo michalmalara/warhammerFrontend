@@ -6,9 +6,9 @@ import {routes} from '../../app.routes';
 
 describe('Character creation routing', () => {
   it('navigates /character/create to step-1', async () => {
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       providers: [provideRouter(routes)],
-    }).compileComponents();
+    });
 
     const router = TestBed.inject(Router);
     const location = TestBed.inject(Location);

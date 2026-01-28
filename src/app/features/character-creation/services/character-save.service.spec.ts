@@ -58,6 +58,20 @@ describe('CharacterSaveService', () => {
         {id: 'IP', value: 0},
         {id: 'FP', value: 2},
       ],
+      getSelectedCharacteristic: () => ({
+        weaponSkill: 0,
+        ballisticSkill: 0,
+        strength: 0,
+        toughness: 0,
+        agility: 0,
+        intelligence: 0,
+        willpower: 0,
+        fellowship: 0,
+        attacks: 0,
+        wounds: 0,
+        movement: 0,
+        magic: 0,
+      }),
     } as unknown as CharacterDataService;
 
     await TestBed.configureTestingModule({

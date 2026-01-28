@@ -1,0 +1,38 @@
+<section class="page">
+  <header class="page__header">
+    <div>
+      <h1 i18n="@@characterList.title|Characters list page title">Characters</h1>
+      <p class="page__subtitle" i18n="@@characterList.subtitle|Characters list page subtitle">
+        Browse all saved characters.
+      </p>
+    </div>
+
+    <a
+      mat-flat-button
+      color="primary"
+      [routerLink]="['/character/create']"
+      i18n="@@characterList.createButton|Create character button"
+    >
+      Create character
+    </a>
+  </header>
+
+  @if (characters$ | async; as characters) {
+    @if (characters.length > 0) {
+      <div class="grid">
+        @for (c of characters; track trackById($index, c)) {
+          <character-tile [character]="c"></character-tile>
+        }
+      </div>
+    } @else {
+      <div class="empty" i18n="@@characterList.empty|Empty list message">
+        No characters yet. Create your first character.
+      </div>
+    }
+  } @else {
+    <div class="loading">
+      <mat-progress-spinner diameter="32" mode="indeterminate"></mat-progress-spinner>
+      <span i18n="@@characterList.loading|Loading label">Loading…</span>
+    </div>
+  }
+</section>

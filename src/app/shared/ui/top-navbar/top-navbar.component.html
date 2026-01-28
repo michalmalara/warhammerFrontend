@@ -19,4 +19,10 @@
       </a>
     }
   </nav>
+
+  @if (isLogged()) {
+    <button mat-button class="top-navbar__link" (click)="onLogout()" i18n="Logout button@@auth.logout">
+      Logout
+    </button>
+  }
 </mat-toolbar>

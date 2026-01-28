@@ -1,0 +1,19 @@
+<mat-card class="tile">
+  <mat-card-header>
+    <mat-card-title i18n="@@characterList.tile.title|Character tile title">{{ displayName }}</mat-card-title>
+    @if (character.race) {
+      <mat-card-subtitle i18n="@@characterList.tile.subtitle|Character tile subtitle">{{ character.race }}
+      </mat-card-subtitle>
+    } @else {
+      <mat-card-subtitle i18n="@@characterList.tile.subtitleUnknown|Fallback when race is missing">Unknown race
+      </mat-card-subtitle>
+    }
+
+    @if (character.currantProfessionName) {
+      <mat-card-subtitle class="tile__profession"
+                         i18n="@@characterList.tile.profession|Current profession label">{{ character.currantProfessionName }}
+      </mat-card-subtitle>
+    }
+
+  </mat-card-header>
+</mat-card>

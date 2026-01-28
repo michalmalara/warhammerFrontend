@@ -1,5 +1,7 @@
 <div class="app-layout">
-  <app-top-navbar [links]="navLinks" title="Warhammer" i18n-title="App title@@app.title"></app-top-navbar>
+  @if (isLogged()) {
+    <app-top-navbar [links]="navLinks" title="Warhammer" i18n-title="App title@@app.title"></app-top-navbar>
+  }
 
   <main class="app-main">
     <router-outlet></router-outlet>

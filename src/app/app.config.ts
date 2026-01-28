@@ -7,12 +7,13 @@ import {DomSanitizer} from '@angular/platform-browser';
 
 import {routes} from './app.routes';
 import {caseConverterInterceptor} from './shared/http/case-converter.interceptor';
+import {AUTH_TOKEN_INTERCEPTOR} from './features/auth/interceptors/auth-token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([caseConverterInterceptor])),
+    provideHttpClient(withInterceptors([caseConverterInterceptor, AUTH_TOKEN_INTERCEPTOR])),
     provideAnimationsAsync(),
     {
       provide: APP_INITIALIZER,
