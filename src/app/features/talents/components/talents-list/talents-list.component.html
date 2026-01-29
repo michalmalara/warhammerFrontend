@@ -20,8 +20,6 @@
           type="text"
           [value]="query()"
           (input)="onQueryInput(($any($event.target).value) ?? '')"
-          placeholder="Search the archives for a talent..."
-          i18n-placeholder="Placeholder@@talentsList.search.placeholder"
           aria-label="Search talents"
           i18n-aria-label="Aria@@talentsList.search.aria"
         />

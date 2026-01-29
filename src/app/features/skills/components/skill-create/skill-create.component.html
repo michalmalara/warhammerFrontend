@@ -21,10 +21,8 @@
               <input
                 matInput
                 formControlName="name"
-                placeholder="e.g., Strike to Stun"
-                i18n-placeholder="Placeholder@@skillCreate.skillName.placeholder"
                 aria-label="Skill name"
-                i18n-aria-label="Aria@@skillCreate.skillName.aria"
+                i18n-aria-label="Input aria|Skill name aria@@skill.create.name.aria"
               />
               @if (form.controls.name.touched && form.controls.name.invalid) {
                 <mat-error i18n="Validation@@skillCreate.skillName.error">Required name (max 100 characters)</mat-error>
@@ -107,12 +105,10 @@
           <mat-form-field appearance="outline" class="full lore">
             <textarea
               matInput
-              rows="10"
+              rows="6"
               formControlName="description"
-              placeholder="Detail the mechanics and the flavor of this skill. How is it practiced in the Old World? What are the grim consequences of failure?"
-              i18n-placeholder="Placeholder@@skillCreate.description.placeholder"
               aria-label="Skill description"
-              i18n-aria-label="Aria@@skillCreate.description.aria"
+              i18n-aria-label="Input aria|Skill description aria@@skill.create.description.aria"
             ></textarea>
           </mat-form-field>
         </div>

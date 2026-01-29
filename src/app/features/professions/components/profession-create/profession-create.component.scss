@@ -674,3 +674,11 @@ mat-card-title {
     border-color: var(--color-accent);
   }
 }
+
+/* New style for highlighting newly added skill/talent tiles */
+.tile--highlight {
+  outline: 2px solid var(--color-accent);
+  box-shadow: 0 8px 32px rgba(199, 59, 59, 0.12);
+  transform: translateY(-4px);
+  transition: transform 220ms ease, box-shadow 220ms ease, outline-color 220ms ease;
+}

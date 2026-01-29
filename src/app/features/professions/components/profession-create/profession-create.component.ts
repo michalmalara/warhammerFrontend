@@ -1,4 +1,4 @@
-import {booleanAttribute, Component, inject} from '@angular/core';
+import {booleanAttribute, ChangeDetectorRef, Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
@@ -62,6 +62,7 @@ export class ProfessionCreateComponent {
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
   private readonly dialog = inject(MatDialog);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   private static readonly MIN_AUTOCOMPLETE_CHARS = 3;
 
@@ -228,6 +229,49 @@ export class ProfessionCreateComponent {
     this.altTalentPickerVisible.set(i, false);
   }
 
+  // Index of recently added skill/talent used to highlight & scroll into view
+  addedSkillIndex = -1;
+  addedTalentIndex = -1;
+
+  private markAndScrollSkill(index: number) {
+    this.addedSkillIndex = index;
+    // allow DOM to update
+    setTimeout(() => {
+      try {
+        const el = document.querySelector(`[data-added-skill="${index}"]`);
+        (el as HTMLElement | null)?.scrollIntoView({behavior: 'smooth', block: 'center'});
+      } catch (e) {
+        // ignore
+      }
+    }, 60);
+    // clear highlight after short period
+    setTimeout(() => (this.addedSkillIndex = -1), 2200);
+  }
+
+  private markAndScrollTalent(index: number) {
+    this.addedTalentIndex = index;
+    setTimeout(() => {
+      try {
+        const el = document.querySelector(`[data-added-talent="${index}"]`);
+        (el as HTMLElement | null)?.scrollIntoView({behavior: 'smooth', block: 'center'});
+      } catch (e) {
+      }
+    }, 60);
+    setTimeout(() => (this.addedTalentIndex = -1), 2200);
+  }
+
+  private refreshSkillsListView() {
+    this.form.controls.skills.updateValueAndValidity({emitEvent: true});
+    this.form.updateValueAndValidity({emitEvent: true});
+    this.cdr.detectChanges();
+  }
+
+  private refreshTalentsListView() {
+    this.form.controls.talents.updateValueAndValidity({emitEvent: true});
+    this.form.updateValueAndValidity({emitEvent: true});
+    this.cdr.detectChanges();
+  }
+
   save() {
     if (this.form.invalid || this.isSaving) {
       this.form.markAllAsTouched();
@@ -391,6 +435,8 @@ export class ProfessionCreateComponent {
           } as ProfessionSkill as any;
           this.skills.push(new FormControl<ProfessionSkill>(withUiDescription));
           this.refreshSkillsOptions();
+          this.refreshSkillsListView();
+          this.markAndScrollSkill(this.skills.length - 1);
         },
         error: () => {
           this.snackBar.open($localize`:Snackbar@@profession.create.add.skill.failed:Failed to add skill to profession.`, 'OK', {duration: 3000});
@@ -432,6 +478,8 @@ export class ProfessionCreateComponent {
           } as ProfessionTalent as any;
           this.talents.push(new FormControl<ProfessionTalent>(withUiDescription));
           this.refreshTalentsOptions();
+          this.refreshTalentsListView();
+          this.markAndScrollTalent(this.talents.length - 1);
         },
         error: () => {
           this.snackBar.open($localize`:Snackbar@@profession.create.add.talent.failed:Failed to add talent to profession.`, 'OK', {duration: 3000});
@@ -567,6 +615,8 @@ export class ProfessionCreateComponent {
       next: (created) => {
         this.skills.push(new FormControl<ProfessionSkill>(created));
         this.refreshSkillsOptions();
+        this.refreshSkillsListView();
+        this.markAndScrollSkill(this.skills.length - 1);
       },
       error: () => {
         this.snackBar.open($localize`:Snackbar@@profession.create.add.skill.failed:Failed to add skill to profession.`, 'OK', {duration: 3000});
@@ -597,6 +647,8 @@ export class ProfessionCreateComponent {
       next: (created) => {
         this.talents.push(new FormControl<ProfessionTalent>(created));
         this.refreshTalentsOptions();
+        this.refreshTalentsListView();
+        this.markAndScrollTalent(this.talents.length - 1);
       },
       error: () => {
         this.snackBar.open($localize`:Snackbar@@profession.create.add.talent.failed:Failed to add talent to profession.`, 'OK', {duration: 3000});

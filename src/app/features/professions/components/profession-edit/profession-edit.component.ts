@@ -264,6 +264,34 @@ export class ProfessionEditComponent {
     this.altTalentPickerVisible.set(i, !this.isAltTalentPickerVisible(i));
   }
 
+  // Index of recently added skill/talent used by shared template to highlight & scroll into view
+  addedSkillIndex = -1;
+  addedTalentIndex = -1;
+
+  private markAndScrollSkill(index: number) {
+    this.addedSkillIndex = index;
+    setTimeout(() => {
+      try {
+        const el = document.querySelector(`[data-added-skill="${index}"]`);
+        (el as HTMLElement | null)?.scrollIntoView({behavior: 'smooth', block: 'center'});
+      } catch (e) {
+      }
+    }, 60);
+    setTimeout(() => (this.addedSkillIndex = -1), 2200);
+  }
+
+  private markAndScrollTalent(index: number) {
+    this.addedTalentIndex = index;
+    setTimeout(() => {
+      try {
+        const el = document.querySelector(`[data-added-talent="${index}"]`);
+        (el as HTMLElement | null)?.scrollIntoView({behavior: 'smooth', block: 'center'});
+      } catch (e) {
+      }
+    }, 60);
+    setTimeout(() => (this.addedTalentIndex = -1), 2200);
+  }
+
   constructor() {
     // Wczytaj profesję i ustaw form
     this.route.paramMap
@@ -542,6 +570,7 @@ export class ProfessionEditComponent {
     this.linksApi.createProfessionSkill({skill: opt.id}).subscribe({
       next: (created) => {
         this.skills.push(new FormControl<ProfessionSkill>(created));
+        this.markAndScrollSkill(this.skills.length - 1);
       },
       error: () => {
         this.snackBar.open($localize`:Snackbar@@profession.edit.add.skill.failed:Failed to add skill to profession.`, 'OK', {duration: 3000});
@@ -570,6 +599,7 @@ export class ProfessionEditComponent {
     this.linksApi.createProfessionTalent({talent: opt.id}).subscribe({
       next: (created) => {
         this.talents.push(new FormControl<ProfessionTalent>(created));
+        this.markAndScrollTalent(this.talents.length - 1);
       },
       error: () => {
         this.snackBar.open($localize`:Snackbar@@profession.edit.add.talent.failed:Failed to add talent to profession.`, 'OK', {duration: 3000});

@@ -125,6 +125,8 @@
                   @if (!isSkillRenderedAsAlternative(i)) {
                     <div
                       class="tile optional-block"
+                      [class.tile--highlight]="i === addedSkillIndex"
+                      attr.data-added-skill="{{i}}"
                       [class.optional-block--has-alternatives]="(s.value?.alternativeSkill?.length ?? 0) > 0 || isAltSkillPickerVisible(i)"
                       [class.tile--no-alternatives]="(s.value?.alternativeSkill?.length ?? 0) === 0 && !isAltSkillPickerVisible(i)"
                     >
@@ -229,6 +231,8 @@
                   @if (!isTalentRenderedAsAlternative(i)) {
                     <div
                       class="tile optional-block"
+                      [class.tile--highlight]="i === addedTalentIndex"
+                      attr.data-added-talent="{{i}}"
                       [class.optional-block--has-alternatives]="(t.value?.alternativeTalent?.length ?? 0) > 0 || isAltTalentPickerVisible(i)"
                       [class.tile--no-alternatives]="(t.value?.alternativeTalent?.length ?? 0) === 0 && !isAltTalentPickerVisible(i)"
                     >

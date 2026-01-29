@@ -44,8 +44,6 @@
       <mat-icon matPrefix>search</mat-icon>
       <input
         matInput
-        type="text"
-        placeholder="Search the archives..."
         [value]="(search$ | async) ?? ''"
         (input)="setSearch(($any($event.target).value) ?? '')"
         aria-label="Search professions"

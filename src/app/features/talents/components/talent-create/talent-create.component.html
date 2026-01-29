@@ -20,10 +20,8 @@
               <input
                 matInput
                 formControlName="name"
-                placeholder="e.g., Hardy"
-                i18n-placeholder="Placeholder@@talentCreate.name.placeholder"
                 aria-label="Talent name"
-                i18n-aria-label="Aria@@talentCreate.name.aria"
+                i18n-aria-label="Input aria|Talent name aria@@talent.create.name.aria"
               />
               @if (form.controls.name.touched && form.controls.name.invalid) {
                 <mat-error i18n="Validation@@talentCreate.name.error">Required name (max 100 characters)</mat-error>
@@ -40,12 +38,10 @@
             <mat-form-field appearance="outline" class="full lore">
               <textarea
                 matInput
-                rows="10"
+                rows="6"
                 formControlName="description"
-                placeholder="Describe what this talent grants and how it manifests."
-                i18n-placeholder="Placeholder@@talentCreate.description.placeholder"
                 aria-label="Talent description"
-                i18n-aria-label="Aria@@talentCreate.description.aria"
+                i18n-aria-label="Input aria|Talent description aria@@talent.create.description.aria"
               ></textarea>
             </mat-form-field>
           </div>
