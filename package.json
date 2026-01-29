@@ -11,7 +11,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:ci": "ng test --watch=false",
-    "format": "prettier --write \"**/*.{ts,js,scss,css,html,json,md}\""
+    "format": "prettier --write \"**/*.{ts,js,scss,css,html,json,md}\"",
+    "lint": "eslint --ext .ts,.html src/ || true"
   },
   "prettier": {
     "printWidth": 100,
@@ -42,10 +43,17 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-eslint/eslint-plugin": "^21.1.0",
+    "@angular-eslint/eslint-plugin-template": "^21.1.0",
+    "@angular-eslint/template-parser": "^21.1.0",
     "@angular/build": "^21.0.5",
     "@angular/cli": "^21.0.5",
     "@angular/compiler-cli": "^21.0.0",
     "@angular/localize": "^21.0.8",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"

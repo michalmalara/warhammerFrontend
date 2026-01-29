@@ -70,7 +70,6 @@ type CharacterCardVm = {
   styleUrls: ['./character-card.component.scss'],
 })
 export class CharacterCardComponent {
-  // expose global Math to the template (Angular templates only see component properties)
   readonly Math = Math;
 
   private readonly api = inject(CharactersApiService);
@@ -81,28 +80,176 @@ export class CharacterCardComponent {
   private readonly skillsApi = inject(SkillsApiService);
   private readonly talentsApi = inject(TalentsApiService);
 
-  private readonly mapProfileToPrimaryStats = (p: CharacterProfileDto): {
-    label: string;
-    base: number;
-    adv: number;
-    total?: number;
-  }[] => [
-    {label: 'WS', base: p.weaponSkills, adv: p.weaponSkillsDevelopment},
-    {label: 'BS', base: p.ballisticSkills, adv: p.ballisticSkillsDevelopment},
-    {label: 'S', base: p.strength, adv: p.strengthDevelopment},
-    {label: 'T', base: p.toughness, adv: p.toughnessDevelopment},
-    {label: 'Ag', base: p.agility, adv: p.agilityDevelopment},
-    {label: 'Int', base: p.intelligence, adv: p.intelligenceDevelopment},
-    {label: 'WP', base: p.willpower, adv: p.willpowerDevelopment},
-    {label: 'Fel', base: p.fellowship, adv: p.fellowshipDevelopment},
-  ];
+  // --- current API kept as fallbacks (used when component is embedded elsewhere)
+  @Input() name = 'Gottfried von Hollen';
+  @Input() title = 'Roadwarden';
+  @Input() subtitle = 'CHARACTER DASHBOARD';
+  @Input() xpCurrent = 0;
+  @Input() xpMax = 0;
 
-  private readonly mapProfileToSecondaryStats = (p: CharacterProfileDto): {
+  /** Aktualna profesja postaci (wyświetlana w karcie Experience). */
+  @Input() currentProfession = this.title;
+
+  /** Punkty doświadczenia dostępne do wydania (niewydane). */
+  @Input() xpToSpend = 0;
+
+  /** Suma wszystkich zdobytych punktów doświadczenia (łącznie). */
+  @Input() xpTotalEarned = 0;
+
+  /**
+   * Wsteczna kompatybilność (używane też w sidebarze). Jeśli nie podasz `portraitUrl`,
+   * komponent spróbuje użyć `avatarUrl`.
+   */
+  @Input() avatarUrl = 'assets/img/character-portrait-placeholder.png';
+
+  /** URL portretu postaci do wyświetlenia obok imienia. */
+  @Input() portraitUrl?: string;
+
+  /** Tekst alternatywny dla portretu (dostępność / screenreadery). */
+  @Input() portraitAlt?: string;
+
+  // Primary / Secondary stats moved to a separate component
+  primaryStats: { label: string; base: number; adv: number; total?: number }[] = [];
+
+  secondaryStats: { label: string; base: number; adv: number; total?: number }[] = [];
+
+  // Wounds state (kept as simple fields so parent can persist/observe value)
+  woundsMax = 0;
+  woundsCurrent = this.woundsMax;
+
+  /** Mock danych dla taba Skills – usunięte: komponent korzysta z API / vm$ */
+  skills: CharacterSkill[] = [];
+
+  /** Mock danych dla taba Talents – usunięte: komponent korzysta z API / vm$ */
+  talents: Talent[] = [];
+
+  /** Fate/Fortune – zainicjalizowane zerami, mocki usunięte */
+  fateMax = 0;
+  fateCurrent = 0;
+  fortuneCurrent = 0;
+
+  readonly vm$: Observable<CharacterCardVm> = this.route.paramMap.pipe(
+    map((pm) => pm.get('id')),
+    filter((id): id is string => !!id),
+    map((id) => Number(id)),
+    filter((id) => Number.isFinite(id) && id > 0),
+    switchMap((id) =>
+      forkJoin({
+        character: this.api.getById(id),
+        profile: this.profileApi.getCharacterProfile(id),
+        skillWrappers: this.charSkillsApi.list(id),
+        talentWrappers: this.charTalentsApi.list(id),
+      }).pipe(
+        switchMap(({character, profile, skillWrappers, talentWrappers}) => {
+          const skillIds = [...new Set(skillWrappers.map((w) => w.skill))];
+          const talentIds = [...new Set(talentWrappers.map((w) => w.talent))];
+
+          return forkJoin({
+            character: of(character),
+            profile: of(profile),
+            skillsUi: skillIds.length
+              ? this.listSkillDefinitionsByIds(skillIds).pipe(
+                map((defs) => this.mapCharacterSkillsToUi(skillWrappers, defs, profile)),
+              )
+              : of([] as CharacterSkill[]),
+            talentsUi: talentIds.length
+              ? this.listTalentDefinitionsByIds(talentIds).pipe(map((defs) => this.mapCharacterTalentsToUi(talentWrappers, defs)))
+              : of([] as Talent[]),
+          });
+        }),
+        map(({character, profile, skillsUi, talentsUi}) => ({
+          loading: false,
+          error: null as string | null,
+          character,
+          profile,
+          skillsUi,
+          talentsUi,
+          primaryStats: this.mapProfileToPrimaryStats(profile),
+          secondaryStats: this.mapProfileToSecondaryStats(profile),
+          woundsMax: profile.wounds,
+          woundsCurrent: profile.wounds,
+          fateMax: profile.fatePoints,
+          fateCurrent: profile.fatePoints,
+          xpCurrent: character?.experiencePoints ?? this.xpCurrent,
+          xpTotalEarned: character?.totalExperiencePoints ?? this.xpTotalEarned,
+          currentProfession: character?.currentProfessionName ?? this.currentProfession,
+        })),
+        startWith({
+          loading: true,
+          error: null as string | null,
+          character: null as Character | null,
+          profile: null as CharacterProfileDto | null,
+          skillsUi: [] as CharacterSkill[],
+          talentsUi: [] as Talent[],
+          primaryStats: this.primaryStats,
+          secondaryStats: this.secondaryStats,
+          woundsMax: this.woundsMax,
+          woundsCurrent: this.woundsCurrent,
+          fateMax: this.fateMax,
+          fateCurrent: this.fateCurrent,
+          xpCurrent: this.xpCurrent,
+          xpTotalEarned: this.xpTotalEarned,
+          currentProfession: this.currentProfession,
+        }),
+        catchError((err) => {
+          const http = err instanceof HttpErrorResponse ? err : null;
+          if (http) {
+            console.error('[CharacterCardComponent] HTTP error', {
+              status: http.status,
+              statusText: http.statusText,
+              url: http.url,
+              error: http.error,
+            });
+          } else {
+            console.error('[CharacterCardComponent] Failed to load character dashboard', err);
+          }
+
+          return of({
+            loading: false,
+            error: 'Failed to load character. Please try again later.',
+            character: null as Character | null,
+            profile: null as CharacterProfileDto | null,
+            skillsUi: [] as CharacterSkill[],
+            talentsUi: [] as Talent[],
+            primaryStats: this.primaryStats,
+            secondaryStats: this.secondaryStats,
+            woundsMax: this.woundsMax,
+            woundsCurrent: this.woundsCurrent,
+            fateMax: this.fateMax,
+            fateCurrent: this.fateCurrent,
+            xpCurrent: this.xpCurrent,
+            xpTotalEarned: this.xpTotalEarned,
+            currentProfession: this.currentProfession,
+          });
+        }),
+      ),
+    ),
+  );
+
+  private mapProfileToPrimaryStats(p: CharacterProfileDto): {
     label: string;
     base: number;
     adv: number;
-    total?: number;
-  }[] => {
+    total?: number
+  }[] {
+    return [
+      {label: 'WS', base: p.weaponSkills, adv: p.weaponSkillsDevelopment},
+      {label: 'BS', base: p.ballisticSkills, adv: p.ballisticSkillsDevelopment},
+      {label: 'S', base: p.strength, adv: p.strengthDevelopment},
+      {label: 'T', base: p.toughness, adv: p.toughnessDevelopment},
+      {label: 'Ag', base: p.agility, adv: p.agilityDevelopment},
+      {label: 'Int', base: p.intelligence, adv: p.intelligenceDevelopment},
+      {label: 'WP', base: p.willpower, adv: p.willpowerDevelopment},
+      {label: 'Fel', base: p.fellowship, adv: p.fellowshipDevelopment},
+    ];
+  }
+
+  private mapProfileToSecondaryStats(p: CharacterProfileDto): {
+    label: string;
+    base: number;
+    adv: number;
+    total?: number
+  }[] {
     const strengthTotal = (p.strength ?? 0) + (p.strengthModifier ?? 0);
     const toughnessTotal = (p.toughness ?? 0) + (p.toughnessModifier ?? 0);
 
@@ -121,19 +268,21 @@ export class CharacterCardComponent {
       {label: 'IP', base: p.insanityPoints, adv: 0},
       {label: 'FP', base: p.fatePoints, adv: 0},
     ];
-  };
+  }
 
-  private readonly listSkillDefinitionsByIds = (ids: number[]) =>
-    this.skillsApi.list().pipe(map((list) => list.filter((s) => ids.includes(s.id))));
+  private listSkillDefinitionsByIds(ids: number[]) {
+    return this.skillsApi.list().pipe(map((list) => list.filter((s) => ids.includes(s.id))));
+  }
 
-  private readonly listTalentDefinitionsByIds = (ids: number[]) =>
-    this.talentsApi.list().pipe(map((list) => list.filter((t) => ids.includes(t.id))));
+  private listTalentDefinitionsByIds(ids: number[]) {
+    return this.talentsApi.list().pipe(map((list) => list.filter((t) => ids.includes(t.id))));
+  }
 
-  private readonly mapCharacterSkillsToUi = (
+  private mapCharacterSkillsToUi(
     wrappers: CharacterSkillDto[],
     defs: Skill[],
     profile: CharacterProfileDto,
-  ): CharacterSkill[] => {
+  ): CharacterSkill[] {
     const byId = new Map<number, Skill>(defs.map((s) => [s.id, s]));
 
     const getCharacteristicValue = (assoc: string): number => {
@@ -202,9 +351,9 @@ export class CharacterCardComponent {
 
       return [ui];
     });
-  };
+  }
 
-  private readonly mapCharacterTalentsToUi = (wrappers: CharacterTalentDto[], defs: TalentDef[]): Talent[] => {
+  private mapCharacterTalentsToUi(wrappers: CharacterTalentDto[], defs: TalentDef[]): Talent[] {
     const byId = new Map<number, TalentDef>(defs.map((t) => [t.id, t]));
 
     return wrappers.flatMap((w) => {
@@ -219,134 +368,7 @@ export class CharacterCardComponent {
 
       return [ui];
     });
-  };
-
-  readonly vm$: Observable<CharacterCardVm> = this.route.paramMap.pipe(
-    map((pm) => pm.get('id')),
-    filter((id): id is string => !!id),
-    map((id) => Number(id)),
-    filter((id) => Number.isFinite(id) && id > 0),
-    switchMap((id) =>
-      forkJoin({
-        character: this.api.getById(id),
-        profile: this.profileApi.getCharacterProfile(id),
-        skillWrappers: this.charSkillsApi.list(id),
-        talentWrappers: this.charTalentsApi.list(id),
-      }).pipe(
-        switchMap(({character, profile, skillWrappers, talentWrappers}) => {
-          const skillIds = [...new Set(skillWrappers.map((w) => w.skill))];
-          const talentIds = [...new Set(talentWrappers.map((w) => w.talent))];
-
-          return forkJoin({
-            character: of(character),
-            profile: of(profile),
-            skillsUi: skillIds.length
-              ? this.listSkillDefinitionsByIds(skillIds).pipe(map((defs) => this.mapCharacterSkillsToUi(skillWrappers, defs, profile)))
-              : of([] as CharacterSkill[]),
-            talentsUi: talentIds.length
-              ? this.listTalentDefinitionsByIds(talentIds).pipe(map((defs) => this.mapCharacterTalentsToUi(talentWrappers, defs)))
-              : of([] as Talent[]),
-          });
-        }),
-        map(({character, profile, skillsUi, talentsUi}) => ({
-          loading: false,
-          error: null as string | null,
-          character,
-          profile,
-          skillsUi,
-          talentsUi,
-          primaryStats: this.mapProfileToPrimaryStats(profile),
-          secondaryStats: this.mapProfileToSecondaryStats(profile),
-          woundsMax: profile.wounds,
-          woundsCurrent: profile.wounds,
-          fateMax: profile.fatePoints,
-          fateCurrent: profile.fatePoints,
-          // expose XP and current profession at top-level of the VM for simpler bindings
-          xpCurrent: character?.experiencePoints ?? this.xpCurrent,
-          xpTotalEarned: character?.totalExperiencePoints ?? this.xpTotalEarned,
-          currentProfession: character?.currentProfessionName ?? this.currentProfession,
-        })),
-        startWith({
-          loading: true,
-          error: null as string | null,
-          character: null as Character | null,
-          profile: null as CharacterProfileDto | null,
-          skillsUi: [] as CharacterSkill[],
-          talentsUi: [] as Talent[],
-          primaryStats: this.primaryStats,
-          secondaryStats: this.secondaryStats,
-          woundsMax: this.woundsMax,
-          woundsCurrent: this.woundsCurrent,
-          fateMax: this.fateMax,
-          fateCurrent: this.fateCurrent,
-          // initial XP/profession values come from component inputs
-          xpCurrent: this.xpCurrent,
-          xpTotalEarned: this.xpTotalEarned,
-          currentProfession: this.currentProfession,
-        }),
-        catchError((err) => {
-          const http = err instanceof HttpErrorResponse ? err : null;
-          if (http) {
-            console.error('[CharacterCardComponent] HTTP error', {
-              status: http.status,
-              statusText: http.statusText,
-              url: http.url,
-              error: http.error,
-            });
-          } else {
-            console.error('[CharacterCardComponent] Failed to load character dashboard', err);
-          }
-
-          return of({
-            loading: false,
-            error: 'Failed to load character. Please try again later.',
-            character: null as Character | null,
-            profile: null as CharacterProfileDto | null,
-            skillsUi: [] as CharacterSkill[],
-            talentsUi: [] as Talent[],
-            primaryStats: this.primaryStats,
-            secondaryStats: this.secondaryStats,
-            woundsMax: this.woundsMax,
-            woundsCurrent: this.woundsCurrent,
-            fateMax: this.fateMax,
-            fateCurrent: this.fateCurrent,
-            // ensure XP/profession fields are present on error branch
-            xpCurrent: this.xpCurrent,
-            xpTotalEarned: this.xpTotalEarned,
-            currentProfession: this.currentProfession,
-          });
-        }),
-      ),
-    ),
-  );
-
-  // --- current API kept as fallbacks (used when component is embedded elsewhere)
-  @Input() name = 'Gottfried von Hollen';
-  @Input() title = 'Roadwarden';
-  @Input() subtitle = 'CHARACTER DASHBOARD';
-  @Input() xpCurrent = 0;
-  @Input() xpMax = 0;
-
-  /** Aktualna profesja postaci (wyświetlana w karcie Experience). */
-  @Input() currentProfession = this.title;
-
-  /** Punkty doświadczenia dostępne do wydania (niewydane). */
-  @Input() xpToSpend = 0;
-
-  /** Suma wszystkich zdobytych punktów doświadczenia (łącznie). */
-  @Input() xpTotalEarned = 0;
-
-  /**
-   * Wsteczna kompatybilność (używane też w sidebarze). Jeśli nie podasz `portraitUrl`,
-   * komponent spróbuje użyć `avatarUrl`.
-   */
-  @Input() avatarUrl = 'assets/img/character-portrait-placeholder.png';
-
-  /** URL portretu postaci do wyświetlenia obok imienia. */
-  @Input() portraitUrl?: string;
-
-  /** Tekst alternatywny dla portretu (dostępność / screenreadery). */
-  @Input() portraitAlt?: string;
+  }
 
   get effectivePortraitUrl(): string {
     const url = (this.portraitUrl ?? '').trim() || (this.avatarUrl ?? '').trim();
@@ -358,34 +380,12 @@ export class CharacterCardComponent {
     return alt || `Portrait: ${this.name}`;
   }
 
-  // Primary / Secondary stats moved to a separate component
-  primaryStats: { label: string; base: number; adv: number; total?: number }[] = [];
-
-  secondaryStats: { label: string; base: number; adv: number; total?: number }[] = [];
-
-  // Wounds state (kept as simple fields so parent can persist/observe value)
-  woundsMax = 0;
-  woundsCurrent = this.woundsMax;
-
-  /** Mock danych dla taba Skills – usunięte: komponent korzysta z API / vm$ */
-  skills: CharacterSkill[] = [];
-
-  /** Mock danych dla taba Talents – usunięte: komponent korzysta z API / vm$ */
-  talents: Talent[] = [];
-
-  /** Fate/Fortune – zainicjalizowane zerami, mocki usunięte */
-  fateMax = 0;
-  fateCurrent = 0;
-  fortuneCurrent = 0;
-
   onPortraitError(event: Event): void {
-    // keep `Math` referenced in TS so compiler won't mark it as unused (it's used from template)
     void this.Math;
 
     const img = event.target as HTMLImageElement | null;
     if (!img) return;
 
-    // avoid loop if placeholder is already set
     if (img.src.endsWith('assets/img/character-portrait-placeholder.png')) return;
     img.src = 'assets/img/character-portrait-placeholder.png';
   }
