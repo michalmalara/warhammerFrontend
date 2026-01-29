@@ -107,6 +107,98 @@ export class ProfessionSkillDialogComponent {
     return m;
   }
 
+  private static buildAlternativeGroups(map: Map<number, Set<number>>): number[][] {
+    const adjacency = new Map<number, Set<number>>();
+
+    const ensure = (id: number) => {
+      if (!adjacency.has(id)) adjacency.set(id, new Set<number>());
+      return adjacency.get(id)!;
+    };
+
+    for (const [from, toSet] of map.entries()) {
+      const fromAdj = ensure(from);
+      for (const to of toSet) {
+        if (!Number.isFinite(to)) continue;
+        fromAdj.add(to);
+        ensure(to).add(from);
+      }
+    }
+
+    const visited = new Set<number>();
+    const groups: number[][] = [];
+
+    const ids = Array.from(adjacency.keys()).sort((a, b) => a - b);
+    for (const start of ids) {
+      if (visited.has(start)) continue;
+
+      const stack = [start];
+      visited.add(start);
+      const group: number[] = [];
+
+      while (stack.length) {
+        const cur = stack.pop()!;
+        group.push(cur);
+
+        const neigh = adjacency.get(cur);
+        if (!neigh) continue;
+        for (const n of neigh) {
+          if (visited.has(n)) continue;
+          visited.add(n);
+          stack.push(n);
+        }
+      }
+
+      group.sort((a, b) => a - b);
+      groups.push(group);
+    }
+
+    groups.sort((a, b) => (a[0] ?? 0) - (b[0] ?? 0));
+    return groups;
+  }
+
+  get existingAlternativeGroups(): Array<{
+    groupId: number;
+    skills: Array<{ id: number; name: string; alternativeSkillIds?: number[] }>
+  }> {
+    const all = this.existingSkillsStructured;
+    if (!all.length) return [];
+
+    const map = this.existingSkillAlternativeMap;
+    const groupsRaw = ProfessionSkillDialogComponent.buildAlternativeGroups(map);
+
+    const groupById = new Map<number, Array<{ id: number; name: string; alternativeSkillIds?: number[] }>>();
+    for (let i = 0; i < groupsRaw.length; i++) {
+      const ids = new Set(groupsRaw[i]);
+      const skills = all.filter((s) => ids.has(s.id)).sort((a, b) => a.name.localeCompare(b.name));
+      if (skills.length >= 2) groupById.set(i + 1, skills);
+    }
+
+    const groupedIds = new Set<number>();
+    for (const skills of groupById.values()) {
+      for (const s of skills) groupedIds.add(s.id);
+    }
+
+    const singles = all
+      .filter((s) => !groupedIds.has(s.id))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    const result: Array<{
+      groupId: number;
+      skills: Array<{ id: number; name: string; alternativeSkillIds?: number[] }>
+    }> = [];
+
+    for (const [groupId, skills] of Array.from(groupById.entries()).sort((a, b) => a[0] - b[0])) {
+      result.push({groupId, skills});
+    }
+
+    let nextGroupId = (result.at(-1)?.groupId ?? 0) + 1;
+    for (const s of singles) {
+      result.push({groupId: nextGroupId++, skills: [s]});
+    }
+
+    return result;
+  }
+
   isAlternativeRelatedToSelected(skillLinkId: number): boolean {
     if (!Number.isFinite(skillLinkId) || !this.selectedAlternativeIds.length) return false;
 

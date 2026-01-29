@@ -49,22 +49,48 @@
           Alternatives (click to select)
         </div>
 
-        <div class="existing__choices" aria-label="Choose alternatives"
+        <div class="existing__groups" aria-label="Choose alternatives"
              i18n-aria-label="ARIA@@profession.create.dialog.skill.alternatives.aria">
-          @for (s of existingSkillsStructured; track s?.id) {
-            <button
-              mat-stroked-button
-              type="button"
-              class="existing__choice"
-              [class.existing__choice--selected]="selectedAlternativeIds.includes(s.id)"
-              [class.existing__choice--alternative-related]="!selectedAlternativeIds.includes(s.id) && isAlternativeRelatedToSelected(s.id)"
-              (click)="toggleAlternative(s.id)"
-            >
-              <span class="existing__choice__label">{{ s.name }}</span>
-              @if (selectedAlternativeIds.includes(s.id)) {
-                <mat-icon class="existing__choice__icon">check</mat-icon>
-              }
-            </button>
+          @for (g of existingAlternativeGroups; track g?.groupId) {
+            @if (g.skills.length >= 2) {
+              <div class="existing__group" [attr.data-group-id]="g.groupId">
+                <div class="existing__choices">
+                  @for (s of g.skills; track s?.id) {
+                    <button
+                      mat-stroked-button
+                      type="button"
+                      class="existing__choice"
+                      [class.existing__choice--selected]="selectedAlternativeIds.includes(s.id)"
+                      [class.existing__choice--alternative-related]="!selectedAlternativeIds.includes(s.id) && isAlternativeRelatedToSelected(s.id)"
+                      (click)="toggleAlternative(s.id)"
+                    >
+                      <span class="existing__choice__label">{{ s.name }}</span>
+                      @if (selectedAlternativeIds.includes(s.id)) {
+                        <mat-icon class="existing__choice__icon">check</mat-icon>
+                      }
+                    </button>
+                  }
+                </div>
+              </div>
+            } @else {
+              <div class="existing__choices">
+                @for (s of g.skills; track s?.id) {
+                  <button
+                    mat-stroked-button
+                    type="button"
+                    class="existing__choice"
+                    [class.existing__choice--selected]="selectedAlternativeIds.includes(s.id)"
+                    [class.existing__choice--alternative-related]="!selectedAlternativeIds.includes(s.id) && isAlternativeRelatedToSelected(s.id)"
+                    (click)="toggleAlternative(s.id)"
+                  >
+                    <span class="existing__choice__label">{{ s.name }}</span>
+                    @if (selectedAlternativeIds.includes(s.id)) {
+                      <mat-icon class="existing__choice__icon">check</mat-icon>
+                    }
+                  </button>
+                }
+              </div>
+            }
           }
         </div>
       </div>

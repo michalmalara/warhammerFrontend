@@ -48,4 +48,40 @@ describe('ProfessionSkillDialogComponent', () => {
     component.selectedAlternativeIds = [];
     expect(component.isAlternativeRelatedToSelected(2)).toBeFalsy();
   });
+
+  it('should group transitively connected alternatives into one group', () => {
+    const component = build([
+      {id: 1, name: 'A', alternativeSkillIds: [2]},
+      {id: 2, name: 'B', alternativeSkillIds: [3]},
+      {id: 3, name: 'C', alternativeSkillIds: []},
+      {id: 10, name: 'X', alternativeSkillIds: []},
+    ]);
+
+    const groups = component.existingAlternativeGroups.filter((g) => g.skills.length >= 2);
+    expect(groups.length).toBe(1);
+
+    const ids = groups[0].skills.map((s) => s.id).sort((a, b) => a - b);
+    expect(ids).toEqual([1, 2, 3]);
+  });
+
+  it('should create separate groups for disconnected alternative sets', () => {
+    const component = build([
+      {id: 1, name: 'A', alternativeSkillIds: [2]},
+      {id: 2, name: 'B', alternativeSkillIds: []},
+      {id: 3, name: 'C', alternativeSkillIds: [4]},
+      {id: 4, name: 'D', alternativeSkillIds: []},
+    ]);
+
+    const groups = component.existingAlternativeGroups.filter((g) => g.skills.length >= 2);
+    expect(groups.length).toBe(2);
+
+    const groupIds = groups
+      .map((g) => g.skills.map((s) => s.id).sort((a, b) => a - b))
+      .sort((a, b) => (a[0] ?? 0) - (b[0] ?? 0));
+
+    expect(groupIds).toEqual([
+      [1, 2],
+      [3, 4],
+    ]);
+  });
 });
