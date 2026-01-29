@@ -10,8 +10,6 @@ import {RouterLink} from '@angular/router';
   styleUrls: ['./breadcrumbs.component.scss'],
 })
 export class BreadcrumbsComponent {
-  /** 1-based current step (1..5) */
   @Input() currentStep = 1;
-  /** optional label to show next to "Step 1: Race" */
   @Input() selectedRaceLabel: string | null = null;
 }

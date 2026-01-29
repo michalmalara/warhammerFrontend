@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CharacterSkill } from './skills.types';
+import {CommonModule} from '@angular/common';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {CharacterSkill} from './skills.types';
 
 @Component({
   selector: 'skills',
@@ -10,15 +10,10 @@ import { CharacterSkill } from './skills.types';
   styleUrls: ['./skills.component.scss'],
 })
 export class SkillsComponent {
-  @Input({ required: true }) skills: CharacterSkill[] = [];
+  @Input({required: true}) skills: CharacterSkill[] = [];
 
-  /**
-   * Blokuje możliwość klikania kontrolek (TAKEN / +10% / +20%).
-   * Domyślnie true – zgodnie z prośbą.
-   */
   @Input() disabled = true;
 
-  /** Emisja zmian (na przyszłość pod zapis do backendu). */
   @Output() skillsChange = new EventEmitter<CharacterSkill[]>();
 
   trackById = (_: number, s: CharacterSkill) => s.id;

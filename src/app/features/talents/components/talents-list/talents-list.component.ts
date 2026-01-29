@@ -46,7 +46,6 @@ export class TalentsListComponent {
   private readonly refreshTick = signal(0);
   readonly deletingIds = signal<Set<number>>(new Set());
 
-  // we keep the flag for possible future UI use, but it's not required by template
   readonly hasLoadError = signal(false);
 
   readonly talents$: Observable<Talent[] | null> = toObservable(this.refreshTick).pipe(
@@ -54,7 +53,6 @@ export class TalentsListComponent {
     catchError(() => of(null)),
   );
 
-  /** UI state */
   readonly query = signal('');
 
   trackById = (_: number, t: Talent) => t.id;

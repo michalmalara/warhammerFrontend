@@ -22,7 +22,5 @@ import {ActivatedRoute} from '@angular/router';
   ],
 })
 export class CharacterCreationStepPlaceholderComponent {
-  private readonly route = inject(ActivatedRoute);
-
-  @Input() stepLabel = this.route.snapshot.data['stepLabel'] ?? 'Unknown step';
+  @Input() stepLabel = inject(ActivatedRoute).snapshot.data['stepLabel'] ?? 'Unknown step';
 }

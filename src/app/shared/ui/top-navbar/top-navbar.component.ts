@@ -23,12 +23,10 @@ export class TopNavbarComponent {
   @Input() links: NavLink[] = [];
   @Input() title = 'Warhammer';
 
-  // Inject auth services and router
   private readonly auth = inject(AuthService);
   private readonly session = inject(AuthSessionService);
   private readonly router = inject(Router);
 
-  // Helpers used from template (signals exposed as functions for template typechecking)
   isLogged = () => this.session.isLoggedIn();
 
   onLogout = () => {

@@ -49,10 +49,6 @@ export class SkillsListComponent {
   private readonly api = inject(SkillsApiService);
   private readonly dialog = inject(Dialog);
 
-  /**
-   * Trik na łatwe odświeżanie listy po operacjach mutujących (create/delete/update).
-   * Zwiększamy licznik, a skills$ pobiera listę ponownie.
-   */
   private readonly refreshTick = signal(0);
 
   /** Idki umiejętności aktualnie usuwanych (UI disable na przycisku). */
@@ -130,7 +126,6 @@ export class SkillsListComponent {
   matchesFilters(skill: Skill): boolean {
     const type = this.typeFilter();
     if (type) {
-      // backend domyślnie zwraca 'basic'; frontend w modelu dopuszcza string
       if (String(skill.type ?? 'basic') !== type) return false;
     }
 
@@ -155,7 +150,6 @@ export class SkillsListComponent {
   }
 
   onDeleteSkill(skill: Skill) {
-    // Prosty guard, gdyby ktoś kliknął kilka razy.
     if (this.deletingIds().has(skill.id)) return;
 
     const data: SkillDeleteConfirmDialogData = {

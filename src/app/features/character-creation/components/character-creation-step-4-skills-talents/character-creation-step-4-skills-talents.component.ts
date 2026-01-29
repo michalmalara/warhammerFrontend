@@ -25,7 +25,6 @@ export class CharacterCreationStep4SkillsTalentsComponent {
   readonly selectedRaceLabel = computed(() => {
     const race = this.charData.race();
     if (!race) return 'Unknown race';
-    // Keep labels aligned with step-1 cards.
     switch (race) {
       case 'human':
         return 'Human';
@@ -45,7 +44,6 @@ export class CharacterCreationStep4SkillsTalentsComponent {
   }
 
   goNext() {
-    // Navigate to step-5 (Final Review & Wealth)
     void this.router.navigate(['/character-create/step-5']);
   }
 }
