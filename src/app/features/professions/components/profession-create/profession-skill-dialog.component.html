@@ -45,11 +45,25 @@
     @if (existingSkillNames.length) {
       <div class="existing" aria-label="Already added skills"
            i18n-aria-label="ARIA@@profession.create.dialog.skill.existing.aria">
-        <div class="existing__title" i18n="Section title@@profession.create.dialog.skill.existing.title">Already added
+        <div class="existing__title" i18n="Section title@@profession.create.dialog.skill.existing.title">
+          Alternatives (click to select)
         </div>
-        <div class="existing__list">
-          @for (n of existingSkillNames; track n) {
-            <div class="existing__item">{{ n }}</div>
+
+        <div class="existing__choices" aria-label="Choose alternatives"
+             i18n-aria-label="ARIA@@profession.create.dialog.skill.alternatives.aria">
+          @for (s of existingSkillsStructured; track s?.id) {
+            <button
+              mat-stroked-button
+              type="button"
+              class="existing__choice"
+              [class.existing__choice--selected]="selectedAlternativeIds.includes(s.id)"
+              (click)="toggleAlternative(s.id)"
+            >
+              <span class="existing__choice__label">{{ s.name }}</span>
+              @if (selectedAlternativeIds.includes(s.id)) {
+                <mat-icon class="existing__choice__icon">check</mat-icon>
+              }
+            </button>
           }
         </div>
       </div>

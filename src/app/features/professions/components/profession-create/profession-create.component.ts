@@ -404,8 +404,10 @@ export class ProfessionCreateComponent {
   // New: open dialog to add skill
   openAddSkillDialog() {
     const existingSkills = this.skills.controls
-      .map((c) => (c.value as any)?.skill?.name ?? (c.value as any)?.name ?? (c.value as any))
-      .filter((v) => typeof v === 'string' && v.trim().length > 0);
+      .map((c) => c.value as any)
+      .filter((v) => v && typeof v === 'object')
+      .map((v) => ({id: v.id as number | undefined, name: v?.skill?.name ?? v?.name}))
+      .filter((s) => typeof s.id === 'number' && typeof s.name === 'string' && s.name.trim().length > 0);
 
     const ref = this.dialog.open(ProfessionSkillDialogComponent, {
       width: '720px',
@@ -414,7 +416,12 @@ export class ProfessionCreateComponent {
       backdropClass: 'wax-dialog-backdrop',
       data: {existingSkills},
     });
-    ref.afterClosed().subscribe((selected: { id: number; name: string; description?: string } | undefined) => {
+    ref.afterClosed().subscribe((selected: {
+      id: number;
+      name: string;
+      description?: string;
+      alternativeSkill?: number[]
+    } | undefined) => {
       if (!selected || !selected.id) return;
 
       // avoid duplicates by skill.id
@@ -427,7 +434,11 @@ export class ProfessionCreateComponent {
         return;
       }
 
-      this.linksApi.createProfessionSkill({skill: selected.id}).subscribe({
+      // Pass alternativeSkill IDs to backend when creating the profession-skill link
+      const payload: any = {skill: selected.id};
+      if (Array.isArray(selected.alternativeSkill) && selected.alternativeSkill.length) payload.alternativeSkill = selected.alternativeSkill;
+
+      this.linksApi.createProfessionSkill(payload).subscribe({
         next: (created) => {
           const withUiDescription = {
             ...(created as any),
