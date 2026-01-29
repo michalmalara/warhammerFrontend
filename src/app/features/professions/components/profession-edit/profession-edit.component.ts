@@ -847,8 +847,18 @@ export class ProfessionEditComponent {
 
   openAddSkillDialog() {
     const existingSkills = this.skills.controls
-      .map((c) => (c.value as any)?.skill?.name ?? (c.value as any)?.name ?? (c.value as any))
-      .filter((v) => typeof v === 'string' && v.trim().length > 0);
+      .map((c) => c.value as any)
+      .filter((v) => v && typeof v === 'object')
+      .map((v) => ({
+        id: v.id as number | undefined,
+        name: v?.skill?.name ?? v?.name,
+        alternativeSkillIds: Array.isArray(v?.alternativeSkill)
+          ? v.alternativeSkill
+            .map((a: any) => a?.id ?? a?.skill?.id)
+            .filter((id: any) => typeof id === 'number')
+          : [],
+      }))
+      .filter((s) => typeof s.id === 'number' && typeof s.name === 'string' && s.name.trim().length > 0);
 
     const ref = this.dialog.open(ProfessionSkillDialogComponent, {
       width: '720px',

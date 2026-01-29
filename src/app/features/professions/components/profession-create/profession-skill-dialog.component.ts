@@ -41,7 +41,7 @@ export class ProfessionSkillDialogComponent {
     name: string
   } | undefined>);
   readonly data = inject<{
-    existingSkills?: Array<{ id?: number; name?: string } | string>
+    existingSkills?: Array<{ id?: number; name?: string; alternativeSkillIds?: number[] } | string>
   }>(MAT_DIALOG_DATA, {optional: true});
 
   readonly skillSearchControl = new FormControl('');
@@ -96,13 +96,40 @@ export class ProfessionSkillDialogComponent {
       .sort((a, b) => a.localeCompare(b));
   }
 
+  private get existingSkillAlternativeMap(): Map<number, Set<number>> {
+    const m = new Map<number, Set<number>>();
+    for (const s of this.existingSkillsStructured) {
+      const altIds = Array.isArray((s as any).alternativeSkillIds) ? (s as any).alternativeSkillIds : [];
+      const filtered = altIds.filter((id: any) => typeof id === 'number');
+      if (!filtered.length) continue;
+      m.set(s.id, new Set(filtered));
+    }
+    return m;
+  }
+
+  isAlternativeRelatedToSelected(skillLinkId: number): boolean {
+    if (!Number.isFinite(skillLinkId) || !this.selectedAlternativeIds.length) return false;
+
+    const map = this.existingSkillAlternativeMap;
+    for (const selectedId of this.selectedAlternativeIds) {
+      const selectedToOthers = map.get(selectedId);
+      if (selectedToOthers?.has(skillLinkId)) return true;
+
+      const candidateToOthers = map.get(skillLinkId);
+      if (candidateToOthers?.has(selectedId)) return true;
+    }
+
+    return false;
+  }
+
   // Helper used by template to expose structured existing skills (id + name)
-  get existingSkillsStructured(): Array<{ id: number; name: string }> {
+  get existingSkillsStructured(): Array<{ id: number; name: string; alternativeSkillIds?: number[] }> {
     const items = this.data?.existingSkills ?? [];
     return items
       .map((s: any) => ({
         id: typeof s === 'object' ? s?.id : undefined,
-        name: typeof s === 'object' ? (s?.name ?? s?.skill?.name) : s
+        name: typeof s === 'object' ? (s?.name ?? s?.skill?.name) : s,
+        alternativeSkillIds: typeof s === 'object' ? s?.alternativeSkillIds : undefined,
       }))
       .filter((x: any) => typeof x.id === 'number' && typeof x.name === 'string' && x.name.trim().length > 0);
   }

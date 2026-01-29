@@ -1,4 +1,4 @@
-import {booleanAttribute, ChangeDetectorRef, Component, inject} from '@angular/core';
+import {ChangeDetectorRef, Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
@@ -159,48 +159,6 @@ export class ProfessionCreateComponent {
     );
   }
 
-  readonly form = this.fb.nonNullable.group({
-    name: ['', [Validators.required, Validators.maxLength(120)]],
-    description: ['', [Validators.required, Validators.maxLength(2000)]],
-
-    weaponSkillsDevelopment: [0, [Validators.required, Validators.min(0)]],
-    ballisticSkillsDevelopment: [0, [Validators.required, Validators.min(0)]],
-    strengthDevelopment: [0, [Validators.required, Validators.min(0)]],
-    toughnessDevelopment: [0, [Validators.required, Validators.min(0)]],
-    agilityDevelopment: [0, [Validators.required, Validators.min(0)]],
-    intelligenceDevelopment: [0, [Validators.required, Validators.min(0)]],
-    willpowerDevelopment: [0, [Validators.required, Validators.min(0)]],
-    fellowshipDevelopment: [0, [Validators.required, Validators.min(0)]],
-
-    attacksDevelopment: [0, [Validators.required, Validators.min(0)]],
-    woundsDevelopment: [0, [Validators.required, Validators.min(0)]],
-    movementDevelopment: [0, [Validators.required, Validators.min(0)]],
-    magicDevelopment: [0, [Validators.required, Validators.min(0)]],
-
-    // dynamic lists (skills / talents) - przechowujemy encje ProfessionSkill/ProfessionTalent
-    skills: this.fb.array([]),
-    talents: this.fb.array([]),
-    trappings: ['', [Validators.maxLength(2000)]],
-
-    // career exits (chips) - can contain numbers, strings or objects { id, name }
-    exitProfessions: this.fb.array([]),
-    isAdvanced: booleanAttribute(false)
-  });
-
-  // convenience getters for template
-  get skills(): FormArray {
-    return this.form.get('skills') as FormArray;
-  }
-
-  get talents(): FormArray {
-    return this.form.get('talents') as FormArray;
-  }
-
-  // getter for exits FormArray used by template
-  get exits(): FormArray {
-    return this.form.get('exitProfessions') as FormArray;
-  }
-
   // --- UI state: pokazywanie panelu alternatyw per-wiersz ---
   private readonly altSkillPickerVisible = new Map<number, boolean>();
   private readonly altTalentPickerVisible = new Map<number, boolean>();
@@ -270,6 +228,45 @@ export class ProfessionCreateComponent {
     this.form.controls.talents.updateValueAndValidity({emitEvent: true});
     this.form.updateValueAndValidity({emitEvent: true});
     this.cdr.detectChanges();
+  }
+
+  readonly form = this.fb.nonNullable.group({
+    name: ['', [Validators.required, Validators.maxLength(120)]],
+    description: ['', [Validators.required, Validators.maxLength(2000)]],
+
+    weaponSkillsDevelopment: [0, [Validators.required, Validators.min(0)]],
+    ballisticSkillsDevelopment: [0, [Validators.required, Validators.min(0)]],
+    strengthDevelopment: [0, [Validators.required, Validators.min(0)]],
+    toughnessDevelopment: [0, [Validators.required, Validators.min(0)]],
+    agilityDevelopment: [0, [Validators.required, Validators.min(0)]],
+    intelligenceDevelopment: [0, [Validators.required, Validators.min(0)]],
+    willpowerDevelopment: [0, [Validators.required, Validators.min(0)]],
+    fellowshipDevelopment: [0, [Validators.required, Validators.min(0)]],
+
+    attacksDevelopment: [0, [Validators.required, Validators.min(0)]],
+    woundsDevelopment: [0, [Validators.required, Validators.min(0)]],
+    movementDevelopment: [0, [Validators.required, Validators.min(0)]],
+    magicDevelopment: [0, [Validators.required, Validators.min(0)]],
+
+    skills: this.fb.array<FormControl<any>>([]),
+    talents: this.fb.array<FormControl<any>>([]),
+    trappings: ['', [Validators.maxLength(2000)]],
+
+    exitProfessions: this.fb.array<FormControl<any>>([]),
+
+    isAdvanced: false,
+  });
+
+  get skills(): FormArray<FormControl<any>> {
+    return this.form.get('skills') as FormArray<FormControl<any>>;
+  }
+
+  get talents(): FormArray<FormControl<any>> {
+    return this.form.get('talents') as FormArray<FormControl<any>>;
+  }
+
+  get exits(): FormArray<FormControl<any>> {
+    return this.form.get('exitProfessions') as FormArray<FormControl<any>>;
   }
 
   save() {
@@ -406,7 +403,13 @@ export class ProfessionCreateComponent {
     const existingSkills = this.skills.controls
       .map((c) => c.value as any)
       .filter((v) => v && typeof v === 'object')
-      .map((v) => ({id: v.id as number | undefined, name: v?.skill?.name ?? v?.name}))
+      .map((v) => ({
+        id: v.id as number | undefined,
+        name: v?.skill?.name ?? v?.name,
+        alternativeSkillIds: Array.isArray(v?.alternativeSkill)
+          ? v.alternativeSkill.map((a: any) => a?.id).filter((id: any) => typeof id === 'number')
+          : [],
+      }))
       .filter((s) => typeof s.id === 'number' && typeof s.name === 'string' && s.name.trim().length > 0);
 
     const ref = this.dialog.open(ProfessionSkillDialogComponent, {
@@ -443,8 +446,8 @@ export class ProfessionCreateComponent {
           const withUiDescription = {
             ...(created as any),
             uiDescription: selected.description,
-          } as ProfessionSkill as any;
-          this.skills.push(new FormControl<ProfessionSkill>(withUiDescription));
+          } as any;
+          this.skills.push(new FormControl<any>(withUiDescription));
           this.refreshSkillsOptions();
           this.refreshSkillsListView();
           this.markAndScrollSkill(this.skills.length - 1);
@@ -486,8 +489,8 @@ export class ProfessionCreateComponent {
           const withUiDescription = {
             ...(created as any),
             uiDescription: selected.description,
-          } as ProfessionTalent as any;
-          this.talents.push(new FormControl<ProfessionTalent>(withUiDescription));
+          } as any;
+          this.talents.push(new FormControl<any>(withUiDescription));
           this.refreshTalentsOptions();
           this.refreshTalentsListView();
           this.markAndScrollTalent(this.talents.length - 1);
@@ -624,7 +627,7 @@ export class ProfessionCreateComponent {
 
     this.linksApi.createProfessionSkill({skill: opt.id}).subscribe({
       next: (created) => {
-        this.skills.push(new FormControl<ProfessionSkill>(created));
+        this.skills.push(new FormControl<any>(created));
         this.refreshSkillsOptions();
         this.refreshSkillsListView();
         this.markAndScrollSkill(this.skills.length - 1);
@@ -656,7 +659,7 @@ export class ProfessionCreateComponent {
 
     this.linksApi.createProfessionTalent({talent: opt.id}).subscribe({
       next: (created) => {
-        this.talents.push(new FormControl<ProfessionTalent>(created));
+        this.talents.push(new FormControl<any>(created));
         this.refreshTalentsOptions();
         this.refreshTalentsListView();
         this.markAndScrollTalent(this.talents.length - 1);

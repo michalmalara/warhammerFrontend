@@ -57,6 +57,7 @@
               type="button"
               class="existing__choice"
               [class.existing__choice--selected]="selectedAlternativeIds.includes(s.id)"
+              [class.existing__choice--alternative-related]="!selectedAlternativeIds.includes(s.id) && isAlternativeRelatedToSelected(s.id)"
               (click)="toggleAlternative(s.id)"
             >
               <span class="existing__choice__label">{{ s.name }}</span>

@@ -129,13 +129,13 @@ describe('CharacterCardComponent', () => {
   it('renders placeholder when portraitUrl is not provided', async () => {
     const fixture = TestBed.createComponent(CharacterCardComponent);
     fixture.componentInstance.portraitUrl = undefined;
-    fixture.componentInstance.avatarUrl = './assetsassets/img/character-portrait-placeholder.png';
+    fixture.componentInstance.avatarUrl = 'assets/img/character-portrait-placeholder.png';
     fixture.detectChanges();
     await fixture.whenStable();
 
     const img = (fixture.nativeElement as HTMLElement).querySelector('.portrait img') as HTMLImageElement | null;
     expect(img).toBeTruthy();
-    expect(img!.getAttribute('src')).toBe('src/src/assets/img/character-portrait-placeholder.png');
+    expect(img!.getAttribute('src')).toContain('assets/img/character-portrait-placeholder.png');
     expect(img!.getAttribute('alt')).toContain('Portrait');
   });
 
@@ -153,9 +153,21 @@ describe('CharacterCardComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
-    expect(text).toContain('Skill A');
-    expect(text).toContain('Talent A');
+    const root = fixture.nativeElement as HTMLElement;
+
+    const skillsTab = root.querySelector('.mdc-tab:nth-child(1)') as HTMLElement | null;
+    skillsTab?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(root.textContent ?? '').toContain('Skill A');
+
+    const talentsTab = root.querySelector('.mdc-tab:nth-child(2)') as HTMLElement | null;
+    talentsTab?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(root.textContent ?? '').toContain('Talent A');
   });
 
   it('renders SB/TB modifiers from profile', async () => {
