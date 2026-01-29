@@ -367,3 +367,24 @@ textarea[formControlName="description"]:-ms-input-placeholder,
   font-family: 'Material Icons', 'Material Symbols Outlined', sans-serif !important;
   font-feature-settings: 'liga';
 }
+
+/* Dialog styles for Add Skill dialog */
+.wax-dialog-backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.wax-dialog-panel {
+  .mat-mdc-dialog-container {
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .mdc-dialog__surface {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    overflow: visible;
+  }
+}

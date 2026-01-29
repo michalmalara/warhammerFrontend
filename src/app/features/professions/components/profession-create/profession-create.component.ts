@@ -13,6 +13,7 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatOptionModule} from '@angular/material/core';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
@@ -25,6 +26,8 @@ import {SkillsApiService} from '../../../skills/services/skills-api.service';
 import {TalentsApiService} from '../../../talents/services/talents-api.service';
 import {ProfessionLinksApiService} from '../../services/profession-links-api.service';
 import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
+import {ProfessionSkillDialogComponent} from './profession-skill-dialog.component';
+import {ProfessionTalentDialogComponent, type ProfessionTalentDialogResult} from './profession-talent-dialog.component';
 
 @Component({
   selector: 'app-profession-create',
@@ -43,7 +46,9 @@ import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-
     MatChipsModule,
     MatAutocompleteModule,
     MatOptionModule,
+    MatDialogModule,
     WaxSealButtonComponent,
+
   ],
   templateUrl: './profession-create.component.html',
   styleUrls: ['./profession-create.component.scss'],
@@ -56,6 +61,7 @@ export class ProfessionCreateComponent {
   private readonly linksApi = inject(ProfessionLinksApiService);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly dialog = inject(MatDialog);
 
   private static readonly MIN_AUTOCOMPLETE_CHARS = 3;
 
@@ -349,6 +355,89 @@ export class ProfessionCreateComponent {
     }
     this.talentSearchControl.setValue('');
     this.snackBar.open($localize`:Snackbar@@profession.create.chooseTalent.autocomplete:Choose a talent from the list (autocomplete).`, 'OK', {duration: 2500});
+  }
+
+  // New: open dialog to add skill
+  openAddSkillDialog() {
+    const existingSkills = this.skills.controls
+      .map((c) => (c.value as any)?.skill?.name ?? (c.value as any)?.name ?? (c.value as any))
+      .filter((v) => typeof v === 'string' && v.trim().length > 0);
+
+    const ref = this.dialog.open(ProfessionSkillDialogComponent, {
+      width: '720px',
+      maxWidth: 'calc(100vw - 32px)',
+      panelClass: 'wax-dialog-panel',
+      backdropClass: 'wax-dialog-backdrop',
+      data: {existingSkills},
+    });
+    ref.afterClosed().subscribe((selected: { id: number; name: string; description?: string } | undefined) => {
+      if (!selected || !selected.id) return;
+
+      // avoid duplicates by skill.id
+      const already = this.skills.controls.some((c) => {
+        const v = c.value as any;
+        return v?.skill?.id === selected.id;
+      });
+      if (already) {
+        this.snackBar.open($localize`:Snackbar@@profession.create.add.skill.duplicate:Skill already added.`, 'OK', {duration: 2000});
+        return;
+      }
+
+      this.linksApi.createProfessionSkill({skill: selected.id}).subscribe({
+        next: (created) => {
+          const withUiDescription = {
+            ...(created as any),
+            uiDescription: selected.description,
+          } as ProfessionSkill as any;
+          this.skills.push(new FormControl<ProfessionSkill>(withUiDescription));
+          this.refreshSkillsOptions();
+        },
+        error: () => {
+          this.snackBar.open($localize`:Snackbar@@profession.create.add.skill.failed:Failed to add skill to profession.`, 'OK', {duration: 3000});
+        },
+      });
+    });
+  }
+
+  openAddTalentDialog() {
+    const existingTalents = this.talents.controls
+      .map((c) => (c.value as any)?.talent?.name ?? (c.value as any)?.name ?? (c.value as any))
+      .filter((v) => typeof v === 'string' && v.trim().length > 0);
+
+    const ref = this.dialog.open(ProfessionTalentDialogComponent, {
+      width: '720px',
+      maxWidth: 'calc(100vw - 32px)',
+      panelClass: 'wax-dialog-panel',
+      backdropClass: 'wax-dialog-backdrop',
+      data: {existingTalents},
+    });
+
+    ref.afterClosed().subscribe((selected: ProfessionTalentDialogResult | undefined) => {
+      if (!selected?.id) return;
+
+      const already = this.talents.controls.some((c) => {
+        const v = c.value as any;
+        return v?.talent?.id === selected.id;
+      });
+      if (already) {
+        this.snackBar.open($localize`:Snackbar@@profession.create.add.talent.duplicate:Talent already added.`, 'OK', {duration: 2000});
+        return;
+      }
+
+      this.linksApi.createProfessionTalent({talent: selected.id}).subscribe({
+        next: (created) => {
+          const withUiDescription = {
+            ...(created as any),
+            uiDescription: selected.description,
+          } as ProfessionTalent as any;
+          this.talents.push(new FormControl<ProfessionTalent>(withUiDescription));
+          this.refreshTalentsOptions();
+        },
+        error: () => {
+          this.snackBar.open($localize`:Snackbar@@profession.create.add.talent.failed:Failed to add talent to profession.`, 'OK', {duration: 3000});
+        },
+      });
+    });
   }
 
   removeSkill(index: number) {
@@ -729,5 +818,15 @@ export class ProfessionCreateComponent {
   private refreshTalentsOptions() {
     const q = (this.talentSearchControl.value ?? '').toString();
     this.talentSearchControl.setValue(q);
+  }
+
+  getSkillUiDescription(value: unknown): string {
+    const d = (value as any)?.uiDescription;
+    return typeof d === 'string' ? d : '';
+  }
+
+  getTalentUiDescription(value: unknown): string {
+    const d = (value as any)?.uiDescription;
+    return typeof d === 'string' ? d : '';
   }
 }

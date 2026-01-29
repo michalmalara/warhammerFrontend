@@ -1,0 +1,81 @@
+<div class="dialog" role="dialog" aria-modal="true">
+  <div class="corner top-left" aria-hidden="true">
+    <mat-icon fontIcon="flare"></mat-icon>
+  </div>
+  <div class="corner top-right" aria-hidden="true">
+    <mat-icon fontIcon="flare"></mat-icon>
+  </div>
+  <div class="corner bottom-left" aria-hidden="true">
+    <mat-icon fontIcon="flare"></mat-icon>
+  </div>
+  <div class="corner bottom-right" aria-hidden="true">
+    <mat-icon fontIcon="flare"></mat-icon>
+  </div>
+
+  <div class="header">
+    <h2 class="title" i18n="Dialog title@@profession.create.dialog.skill.title">Add Skill</h2>
+    <p class="subtitle" i18n="Dialog subtitle@@profession.create.dialog.skill.subtitle">Search and select a skill to
+      add.</p>
+  </div>
+
+  <div class="content">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label i18n="Label@@profession.create.dialog.skill.label">Skill</mat-label>
+      <input
+        matInput
+        [formControl]="skillSearchControl"
+        [matAutocomplete]="auto"
+        placeholder="Search..."
+        i18n-placeholder="Placeholder@@profession.create.dialog.skill.search"
+      />
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event)">
+        @for (o of options$ | async; track o?.id ?? o?.name ?? o) {
+          <mat-option [value]="o">{{ o.name }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label i18n="Label@@profession.create.dialog.skill.description.label">Description</mat-label>
+      <textarea
+        matInput
+        rows="3"
+        [formControl]="descriptionControl"
+        placeholder="Optional description..."
+        i18n-placeholder="Placeholder@@profession.create.dialog.skill.description.placeholder"
+      ></textarea>
+    </mat-form-field>
+
+    @if (existingSkillNames.length) {
+      <div class="existing" aria-label="Already added skills"
+           i18n-aria-label="ARIA@@profession.create.dialog.skill.existing.aria">
+        <div class="existing__title" i18n="Section title@@profession.create.dialog.skill.existing.title">Already added
+        </div>
+        <div class="existing__list">
+          @for (n of existingSkillNames; track n) {
+            <div class="existing__item">{{ n }}</div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="actions">
+    <app-wax-seal-button
+      variant="cancel"
+      icon="close"
+      label="Cancel"
+      i18n-label="Button@@profession.create.dialog.skill.cancel"
+      (clicked)="cancel()"
+    ></app-wax-seal-button>
+
+    <app-wax-seal-button
+      variant="save"
+      icon="add"
+      label="Add"
+      i18n-label="Button@@profession.create.dialog.skill.add"
+      [disabled]="!selectedOption"
+      (clicked)="add()"
+    ></app-wax-seal-button>
+  </div>
+</div>

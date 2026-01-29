@@ -8,7 +8,7 @@
   </div>
 
   <form class="form" [formGroup]="form" (ngSubmit)="save()">
-    <mat-card-content class="content">
+    <div class="content">
       <mat-card class="character-card card">
         <mat-card-title i18n="Card title|New profession card title@@profession.create.card.title">New Profession
         </mat-card-title>
@@ -112,24 +112,12 @@
             <h3 class="section-title">Required Skills</h3>
 
             <div class="search-input">
-              <mat-form-field appearance="outline" class="full">
-                <mat-label i18n="Label@@profession.create.skills.label">Skills</mat-label>
-                <input
-                  matInput
-                  [formControl]="skillSearchControl"
-                  [matAutocomplete]="skillAuto"
-                  i18n-placeholder="Placeholder@@profession.create.skills.search.placeholder"
-                  placeholder="Search skills..."
-                />
-
-                <mat-autocomplete #skillAuto="matAutocomplete" (optionSelected)="selectSkill($event)">
-                  @for (o of skillsOptions$ | async; track o?.id ?? o?.name ?? o) {
-                    <mat-option [value]="o">
-                      {{ o.name }}
-                    </mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
+              <div class="actions-row">
+                <button mat-stroked-button type="button" class="add-skill-button" (click)="openAddSkillDialog()">
+                  <mat-icon>add</mat-icon>
+                  <span i18n="Button label@@profession.create.addSkill">Add Skill</span>
+                </button>
+              </div>
 
               <!-- (tiles) -->
               <div class="tiles" aria-label="Skills" i18n-aria-label="ARIA@@profession.create.skills.list.aria">
@@ -144,6 +132,10 @@
                         <div class="tile__title">
                           {{ (s.value?.skill?.name || s.value?.name || s.value) }}
                         </div>
+
+                        @if (getSkillUiDescription(s.value)) {
+                          <div class="tile__description">{{ getSkillUiDescription(s.value) }}</div>
+                        }
 
                         <div class="tile__actions">
                           <button
@@ -224,24 +216,12 @@
             <h3 class="section-title">Required Talents</h3>
 
             <div class="search-input">
-              <mat-form-field appearance="outline" class="full">
-                <mat-label i18n="Label@@profession.create.talents.label">Talents</mat-label>
-                <input
-                  matInput
-                  [formControl]="talentSearchControl"
-                  [matAutocomplete]="talentAuto"
-                  i18n-placeholder="Placeholder@@profession.create.talents.search.placeholder"
-                  placeholder="Search talents..."
-                />
-
-                <mat-autocomplete #talentAuto="matAutocomplete" (optionSelected)="selectTalent($event)">
-                  @for (o of talentsOptions$ | async; track o?.id ?? o?.name ?? o) {
-                    <mat-option [value]="o">
-                      {{ o.name }}
-                    </mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
+              <div class="actions-row">
+                <button mat-stroked-button type="button" class="add-skill-button" (click)="openAddTalentDialog()">
+                  <mat-icon>add</mat-icon>
+                  <span i18n="Button label@@profession.create.addTalent">Add Talent</span>
+                </button>
+              </div>
 
               <!-- tiles -->
               <div class="tiles" aria-label="Talents" i18n-aria-label="ARIA@@profession.create.talents.list.aria">
@@ -256,6 +236,10 @@
                         <div class="tile__title">
                           {{ (t.value?.talent?.name || t.value?.name || t.value) }}
                         </div>
+
+                        @if (getTalentUiDescription(t.value)) {
+                          <div class="tile__description">{{ getTalentUiDescription(t.value) }}</div>
+                        }
 
                         <div class="tile__actions">
                           <button
@@ -330,6 +314,7 @@
             </div>
           </mat-card-content>
         </mat-card>
+
       </div>
 
       <!-- Characteristics / Development card -->
@@ -739,7 +724,7 @@
           </div>
         </mat-card-content>
       </mat-card>
-    </mat-card-content>
+    </div>
 
     <div class="actions">
       <app-wax-seal-button
