@@ -84,4 +84,21 @@ describe('ProfessionSkillDialogComponent', () => {
       [3, 4],
     ]);
   });
+
+  it('should toggle whole alternative group when clicking any member', () => {
+    const component = build([
+      {id: 1, name: 'A', alternativeSkillIds: [2]},
+      {id: 2, name: 'B', alternativeSkillIds: []},
+      {id: 3, name: 'C', alternativeSkillIds: []},
+    ]);
+
+    component.toggleAlternative(1);
+    expect(component.selectedAlternativeIds.sort((a, b) => a - b)).toEqual([1, 2]);
+
+    component.toggleAlternative(2);
+    expect(component.selectedAlternativeIds).toEqual([]);
+
+    component.toggleAlternative(3);
+    expect(component.selectedAlternativeIds).toEqual([3]);
+  });
 });

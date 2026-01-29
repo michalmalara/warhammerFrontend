@@ -461,8 +461,24 @@ export class ProfessionCreateComponent {
 
   openAddTalentDialog() {
     const existingTalents = this.talents.controls
-      .map((c) => (c.value as any)?.talent?.name ?? (c.value as any)?.name ?? (c.value as any))
-      .filter((v) => typeof v === 'string' && v.trim().length > 0);
+      .map((c) => {
+        const v = c.value as any;
+
+        const id = v?.id as number | undefined;
+        const name = (v?.talent?.name ?? v?.name ?? v) as string | undefined;
+        const alternativeTalentIds = Array.isArray(v?.alternativeTalent)
+          ? v.alternativeTalent
+            .map((a: any) => a?.id)
+            .filter((altId: any) => typeof altId === 'number')
+          : [];
+
+        if (typeof id === 'number' && typeof name === 'string' && name.trim().length > 0) {
+          return {id, name, alternativeTalentIds};
+        }
+
+        return typeof name === 'string' ? name : '';
+      })
+      .filter((v) => (typeof v === 'string' ? v.trim().length > 0 : true));
 
     const ref = this.dialog.open(ProfessionTalentDialogComponent, {
       width: '720px',
@@ -484,7 +500,12 @@ export class ProfessionCreateComponent {
         return;
       }
 
-      this.linksApi.createProfessionTalent({talent: selected.id}).subscribe({
+      const payload: any = {talent: selected.id};
+      if (Array.isArray((selected as any).alternativeTalent) && (selected as any).alternativeTalent.length) {
+        payload.alternativeTalent = (selected as any).alternativeTalent;
+      }
+
+      this.linksApi.createProfessionTalent(payload).subscribe({
         next: (created) => {
           const withUiDescription = {
             ...(created as any),
@@ -896,3 +917,5 @@ export class ProfessionCreateComponent {
     return typeof d === 'string' ? d : '';
   }
 }
+
+

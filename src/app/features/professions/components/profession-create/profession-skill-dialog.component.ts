@@ -64,49 +64,6 @@ export class ProfessionSkillDialogComponent {
     this.selectedOption = event.option.value as { id: number; name: string };
   }
 
-  toggleAlternative(id: number) {
-    const i = this.selectedAlternativeIds.indexOf(id);
-    if (i >= 0) {
-      this.selectedAlternativeIds.splice(i, 1);
-    } else {
-      this.selectedAlternativeIds.push(id);
-    }
-  }
-
-  cancel() {
-    this.dialogRef.close();
-  }
-
-  add() {
-    if (!this.selectedOption) return;
-    const description = (this.descriptionControl.value ?? '').toString().trim();
-    // include alternativeSkill if any selected
-    this.dialogRef.close({
-      ...this.selectedOption,
-      description: description || undefined,
-      alternativeSkill: this.selectedAlternativeIds.length ? this.selectedAlternativeIds : undefined,
-    } as any);
-  }
-
-  get existingSkillNames(): string[] {
-    const items = this.data?.existingSkills ?? [];
-    return items
-      .map((s: any) => (typeof s === 'string' ? s : (s?.name ?? s?.skill?.name)))
-      .filter((n: any): n is string => typeof n === 'string' && n.trim().length > 0)
-      .sort((a, b) => a.localeCompare(b));
-  }
-
-  private get existingSkillAlternativeMap(): Map<number, Set<number>> {
-    const m = new Map<number, Set<number>>();
-    for (const s of this.existingSkillsStructured) {
-      const altIds = Array.isArray((s as any).alternativeSkillIds) ? (s as any).alternativeSkillIds : [];
-      const filtered = altIds.filter((id: any) => typeof id === 'number');
-      if (!filtered.length) continue;
-      m.set(s.id, new Set(filtered));
-    }
-    return m;
-  }
-
   private static buildAlternativeGroups(map: Map<number, Set<number>>): number[][] {
     const adjacency = new Map<number, Set<number>>();
 
@@ -154,6 +111,74 @@ export class ProfessionSkillDialogComponent {
 
     groups.sort((a, b) => (a[0] ?? 0) - (b[0] ?? 0));
     return groups;
+  }
+
+  private getAlternativeGroupIdsFor(skillLinkId: number): number[] {
+    if (!Number.isFinite(skillLinkId)) return [];
+
+    const groupsRaw = ProfessionSkillDialogComponent.buildAlternativeGroups(this.existingSkillAlternativeMap);
+    for (const g of groupsRaw) {
+      if (g.includes(skillLinkId)) return g;
+    }
+
+    return [];
+  }
+
+  toggleAlternative(id: number) {
+    const group = this.getAlternativeGroupIdsFor(id);
+
+    if (group.length >= 2) {
+      const allSelected = group.every((gid) => this.selectedAlternativeIds.includes(gid));
+      if (allSelected) {
+        this.selectedAlternativeIds = this.selectedAlternativeIds.filter((x) => !group.includes(x));
+      } else {
+        const next = new Set(this.selectedAlternativeIds);
+        for (const gid of group) next.add(gid);
+        this.selectedAlternativeIds = Array.from(next);
+      }
+      return;
+    }
+
+    const i = this.selectedAlternativeIds.indexOf(id);
+    if (i >= 0) {
+      this.selectedAlternativeIds.splice(i, 1);
+    } else {
+      this.selectedAlternativeIds.push(id);
+    }
+  }
+
+  cancel() {
+    this.dialogRef.close();
+  }
+
+  add() {
+    if (!this.selectedOption) return;
+    const description = (this.descriptionControl.value ?? '').toString().trim();
+    // include alternativeSkill if any selected
+    this.dialogRef.close({
+      ...this.selectedOption,
+      description: description || undefined,
+      alternativeSkill: this.selectedAlternativeIds.length ? this.selectedAlternativeIds : undefined,
+    } as any);
+  }
+
+  get existingSkillNames(): string[] {
+    const items = this.data?.existingSkills ?? [];
+    return items
+      .map((s: any) => (typeof s === 'string' ? s : (s?.name ?? s?.skill?.name)))
+      .filter((n: any): n is string => typeof n === 'string' && n.trim().length > 0)
+      .sort((a, b) => a.localeCompare(b));
+  }
+
+  private get existingSkillAlternativeMap(): Map<number, Set<number>> {
+    const m = new Map<number, Set<number>>();
+    for (const s of this.existingSkillsStructured) {
+      const altIds = Array.isArray((s as any).alternativeSkillIds) ? (s as any).alternativeSkillIds : [];
+      const filtered = altIds.filter((id: any) => typeof id === 'number');
+      if (!filtered.length) continue;
+      m.set(s.id, new Set(filtered));
+    }
+    return m;
   }
 
   get existingAlternativeGroups(): Array<{
