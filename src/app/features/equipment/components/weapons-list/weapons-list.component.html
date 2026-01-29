@@ -1,0 +1,113 @@
+<section class="page">
+  <h2 class="sr-only" i18n="SR heading@@weaponsList.srHeading">Weapons</h2>
+
+  <header class="headline">
+    <div class="headline-text">
+      <h1 class="title" i18n="Title@@weaponsList.title">The Arsenal of Blades and Blackpowder</h1>
+      <p class="subtitle" i18n="Subtitle@@weaponsList.subtitle">
+        Review weapons of war. Add new arms to the armory when the Old World demands it.
+      </p>
+    </div>
+  </header>
+
+  <section class="filters" aria-label="Search and filters" i18n-aria-label="Aria@@weaponsList.filters.aria">
+    <div class="filters-row">
+      <mat-form-field class="search" appearance="fill">
+        <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+        <input
+          matInput
+          type="text"
+          [value]="query()"
+          (input)="onQueryInput(($any($event.target).value) ?? '')"
+          placeholder="Search the armory for a weapon..."
+          i18n-placeholder="Placeholder@@weaponsList.search.placeholder"
+          aria-label="Search weapons"
+          i18n-aria-label="Aria@@weaponsList.search.aria"
+        />
+      </mat-form-field>
+    </div>
+
+    @if (weapons$ | async; as weaponsForCount) {
+      @if (weaponsForCount !== null) {
+        <div class="quick-filters">
+          <span class="count" i18n="Count label@@weaponsList.count">
+            Showing {{ applyFilters(weaponsForCount).length }} Weapons
+          </span>
+        </div>
+      }
+    }
+  </section>
+
+  @if (weapons$ | async; as weapons) {
+    @if (weapons === null) {
+      <p class="error" i18n="Error@@weaponsList.error.loadFailed">Failed to load the weapons list.</p>
+    } @else if (weapons.length === 0) {
+      <p class="empty" i18n="Empty@@weaponsList.empty.noWeapons">No weapons.</p>
+    } @else {
+      @if (applyFilters(weapons).length === 0) {
+        <p class="empty" i18n="Empty@@weaponsList.empty.noResults">No results for the selected search.</p>
+      } @else {
+        <section class="skills-grid" aria-label="Weapons list" i18n-aria-label="Aria@@weaponsList.grid.aria">
+          @for (w of applyFilters(weapons); track trackById($index, w)) {
+            <article class="skill-card" tabindex="0">
+              <div class="card-top">
+                <div class="titles">
+                  <h3 class="skill-name">{{ w.name }}</h3>
+                  <div class="skill-meta">{{ w.type }}</div>
+                </div>
+
+                <div class="icon-badge" aria-hidden="true">
+                  <mat-icon fontIcon="gavel"></mat-icon>
+                </div>
+              </div>
+
+              @if (shortDescription(w.description); as desc) {
+                <p class="skill-desc">{{ desc }}</p>
+              } @else {
+                <p class="skill-desc muted" i18n="Fallback@@weaponsList.weapon.noDescription">No description.</p>
+              }
+
+              <div class="card-bottom">
+                <mat-chip-set aria-label="Stats" i18n-aria-label="Aria@@weaponsList.tags.aria">
+                  <mat-chip class="chip">DMG {{ w.damage }}</mat-chip>
+                  <mat-chip class="chip">+{{ w.damageBonus }}</mat-chip>
+                  <mat-chip class="chip">RNG {{ w.range }}</mat-chip>
+                  <mat-chip class="chip">REL {{ w.reloadTime }}</mat-chip>
+                </mat-chip-set>
+
+                <button
+                  mat-icon-button
+                  class="danger-icon-btn"
+                  color="warn"
+                  type="button"
+                  aria-label="Delete weapon"
+                  i18n-aria-label="Aria@@weaponsList.delete.aria"
+                  (click)="$event.stopPropagation(); $event.preventDefault(); onDeleteWeapon(w)"
+                  [disabled]="isDeleting(w)"
+                >
+                  <mat-icon fontIcon="delete"></mat-icon>
+                </button>
+              </div>
+            </article>
+          }
+        </section>
+      }
+    }
+  } @else {
+    <div class="loading">
+      <mat-spinner diameter="28"></mat-spinner>
+      <span i18n="Loading@@weaponsList.loading">Loading…</span>
+    </div>
+  }
+
+  <a
+    class="fab"
+    mat-fab
+    color="primary"
+    [routerLink]="['/weapons/new']"
+    aria-label="Add weapon"
+    i18n-aria-label="Aria@@weaponsList.fab.add.aria"
+  >
+    <mat-icon fontIcon="add"></mat-icon>
+  </a>
+</section>

@@ -1,0 +1,56 @@
+<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="armor-delete-title">
+  <div class="modal">
+    <div class="corner top-left" aria-hidden="true">
+      <mat-icon fontIcon="flare"></mat-icon>
+    </div>
+    <div class="corner top-right" aria-hidden="true">
+      <mat-icon fontIcon="flare"></mat-icon>
+    </div>
+    <div class="corner bottom-left" aria-hidden="true">
+      <mat-icon fontIcon="flare"></mat-icon>
+    </div>
+    <div class="corner bottom-right" aria-hidden="true">
+      <mat-icon fontIcon="flare"></mat-icon>
+    </div>
+
+    <div class="header">
+      <h2 id="armor-delete-title" class="title" i18n="Dialog title@@armorDeleteDialog.title">
+        Are you sure you want to delete this armor?
+      </h2>
+    </div>
+
+    <div class="skill">
+      <span class="skill-name">{{ data.armorName }}</span>
+    </div>
+
+    <div class="body">
+      <p class="quote" i18n="Quote@@armorDeleteDialog.quote">
+        "Protection is earned. Removing it is a choice you can't undo."
+      </p>
+    </div>
+
+    <div class="actions">
+      <app-wax-seal-button
+        variant="cancel"
+        icon="close"
+        label="Cancel"
+        i18n-label="Button@@armorDeleteDialog.cancel"
+        (clicked)="cancel()"
+      ></app-wax-seal-button>
+
+      <app-wax-seal-button
+        variant="save"
+        icon="delete_forever"
+        label="Delete"
+        i18n-label="Button@@armorDeleteDialog.confirm"
+        (clicked)="confirm()"
+      ></app-wax-seal-button>
+    </div>
+
+    <div class="bottom-detail" aria-hidden="true">
+      <span class="line"></span>
+      <mat-icon class="skull" fontIcon="skull"></mat-icon>
+      <span class="line"></span>
+    </div>
+  </div>
+</div>

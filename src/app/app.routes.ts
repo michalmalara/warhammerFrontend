@@ -13,6 +13,10 @@ import {SkillCreateComponent} from './features/skills/components/skill-create/sk
 import {SkillsListComponent} from './features/skills/components/skills-list/skills-list.component';
 import {TalentCreateComponent} from './features/talents/components/talent-create/talent-create.component';
 import {TalentsListComponent} from './features/talents/components/talents-list/talents-list.component';
+import {WeaponsListComponent} from './features/equipment/components/weapons-list/weapons-list.component';
+import {WeaponCreateComponent} from './features/equipment/components/weapon-create/weapon-create.component';
+import {ArmorsListComponent} from './features/equipment/components/armors-list/armors-list.component';
+import {ArmorCreateComponent} from './features/equipment/components/armor-create/armor-create.component';
 
 import {
   CharacterCreationShellComponent
@@ -83,6 +87,12 @@ export const routes: Routes = [
 
   {path: 'talents', component: TalentsListComponent},
   {path: 'talents/new', component: TalentCreateComponent},
+
+  {path: 'weapons', component: WeaponsListComponent},
+  {path: 'weapons/new', component: WeaponCreateComponent},
+
+  {path: 'armors', component: ArmorsListComponent},
+  {path: 'armors/new', component: ArmorCreateComponent},
 
   {path: '**', redirectTo: 'characters'},
 ];

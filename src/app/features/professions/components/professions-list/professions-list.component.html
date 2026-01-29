@@ -114,9 +114,14 @@
     </div>
   }
 
-  <a class="fab-seal" [routerLink]="['/professions/new']" aria-label="Create Profession">
-    <span class="fab-seal__ring" aria-hidden="true"></span>
-    <mat-icon class="fab-seal__icon" fontIcon="add"></mat-icon>
-    <span class="fab-seal__tooltip">Create Profession</span>
+  <a
+    class="fab"
+    mat-fab
+    color="primary"
+    [routerLink]="['/professions/new']"
+    aria-label="Add profession"
+    i18n-aria-label="Aria@@professionsList.fab.add.aria"
+  >
+    <mat-icon fontIcon="add"></mat-icon>
   </a>
 </section>

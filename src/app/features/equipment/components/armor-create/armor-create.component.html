@@ -1,0 +1,87 @@
+<mat-card class="equipment-create">
+  <div class="page-heading">
+    <h1 class="page-title" i18n="Page title@@armorCreate.title">Armor Creation Editor</h1>
+    <div class="page-divider" aria-hidden="true"></div>
+    <p class="page-subtitle" i18n="Page subtitle@@armorCreate.subtitle">
+      Record a new armor piece for the quartermaster.
+    </p>
+  </div>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="save()">
+    <mat-card-content class="content">
+      <div class="form-grid one-column">
+        <div class="row">
+          <div class="section-label">
+            <mat-icon class="section-icon" aria-hidden="true">edit_square</mat-icon>
+            <span i18n="Section label@@armorCreate.armorName.label">Armor Name</span>
+          </div>
+          <mat-form-field appearance="outline" class="full">
+            <input
+              matInput
+              formControlName="name"
+              placeholder="e.g., Leather Jack"
+              i18n-placeholder="Placeholder@@armorCreate.armorName.placeholder"
+              aria-label="Armor name"
+              i18n-aria-label="Aria@@armorCreate.armorName.aria"
+            />
+            @if (form.controls.name.touched && form.controls.name.invalid) {
+              <mat-error i18n="Validation@@armorCreate.armorName.error">Required name (max 100 characters)</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <div class="section-label">
+            <mat-icon class="section-icon" aria-hidden="true">place</mat-icon>
+            <span i18n="Section label@@armorCreate.location.label">Location</span>
+          </div>
+          <mat-form-field appearance="outline" class="full">
+            <input
+              matInput
+              formControlName="location"
+              placeholder="e.g., Body"
+              i18n-placeholder="Placeholder@@armorCreate.location.placeholder"
+              aria-label="Armor location"
+              i18n-aria-label="Aria@@armorCreate.location.aria"
+            />
+            @if (form.controls.location.touched && form.controls.location.invalid) {
+              <mat-error i18n="Validation@@armorCreate.location.error">Required location (max 100 characters)
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="outline" class="full">
+            <mat-label i18n="Label@@armorCreate.armorPoints.label">Armor Points</mat-label>
+            <input matInput type="number" formControlName="armorPoints"/>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <div class="actions">
+      <app-wax-seal-button
+        variant="cancel"
+        icon="close"
+        label="Discard"
+        i18n-label="Action label@@armorCreate.actions.discard"
+        [routerLink]="['/armors']"
+        ariaLabel="Discard"
+        i18n-ariaLabel="Aria@@armorCreate.actions.discard.aria"
+      ></app-wax-seal-button>
+
+      <app-wax-seal-button
+        variant="save"
+        icon="check"
+        label="Affix Seal"
+        i18n-label="Action label@@armorCreate.actions.save"
+        type="submit"
+        [loading]="isSaving"
+        [disabled]="isSaving"
+        ariaLabel="Affix seal"
+        i18n-ariaLabel="Aria@@armorCreate.actions.save.aria"
+      ></app-wax-seal-button>
+    </div>
+  </form>
+</mat-card>

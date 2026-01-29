@@ -1,0 +1,104 @@
+<section class="page">
+  <h2 class="sr-only" i18n="SR heading@@armorsList.srHeading">Armors</h2>
+
+  <header class="headline">
+    <div class="headline-text">
+      <h1 class="title" i18n="Title@@armorsList.title">The Wardrobe of Steel and Leather</h1>
+      <p class="subtitle" i18n="Subtitle@@armorsList.subtitle">
+        Catalogue protective gear. Add new armor pieces to keep adventurers alive a little longer.
+      </p>
+    </div>
+  </header>
+
+  <section class="filters" aria-label="Search and filters" i18n-aria-label="Aria@@armorsList.filters.aria">
+    <div class="filters-row">
+      <mat-form-field class="search" appearance="fill">
+        <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+        <input
+          matInput
+          type="text"
+          [value]="query()"
+          (input)="onQueryInput(($any($event.target).value) ?? '')"
+          placeholder="Search the armory for armor..."
+          i18n-placeholder="Placeholder@@armorsList.search.placeholder"
+          aria-label="Search armors"
+          i18n-aria-label="Aria@@armorsList.search.aria"
+        />
+      </mat-form-field>
+    </div>
+
+    @if (armors$ | async; as armorsForCount) {
+      @if (armorsForCount !== null) {
+        <div class="quick-filters">
+          <span class="count" i18n="Count label@@armorsList.count">
+            Showing {{ applyFilters(armorsForCount).length }} Armors
+          </span>
+        </div>
+      }
+    }
+  </section>
+
+  @if (armors$ | async; as armors) {
+    @if (armors === null) {
+      <p class="error" i18n="Error@@armorsList.error.loadFailed">Failed to load the armors list.</p>
+    } @else if (armors.length === 0) {
+      <p class="empty" i18n="Empty@@armorsList.empty.noArmors">No armors.</p>
+    } @else {
+      @if (applyFilters(armors).length === 0) {
+        <p class="empty" i18n="Empty@@armorsList.empty.noResults">No results for the selected search.</p>
+      } @else {
+        <section class="skills-grid" aria-label="Armors list" i18n-aria-label="Aria@@armorsList.grid.aria">
+          @for (a of applyFilters(armors); track trackById($index, a)) {
+            <article class="skill-card" tabindex="0">
+              <div class="card-top">
+                <div class="titles">
+                  <h3 class="skill-name">{{ a.name }}</h3>
+                  <div class="skill-meta">{{ a.location }}</div>
+                </div>
+
+                <div class="icon-badge" aria-hidden="true">
+                  <mat-icon fontIcon="shield"></mat-icon>
+                </div>
+              </div>
+
+              <div class="card-bottom">
+                <mat-chip-set aria-label="Stats" i18n-aria-label="Aria@@armorsList.tags.aria">
+                  <mat-chip class="chip">AP {{ a.armorPoints }}</mat-chip>
+                </mat-chip-set>
+
+                <button
+                  mat-icon-button
+                  class="danger-icon-btn"
+                  color="warn"
+                  type="button"
+                  aria-label="Delete armor"
+                  i18n-aria-label="Aria@@armorsList.delete.aria"
+                  (click)="$event.stopPropagation(); $event.preventDefault(); onDeleteArmor(a)"
+                  [disabled]="isDeleting(a)"
+                >
+                  <mat-icon fontIcon="delete"></mat-icon>
+                </button>
+              </div>
+            </article>
+          }
+        </section>
+      }
+    }
+  } @else {
+    <div class="loading">
+      <mat-spinner diameter="28"></mat-spinner>
+      <span i18n="Loading@@armorsList.loading">Loading…</span>
+    </div>
+  }
+
+  <a
+    class="fab"
+    mat-fab
+    color="primary"
+    [routerLink]="['/armors/new']"
+    aria-label="Add armor"
+    i18n-aria-label="Aria@@armorsList.fab.add.aria"
+  >
+    <mat-icon fontIcon="add"></mat-icon>
+  </a>
+</section>

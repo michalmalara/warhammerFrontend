@@ -1,0 +1,141 @@
+<mat-card class="equipment-create">
+  <div class="page-heading">
+    <h1 class="page-title" i18n="Page title@@weaponCreate.title">Weapon Creation Editor</h1>
+    <div class="page-divider" aria-hidden="true"></div>
+    <p class="page-subtitle" i18n="Page subtitle@@weaponCreate.subtitle">
+      Forge a new weapon entry for your armory.
+    </p>
+  </div>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="save()">
+    <mat-card-content class="content">
+      <div class="form-grid">
+        <div class="left">
+          <div class="row">
+            <div class="section-label">
+              <mat-icon class="section-icon" aria-hidden="true">edit_square</mat-icon>
+              <span i18n="Section label@@weaponCreate.weaponName.label">Weapon Name</span>
+            </div>
+            <mat-form-field appearance="outline" class="full">
+              <input
+                matInput
+                formControlName="name"
+                placeholder="e.g., Handgun"
+                i18n-placeholder="Placeholder@@weaponCreate.weaponName.placeholder"
+                aria-label="Weapon name"
+                i18n-aria-label="Aria@@weaponCreate.weaponName.aria"
+              />
+              @if (form.controls.name.touched && form.controls.name.invalid) {
+                <mat-error i18n="Validation@@weaponCreate.weaponName.error">Required name (max 100 characters)
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="section-label">
+              <mat-icon class="section-icon" aria-hidden="true">category</mat-icon>
+              <span i18n="Section label@@weaponCreate.weaponType.label">Weapon Type</span>
+            </div>
+            <mat-form-field appearance="outline" class="full">
+              <input
+                matInput
+                formControlName="type"
+                placeholder="e.g., Melee"
+                i18n-placeholder="Placeholder@@weaponCreate.weaponType.placeholder"
+                aria-label="Weapon type"
+                i18n-aria-label="Aria@@weaponCreate.weaponType.aria"
+              />
+              @if (form.controls.type.touched && form.controls.type.invalid) {
+                <mat-error i18n="Validation@@weaponCreate.weaponType.error">Required type (max 100 characters)
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="row stats-row">
+            <mat-form-field appearance="outline" class="stat">
+              <mat-label i18n="Label@@weaponCreate.damage.label">Damage</mat-label>
+              <input matInput type="number" formControlName="damage"/>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="stat">
+              <mat-label i18n="Label@@weaponCreate.damageBonus.label">Damage Bonus</mat-label>
+              <input matInput type="number" formControlName="damageBonus"/>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="stat">
+              <mat-label i18n="Label@@weaponCreate.range.label">Range</mat-label>
+              <input matInput type="number" formControlName="range"/>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="stat">
+              <mat-label i18n="Label@@weaponCreate.reloadTime.label">Reload Time</mat-label>
+              <input matInput type="number" formControlName="reloadTime"/>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="section-label">
+            <mat-icon class="section-icon" aria-hidden="true">history_edu</mat-icon>
+            <span i18n="Section label@@weaponCreate.description.label">Description</span>
+          </div>
+
+          <mat-form-field appearance="outline" class="full lore">
+            <textarea
+              matInput
+              rows="6"
+              formControlName="description"
+              placeholder="Describe the weapon and its use on the battlefield."
+              i18n-placeholder="Placeholder@@weaponCreate.description.placeholder"
+              aria-label="Weapon description"
+              i18n-aria-label="Aria@@weaponCreate.description.aria"
+            ></textarea>
+          </mat-form-field>
+
+          <div class="section-label">
+            <mat-icon class="section-icon" aria-hidden="true">auto_awesome</mat-icon>
+            <span i18n="Section label@@weaponCreate.traits.label">Traits</span>
+          </div>
+
+          <mat-form-field appearance="outline" class="full lore">
+            <textarea
+              matInput
+              rows="4"
+              formControlName="traits"
+              placeholder="List traits, qualities, or special rules."
+              i18n-placeholder="Placeholder@@weaponCreate.traits.placeholder"
+              aria-label="Weapon traits"
+              i18n-aria-label="Aria@@weaponCreate.traits.aria"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <div class="actions">
+      <app-wax-seal-button
+        variant="cancel"
+        icon="close"
+        label="Discard"
+        i18n-label="Action label@@weaponCreate.actions.discard"
+        [routerLink]="['/weapons']"
+        ariaLabel="Discard"
+        i18n-ariaLabel="Aria@@weaponCreate.actions.discard.aria"
+      ></app-wax-seal-button>
+
+      <app-wax-seal-button
+        variant="save"
+        icon="check"
+        label="Affix Seal"
+        i18n-label="Action label@@weaponCreate.actions.save"
+        type="submit"
+        [loading]="isSaving"
+        [disabled]="isSaving"
+        ariaLabel="Affix seal"
+        i18n-ariaLabel="Aria@@weaponCreate.actions.save.aria"
+      ></app-wax-seal-button>
+    </div>
+  </form>
+</mat-card>
