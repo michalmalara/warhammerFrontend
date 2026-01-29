@@ -1,757 +1,767 @@
-<mat-card class="profession-editor">
-  <header class="hero">
-    <div>
-      <h1 class="title" i18n="Hero title|Profession create hero@@profession.create.hero.title">Create Profession</h1>
-      <p class="subtitle" i18n="Hero subtitle|Short hero subtitle@@profession.create.hero.subtitle">Quickly define a new
-        profession and its development costs</p>
-    </div>
-
-    <div class="hero-actions">
-      <a mat-stroked-button class="hero-actions__btn" [routerLink]="['/professions']"
-         aria-label="Browse professions library">
-        <mat-icon fontIcon="search"></mat-icon>
-        Browse library
-      </a>
-    </div>
-  </header>
+<mat-card class="skill-create">
+  <div class="page-heading">
+    <h1 class="page-title" i18n="Page title@@professionCreate.title">Profession Creation Editor</h1>
+    <div class="page-divider" aria-hidden="true"></div>
+    <p class="page-subtitle" i18n="Page subtitle@@professionCreate.subtitle">
+      Quickly define a new profession and its development costs.
+    </p>
+  </div>
 
   <form class="form" [formGroup]="form" (ngSubmit)="save()">
-    <!-- Inputs card (name, description) styled like character card -->
-    <mat-card class="character-card card">
-      <mat-card-title i18n="Card title|New profession card title@@profession.create.card.title">
-        New Profession
-      </mat-card-title>
-      <mat-card-subtitle
-        i18n="Card subtitle|Short create profession subtitle@@profession.create.card.subtitle"
-      >
-        Fill in basic information and development costs
-      </mat-card-subtitle>
+    <mat-card-content class="content">
+      <mat-card class="character-card card">
+        <mat-card-title i18n="Card title|New profession card title@@profession.create.card.title">New Profession
+        </mat-card-title>
+        <mat-card-subtitle i18n="Card subtitle|Short create profession subtitle@@profession.create.card.subtitle">
+          Fill in basic information and development costs
+        </mat-card-subtitle>
 
-      <mat-card-content>
-        <!-- Two-column layout: left = name + type, right = description -->
-        <div class="new-profession-grid">
-          <!-- Left column: name and type -->
-          <div class="new-profession-grid__left">
-            <div class="row">
-              <mat-form-field appearance="outline" class="full">
-                <mat-label i18n="Label|Name field label@@profession.create.name.label">Name</mat-label>
-                <input
+        <mat-card-content>
+          <div class="form-grid">
+            <div class="left">
+              <div class="row">
+                <div class="section-label">
+                  <mat-icon class="section-icon" aria-hidden="true">edit_square</mat-icon>
+                  <span i18n="Section label@@professionCreate.name.section">Profession Name</span>
+                </div>
+
+                <mat-form-field appearance="outline" class="full">
+                  <mat-label i18n="Label|Name field label@@profession.create.name.label">Name</mat-label>
+                  <input
+                    matInput
+                    formControlName="name"
+                    aria-label="Profession name"
+                    i18n-aria-label="Input aria-label|Profession name aria@@profession.create.name.aria"
+                  />
+                  @if (form.controls.name.touched && form.controls.name.invalid) {
+                    <mat-error i18n="Validation|Name required message@@profession.create.name.required">Name is
+                      required
+                    </mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="row row--padded">
+                <div class="section-label">
+                  <mat-icon class="section-icon" aria-hidden="true">category</mat-icon>
+                  <span i18n="Section label@@professionCreate.type.section">Profession Type</span>
+                </div>
+
+                <div class="type-toggle" role="group" aria-label="Profession type"
+                     i18n-aria-label="Aria@@professionCreate.type.aria">
+                  <button
+                    type="button"
+                    class="type-toggle__btn"
+                    [class.is-active]="!form.controls.isAdvanced.value"
+                    [attr.aria-pressed]="!form.controls.isAdvanced.value"
+                    aria-label="Basic"
+                    i18n-aria-label="ARIA@@profession.create.type.basic"
+                    (click)="form.controls.isAdvanced.setValue(false)"
+                  >
+                    <mat-icon class="type-toggle__icon" fontIcon="person_search"></mat-icon>
+                    <span class="type-toggle__label" i18n="Label@@profession.create.type.basic.label">Basic</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="type-toggle__btn"
+                    [class.is-active]="form.controls.isAdvanced.value"
+                    [attr.aria-pressed]="form.controls.isAdvanced.value"
+                    aria-label="Advanced"
+                    i18n-aria-label="ARIA@@profession.create.type.advanced"
+                    (click)="form.controls.isAdvanced.setValue(true)"
+                  >
+                    <mat-icon class="type-toggle__icon" fontIcon="military_tech"></mat-icon>
+                    <span class="type-toggle__label" i18n="Label@@profession.create.type.advanced.label">Advanced</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="right">
+              <div class="section-label">
+                <mat-icon class="section-icon" aria-hidden="true">history_edu</mat-icon>
+                <span i18n="Section label@@professionCreate.description.section">Profession Description</span>
+              </div>
+
+              <mat-form-field appearance="outline" class="full lore">
+                <mat-label i18n="Label|Description field label@@profession.create.description.label">Description
+                </mat-label>
+                <textarea
                   matInput
-                  formControlName="name"
-                  aria-label="Profession name"
-                  i18n-aria-label="Input aria-label|Profession name aria@@profession.create.name.aria"
-                />
-                @if (form.controls.name.touched && form.controls.name.invalid) {
-                  <mat-error i18n="Validation|Name required message@@profession.create.name.required">Name is required
+                  rows="4"
+                  formControlName="description"
+                  aria-label="Profession description"
+                  i18n-aria-label="Input aria-label|Profession description aria@@profession.create.description.aria"
+                ></textarea>
+                @if (form.controls.description.touched && form.controls.description.invalid) {
+                  <mat-error i18n="Validation|Description required message@@profession.create.description.required">
+                    Description is required
                   </mat-error>
                 }
               </mat-form-field>
             </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
 
-            <!-- Profession type: custom buttons styled like the mockup -->
-            <div class="row" style="margin-top: 8px;">
-              <div class="type-toggle" role="group" aria-label="Profession type">
+      <!-- Skills & Talents cards (split into two side-by-side cards) -->
+      <div class="grid two-cards">
+        <mat-card class="character-card card">
+          <mat-card-content>
+            <h3 class="section-title">Required Skills</h3>
+
+            <div class="search-input">
+              <mat-form-field appearance="outline" class="full">
+                <mat-label i18n="Label@@profession.create.skills.label">Skills</mat-label>
+                <input
+                  matInput
+                  [formControl]="skillSearchControl"
+                  [matAutocomplete]="skillAuto"
+                  i18n-placeholder="Placeholder@@profession.create.skills.search.placeholder"
+                  placeholder="Search skills..."
+                />
+
+                <mat-autocomplete #skillAuto="matAutocomplete" (optionSelected)="selectSkill($event)">
+                  @for (o of skillsOptions$ | async; track o?.id ?? o?.name ?? o) {
+                    <mat-option [value]="o">
+                      {{ o.name }}
+                    </mat-option>
+                  }
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <!-- (tiles) -->
+              <div class="tiles" aria-label="Skills" i18n-aria-label="ARIA@@profession.create.skills.list.aria">
+                @for (s of skills.controls; track s; let i = $index) {
+                  @if (!isSkillRenderedAsAlternative(i)) {
+                    <div
+                      class="tile optional-block"
+                      [class.optional-block--has-alternatives]="(s.value?.alternativeSkill?.length ?? 0) > 0 || isAltSkillPickerVisible(i)"
+                      [class.tile--no-alternatives]="(s.value?.alternativeSkill?.length ?? 0) === 0 && !isAltSkillPickerVisible(i)"
+                    >
+                      <div class="tile__header">
+                        <div class="tile__title">
+                          {{ (s.value?.skill?.name || s.value?.name || s.value) }}
+                        </div>
+
+                        <div class="tile__actions">
+                          <button
+                            mat-icon-button
+                            type="button"
+                            aria-label="Show/Hide alternatives"
+                            i18n-aria-label="ARIA@@profession.create.alt.toggle"
+                            (click)="toggleAltSkillPicker(i)"
+                          >
+                            <mat-icon
+                              [fontIcon]="isAltSkillPickerVisible(i) ? 'expand_less' : 'expand_more'"></mat-icon>
+                          </button>
+
+                          <button mat-icon-button type="button" aria-label="Remove"
+                                  i18n-aria-label="ARIA@@profession.create.remove.skill" (click)="removeSkill(i)">
+                            <mat-icon fontIcon="close"></mat-icon>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Alternative skills for this skill -->
+                      @if (s.value?.alternativeSkill?.length) {
+                        <div class="tile__section" aria-label="Alternative skills"
+                             i18n-aria-label="ARIA@@profession.create.alternatives.skills">
+                          <div class="tile__section-title" i18n="Section title@@profession.create.alternatives.title">
+                            Alternatives
+                          </div>
+                          <div class="tile__subtiles">
+                            @for (a of s.value.alternativeSkill; track a?.id ?? a?.skill?.id ?? a; let ai = $index) {
+                              <div class="subtile">
+                                <div class="subtile__title">{{ a?.skill?.name }}</div>
+                                <button
+                                  mat-icon-button
+                                  type="button"
+                                  aria-label="Remove alternative"
+                                  i18n-aria-label="ARIA@@profession.create.remove.alternative"
+                                  (click)="removeAlternativeSkill(i, ai)"
+                                >
+                                  <mat-icon>close</mat-icon>
+                                </button>
+                              </div>
+                            }
+                          </div>
+                        </div>
+                      }
+
+                      @if (isAltSkillPickerVisible(i)) {
+                        <div class="tile__section">
+                          <mat-form-field appearance="outline" class="full field--spaced">
+                            <mat-label i18n="Label@@profession.create.addAlternativeSkill.label">Add alternative skill
+                              (from already added)
+                            </mat-label>
+                            <select
+                              matNativeControl
+                              (change)="addAlternativeSkillFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
+                            >
+                              <option value="" selected disabled i18n="Placeholder@@profession.create.choose">Choose...
+                              </option>
+                              @for (ss of skills.controls; track ss; let si = $index) {
+                                @if (si !== i) {
+                                  <option [value]="ss.value?.id">{{ ss.value?.skill?.name }}</option>
+                                }
+                              }
+                            </select>
+                          </mat-form-field>
+                        </div>
+                      }
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="character-card card">
+          <mat-card-content>
+            <h3 class="section-title">Required Talents</h3>
+
+            <div class="search-input">
+              <mat-form-field appearance="outline" class="full">
+                <mat-label i18n="Label@@profession.create.talents.label">Talents</mat-label>
+                <input
+                  matInput
+                  [formControl]="talentSearchControl"
+                  [matAutocomplete]="talentAuto"
+                  i18n-placeholder="Placeholder@@profession.create.talents.search.placeholder"
+                  placeholder="Search talents..."
+                />
+
+                <mat-autocomplete #talentAuto="matAutocomplete" (optionSelected)="selectTalent($event)">
+                  @for (o of talentsOptions$ | async; track o?.id ?? o?.name ?? o) {
+                    <mat-option [value]="o">
+                      {{ o.name }}
+                    </mat-option>
+                  }
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <!-- tiles -->
+              <div class="tiles" aria-label="Talents" i18n-aria-label="ARIA@@profession.create.talents.list.aria">
+                @for (t of talents.controls; track t; let i = $index) {
+                  @if (!isTalentRenderedAsAlternative(i)) {
+                    <div
+                      class="tile optional-block"
+                      [class.optional-block--has-alternatives]="(t.value?.alternativeTalent?.length ?? 0) > 0 || isAltTalentPickerVisible(i)"
+                      [class.tile--no-alternatives]="(t.value?.alternativeTalent?.length ?? 0) === 0 && !isAltTalentPickerVisible(i)"
+                    >
+                      <div class="tile__header">
+                        <div class="tile__title">
+                          {{ (t.value?.talent?.name || t.value?.name || t.value) }}
+                        </div>
+
+                        <div class="tile__actions">
+                          <button
+                            mat-icon-button
+                            type="button"
+                            aria-label="Show/Hide alternatives"
+                            i18n-aria-label="ARIA@@profession.create.alt.toggle"
+                            (click)="toggleAltTalentPicker(i)"
+                          >
+                            <mat-icon
+                              [fontIcon]="isAltTalentPickerVisible(i) ? 'expand_less' : 'expand_more'"></mat-icon>
+                          </button>
+
+                          <button mat-icon-button type="button" aria-label="Remove"
+                                  i18n-aria-label="ARIA@@profession.create.remove.talent" (click)="removeTalent(i)">
+                            <mat-icon fontIcon="close"></mat-icon>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Alternative talents for this talent -->
+                      @if (t.value?.alternativeTalent?.length) {
+                        <div class="tile__section" aria-label="Alternative talents"
+                             i18n-aria-label="ARIA@@profession.create.alternatives.talents">
+                          <div class="tile__section-title" i18n="Section title@@profession.create.alternatives.title">
+                            Alternatives
+                          </div>
+                          <div class="tile__subtiles">
+                            @for (a of t.value.alternativeTalent; track a?.id ?? a?.talent?.id ?? a; let ai = $index) {
+                              <div class="subtile">
+                                <div class="subtile__title">{{ a?.talent?.name }}</div>
+                                <button
+                                  mat-icon-button
+                                  type="button"
+                                  aria-label="Remove alternative"
+                                  i18n-aria-label="ARIA@@profession.create.remove.alternative"
+                                  (click)="removeAlternativeTalent(i, ai)"
+                                >
+                                  <mat-icon>close</mat-icon>
+                                </button>
+                              </div>
+                            }
+                          </div>
+                        </div>
+                      }
+
+                      @if (isAltTalentPickerVisible(i)) {
+                        <div class="tile__section">
+                          <mat-form-field appearance="outline" class="full field--spaced">
+                            <mat-label i18n="Label@@profession.create.addAlternativeTalent.label">Add alternative talent
+                              (from already added)
+                            </mat-label>
+                            <select
+                              matNativeControl
+                              (change)="addAlternativeTalentFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
+                            >
+                              <option value="" selected disabled i18n="Placeholder@@profession.create.choose">Choose...
+                              </option>
+                              @for (tt of talents.controls; track tt; let ti = $index) {
+                                @if (ti !== i) {
+                                  <option [value]="tt.value?.id">{{ tt.value?.talent?.name }}</option>
+                                }
+                              }
+                            </select>
+                          </mat-form-field>
+                        </div>
+                      }
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Characteristics / Development card -->
+      <mat-card class="character-card card">
+        <mat-card-content>
+          <h3 class="section-title"
+              i18n="Section heading|Development section heading@@profession.create.development.title">
+            Development (cost per level)</h3>
+
+          <div class="grid">
+            <div class="stat-control">
+              <label i18n="Abbrev&context|WS abbreviation and full name@@profession.create.label.ws">WS
+                <span class="muted">(Weapon Skill)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['weaponSkillsDevelopment']" aria-live="polite">
                 <button
+                  mat-icon-button
                   type="button"
-                  class="type-toggle__btn"
-                  [class.is-active]="!form.controls.isAdvanced.value"
-                  [attr.aria-pressed]="!form.controls.isAdvanced.value"
-                  aria-label="Basic"
-                  i18n-aria-label="ARIA@@profession.create.type.basic"
-                  (click)="form.controls.isAdvanced.setValue(false)"
+                  aria-label="Decrease Weapon Skill development"
+                  i18n-aria-label="Button aria|Decrease Weapon Skill development@@profession.create.ws.dec"
+                  (click)="decrement('weaponSkillsDevelopment')"
                 >
-                  <mat-icon class="type-toggle__icon" fontIcon="person_search"></mat-icon>
-                  <span class="type-toggle__label" i18n="Label@@profession.create.type.basic.label">Basic</span>
+                  <mat-icon fontIcon="remove"></mat-icon>
                 </button>
-
+                <div class="value">{{ form.controls.weaponSkillsDevelopment.value }}</div>
                 <button
+                  mat-icon-button
                   type="button"
-                  class="type-toggle__btn"
-                  [class.is-active]="form.controls.isAdvanced.value"
-                  [attr.aria-pressed]="form.controls.isAdvanced.value"
-                  aria-label="Advanced"
-                  i18n-aria-label="ARIA@@profession.create.type.advanced"
-                  (click)="form.controls.isAdvanced.setValue(true)"
+                  aria-label="Increase Weapon Skill development"
+                  i18n-aria-label="Button aria|Increase Weapon Skill development@@profession.create.ws.inc"
+                  (click)="increment('weaponSkillsDevelopment')"
                 >
-                  <mat-icon class="type-toggle__icon" fontIcon="military_tech"></mat-icon>
-                  <span class="type-toggle__label" i18n="Label@@profession.create.type.advanced.label">Advanced</span>
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label i18n="Abbrev&context|BS abbreviation and full name@@profession.create.label.bs">BS
+                <span class="muted">(Ballistic Skill)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['ballisticSkillsDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Ballistic Skill development"
+                  i18n-aria-label="Button aria|Decrease Ballistic Skill development@@profession.create.bs.dec"
+                  (click)="decrement('ballisticSkillsDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.ballisticSkillsDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Ballistic Skill development"
+                  i18n-aria-label="Button aria|Increase Ballistic Skill development@@profession.create.bs.inc"
+                  (click)="increment('ballisticSkillsDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label
+                i18n="Abbrev&context|Strength abbreviation and full name@@profession.create.label.str"
+              >S
+                <span class="muted">(Strength)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['strengthDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Strength development"
+                  i18n-aria-label="Button aria|Decrease Strength development@@profession.create.str.dec"
+                  (click)="decrement('strengthDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.strengthDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Strength development"
+                  i18n-aria-label="Button aria|Increase Strength development@@profession.create.str.inc"
+                  (click)="increment('strengthDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label
+                i18n="Abbrev&context|Toughness abbreviation and full name@@profession.create.label.tgh"
+              >T
+                <span class="muted">(Toughness)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['toughnessDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Toughness development"
+                  i18n-aria-label="
+                    Button aria|Decrease Toughness development@@profession.create.tgh.dec"
+                  (click)="decrement('toughnessDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.toughnessDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Toughness development"
+                  i18n-aria-label="
+                    Button aria|Increase Toughness development@@profession.create.tgh.inc"
+                  (click)="increment('toughnessDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label
+                i18n="Abbrev&context|Agility abbreviation and full name@@profession.create.label.ag"
+              >Ag
+                <span class="muted">(Agility)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['agilityDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Agility development"
+                  i18n-aria-label="Button aria|Decrease Agility development@@profession.create.ag.dec"
+                  (click)="decrement('agilityDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.agilityDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Agility development"
+                  i18n-aria-label="Button aria|Increase Agility development@@profession.create.ag.inc"
+                  (click)="increment('agilityDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label
+                i18n="
+                  Abbrev&context|Intelligence abbreviation and full name@@profession.create.label.int"
+              >Int
+                <span class="muted">(Intelligence)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['intelligenceDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Intelligence development"
+                  i18n-aria-label="
+                    Button aria|Decrease Intelligence development@@profession.create.int.dec"
+                  (click)="decrement('intelligenceDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.intelligenceDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Intelligence development"
+                  i18n-aria-label="
+                    Button aria|Increase Intelligence development@@profession.create.int.inc"
+                  (click)="increment('intelligenceDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label
+                i18n="Abbrev&context|Willpower abbreviation and full name@@profession.create.label.wp"
+              >WP
+                <span class="muted">(Willpower)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['willpowerDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Willpower development"
+                  i18n-aria-label="Button aria|Decrease Willpower development@@profession.create.wp.dec"
+                  (click)="decrement('willpowerDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.willpowerDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Willpower development"
+                  i18n-aria-label="Button aria|Increase Willpower development@@profession.create.wp.inc"
+                  (click)="increment('willpowerDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label
+                i18n="Abbrev&context|Fellowship abbreviation and full name@@profession.create.label.fel"
+              >Fel
+                <span class="muted">(Fellowship)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['fellowshipDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Fellowship development"
+                  i18n-aria-label="
+                    Button aria|Decrease Fellowship development@@profession.create.fel.dec"
+                  (click)="decrement('fellowshipDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.fellowshipDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Fellowship development"
+                  i18n-aria-label="
+                    Button aria|Increase Fellowship development@@profession.create.fel.inc"
+                  (click)="increment('fellowshipDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label i18n="Abbrev&context|Attacks abbreviation and full name@@profession.create.label.a">A
+                <span class="muted">(Attacks)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['attacksDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Attacks development"
+                  i18n-aria-label="Button aria|Decrease Attacks development@@profession.create.a.dec"
+                  (click)="decrement('attacksDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.attacksDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Attacks development"
+                  i18n-aria-label="Button aria|Increase Attacks development@@profession.create.a.inc"
+                  (click)="increment('attacksDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label i18n="Abbrev&context|Wounds abbreviation and full name@@profession.create.label.w">W
+                <span class="muted">(Wounds)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['woundsDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Wounds development"
+                  i18n-aria-label="Button aria|Decrease Wounds development@@profession.create.w.dec"
+                  (click)="decrement('woundsDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.woundsDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Wounds development"
+                  i18n-aria-label="Button aria|Increase Wounds development@@profession.create.w.inc"
+                  (click)="increment('woundsDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label
+                i18n="Abbrev&context|Movement abbreviation and full name@@profession.create.label.m"
+              >M
+                <span class="muted">(Movement)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['movementDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Movement development"
+                  i18n-aria-label="Button aria|Decrease Movement development@@profession.create.m.dec"
+                  (click)="decrement('movementDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.movementDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Movement development"
+                  i18n-aria-label="Button aria|Increase Movement development@@profession.create.m.inc"
+                  (click)="increment('movementDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-control">
+              <label i18n="Abbrev&context|Magic abbreviation and full name@@profession.create.label.mag">MAG
+                <span class="muted">(Magic)</span>
+              </label>
+              <div class="stat" [class.pulse]="animating['magicDevelopment']">
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Decrease Magic development"
+                  i18n-aria-label="Button aria|Decrease Magic development@@profession.create.mag.dec"
+                  (click)="decrement('magicDevelopment')"
+                >
+                  <mat-icon fontIcon="remove"></mat-icon>
+                </button>
+                <div class="value">{{ form.controls.magicDevelopment.value }}</div>
+                <button
+                  mat-icon-button
+                  type="button"
+                  aria-label="Increase Magic development"
+                  i18n-aria-label="Button aria|Increase Magic development@@profession.create.mag.inc"
+                  (click)="increment('magicDevelopment')"
+                >
+                  <mat-icon fontIcon="add"></mat-icon>
                 </button>
               </div>
             </div>
           </div>
+        </mat-card-content>
+      </mat-card>
 
-          <!-- Right column: description -->
-          <div class="new-profession-grid__right">
+      <mat-card class="character-card card">
+        <mat-card-content>
+          <h3 class="section-title" i18n="Section heading@@professionCreate.equipment.title">Equipment</h3>
+          <div class="row">
             <mat-form-field appearance="outline" class="full">
-              <mat-label i18n="Label|Description field label@@profession.create.description.label">Description
-              </mat-label>
+              <mat-label i18n="Label@@professionCreate.equipment.label">Equipment</mat-label>
               <textarea
                 matInput
-                rows="4"
-                formControlName="description"
-                aria-label="Profession description"
-                i18n-aria-label="Input aria-label|Profession description aria@@profession.create.description.aria"
+                rows="6"
+                formControlName="trappings"
+                aria-label="Equipment"
+                i18n-aria-label="Aria@@professionCreate.equipment.aria"
               ></textarea>
-              @if (form.controls.description.touched && form.controls.description.invalid) {
-                <mat-error i18n="Validation|Description required message@@profession.create.description.required">
-                  Description is required
-                </mat-error>
-              }
             </mat-form-field>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-
-    <!-- Skills & Talents cards (split into two side-by-side cards) -->
-    <div class="grid two-cards">
-      <mat-card class="character-card card">
-        <mat-card-content>
-          <h3 class="section-title">Required Skills</h3>
-
-          <div class="search-input">
-            <mat-form-field appearance="outline" class="full">
-              <mat-label i18n="Label@@profession.create.skills.label">Skills</mat-label>
-              <input
-                matInput
-                [formControl]="skillSearchControl"
-                [matAutocomplete]="skillAuto"
-                i18n-placeholder="Placeholder@@profession.create.skills.search.placeholder"
-                placeholder="Search skills..."
-              />
-
-              <mat-autocomplete #skillAuto="matAutocomplete" (optionSelected)="selectSkill($event)">
-                @for (o of skillsOptions$ | async; track o?.id ?? o?.name ?? o) {
-                  <mat-option [value]="o">
-                    {{ o.name }}
-                  </mat-option>
-                }
-              </mat-autocomplete>
-            </mat-form-field>
-
-            <!-- (tiles) -->
-            <div class="tiles" aria-label="Skills" i18n-aria-label="ARIA@@profession.create.skills.list.aria">
-              @for (s of skills.controls; track s; let i = $index) {
-                @if (!isSkillRenderedAsAlternative(i)) {
-                  <div
-                    class="tile optional-block"
-                    [class.optional-block--has-alternatives]="(s.value?.alternativeSkill?.length ?? 0) > 0 || isAltSkillPickerVisible(i)"
-                    [class.tile--no-alternatives]="(s.value?.alternativeSkill?.length ?? 0) === 0 && !isAltSkillPickerVisible(i)"
-                  >
-                    <div class="tile__header">
-                      <div class="tile__title">
-                        {{ (s.value?.skill?.name || s.value?.name || s.value) }}
-                      </div>
-
-                      <div class="tile__actions">
-                        <button
-                          mat-icon-button
-                          type="button"
-                          aria-label="Show/Hide alternatives"
-                          i18n-aria-label="ARIA@@profession.create.alt.toggle"
-                          (click)="toggleAltSkillPicker(i)"
-                        >
-                          <mat-icon [fontIcon]="isAltSkillPickerVisible(i) ? 'expand_less' : 'expand_more'"></mat-icon>
-                        </button>
-
-                        <button mat-icon-button type="button" aria-label="Remove"
-                                i18n-aria-label="ARIA@@profession.create.remove.skill" (click)="removeSkill(i)">
-                          <mat-icon fontIcon="close"></mat-icon>
-                        </button>
-                      </div>
-                    </div>
-
-                    <!-- Alternative skills for this skill -->
-                    @if (s.value?.alternativeSkill?.length) {
-                      <div class="tile__section" aria-label="Alternative skills"
-                           i18n-aria-label="ARIA@@profession.create.alternatives.skills">
-                        <div class="tile__section-title" i18n="Section title@@profession.create.alternatives.title">
-                          Alternatives
-                        </div>
-                        <div class="tile__subtiles">
-                          @for (a of s.value.alternativeSkill; track a?.id ?? a?.skill?.id ?? a; let ai = $index) {
-                            <div class="subtile">
-                              <div class="subtile__title">{{ a?.skill?.name }}</div>
-                              <button
-                                mat-icon-button
-                                type="button"
-                                aria-label="Remove alternative"
-                                i18n-aria-label="ARIA@@profession.create.remove.alternative"
-                                (click)="removeAlternativeSkill(i, ai)"
-                              >
-                                <mat-icon>close</mat-icon>
-                              </button>
-                            </div>
-                          }
-                        </div>
-                      </div>
-                    }
-
-                    @if (isAltSkillPickerVisible(i)) {
-                      <div class="tile__section">
-                        <mat-form-field appearance="outline" class="full" style="margin-top: 8px;">
-                          <mat-label i18n="Label@@profession.create.addAlternativeSkill.label">Add alternative skill
-                            (from already added)
-                          </mat-label>
-                          <select
-                            matNativeControl
-                            (change)="addAlternativeSkillFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
-                          >
-                            <option value="" selected disabled i18n="Placeholder@@profession.create.choose">Choose...
-                            </option>
-                            @for (ss of skills.controls; track ss; let si = $index) {
-                              @if (si !== i) {
-                                <option [value]="ss.value?.id">{{ ss.value?.skill?.name }}</option>
-                              }
-                            }
-                          </select>
-                        </mat-form-field>
-                      </div>
-                    }
-                  </div>
-                }
-              }
-            </div>
           </div>
         </mat-card-content>
       </mat-card>
 
       <mat-card class="character-card card">
         <mat-card-content>
-          <h3 class="section-title">Required Talents</h3>
+          <h3 class="section-title" i18n="Section heading@@professionCreate.exits.title">Career Exits</h3>
 
           <div class="search-input">
             <mat-form-field appearance="outline" class="full">
-              <mat-label i18n="Label@@profession.create.talents.label">Talents</mat-label>
+              <mat-label i18n="Label@@professionCreate.exits.search.label">Search careers...</mat-label>
               <input
                 matInput
-                [formControl]="talentSearchControl"
-                [matAutocomplete]="talentAuto"
-                i18n-placeholder="Placeholder@@profession.create.talents.search.placeholder"
-                placeholder="Search talents..."
+                [formControl]="exitSearchControl"
+                [matAutocomplete]="auto"
+                aria-label="Search careers"
+                i18n-aria-label="Aria@@professionCreate.exits.search.aria"
               />
 
-              <mat-autocomplete #talentAuto="matAutocomplete" (optionSelected)="selectTalent($event)">
-                @for (o of talentsOptions$ | async; track o?.id ?? o?.name ?? o) {
-                  <mat-option [value]="o">
-                    {{ o.name }}
-                  </mat-option>
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectExit($event)">
+                @for (o of exitsOptions$ | async; track o?.id ?? o?.name ?? o) {
+                  <mat-option [value]="o">{{ o.name }}</mat-option>
                 }
               </mat-autocomplete>
             </mat-form-field>
 
-            <!-- tiles -->
-            <div class="tiles" aria-label="Talents" i18n-aria-label="ARIA@@profession.create.talents.list.aria">
-              @for (t of talents.controls; track t; let i = $index) {
-                @if (!isTalentRenderedAsAlternative(i)) {
-                  <div
-                    class="tile optional-block"
-                    [class.optional-block--has-alternatives]="(t.value?.alternativeTalent?.length ?? 0) > 0 || isAltTalentPickerVisible(i)"
-                    [class.tile--no-alternatives]="(t.value?.alternativeTalent?.length ?? 0) === 0 && !isAltTalentPickerVisible(i)"
-                  >
-                    <div class="tile__header">
-                      <div class="tile__title">
-                        {{ (t.value?.talent?.name || t.value?.name || t.value) }}
-                      </div>
-
-                      <div class="tile__actions">
-                        <button
-                          mat-icon-button
-                          type="button"
-                          aria-label="Show/Hide alternatives"
-                          i18n-aria-label="ARIA@@profession.create.alt.toggle"
-                          (click)="toggleAltTalentPicker(i)"
-                        >
-                          <mat-icon [fontIcon]="isAltTalentPickerVisible(i) ? 'expand_less' : 'expand_more'"></mat-icon>
-                        </button>
-
-                        <button mat-icon-button type="button" aria-label="Remove"
-                                i18n-aria-label="ARIA@@profession.create.remove.talent" (click)="removeTalent(i)">
-                          <mat-icon fontIcon="close"></mat-icon>
-                        </button>
-                      </div>
-                    </div>
-
-                    <!-- Alternative talents for this talent -->
-                    @if (t.value?.alternativeTalent?.length) {
-                      <div class="tile__section" aria-label="Alternative talents"
-                           i18n-aria-label="ARIA@@profession.create.alternatives.talents">
-                        <div class="tile__section-title" i18n="Section title@@profession.create.alternatives.title">
-                          Alternatives
-                        </div>
-                        <div class="tile__subtiles">
-                          @for (a of t.value.alternativeTalent; track a?.id ?? a?.talent?.id ?? a; let ai = $index) {
-                            <div class="subtile">
-                              <div class="subtile__title">{{ a?.talent?.name }}</div>
-                              <button
-                                mat-icon-button
-                                type="button"
-                                aria-label="Remove alternative"
-                                i18n-aria-label="ARIA@@profession.create.remove.alternative"
-                                (click)="removeAlternativeTalent(i, ai)"
-                              >
-                                <mat-icon>close</mat-icon>
-                              </button>
-                            </div>
-                          }
-                        </div>
-                      </div>
-                    }
-
-                    @if (isAltTalentPickerVisible(i)) {
-                      <div class="tile__section">
-                        <mat-form-field appearance="outline" class="full" style="margin-top: 8px;">
-                          <mat-label i18n="Label@@profession.create.addAlternativeTalent.label">Add alternative talent
-                            (from already added)
-                          </mat-label>
-                          <select
-                            matNativeControl
-                            (change)="addAlternativeTalentFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
-                          >
-                            <option value="" selected disabled i18n="Placeholder@@profession.create.choose">Choose...
-                            </option>
-                            @for (tt of talents.controls; track tt; let ti = $index) {
-                              @if (ti !== i) {
-                                <option [value]="tt.value?.id">{{ tt.value?.talent?.name }}</option>
-                              }
-                            }
-                          </select>
-                        </mat-form-field>
-                      </div>
-                    }
-                  </div>
-                }
+            <mat-chip-grid aria-label="Career Exits" i18n-aria-label="Aria@@professionCreate.exits.list.aria">
+              @for (e of exits.controls; track e; let i = $index) {
+                <mat-chip [removable]="true" (removed)="removeExit(i)">
+                  {{ (e.value && (e.value.name || e.value)) }}
+                  <mat-icon matChipRemove fontIcon="close"></mat-icon>
+                </mat-chip>
               }
-            </div>
+            </mat-chip-grid>
           </div>
         </mat-card-content>
       </mat-card>
-    </div>
+    </mat-card-content>
 
-    <!-- Characteristics / Development card -->
-    <mat-card class="character-card card">
-      <mat-card-content>
-        <h3 class="section-title"
-            i18n="Section heading|Development section heading@@profession.create.development.title">
-          Development (cost per level)</h3>
-
-        <div class="grid">
-          <div class="stat-control">
-            <label i18n="Abbrev&context|WS abbreviation and full name@@profession.create.label.ws">WS
-              <span class="muted">(Weapon Skill)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['weaponSkillsDevelopment']" aria-live="polite">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Weapon Skill development"
-                i18n-aria-label="Button aria|Decrease Weapon Skill development@@profession.create.ws.dec"
-                (click)="decrement('weaponSkillsDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.weaponSkillsDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Weapon Skill development"
-                i18n-aria-label="Button aria|Increase Weapon Skill development@@profession.create.ws.inc"
-                (click)="increment('weaponSkillsDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label i18n="Abbrev&context|BS abbreviation and full name@@profession.create.label.bs">BS
-              <span class="muted">(Ballistic Skill)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['ballisticSkillsDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Ballistic Skill development"
-                i18n-aria-label="Button aria|Decrease Ballistic Skill development@@profession.create.bs.dec"
-                (click)="decrement('ballisticSkillsDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.ballisticSkillsDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Ballistic Skill development"
-                i18n-aria-label="Button aria|Increase Ballistic Skill development@@profession.create.bs.inc"
-                (click)="increment('ballisticSkillsDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label
-              i18n="Abbrev&context|Strength abbreviation and full name@@profession.create.label.str"
-            >S
-              <span class="muted">(Strength)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['strengthDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Strength development"
-                i18n-aria-label="Button aria|Decrease Strength development@@profession.create.str.dec"
-                (click)="decrement('strengthDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.strengthDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Strength development"
-                i18n-aria-label="Button aria|Increase Strength development@@profession.create.str.inc"
-                (click)="increment('strengthDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label
-              i18n="Abbrev&context|Toughness abbreviation and full name@@profession.create.label.tgh"
-            >T
-              <span class="muted">(Toughness)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['toughnessDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Toughness development"
-                i18n-aria-label="
-                  Button aria|Decrease Toughness development@@profession.create.tgh.dec"
-                (click)="decrement('toughnessDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.toughnessDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Toughness development"
-                i18n-aria-label="
-                  Button aria|Increase Toughness development@@profession.create.tgh.inc"
-                (click)="increment('toughnessDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label
-              i18n="Abbrev&context|Agility abbreviation and full name@@profession.create.label.ag"
-            >Ag
-              <span class="muted">(Agility)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['agilityDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Agility development"
-                i18n-aria-label="Button aria|Decrease Agility development@@profession.create.ag.dec"
-                (click)="decrement('agilityDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.agilityDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Agility development"
-                i18n-aria-label="Button aria|Increase Agility development@@profession.create.ag.inc"
-                (click)="increment('agilityDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label
-              i18n="
-                Abbrev&context|Intelligence abbreviation and full name@@profession.create.label.int"
-            >Int
-              <span class="muted">(Intelligence)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['intelligenceDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Intelligence development"
-                i18n-aria-label="
-                  Button aria|Decrease Intelligence development@@profession.create.int.dec"
-                (click)="decrement('intelligenceDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.intelligenceDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Intelligence development"
-                i18n-aria-label="
-                  Button aria|Increase Intelligence development@@profession.create.int.inc"
-                (click)="increment('intelligenceDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label
-              i18n="Abbrev&context|Willpower abbreviation and full name@@profession.create.label.wp"
-            >WP
-              <span class="muted">(Willpower)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['willpowerDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Willpower development"
-                i18n-aria-label="Button aria|Decrease Willpower development@@profession.create.wp.dec"
-                (click)="decrement('willpowerDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.willpowerDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Willpower development"
-                i18n-aria-label="Button aria|Increase Willpower development@@profession.create.wp.inc"
-                (click)="increment('willpowerDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label
-              i18n="Abbrev&context|Fellowship abbreviation and full name@@profession.create.label.fel"
-            >Fel
-              <span class="muted">(Fellowship)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['fellowshipDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Fellowship development"
-                i18n-aria-label="
-                  Button aria|Decrease Fellowship development@@profession.create.fel.dec"
-                (click)="decrement('fellowshipDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.fellowshipDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Fellowship development"
-                i18n-aria-label="
-                  Button aria|Increase Fellowship development@@profession.create.fel.inc"
-                (click)="increment('fellowshipDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label i18n="Abbrev&context|Attacks abbreviation and full name@@profession.create.label.a">A
-              <span class="muted">(Attacks)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['attacksDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Attacks development"
-                i18n-aria-label="Button aria|Decrease Attacks development@@profession.create.a.dec"
-                (click)="decrement('attacksDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.attacksDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Attacks development"
-                i18n-aria-label="Button aria|Increase Attacks development@@profession.create.a.inc"
-                (click)="increment('attacksDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label i18n="Abbrev&context|Wounds abbreviation and full name@@profession.create.label.w">W
-              <span class="muted">(Wounds)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['woundsDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Wounds development"
-                i18n-aria-label="Button aria|Decrease Wounds development@@profession.create.w.dec"
-                (click)="decrement('woundsDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.woundsDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Wounds development"
-                i18n-aria-label="Button aria|Increase Wounds development@@profession.create.w.inc"
-                (click)="increment('woundsDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label
-              i18n="Abbrev&context|Movement abbreviation and full name@@profession.create.label.m"
-            >M
-              <span class="muted">(Movement)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['movementDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Movement development"
-                i18n-aria-label="Button aria|Decrease Movement development@@profession.create.m.dec"
-                (click)="decrement('movementDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.movementDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Movement development"
-                i18n-aria-label="Button aria|Increase Movement development@@profession.create.m.inc"
-                (click)="increment('movementDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="stat-control">
-            <label i18n="Abbrev&context|Magic abbreviation and full name@@profession.create.label.mag">MAG
-              <span class="muted">(Magic)</span>
-            </label>
-            <div class="stat" [class.pulse]="animating['magicDevelopment']">
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Decrease Magic development"
-                i18n-aria-label="Button aria|Decrease Magic development@@profession.create.mag.dec"
-                (click)="decrement('magicDevelopment')"
-              >
-                <mat-icon fontIcon="remove"></mat-icon>
-              </button>
-              <div class="value">{{ form.controls.magicDevelopment.value }}</div>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Increase Magic development"
-                i18n-aria-label="Button aria|Increase Magic development@@profession.create.mag.inc"
-                (click)="increment('magicDevelopment')"
-              >
-                <mat-icon fontIcon="add"></mat-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-
-    <!-- Trappings -->
-    <mat-card class="character-card card">
-      <mat-card-content>
-        <h3 class="section-title">Equipment</h3>
-        <div class="row">
-          <mat-form-field appearance="outline" class="full">
-            <mat-label>Equipment</mat-label>
-            <textarea matInput rows="6" formControlName="trappings"
-            ></textarea>
-          </mat-form-field>
-        </div>
-      </mat-card-content>
-    </mat-card>
-
-    <!-- Career Exits -->
-    <mat-card class="character-card card">
-      <mat-card-content>
-        <h3 class="section-title">Career Exits</h3>
-
-        <div class="search-input">
-          <mat-form-field appearance="outline" class="full">
-            <mat-label>Search careers...</mat-label>
-            <input
-              matInput
-              [formControl]="exitSearchControl"
-              [matAutocomplete]="auto"
-              aria-label="Search careers"
-            />
-
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectExit($event)">
-              @for (o of exitsOptions$ | async; track o?.id ?? o?.name ?? o) {
-                <mat-option [value]="o">
-                  {{ o.name }}
-                </mat-option>
-              }
-            </mat-autocomplete>
-          </mat-form-field>
-
-          <mat-chip-grid aria-label="Career Exits">
-            @for (e of exits.controls; track e; let i = $index) {
-              <mat-chip [removable]="true" (removed)="removeExit(i)">
-                {{ (e.value && (e.value.name || e.value)) }}
-                <mat-icon matChipRemove fontIcon="close"></mat-icon>
-              </mat-chip>
-            }
-          </mat-chip-grid>
-        </div>
-      </mat-card-content>
-    </mat-card>
-
-    <!-- Actions remain inside the form so submit covers all cards -->
     <div class="actions">
       <app-wax-seal-button
         variant="cancel"
         icon="close"
         label="Discard"
+        i18n-label="Action label@@professionCreate.actions.discard"
         [routerLink]="['/professions']"
         ariaLabel="Discard"
+        i18n-ariaLabel="Aria@@professionCreate.actions.discard.aria"
       ></app-wax-seal-button>
 
       <app-wax-seal-button
         variant="save"
         icon="check"
         label="Affix Seal"
+        i18n-label="Action label@@professionCreate.actions.save"
         type="submit"
         [loading]="isSaving"
         [disabled]="isSaving"
         ariaLabel="Affix seal"
+        i18n-ariaLabel="Aria@@professionCreate.actions.save.aria"
       ></app-wax-seal-button>
     </div>
   </form>
