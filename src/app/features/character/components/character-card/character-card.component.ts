@@ -359,146 +359,29 @@ export class CharacterCardComponent {
   }
 
   // Primary / Secondary stats moved to a separate component
-  primaryStats: { label: string; base: number; adv: number }[] = [
-    {label: 'WS', base: 31, adv: 3},
-    {label: 'BS', base: 26, adv: 5},
-    {label: 'S', base: 35, adv: 0},
-    {label: 'T', base: 33, adv: 5},
-    {label: 'A', base: 27, adv: 5},
-    {label: 'Int', base: 29, adv: 0},
-    {label: 'WP', base: 31, adv: 5},
-    {label: 'Fel', base: 30, adv: 0},
-  ];
+  primaryStats: { label: string; base: number; adv: number; total?: number }[] = [];
 
-  secondaryStats: { label: string; base: number; adv: number }[] = [
-    {label: 'A', base: 1, adv: 1},
-    {label: 'W', base: 12, adv: 3},
-    {label: 'SB', base: 3, adv: 0},
-    {label: 'TB', base: 3, adv: 0},
-    {label: 'M', base: 4, adv: 0},
-    {label: 'MAG', base: 0, adv: 0},
-    {label: 'IP', base: 2, adv: 0},
-    {label: 'FP', base: 3, adv: 0},
-  ];
+  secondaryStats: { label: string; base: number; adv: number; total?: number }[] = [];
 
   // Wounds state (kept as simple fields so parent can persist/observe value)
-  woundsMax = 15;
+  woundsMax = 0;
   woundsCurrent = this.woundsMax;
 
-  /** Mock danych dla taba Skills – do podpięcia pod backend w kolejnym kroku. */
-  skills: CharacterSkill[] = [
-    {
-      id: 'animal-care',
-      skill: {id: 'animal-care', name: 'Animal Care', characteristic: 'INT'},
-      basePercent: 29,
-      taken: true,
-      advPlus10: false,
-      advPlus20: false,
-    },
-    {
-      id: 'gossip',
-      skill: {id: 'gossip', name: 'Gossip', characteristic: 'FEL'},
-      basePercent: 40,
-      taken: true,
-      advPlus10: true,
-      advPlus20: false,
-    },
-    {
-      id: 'search',
-      skill: {id: 'search', name: 'Search', characteristic: 'INT'},
-      basePercent: 29,
-      taken: true,
-      advPlus10: true,
-      advPlus20: true,
-    },
-    {
-      id: 'common-knowledge-empire',
-      skill: {
-        id: 'common-knowledge-empire',
-        name: 'Common Knowledge (Empire)',
-        characteristic: 'INT',
-      },
-      basePercent: 39,
-      taken: true,
-      advPlus10: true,
-      advPlus20: false,
-    },
-    {
-      id: 'outdoor-survival',
-      skill: {id: 'outdoor-survival', name: 'Outdoor Survival', characteristic: 'INT'},
-      basePercent: 29,
-      taken: true,
-      advPlus10: false,
-      advPlus20: false,
-    },
-    {
-      id: 'speak-language-reikspiel',
-      skill: {
-        id: 'speak-language-reikspiel',
-        name: 'Speak Language (Reikspiel)',
-        characteristic: 'INT',
-      },
-      basePercent: 39,
-      taken: true,
-      advPlus10: false,
-      advPlus20: false,
-    },
-    {
-      id: 'drive',
-      skill: {id: 'drive', name: 'Drive', characteristic: 'S'},
-      basePercent: 35,
-      taken: true,
-      advPlus10: false,
-      advPlus20: false,
-    },
-    {
-      id: 'perception',
-      skill: {id: 'perception', name: 'Perception', characteristic: 'INT'},
-      basePercent: 39,
-      taken: true,
-      advPlus10: true,
-      advPlus20: false,
-    },
-    {
-      id: 'swim',
-      skill: {id: 'swim', name: 'Swim', characteristic: 'S'},
-      basePercent: 35,
-      taken: true,
-      advPlus10: false,
-      advPlus20: false,
-    },
-  ];
+  /** Mock danych dla taba Skills – usunięte: komponent korzysta z API / vm$ */
+  skills: CharacterSkill[] = [];
 
-  /** Mock danych dla taba Talents – do podpięcia pod backend w kolejnym kroku. */
-  talents: Talent[] = [
-    {
-      id: 'coolheaded',
-      name: 'Coolheaded',
-      description: 'You can retry one failed Cool Test per session.',
-    },
-    {
-      id: 'night-vision',
-      name: 'Night Vision',
-      description: 'You can see in the dark as if it were dim light.',
-    },
-    {
-      id: 'hardy',
-      name: 'Hardy',
-      description: 'Increase your Wounds by +1.',
-    },
-    {
-      id: 'rapid-reload',
-      name: 'Rapid Reload',
-      description: 'You reload ranged weapons faster than normal.',
-    },
-  ];
+  /** Mock danych dla taba Talents – usunięte: komponent korzysta z API / vm$ */
+  talents: Talent[] = [];
 
-  /** Fate/Fortune – mock pod kartę Fate Points (zgodnie z mockupem). */
-  fateMax = 4;
-  fateCurrent = 3;
-  fortuneCurrent = 2;
+  /** Fate/Fortune – zainicjalizowane zerami, mocki usunięte */
+  fateMax = 0;
+  fateCurrent = 0;
+  fortuneCurrent = 0;
 
   onPortraitError(event: Event): void {
+    // keep `Math` referenced in TS so compiler won't mark it as unused (it's used from template)
+    void this.Math;
+
     const img = event.target as HTMLImageElement | null;
     if (!img) return;
 
