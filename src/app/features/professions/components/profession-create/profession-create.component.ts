@@ -171,20 +171,12 @@ export class ProfessionCreateComponent {
     this.altSkillPickerVisible.set(i, !this.isAltSkillPickerVisible(i));
   }
 
-  hideAltSkillPicker(i: number) {
-    this.altSkillPickerVisible.set(i, false);
-  }
-
   isAltTalentPickerVisible(i: number): boolean {
     return this.altTalentPickerVisible.get(i) ?? false;
   }
 
   toggleAltTalentPicker(i: number) {
     this.altTalentPickerVisible.set(i, !this.isAltTalentPickerVisible(i));
-  }
-
-  hideAltTalentPicker(i: number) {
-    this.altTalentPickerVisible.set(i, false);
   }
 
   // Index of recently added skill/talent used to highlight & scroll into view
@@ -917,5 +909,4 @@ export class ProfessionCreateComponent {
     return typeof d === 'string' ? d : '';
   }
 }
-
 

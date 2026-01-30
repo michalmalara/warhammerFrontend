@@ -126,37 +126,28 @@
                     <div
                       class="tile optional-block"
                       [class.tile--highlight]="i === addedSkillIndex"
-                      attr.data-added-skill="{{i}}"
+                      [attr.data-added-skill]="i"
                       [class.optional-block--has-alternatives]="(s.value?.alternativeSkill?.length ?? 0) > 0 || isAltSkillPickerVisible(i)"
                       [class.tile--no-alternatives]="(s.value?.alternativeSkill?.length ?? 0) === 0 && !isAltSkillPickerVisible(i)"
                     >
-                      <div class="tile__header">
-                        <div class="tile__title">
-                          {{ (s.value?.skill?.name || s.value?.name || s.value) }}
+                      @if (s.value.alternativeSkill.length === 0) {
+                        <div class="tile__header">
+                          <div class="tile__title">
+                            {{ (s.value?.skill?.name || s.value?.name || s.value) }}
+                          </div>
+
+                          @if (getSkillUiDescription(s.value)) {
+                            <div class="tile__description">{{ getSkillUiDescription(s.value) }}</div>
+                          }
+
+                          <div class="tile__actions">
+                            <button mat-icon-button type="button" aria-label="Remove"
+                                    i18n-aria-label="ARIA@@profession.create.remove.skill" (click)="removeSkill(i)">
+                              <mat-icon fontIcon="close"></mat-icon>
+                            </button>
+                          </div>
                         </div>
-
-                        @if (getSkillUiDescription(s.value)) {
-                          <div class="tile__description">{{ getSkillUiDescription(s.value) }}</div>
-                        }
-
-                        <div class="tile__actions">
-                          <button
-                            mat-icon-button
-                            type="button"
-                            aria-label="Show/Hide alternatives"
-                            i18n-aria-label="ARIA@@profession.create.alt.toggle"
-                            (click)="toggleAltSkillPicker(i)"
-                          >
-                            <mat-icon
-                              [fontIcon]="isAltSkillPickerVisible(i) ? 'expand_less' : 'expand_more'"></mat-icon>
-                          </button>
-
-                          <button mat-icon-button type="button" aria-label="Remove"
-                                  i18n-aria-label="ARIA@@profession.create.remove.skill" (click)="removeSkill(i)">
-                            <mat-icon fontIcon="close"></mat-icon>
-                          </button>
-                        </div>
-                      </div>
+                      }
 
                       <!-- Alternative skills for this skill -->
                       @if (s.value?.alternativeSkill?.length) {
@@ -166,9 +157,24 @@
                             Alternatives
                           </div>
                           <div class="tile__subtiles">
+                            <div class="subtile subtile--primary">
+                              <div class="subtile__title">{{ (s.value?.skill?.name || s.value?.name || s.value) }}</div>
+                              @if (getSkillUiDescription(s.value)) {
+                                <div class="tile__description">{{ getSkillUiDescription(s.value) }}</div>
+                              }
+                              <button mat-icon-button type="button" aria-label="Remove"
+                                      i18n-aria-label="ARIA@@profession.create.remove.skill" (click)="removeSkill(i)">
+                                <mat-icon fontIcon="close"></mat-icon>
+                              </button>
+
+                            </div>
+
                             @for (a of s.value.alternativeSkill; track a?.id ?? a?.skill?.id ?? a; let ai = $index) {
                               <div class="subtile">
                                 <div class="subtile__title">{{ a?.skill?.name }}</div>
+                                @if (a?.description) {
+                                  <div class="tile__description">{{ a?.description }}</div>
+                                }
                                 <button
                                   mat-icon-button
                                   type="button"
@@ -232,7 +238,7 @@
                     <div
                       class="tile optional-block"
                       [class.tile--highlight]="i === addedTalentIndex"
-                      attr.data-added-talent="{{i}}"
+                      [attr.data-added-talent]="i"
                       [class.optional-block--has-alternatives]="(t.value?.alternativeTalent?.length ?? 0) > 0 || isAltTalentPickerVisible(i)"
                       [class.tile--no-alternatives]="(t.value?.alternativeTalent?.length ?? 0) === 0 && !isAltTalentPickerVisible(i)"
                     >
