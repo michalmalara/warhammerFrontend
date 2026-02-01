@@ -3,10 +3,17 @@
   @if (talents.length) {
     <div class="talents-grid">
       @for (t of talents; track t.id) {
-        <mat-card class="talent-card">
-          <mat-card-title class="name">{{ t.name }}</mat-card-title>
-          <mat-card-content class="description muted">{{ t.description }}</mat-card-content>
-        </mat-card>
+        <article class="talent-tile">
+          <header class="tile-header">
+            <div class="name">{{ t.name }}</div>
+          </header>
+
+          <div class="meta muted" i18n="Meta label@@talents.meta">TALENT</div>
+
+          @if (t.description) {
+            <div class="description muted">{{ t.description }}</div>
+          }
+        </article>
       }
     </div>
   } @else {
