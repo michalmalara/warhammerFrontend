@@ -22,22 +22,26 @@ export interface ProfessionSummary {
 export interface ProfessionSkillAlternative {
   id: number;
   skill: Skill;
+  description?: string | null;
 }
 
 export interface ProfessionSkill {
   id: number;
   skill: Skill;
+  description?: string | null;
   alternativeSkill: ProfessionSkillAlternative[];
 }
 
 export interface ProfessionTalentAlternative {
   id: number;
   talent: Talent;
+  description?: string | null;
 }
 
 export interface ProfessionTalent {
   id: number;
   talent: Talent;
+  description?: string | null;
   alternativeTalent: ProfessionTalentAlternative[];
 }
 

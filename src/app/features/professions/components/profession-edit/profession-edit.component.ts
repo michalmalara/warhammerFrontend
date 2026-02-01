@@ -587,9 +587,10 @@ export class ProfessionEditComponent {
       return;
     }
 
+    const selectedDesc = '';
     const already = this.talents.controls.some((c) => {
       const v = c.value as any;
-      return v?.talent?.id === opt.id;
+      return v?.talent?.id === opt.id && this.getTalentDescription(v) === selectedDesc;
     });
     if (already) {
       this.talentSearchControl.setValue('');
@@ -597,7 +598,7 @@ export class ProfessionEditComponent {
     }
 
     this.linksApi.createProfessionTalent({talent: opt.id}).subscribe({
-      next: (created) => {
+      next: (created: ProfessionTalent) => {
         this.talents.push(new FormControl<ProfessionTalent>(created));
         this.markAndScrollTalent(this.talents.length - 1);
       },
@@ -867,12 +868,18 @@ export class ProfessionEditComponent {
       backdropClass: 'wax-dialog-backdrop',
       data: {existingSkills},
     });
-    ref.afterClosed().subscribe((selected: { id: number; name: string; description?: string } | undefined) => {
+    ref.afterClosed().subscribe((selected: {
+      id: number;
+      name: string;
+      description?: string;
+      alternativeSkill?: number[]
+    } | undefined) => {
       if (!selected?.id) return;
 
+      const selectedDesc = typeof selected.description === 'string' ? selected.description : '';
       const already = this.skills.controls.some((c) => {
         const v = c.value as any;
-        return v?.skill?.id === selected.id;
+        return v?.skill?.id === selected.id && this.getSkillDescription(v) === selectedDesc;
       });
       if (already) {
         this.snackBar.open(
@@ -883,13 +890,17 @@ export class ProfessionEditComponent {
         return;
       }
 
-      this.linksApi.createProfessionSkill({skill: selected.id}).subscribe({
+      const payload: any = {skill: selected.id};
+      if (typeof selected.description === 'string' && selected.description.trim().length) {
+        payload.description = selected.description.trim();
+      }
+      if (Array.isArray(selected.alternativeSkill) && selected.alternativeSkill.length) {
+        payload.alternativeSkill = selected.alternativeSkill;
+      }
+
+      this.linksApi.createProfessionSkill(payload).subscribe({
         next: (created: ProfessionSkill) => {
-          const withUiDescription = {
-            ...(created as any),
-            uiDescription: selected.description,
-          } as ProfessionSkill as any;
-          this.skills.push(new FormControl<ProfessionSkill>(withUiDescription));
+          this.skills.push(new FormControl<ProfessionSkill>(created));
           this.refreshSkillsOptions();
         },
         error: () => {
@@ -932,13 +943,17 @@ export class ProfessionEditComponent {
         return;
       }
 
-      this.linksApi.createProfessionTalent({talent: selected.id}).subscribe({
+      const payload: any = {talent: selected.id};
+      if (typeof selected.description === 'string' && selected.description.trim().length) {
+        payload.description = selected.description.trim();
+      }
+      if (Array.isArray((selected as any).alternativeTalent) && (selected as any).alternativeTalent.length) {
+        payload.alternativeTalent = (selected as any).alternativeTalent;
+      }
+
+      this.linksApi.createProfessionTalent(payload).subscribe({
         next: (created: ProfessionTalent) => {
-          const withUiDescription = {
-            ...(created as any),
-            uiDescription: selected.description,
-          } as ProfessionTalent as any;
-          this.talents.push(new FormControl<ProfessionTalent>(withUiDescription));
+          this.talents.push(new FormControl<ProfessionTalent>(created));
         },
         error: () => {
           this.snackBar.open(
@@ -957,13 +972,13 @@ export class ProfessionEditComponent {
     this.skillSearchControl.setValue(q);
   }
 
-  getSkillUiDescription(value: unknown): string {
-    const d = (value as any)?.uiDescription;
+  getSkillDescription(value: unknown): string {
+    const d = (value as any)?.description;
     return typeof d === 'string' ? d : '';
   }
 
-  getTalentUiDescription(value: unknown): string {
-    const d = (value as any)?.uiDescription;
+  getTalentDescription(value: unknown): string {
+    const d = (value as any)?.description;
     return typeof d === 'string' ? d : '';
   }
 }

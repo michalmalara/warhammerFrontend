@@ -419,27 +419,27 @@ export class ProfessionCreateComponent {
     } | undefined) => {
       if (!selected || !selected.id) return;
 
-      // avoid duplicates by skill.id
+      // allow duplicates of the same skill as long as the UI description differs
+      const selectedDesc = typeof selected.description === 'string' ? selected.description : '';
       const already = this.skills.controls.some((c) => {
         const v = c.value as any;
-        return v?.skill?.id === selected.id;
+        return v?.skill?.id === selected.id && this.getSkillDescription(v) === selectedDesc;
       });
       if (already) {
-        this.snackBar.open($localize`:Snackbar@@profession.create.add.skill.duplicate:Skill already added.`, 'OK', {duration: 2000});
+        this.snackBar.open($localize`:Snackbar@@profession.create.add.skill.duplicate:Skill already added`, 'OK', {duration: 2000});
         return;
       }
 
       // Pass alternativeSkill IDs to backend when creating the profession-skill link
       const payload: any = {skill: selected.id};
+      if (typeof selected.description === 'string' && selected.description.trim().length) {
+        payload.description = selected.description.trim();
+      }
       if (Array.isArray(selected.alternativeSkill) && selected.alternativeSkill.length) payload.alternativeSkill = selected.alternativeSkill;
 
       this.linksApi.createProfessionSkill(payload).subscribe({
         next: (created) => {
-          const withUiDescription = {
-            ...(created as any),
-            uiDescription: selected.description,
-          } as any;
-          this.skills.push(new FormControl<any>(withUiDescription));
+          this.skills.push(new FormControl<any>(created));
           this.refreshSkillsOptions();
           this.refreshSkillsListView();
           this.markAndScrollSkill(this.skills.length - 1);
@@ -483,9 +483,11 @@ export class ProfessionCreateComponent {
     ref.afterClosed().subscribe((selected: ProfessionTalentDialogResult | undefined) => {
       if (!selected?.id) return;
 
+      // allow duplicates of the same talent if UI description differs
+      const selectedDesc = typeof selected.description === 'string' ? selected.description : '';
       const already = this.talents.controls.some((c) => {
         const v = c.value as any;
-        return v?.talent?.id === selected.id;
+        return v?.talent?.id === selected.id && this.getTalentDescription(v) === selectedDesc;
       });
       if (already) {
         this.snackBar.open($localize`:Snackbar@@profession.create.add.talent.duplicate:Talent already added.`, 'OK', {duration: 2000});
@@ -493,17 +495,16 @@ export class ProfessionCreateComponent {
       }
 
       const payload: any = {talent: selected.id};
+      if (typeof selected.description === 'string' && selected.description.trim().length) {
+        payload.description = selected.description.trim();
+      }
       if (Array.isArray((selected as any).alternativeTalent) && (selected as any).alternativeTalent.length) {
         payload.alternativeTalent = (selected as any).alternativeTalent;
       }
 
       this.linksApi.createProfessionTalent(payload).subscribe({
         next: (created) => {
-          const withUiDescription = {
-            ...(created as any),
-            uiDescription: selected.description,
-          } as any;
-          this.talents.push(new FormControl<any>(withUiDescription));
+          this.talents.push(new FormControl<any>(created));
           this.refreshTalentsOptions();
           this.refreshTalentsListView();
           this.markAndScrollTalent(this.talents.length - 1);
@@ -629,9 +630,13 @@ export class ProfessionCreateComponent {
     }
 
     // unikamy duplikatów po skill.id
+    // allow duplicates if UI description differs; autocomplete doesn't provide description so
+    // treat selected description as empty string and only block when an existing entry has the same
+    // base skill id and the same description (i.e. exact duplicate).
+    const selectedDescSkill = '';
     const already = this.skills.controls.some((c) => {
       const v = c.value as any;
-      return v?.skill?.id === opt.id;
+      return v?.skill?.id === opt.id && this.getSkillDescription(v) === selectedDescSkill;
     });
     if (already) {
       this.skillSearchControl.setValue('');
@@ -661,9 +666,13 @@ export class ProfessionCreateComponent {
     }
 
     // unikamy duplikatów po talent.id
+    // allow duplicates if UI description differs; autocomplete doesn't provide description so
+    // treat selected description as empty string and only block when an existing entry has the same
+    // base talent id and the same description (i.e. exact duplicate).
+    const selectedDescTalent = '';
     const already = this.talents.controls.some((c) => {
       const v = c.value as any;
-      return v?.talent?.id === opt.id;
+      return v?.talent?.id === opt.id && this.getTalentDescription(v) === selectedDescTalent;
     });
     if (already) {
       this.talentSearchControl.setValue('');
@@ -899,13 +908,13 @@ export class ProfessionCreateComponent {
     this.talentSearchControl.setValue(q);
   }
 
-  getSkillUiDescription(value: unknown): string {
-    const d = (value as any)?.uiDescription;
+  getSkillDescription(value: unknown): string {
+    const d = (value as any)?.description;
     return typeof d === 'string' ? d : '';
   }
 
-  getTalentUiDescription(value: unknown): string {
-    const d = (value as any)?.uiDescription;
+  getTalentDescription(value: unknown): string {
+    const d = (value as any)?.description;
     return typeof d === 'string' ? d : '';
   }
 }

@@ -121,7 +121,7 @@
 
               <!-- (tiles) -->
               <div class="tiles" aria-label="Skills" i18n-aria-label="ARIA@@profession.create.skills.list.aria">
-                @for (s of skills.controls; track (s.value?.id ?? $index); let i = $index) {
+                @for (s of skills.controls; track (s.value?.id !== null ? (s.value?.id + '::' + (s.value?.description ?? $index)) : $index); let i = $index) {
                   @if (!isSkillRenderedAsAlternative(i)) {
                     <div
                       class="tile optional-block"
@@ -136,8 +136,8 @@
                             {{ (s.value?.skill?.name || s.value?.name || s.value) }}
                           </div>
 
-                          @if (getSkillUiDescription(s.value)) {
-                            <div class="tile__description">{{ getSkillUiDescription(s.value) }}</div>
+                          @if (getSkillDescription(s.value)) {
+                            <div class="tile__description">{{ getSkillDescription(s.value) }}</div>
                           }
 
                           <div class="tile__actions">
@@ -159,8 +159,8 @@
                           <div class="tile__subtiles">
                             <div class="subtile subtile--primary">
                               <div class="subtile__title">{{ (s.value?.skill?.name || s.value?.name || s.value) }}</div>
-                              @if (getSkillUiDescription(s.value)) {
-                                <div class="tile__description">{{ getSkillUiDescription(s.value) }}</div>
+                              @if (getSkillDescription(s.value)) {
+                                <div class="tile__description">{{ getSkillDescription(s.value) }}</div>
                               }
                               <button mat-icon-button type="button" aria-label="Remove"
                                       i18n-aria-label="ARIA@@profession.create.remove.skill" (click)="removeSkill(i)">
@@ -233,7 +233,7 @@
 
               <!-- tiles -->
               <div class="tiles" aria-label="Talents" i18n-aria-label="ARIA@@profession.create.talents.list.aria">
-                @for (t of talents.controls; track (t.value?.id ?? $index); let i = $index) {
+                @for (t of talents.controls; track (t.value?.id !== null ? (t.value?.id + '::' + (t.value?.description ?? $index)) : $index); let i = $index) {
                   @if (!isTalentRenderedAsAlternative(i)) {
                     <div
                       class="tile optional-block"
@@ -242,33 +242,24 @@
                       [class.optional-block--has-alternatives]="(t.value?.alternativeTalent?.length ?? 0) > 0 || isAltTalentPickerVisible(i)"
                       [class.tile--no-alternatives]="(t.value?.alternativeTalent?.length ?? 0) === 0 && !isAltTalentPickerVisible(i)"
                     >
-                      <div class="tile__header">
-                        <div class="tile__title">
-                          {{ (t.value?.talent?.name || t.value?.name || t.value) }}
+                      @if (t.value.alternativeTalent.length === 0) {
+                        <div class="tile__header">
+                          <div class="tile__title">
+                            {{ (t.value?.talent?.name || t.value?.name || t.value) }}
+                          </div>
+
+                          @if (getTalentDescription(t.value)) {
+                            <div class="tile__description">{{ getTalentDescription(t.value) }}</div>
+                          }
+
+                          <div class="tile__actions">
+                            <button mat-icon-button type="button" aria-label="Remove"
+                                    i18n-aria-label="ARIA@@profession.create.remove.talent" (click)="removeTalent(i)">
+                              <mat-icon fontIcon="close"></mat-icon>
+                            </button>
+                          </div>
                         </div>
-
-                        @if (getTalentUiDescription(t.value)) {
-                          <div class="tile__description">{{ getTalentUiDescription(t.value) }}</div>
-                        }
-
-                        <div class="tile__actions">
-                          <button
-                            mat-icon-button
-                            type="button"
-                            aria-label="Show/Hide alternatives"
-                            i18n-aria-label="ARIA@@profession.create.alt.toggle"
-                            (click)="toggleAltTalentPicker(i)"
-                          >
-                            <mat-icon
-                              [fontIcon]="isAltTalentPickerVisible(i) ? 'expand_less' : 'expand_more'"></mat-icon>
-                          </button>
-
-                          <button mat-icon-button type="button" aria-label="Remove"
-                                  i18n-aria-label="ARIA@@profession.create.remove.talent" (click)="removeTalent(i)">
-                            <mat-icon fontIcon="close"></mat-icon>
-                          </button>
-                        </div>
-                      </div>
+                      }
 
                       <!-- Alternative talents for this talent -->
                       @if (t.value?.alternativeTalent?.length) {
@@ -278,9 +269,24 @@
                             Alternatives
                           </div>
                           <div class="tile__subtiles">
+                            <div class="subtile subtile--primary">
+                              <div class="subtile__title">{{ (t.value?.talent?.name || t.value?.name || t.value) }}
+                              </div>
+                              @if (getTalentDescription(t.value)) {
+                                <div class="tile__description">{{ getTalentDescription(t.value) }}</div>
+                              }
+                              <button mat-icon-button type="button" aria-label="Remove"
+                                      i18n-aria-label="ARIA@@profession.create.remove.talent" (click)="removeTalent(i)">
+                                <mat-icon fontIcon="close"></mat-icon>
+                              </button>
+                            </div>
+
                             @for (a of t.value.alternativeTalent; track a?.id ?? a?.talent?.id ?? a; let ai = $index) {
                               <div class="subtile">
                                 <div class="subtile__title">{{ a?.talent?.name }}</div>
+                                @if (a?.description) {
+                                  <div class="tile__description">{{ a?.description }}</div>
+                                }
                                 <button
                                   mat-icon-button
                                   type="button"

@@ -5,6 +5,7 @@ import {ProfessionSkill, ProfessionTalent} from '../models/profession.models';
 
 export type CreateProfessionSkillPayload = {
   skill: number;
+  description?: string;
   alternativeSkill?: number[];
 };
 
@@ -14,6 +15,7 @@ export type UpdateProfessionSkillPayload = {
 
 export type CreateProfessionTalentPayload = {
   talent: number;
+  description?: string;
   alternativeTalent?: number[];
 };
 
