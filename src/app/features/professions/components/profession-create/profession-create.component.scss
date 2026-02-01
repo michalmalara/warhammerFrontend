@@ -525,7 +525,47 @@ mat-card-title {
   font-size: 0.85rem;
 }
 
-/* ensure small title sizing matches character card on mobile */
+/* Align header content within character cards: keep title and header buttons on the same horizontal line */
+.character-card mat-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.character-card mat-card-header .section-title {
+  margin: 0; /* remove extra bottom margin so title centers vertically with buttons */
+  line-height: 1;
+}
+
+@media (max-width: 640px) {
+  .character-card mat-card-header {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .card-header-actions {
+    margin-top: 8px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Card header actions (for buttons placed in mat-card-header) */
+.card-header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-header-actions .add-skill-button {
+  height: 36px;
+  padding: 0 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));

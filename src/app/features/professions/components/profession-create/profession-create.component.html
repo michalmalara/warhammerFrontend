@@ -108,16 +108,19 @@
       <!-- Skills & Talents cards (split into two side-by-side cards) -->
       <div class="grid two-cards">
         <mat-card class="character-card card">
+          <mat-card-header>
+            <mat-card-title>
+              <h3 class="section-title">Required Skills</h3>
+            </mat-card-title>
+            <div class="card-header-actions">
+              <button mat-stroked-button type="button" class="add-skill-button" (click)="openAddSkillDialog()">
+                <mat-icon>add</mat-icon>
+                <span i18n="Button label@@profession.create.addSkill">Add Skill</span>
+              </button>
+            </div>
+          </mat-card-header>
           <mat-card-content>
-            <h3 class="section-title">Required Skills</h3>
-
             <div class="search-input">
-              <div class="actions-row">
-                <button mat-stroked-button type="button" class="add-skill-button" (click)="openAddSkillDialog()">
-                  <mat-icon>add</mat-icon>
-                  <span i18n="Button label@@profession.create.addSkill">Add Skill</span>
-                </button>
-              </div>
 
               <!-- (tiles) -->
               <div class="tiles" aria-label="Skills" i18n-aria-label="ARIA@@profession.create.skills.list.aria">
@@ -220,16 +223,19 @@
         </mat-card>
 
         <mat-card class="character-card card">
+          <mat-card-header>
+            <mat-card-title>
+              <h3 class="section-title">Required Talents</h3>
+            </mat-card-title>
+            <div class="card-header-actions">
+              <button mat-stroked-button type="button" class="add-skill-button" (click)="openAddTalentDialog()">
+                <mat-icon>add</mat-icon>
+                <span i18n="Button label@@profession.create.addTalent">Add Talent</span>
+              </button>
+            </div>
+          </mat-card-header>
           <mat-card-content>
-            <h3 class="section-title">Required Talents</h3>
-
             <div class="search-input">
-              <div class="actions-row">
-                <button mat-stroked-button type="button" class="add-skill-button" (click)="openAddTalentDialog()">
-                  <mat-icon>add</mat-icon>
-                  <span i18n="Button label@@profession.create.addTalent">Add Talent</span>
-                </button>
-              </div>
 
               <!-- tiles -->
               <div class="tiles" aria-label="Talents" i18n-aria-label="ARIA@@profession.create.talents.list.aria">
