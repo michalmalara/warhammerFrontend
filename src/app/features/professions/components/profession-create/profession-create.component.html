@@ -121,7 +121,7 @@
 
               <!-- (tiles) -->
               <div class="tiles" aria-label="Skills" i18n-aria-label="ARIA@@profession.create.skills.list.aria">
-                @for (s of skills.controls; track s; let i = $index) {
+                @for (s of skills.controls; track (s.value?.id ?? $index); let i = $index) {
                   @if (!isSkillRenderedAsAlternative(i)) {
                     <div
                       class="tile optional-block"
@@ -233,7 +233,7 @@
 
               <!-- tiles -->
               <div class="tiles" aria-label="Talents" i18n-aria-label="ARIA@@profession.create.talents.list.aria">
-                @for (t of talents.controls; track t; let i = $index) {
+                @for (t of talents.controls; track (t.value?.id ?? $index); let i = $index) {
                   @if (!isTalentRenderedAsAlternative(i)) {
                     <div
                       class="tile optional-block"

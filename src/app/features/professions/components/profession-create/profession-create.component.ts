@@ -213,13 +213,13 @@ export class ProfessionCreateComponent {
   private refreshSkillsListView() {
     this.form.controls.skills.updateValueAndValidity({emitEvent: true});
     this.form.updateValueAndValidity({emitEvent: true});
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   private refreshTalentsListView() {
     this.form.controls.talents.updateValueAndValidity({emitEvent: true});
     this.form.updateValueAndValidity({emitEvent: true});
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   readonly form = this.fb.nonNullable.group({

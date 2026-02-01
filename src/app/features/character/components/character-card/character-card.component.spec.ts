@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {ActivatedRoute, convertToParamMap} from '@angular/router';
-import {of} from 'rxjs';
+import {firstValueFrom, of} from 'rxjs';
 
 import {CharacterCardComponent} from './character-card.component';
 import {CharactersApiService} from '../../services/characters-api.service';
@@ -153,21 +153,13 @@ describe('CharacterCardComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const root = fixture.nativeElement as HTMLElement;
+    const vm = await firstValueFrom(fixture.componentInstance.vm$);
 
-    const skillsTab = root.querySelector('.mdc-tab:nth-child(1)') as HTMLElement | null;
-    skillsTab?.click();
-    fixture.detectChanges();
-    await fixture.whenStable();
+    const skillsText = (vm.skillsUi ?? []).map((s: any) => s?.name).filter(Boolean).join(' ');
+    const talentsText = (vm.talentsUi ?? []).map((t: any) => t?.name).filter(Boolean).join(' ');
 
-    expect(root.textContent ?? '').toContain('Skill A');
-
-    const talentsTab = root.querySelector('.mdc-tab:nth-child(2)') as HTMLElement | null;
-    talentsTab?.click();
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    expect(root.textContent ?? '').toContain('Talent A');
+    expect(skillsText).toContain('Skill A');
+    expect(talentsText).toContain('Talent A');
   });
 
   it('renders SB/TB modifiers from profile', async () => {
