@@ -17,8 +17,7 @@ import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
-import {finalize} from 'rxjs/operators';
-import {catchError, debounceTime, distinctUntilChanged, map, of, startWith, switchMap} from 'rxjs';
+import {catchError, debounceTime, distinctUntilChanged, finalize, map, of, startWith, switchMap} from 'rxjs';
 
 import {ProfessionsApiService} from '../../services/professions-api.service';
 import {CreateProfessionPayload, ProfessionSkill, ProfessionTalent} from '../../models/profession.models';
@@ -28,6 +27,9 @@ import {ProfessionLinksApiService} from '../../services/profession-links-api.ser
 import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
 import {ProfessionSkillDialogComponent} from './profession-skill-dialog.component';
 import {ProfessionTalentDialogComponent, type ProfessionTalentDialogResult} from './profession-talent-dialog.component';
+import {ArmorsApiService} from '../../../equipment/services/armors-api.service';
+import {WeaponsApiService} from '../../../equipment/services/weapons-api.service';
+import {ProfessionEquipmentLinksApiService} from '../../services/profession-equipment-links-api.service';
 
 @Component({
   selector: 'app-profession-create',
@@ -63,6 +65,9 @@ export class ProfessionCreateComponent {
   private readonly snackBar = inject(MatSnackBar);
   private readonly dialog = inject(MatDialog);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly armorsApi = inject(ArmorsApiService);
+  private readonly weaponsApi = inject(WeaponsApiService);
+  private readonly equipmentLinksApi = inject(ProfessionEquipmentLinksApiService);
 
   private static readonly MIN_AUTOCOMPLETE_CHARS = 3;
 
@@ -107,6 +112,38 @@ export class ProfessionCreateComponent {
     switchMap((q) =>
       q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
         ? this.talentsApi.search(q).pipe(catchError(() => of([])))
+        : of([])
+    )
+  );
+
+  readonly weaponSearchControl = new FormControl('');
+  weaponsOptions$ = this.weaponSearchControl.valueChanges.pipe(
+    startWith(''),
+    map((v) => (typeof v === 'string' ? v : '').toString().trim()),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((q) =>
+      q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
+        ? this.weaponsApi.list().pipe(
+          map((items) => items.filter((w) => w.name.toLowerCase().includes(q.toLowerCase()))),
+          catchError(() => of([]))
+        )
+        : of([])
+    )
+  );
+
+  readonly armorSearchControl = new FormControl('');
+  armorsOptions$ = this.armorSearchControl.valueChanges.pipe(
+    startWith(''),
+    map((v) => (typeof v === 'string' ? v : '').toString().trim()),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((q) =>
+      q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
+        ? this.armorsApi.list().pipe(
+          map((items) => items.filter((a) => a.name.toLowerCase().includes(q.toLowerCase()))),
+          catchError(() => of([]))
+        )
         : of([])
     )
   );
@@ -246,6 +283,9 @@ export class ProfessionCreateComponent {
 
     exitProfessions: this.fb.array<FormControl<any>>([]),
 
+    weapons: this.fb.array<FormControl<any>>([]),
+    armors: this.fb.array<FormControl<any>>([]),
+
     isAdvanced: false,
   });
 
@@ -259,6 +299,14 @@ export class ProfessionCreateComponent {
 
   get exits(): FormArray<FormControl<any>> {
     return this.form.get('exitProfessions') as FormArray<FormControl<any>>;
+  }
+
+  get weapons(): FormArray<FormControl<any>> {
+    return this.form.get('weapons') as FormArray<FormControl<any>>;
+  }
+
+  get armors(): FormArray<FormControl<any>> {
+    return this.form.get('armors') as FormArray<FormControl<any>>;
   }
 
   save() {
@@ -322,6 +370,22 @@ export class ProfessionCreateComponent {
       }
     }
     if (talentsIds.length) payload.talents = talentsIds;
+
+    const weaponIds: number[] = [];
+    for (const w of (v.weapons || [])) {
+      if (w && typeof w === 'object' && 'id' in w && typeof (w as any).id === 'number') {
+        weaponIds.push((w as any).id);
+      }
+    }
+    if (weaponIds.length) payload.weapons = weaponIds;
+
+    const armorIds: number[] = [];
+    for (const a of (v.armors || [])) {
+      if (a && typeof a === 'object' && 'id' in a && typeof (a as any).id === 'number') {
+        armorIds.push((a as any).id);
+      }
+    }
+    if (armorIds.length) payload.armors = armorIds;
 
     // map exit professions: support objects with `id`, numeric strings, and numbers
     const exitIds: number[] = [];
@@ -917,5 +981,108 @@ export class ProfessionCreateComponent {
     const d = (value as any)?.description;
     return typeof d === 'string' ? d : '';
   }
-}
 
+  getWeaponName(value: unknown): string {
+    return (value as any)?.weapon?.name ?? (value as any)?.name ?? '';
+  }
+
+  getArmorName(value: unknown): string {
+    return (value as any)?.armor?.name ?? (value as any)?.name ?? '';
+  }
+
+  selectWeapon(event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as { id: number; name: string };
+    if (!opt?.id) {
+      this.weaponSearchControl.setValue('');
+      return;
+    }
+
+    this.equipmentLinksApi.createProfessionWeapon({weapon: opt.id}).subscribe({
+      next: (created) => {
+        this.weapons.push(new FormControl<any>(created));
+      },
+      error: () => {
+        this.snackBar.open(
+          $localize`:Snackbar@@profession.create.add.weapon.failed:Failed to add weapon to profession.`,
+          'OK',
+          {duration: 3000}
+        );
+      },
+    });
+
+    this.weaponSearchControl.setValue('');
+  }
+
+  removeWeapon(index: number) {
+    if (index < 0 || index >= this.weapons.length) return;
+
+    const current = this.weapons.at(index)?.value as any;
+    const id = current?.id;
+
+    if (typeof id !== 'number') {
+      this.weapons.removeAt(index);
+      return;
+    }
+
+    this.equipmentLinksApi.deleteProfessionWeapon(id).subscribe({
+      next: () => {
+        this.weapons.removeAt(index);
+      },
+      error: () => {
+        this.snackBar.open(
+          $localize`:Snackbar@@profession.create.remove.weapon.failed:Failed to remove weapon from server.`,
+          'OK',
+          {duration: 3000}
+        );
+      },
+    });
+  }
+
+  selectArmor(event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as { id: number; name: string };
+    if (!opt?.id) {
+      this.armorSearchControl.setValue('');
+      return;
+    }
+
+    this.equipmentLinksApi.createProfessionArmor({armor: opt.id}).subscribe({
+      next: (created) => {
+        this.armors.push(new FormControl<any>(created));
+      },
+      error: () => {
+        this.snackBar.open(
+          $localize`:Snackbar@@profession.create.add.armor.failed:Failed to add armor to profession.`,
+          'OK',
+          {duration: 3000}
+        );
+      },
+    });
+
+    this.armorSearchControl.setValue('');
+  }
+
+  removeArmor(index: number) {
+    if (index < 0 || index >= this.armors.length) return;
+
+    const current = this.armors.at(index)?.value as any;
+    const id = current?.id;
+
+    if (typeof id !== 'number') {
+      this.armors.removeAt(index);
+      return;
+    }
+
+    this.equipmentLinksApi.deleteProfessionArmor(id).subscribe({
+      next: () => {
+        this.armors.removeAt(index);
+      },
+      error: () => {
+        this.snackBar.open(
+          $localize`:Snackbar@@profession.create.remove.armor.failed:Failed to remove armor from server.`,
+          'OK',
+          {duration: 3000}
+        );
+      },
+    });
+  }
+}

@@ -45,6 +45,16 @@ export interface ProfessionTalent {
   alternativeTalent: ProfessionTalentAlternative[];
 }
 
+export interface ProfessionWeapon {
+  id: number;
+  weapon: import('../../equipment/models/weapon.models').Weapon;
+}
+
+export interface ProfessionArmor {
+  id: number;
+  armor: import('../../equipment/models/armor.models').Armor;
+}
+
 /**
  * Model frontendowy (camelCase). Backend zwraca snake_case, ale interceptor mapuje do camelCase.
  */
@@ -73,6 +83,9 @@ export interface Profession {
   entryProfessions: ProfessionSummary[];
   exitProfessions: ProfessionSummary[];
 
+  weapons?: ProfessionWeapon[];
+  armors?: ProfessionArmor[];
+
   trappings?: string;
 }
 
@@ -100,6 +113,9 @@ export interface CreateProfessionPayload {
   skills?: number[]; // ProfessionSkill IDs
   entryProfessions?: number[]; // Profession IDs
   exitProfessions?: number[]; // Profession IDs
+
+  weapons?: number[]; // ProfessionWeapon IDs
+  armors?: number[]; // ProfessionArmor IDs
 
   trappings?: string;
 }

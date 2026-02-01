@@ -1,6 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {ActivatedRoute, convertToParamMap} from '@angular/router';
 import {firstValueFrom, of} from 'rxjs';
+import {filter} from 'rxjs/operators';
 
 import {CharacterCardComponent} from './character-card.component';
 import {CharactersApiService} from '../../services/characters-api.service';
@@ -153,10 +154,20 @@ describe('CharacterCardComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const vm = await firstValueFrom(fixture.componentInstance.vm$);
+    const vm = await firstValueFrom(
+      fixture.componentInstance.vm$.pipe(
+        filter((v) => !v.loading && (v.skillsUi?.length ?? 0) > 0 && (v.talentsUi?.length ?? 0) > 0),
+      ),
+    );
 
-    const skillsText = (vm.skillsUi ?? []).map((s: any) => s?.name).filter(Boolean).join(' ');
-    const talentsText = (vm.talentsUi ?? []).map((t: any) => t?.name).filter(Boolean).join(' ');
+    const skillsText = (vm.skillsUi ?? [])
+      .map((s: any) => s?.skill?.name)
+      .filter(Boolean)
+      .join(' ');
+    const talentsText = (vm.talentsUi ?? [])
+      .map((t: any) => t?.name)
+      .filter(Boolean)
+      .join(' ');
 
     expect(skillsText).toContain('Skill A');
     expect(talentsText).toContain('Talent A');

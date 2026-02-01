@@ -691,6 +691,111 @@
 
       <mat-card class="character-card card">
         <mat-card-content>
+          <h3 class="section-title" i18n="Section heading@@professionCreate.requiredEquipment.title">Required
+            Equipment</h3>
+
+          <div class="grid two-cards">
+            <mat-card class="character-card card">
+              <mat-card-content>
+                <h3 class="section-title" i18n="Section heading@@professionCreate.requiredWeapons.title">Required
+                  Weapons</h3>
+
+                <div class="search-input">
+                  <mat-form-field appearance="outline" class="full">
+                    <mat-label i18n="Label@@professionCreate.requiredWeapons.search.label">Search weapons...</mat-label>
+                    <input
+                      matInput
+                      [formControl]="weaponSearchControl"
+                      [matAutocomplete]="weaponsAuto"
+                      aria-label="Search weapons"
+                      i18n-aria-label="Aria@@professionCreate.requiredWeapons.search.aria"
+                    />
+
+                    <mat-autocomplete #weaponsAuto="matAutocomplete" (optionSelected)="selectWeapon($event)">
+                      @for (o of weaponsOptions$ | async; track o?.id ?? o?.name ?? o) {
+                        <mat-option [value]="o">{{ o.name }}</mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
+
+                  <div class="tiles" aria-label="Weapons"
+                       i18n-aria-label="Aria@@professionCreate.requiredWeapons.list.aria">
+                    @for (w of weapons.controls; track w; let i = $index) {
+                      <div class="tile tile--no-alternatives">
+                        <div class="tile__header">
+                          <div class="tile__title">{{ getWeaponName(w.value) }}</div>
+                          <div class="tile__actions">
+                            <button
+                              mat-icon-button
+                              type="button"
+                              aria-label="Remove"
+                              i18n-aria-label="Aria@@professionCreate.requiredWeapons.remove.aria"
+                              (click)="removeWeapon(i)"
+                            >
+                              <mat-icon fontIcon="close"></mat-icon>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="character-card card">
+              <mat-card-content>
+                <h3 class="section-title" i18n="Section heading@@professionCreate.requiredArmors.title">Required
+                  Armors</h3>
+
+                <div class="search-input">
+                  <mat-form-field appearance="outline" class="full">
+                    <mat-label i18n="Label@@professionCreate.requiredArmors.search.label">Search armors...</mat-label>
+                    <input
+                      matInput
+                      [formControl]="armorSearchControl"
+                      [matAutocomplete]="armorsAuto"
+                      aria-label="Search armors"
+                      i18n-aria-label="Aria@@professionCreate.requiredArmors.search.aria"
+                    />
+
+                    <mat-autocomplete #armorsAuto="matAutocomplete" (optionSelected)="selectArmor($event)">
+                      @for (o of armorsOptions$ | async; track o?.id ?? o?.name ?? o) {
+                        <mat-option [value]="o">{{ o.name }}</mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
+
+                  <div class="tiles" aria-label="Armors"
+                       i18n-aria-label="Aria@@professionCreate.requiredArmors.list.aria">
+                    @for (a of armors.controls; track a; let i = $index) {
+                      <div class="tile tile--no-alternatives">
+                        <div class="tile__header">
+                          <div class="tile__title">{{ getArmorName(a.value) }}</div>
+                          <div class="tile__actions">
+                            <button
+                              mat-icon-button
+                              type="button"
+                              aria-label="Remove"
+                              i18n-aria-label="Aria@@professionCreate.requiredArmors.remove.aria"
+                              (click)="removeArmor(i)"
+                            >
+                              <mat-icon fontIcon="close"></mat-icon>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="character-card card">
+        <mat-card-content>
           <h3 class="section-title" i18n="Section heading@@professionCreate.equipment.title">Equipment</h3>
           <div class="row">
             <mat-form-field appearance="outline" class="full">

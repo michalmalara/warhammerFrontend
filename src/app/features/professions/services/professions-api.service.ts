@@ -11,6 +11,8 @@ export type ProfessionUpsertPayload =
   talents?: number[];
   entryProfessions?: number[];
   exitProfessions?: number[];
+  weapons?: number[];
+  armors?: number[];
   trappings?: string;
 };
 
