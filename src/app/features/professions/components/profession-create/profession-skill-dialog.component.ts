@@ -44,15 +44,20 @@ export class ProfessionSkillDialogComponent {
     existingSkills?: Array<{ id?: number; name?: string; alternativeSkillIds?: number[] } | string>
   }>(MAT_DIALOG_DATA, {optional: true});
 
-  readonly skillSearchControl = new FormControl('');
-  readonly descriptionControl = new FormControl('');
+  readonly skillSearchControl = new FormControl<string | { id: number; name: string }>('', {nonNullable: true});
+  readonly descriptionControl = new FormControl('', {nonNullable: true});
 
   // Holds IDs of already-added profession-skill links chosen as alternatives
   selectedAlternativeIds: number[] = [];
 
+  readonly displaySkill = (skill: { id: number; name: string } | string | null): string => {
+    if (!skill) return '';
+    return typeof skill === 'string' ? skill : skill.name;
+  };
+
   readonly options$ = this.skillSearchControl.valueChanges.pipe(
     startWith(''),
-    map((v) => (typeof v === 'string' ? v : '').toString().trim()),
+    map((v) => (typeof v === 'string' ? v : (v?.name ?? '')).toString().trim()),
     debounceTime(300),
     distinctUntilChanged(),
     switchMap((q) => (q.length >= 3 ? this.skillsApi.search(q).pipe(catchError(() => of([]))) : of([])))
@@ -153,8 +158,7 @@ export class ProfessionSkillDialogComponent {
 
   add() {
     if (!this.selectedOption) return;
-    const description = (this.descriptionControl.value ?? '').toString().trim();
-    // include alternativeSkill if any selected
+    const description = this.descriptionControl.value.toString().trim();
     this.dialogRef.close({
       ...this.selectedOption,
       description: description || undefined,

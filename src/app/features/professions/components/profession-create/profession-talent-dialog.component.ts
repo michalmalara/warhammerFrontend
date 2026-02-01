@@ -46,14 +46,19 @@ export class ProfessionTalentDialogComponent {
     existingTalents?: Array<{ id?: number; name?: string; alternativeTalentIds?: number[] } | string>
   }>(MAT_DIALOG_DATA, {optional: true});
 
-  readonly talentSearchControl = new FormControl('');
-  readonly descriptionControl = new FormControl('');
+  readonly talentSearchControl = new FormControl<string | { id: number; name: string }>('', {nonNullable: true});
+  readonly descriptionControl = new FormControl('', {nonNullable: true});
 
   selectedAlternativeIds: number[] = [];
 
+  readonly displayTalent = (talent: { id: number; name: string } | string | null): string => {
+    if (!talent) return '';
+    return typeof talent === 'string' ? talent : talent.name;
+  };
+
   readonly options$ = this.talentSearchControl.valueChanges.pipe(
     startWith(''),
-    map((v) => (typeof v === 'string' ? v : '').toString().trim()),
+    map((v) => (typeof v === 'string' ? v : (v?.name ?? '')).toString().trim()),
     debounceTime(300),
     distinctUntilChanged(),
     switchMap((q) => (q.length >= 3 ? this.talentsApi.search(q).pipe(catchError(() => of([]))) : of([])))
@@ -71,7 +76,7 @@ export class ProfessionTalentDialogComponent {
 
   add() {
     if (!this.selectedOption) return;
-    const description = (this.descriptionControl.value ?? '').toString().trim();
+    const description = this.descriptionControl.value.toString().trim();
     this.dialogRef.close({
       ...this.selectedOption,
       description: description || undefined,

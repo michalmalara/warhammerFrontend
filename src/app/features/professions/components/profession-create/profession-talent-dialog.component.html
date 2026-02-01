@@ -26,7 +26,11 @@
         [formControl]="talentSearchControl"
         [matAutocomplete]="auto"
       />
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event)">
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        [displayWith]="displayTalent"
+        (optionSelected)="optionSelected($event)"
+      >
         @for (o of options$ | async; track o?.id ?? o?.name ?? o) {
           <mat-option [value]="o">{{ o.name }}</mat-option>
         }
