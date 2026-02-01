@@ -530,6 +530,7 @@ mat-card-title {
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-bottom: 12px; /* added spacing under card header */
 }
 
 .character-card mat-card-header .section-title {
@@ -559,54 +560,31 @@ mat-card-title {
 }
 
 .card-header-actions .add-skill-button {
-  height: 36px;
-  padding: 0 12px;
+  height: 32px;
+  padding: 0 8px;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-}
-
-@media (max-width: 600px) {
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  }
-
-  .stat .value {
-    min-width: 36px;
-    font-size: 0.95rem;
-  }
-
-  .stat-control > label {
-    font-size: 0.85rem;
-  }
-
-  .hero .title {
-    font-size: 2rem;
-  }
-
-  .character-card mat-card-title {
-    font-size: 1.05rem;
-  }
 }
 
 /* Kafelki (skills/talents) */
 .tiles {
   display: grid;
-  gap: 10px;
+  gap: 8px; /* reduced from 10px to tighten vertical rhythm */
 }
 
 .tile {
   border: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(255, 255, 255, 0.02);
-  border-radius: 12px;
-  padding: 10px 12px;
+  border-radius: 10px; /* slightly smaller radius */
+  padding: 8px 10px; /* reduced padding */
 }
 
 .tile__header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px; /* reduced gap */
 }
 
 .tile__title {
@@ -616,10 +594,10 @@ mat-card-title {
 }
 
 .tile__description {
-  margin-top: 6px;
+  margin-top: 4px; /* smaller spacing under title */
   color: var(--color-text-muted);
-  font-size: 0.95rem;
-  line-height: 1.4;
+  font-size: 0.92rem;
+  line-height: 1.35;
 }
 
 .tile__actions {
@@ -629,11 +607,11 @@ mat-card-title {
 }
 
 .tile__section {
-  margin-top: 10px;
+  margin-top: 8px; /* reduced from 10px */
 }
 
 .tile__section-title {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.12rem;
   font-weight: 700;
@@ -643,17 +621,17 @@ mat-card-title {
 
 .tile__subtiles {
   display: grid;
-  gap: 6px;
+  gap: 6px; /* slightly reduced */
 }
 
 .subtile {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
 
-  padding: 8px 10px;
-  border-radius: 10px;
+  padding: 6px 8px; /* reduced padding */
+  border-radius: 8px;
 
   border: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(255, 255, 255, 0.03);
@@ -666,7 +644,7 @@ mat-card-title {
 
 /* Jeśli kafelek nie ma alternatyw, wyśrodkuj tytuł w nagłówku */
 .tile--no-alternatives .tile__header {
-  min-height: 44px;
+  min-height: 40px; /* slightly smaller */
   align-items: center;
 }
 
@@ -725,7 +703,7 @@ mat-card-title {
 
 /* spacing between cards: vertical rhythm and gap for two-card layout */
 .content > mat-card {
-  margin-bottom: 18px;
+  margin-bottom: 14px; /* slightly reduced */
 }
 
 /* avoid double-bottom margin for the last card */
@@ -735,12 +713,12 @@ mat-card-title {
 
 /* slightly larger gap when two cards are displayed side-by-side */
 .grid.two-cards {
-  gap: 20px; /* increases horizontal gap between the two side-by-side cards */
-  margin-bottom: 20px; /* add vertical spacing below the skills/talents block */
+  gap: 12px; /* reduced horizontal gap to make cards closer */
+  margin-bottom: 12px; /* reduced vertical spacing below the skills/talents block */
 }
 
 @media (max-width: 980px) {
   .grid.two-cards {
-    margin-bottom: 16px; /* slightly smaller spacing on narrow screens */
+    margin-bottom: 12px; /* slightly smaller spacing on narrow screens */
   }
 }
