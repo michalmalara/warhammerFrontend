@@ -24,12 +24,15 @@
               Skills
             </h4>
 
-            @if (skills().length) {
+            @if (professionSkills().length) {
               <ul class="list">
-                @for (s of skills(); track s.id) {
+                @for (ps of professionSkills(); track ps.id) {
                   <li class="cc-tile cc-tile--hover list__item">
-                    <span class="pill">{{ s.associatedCharacteristic }}</span>
-                    <span class="name">{{ s.name }}</span>
+                    <span class="pill">{{ ps.skill.associatedCharacteristic }}</span>
+                    <span class="name">{{ ps.skill.name }}</span>
+                    @if (ps.description || ps.skill.description) {
+                      <span class="desc">({{ ps.description || ps.skill.description }})</span>
+                    }
                   </li>
                 }
               </ul>
@@ -44,11 +47,14 @@
               Talents
             </h4>
 
-            @if (talents().length) {
+            @if (professionTalents().length) {
               <ul class="list">
-                @for (t of talents(); track t.id) {
+                @for (pt of professionTalents(); track pt.id) {
                   <li class="cc-tile cc-tile--hover list__item">
-                    <span class="name">{{ t.name }}</span>
+                    <span class="name">{{ pt.talent.name }}</span>
+                    @if (pt.description || pt.talent.description) {
+                      <span class="desc">({{ pt.description || pt.talent.description }})</span>
+                    }
                   </li>
                 }
               </ul>

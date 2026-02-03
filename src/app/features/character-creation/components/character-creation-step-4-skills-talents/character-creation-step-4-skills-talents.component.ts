@@ -19,8 +19,9 @@ export class CharacterCreationStep4SkillsTalentsComponent {
   private readonly charData = inject(CharacterDataService);
 
   readonly profession = computed(() => this.charData.getProfession());
-  readonly skills = computed(() => this.charData.getProfessionSkills());
-  readonly talents = computed(() => this.charData.getProfessionTalents());
+
+  readonly professionSkills = computed(() => this.profession()?.skills ?? []);
+  readonly professionTalents = computed(() => this.profession()?.talents ?? []);
 
   readonly selectedRaceLabel = computed(() => {
     const race = this.charData.race();

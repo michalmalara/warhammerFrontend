@@ -23,8 +23,6 @@ describe('CharacterCreationStep4SkillsTalentsComponent', () => {
     const charData = TestBed.inject(CharacterDataService);
 
     charData.setProfession(null);
-    charData.setProfessionSkills([]);
-    charData.setProfessionTalents([]);
 
     fixture.detectChanges();
 
