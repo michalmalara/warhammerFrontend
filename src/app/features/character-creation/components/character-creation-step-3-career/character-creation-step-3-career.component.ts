@@ -81,6 +81,7 @@ export class CharacterCreationStep3CareerComponent {
   readonly selectedCharacteristic = signal<string | null>(null);
 
   readonly displayedSkills: number[] = []
+  readonly displayedTalents: number[] = []
 
   selectCharacteristic(name: string | null) {
     // Toggle selection: if already selected, deselect; otherwise select this name
@@ -297,6 +298,16 @@ export class CharacterCreationStep3CareerComponent {
       .sort((a, b) => (a.skill?.name ?? '').localeCompare(b.skill?.name ?? ''));
   });
 
+  readonly professionTalents = computed((): import('../../../professions/models/profession.models').ProfessionTalent[] => {
+    const p = this.profession();
+    const items = Array.isArray(p?.talents) ? p!.talents : [];
+
+    return items
+      .filter((pt): pt is import('../../../professions/models/profession.models').ProfessionTalent => !!pt && !!pt.talent)
+      .slice()
+      .sort((a, b) => (a.talent?.name ?? '').localeCompare(b.talent?.name ?? ''));
+  });
+
   protected appendToDisplayedSkills(id: number) {
     this.displayedSkills.push(id);
     return ""
@@ -304,5 +315,14 @@ export class CharacterCreationStep3CareerComponent {
 
   protected isSkillDisplayed(id: number) {
     return this.displayedSkills.includes(id);
+  }
+
+  protected appendToDisplayedTalents(id: number) {
+    this.displayedTalents.push(id);
+    return '';
+  }
+
+  protected isTalentDisplayed(id: number) {
+    return this.displayedTalents.includes(id);
   }
 }

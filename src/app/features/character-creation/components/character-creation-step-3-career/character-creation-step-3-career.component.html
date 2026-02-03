@@ -174,6 +174,45 @@
                     <p class="skills__empty" i18n="Empty@@cc.step3.noSkills">This profession has no skills.</p>
                   }
                 </div>
+
+                <div class="skills" aria-label="Profession talents">
+                  <h4 class="section__title" i18n="Heading@@cc.step3.talents">
+                    <mat-icon class="section__titleIcon" fontIcon="auto_awesome"></mat-icon>
+                    Talents
+                  </h4>
+
+                  @if (professionTalents().length) {
+                    <ul class="skills__list">
+                      @for (pt of professionTalents(); track pt.id) {
+                        @if (!isTalentDisplayed(pt.id)) {
+                          <li class="skills__item">
+                            <div class="skills__row">
+                            <span class="skills__name">
+                              {{ pt.talent.name }}
+                            </span>
+                              @if (pt.description || pt.talent.description) {
+                                <span class="skills__descInline">({{ pt.description || pt.talent.description }})</span>
+                              }
+                              @if (pt.alternativeTalent.length) {
+                                @for (alt of pt.alternativeTalent; track $index) {
+                                  /
+                                  <div class="skills__name">{{ alt.talent.name }}</div>
+                                  @if (alt.description) {
+                                    <div class="skills__descInline">({{ alt.description }})</div>
+                                  }
+                                  {{ appendToDisplayedTalents(alt.id) }}
+                                }
+                              }
+                            </div>
+
+                          </li>
+                        }
+                      }
+                    </ul>
+                  } @else {
+                    <p class="skills__empty" i18n="Empty@@cc.step3.noTalents">This profession has no talents.</p>
+                  }
+                </div>
               </div>
 
               @if (p.entryProfessions.length || p.exitProfessions.length) {
