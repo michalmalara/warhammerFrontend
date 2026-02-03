@@ -135,6 +135,45 @@
                     }
                   </div>
                 </div>
+
+                <div class="skills" aria-label="Profession skills">
+                  <h4 class="section__title" i18n="Heading@@cc.step3.skills">
+                    <mat-icon class="section__titleIcon" fontIcon="psychology"></mat-icon>
+                    Skills
+                  </h4>
+
+                  @if (professionSkills().length) {
+                    <ul class="skills__list">
+                      @for (ps of professionSkills(); track ps.id) {
+                        @if (!isSkillDisplayed(ps.id)) {
+                          <li class="skills__item">
+                            <div class="skills__row">
+                            <span class="skills__name">
+                              {{ ps.skill.name }}
+                            </span>
+                              @if (ps.description || ps.skill.description) {
+                                <span class="skills__descInline">({{ ps.description || ps.skill.description }})</span>
+                              }
+                              @if (ps.alternativeSkill.length) {
+                                @for (alt of ps.alternativeSkill; track $index) {
+                                  /
+                                  <div class="skills__name">{{ alt.skill.name }}</div>
+                                  @if (alt.description) {
+                                    <div class="skills__descInline">({{ alt.description }})</div>
+                                  }
+                                  {{ appendToDisplayedSkills(alt.id) }}
+                                }
+                              }
+                            </div>
+
+                          </li>
+                        }
+                      }
+                    </ul>
+                  } @else {
+                    <p class="skills__empty" i18n="Empty@@cc.step3.noSkills">This profession has no skills.</p>
+                  }
+                </div>
               </div>
 
               @if (p.entryProfessions.length || p.exitProfessions.length) {

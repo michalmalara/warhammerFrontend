@@ -259,6 +259,54 @@
   letter-spacing: 0.04em;
 }
 
+.skills {
+  margin-top: 1.25rem;
+}
+
+.skills__list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.skills__item {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.skills__item--alt {
+  border: 1px solid rgba(57, 40, 43, 1);
+  background: rgba(0, 0, 0, 0.18);
+  padding: 0.45rem 0.6rem;
+  border-radius: 10px;
+}
+
+.skills__name {
+  font-weight: 700;
+}
+
+.skills__row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.skills__desc {
+  margin-top: 0.15rem;
+  color: rgba(185, 157, 161, 1);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.skills__descInline {
+  color: rgba(185, 157, 161, 1);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
 .adv {
   display: grid;
   gap: 0.25rem;

@@ -8,7 +8,7 @@ import {ProfessionsApiService} from '../../../professions/services/professions-a
 import {CharacterDataService} from '../../services/character-data.service';
 import {BreadcrumbsComponent} from '../../../../shared/ui/breadcrumbs/breadcrumbs.component';
 import {WaxSealButtonComponent} from '../../../../shared/ui/wax-seal-button/wax-seal-button.component';
-import {Profession} from '../../../professions/models/profession.models';
+import {Profession, ProfessionSkill} from '../../../professions/models/profession.models';
 
 @Component({
   selector: 'app-character-creation-step-3-career',
@@ -79,6 +79,8 @@ export class CharacterCreationStep3CareerComponent {
 
   // Currently selected characteristic (only one allowed at a time)
   readonly selectedCharacteristic = signal<string | null>(null);
+
+  readonly displayedSkills: number[] = []
 
   selectCharacteristic(name: string | null) {
     // Toggle selection: if already selected, deselect; otherwise select this name
@@ -285,4 +287,22 @@ export class CharacterCreationStep3CareerComponent {
     }
   }
 
+  readonly professionSkills = computed((): ProfessionSkill[] => {
+    const p = this.profession();
+    const items = Array.isArray(p?.skills) ? p!.skills : [];
+
+    return items
+      .filter((ps): ps is ProfessionSkill => !!ps && !!ps.skill)
+      .slice()
+      .sort((a, b) => (a.skill?.name ?? '').localeCompare(b.skill?.name ?? ''));
+  });
+
+  protected appendToDisplayedSkills(id: number) {
+    this.displayedSkills.push(id);
+    return ""
+  }
+
+  protected isSkillDisplayed(id: number) {
+    return this.displayedSkills.includes(id);
+  }
 }
