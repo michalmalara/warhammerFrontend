@@ -99,48 +99,12 @@ export class CharacterCreationStep3CareerComponent {
 
   readonly displaySkills = computed(() => {
     const p = this.profession();
-    const skills = (p?.skills ?? []) as Array<any>;
-
-    const hiddenIds = new Set<number>();
-    const hiddenNames = new Set<string>();
-    for (const s of skills) {
-      const alts = (s?.alternativeSkill ?? s?.alternative_skill ?? []) as Array<any>;
-      for (const a of alts ?? []) {
-        const id = a?.id;
-        if (typeof id === 'number') hiddenIds.add(id);
-        const name = a?.name ?? a?.skill?.name ?? (typeof a === 'string' ? a : String(a));
-        if (name) hiddenNames.add(String(name).trim().toLowerCase());
-      }
-    }
-
-    // Jeżeli dany element występuje jako alternatywa u innego — nie wyświetlamy go jako osobnej pozycji.
-    return skills.filter((s) => {
-      const id = s?.id;
-      const name = s?.name ?? s?.skill?.name ?? String(s);
-      const lname = name ? String(name).trim().toLowerCase() : null;
-      if (typeof id === 'number' && hiddenIds.has(id)) return false;
-      if (lname && hiddenNames.has(lname)) return false;
-      return true;
-    });
+    return (p?.skills ?? []) as Array<any>;
   });
 
   readonly displayTalents = computed(() => {
     const p = this.profession();
-    const talents = (p?.talents ?? []) as Array<any>;
-
-    const hiddenIds = new Set<number>();
-    for (const t of talents) {
-      const alts = (t?.alternativeTalent ?? t?.alternative_talent ?? []) as Array<any>;
-      for (const a of alts ?? []) {
-        const id = a?.id;
-        if (typeof id === 'number') hiddenIds.add(id);
-      }
-    }
-
-    return talents.filter((t) => {
-      const id = t?.id;
-      return !(typeof id === 'number' && hiddenIds.has(id));
-    });
+    return (p?.talents ?? []) as Array<any>;
   });
 
   skillName(item: any): string {
@@ -151,24 +115,86 @@ export class CharacterCreationStep3CareerComponent {
   skillAlternatives(item: any): string[] {
     const alts = (item?.alternativeSkill ?? item?.alternative_skill ?? []) as Array<any>;
     if (!Array.isArray(alts) || alts.length === 0) return [];
-    // backend/FE model: [{ id, skill: { name } }]
     return alts
-      .map((x) => x?.name ?? x?.skill?.name ?? String(x))
-      .filter((x) => !!x);
+      .map((x) => x?.skill?.name ?? '')
+      .filter((x) => typeof x === 'string' && x.trim().length > 0);
   }
 
   talentName(item: any): string {
-    if (!item) return '';
-    return item.name ?? item.talent?.name ?? String(item);
+    return item?.talent?.name ?? '';
   }
 
   talentAlternatives(item: any): string[] {
     const alts = (item?.alternativeTalent ?? item?.alternative_talent ?? []) as Array<any>;
     if (!Array.isArray(alts) || alts.length === 0) return [];
-    // backend/FE model: [{ id, talent: { name } }]
     return alts
-      .map((x) => x?.name ?? x?.talent?.name ?? String(x))
-      .filter((x) => !!x);
+      .map((x) => x?.talent?.name ?? '')
+      .filter((x) => typeof x === 'string' && x.trim().length > 0);
+  }
+
+  // Skill/Talent text helpers
+  skillDescription(item: any): string {
+    const desc = item?.skill?.description ?? '';
+    return typeof desc === 'string' ? desc.trim() : '';
+  }
+
+  talentDescription(item: any): string {
+    const desc = item?.talent?.description ?? '';
+    return typeof desc === 'string' ? desc.trim() : '';
+  }
+
+  skillAllNames(item: any): string[] {
+    const main = this.skillName(item);
+    const alts = this.skillAlternatives(item) ?? [];
+    const list = [main, ...alts].filter((x) => typeof x === 'string' && x.trim().length > 0);
+    return list;
+  }
+
+  talentAllNames(item: any): string[] {
+    const main = this.talentName(item);
+    const alts = this.talentAlternatives(item) ?? [];
+    const list = [main, ...alts].filter((x) => typeof x === 'string' && x.trim().length > 0);
+    return list;
+  }
+
+  skillAlternativeDescription(item: any, alternativeName: string): string {
+    if (!item || !alternativeName) return '';
+
+    const mainName = this.skillName(item);
+    if (String(mainName).trim().toLowerCase() === String(alternativeName).trim().toLowerCase()) {
+      return this.skillDescription(item);
+    }
+
+    const alts = (item?.alternativeSkill ?? item?.alternative_skill ?? []) as Array<any>;
+    if (!Array.isArray(alts) || alts.length === 0) return '';
+
+    const found = alts.find((a) => {
+      const n = a?.skill?.name ?? '';
+      return String(n).trim().toLowerCase() === String(alternativeName).trim().toLowerCase();
+    });
+
+    const desc = found?.skill?.description ?? '';
+    return typeof desc === 'string' ? desc.trim() : '';
+  }
+
+  talentAlternativeDescription(item: any, alternativeName: string): string {
+    if (!item || !alternativeName) return '';
+
+    const mainName = this.talentName(item);
+    if (String(mainName).trim().toLowerCase() === String(alternativeName).trim().toLowerCase()) {
+      return this.talentDescription(item);
+    }
+
+    const alts = (item?.alternativeTalent ?? item?.alternative_talent ?? []) as Array<any>;
+    if (!Array.isArray(alts) || alts.length === 0) return '';
+
+    const found = alts.find((a) => {
+      const n = a?.talent?.name ?? '';
+      return String(n).trim().toLowerCase() === String(alternativeName).trim().toLowerCase();
+    });
+
+    const desc = found?.talent?.description ?? '';
+    return typeof desc === 'string' ? desc.trim() : '';
   }
 
   // Helper to build selection keys and manipulate selection state
@@ -355,7 +381,6 @@ export class CharacterCreationStep3CareerComponent {
       const first = Array.isArray(res.matches) && res.matches.length > 0 ? (res.matches[0] as Profession) : null;
       this.profession.set(first);
     } catch (err) {
-      // TODO: better error handling / snackbars
       console.error('Failed to draw profession', err);
     } finally {
       this.isLoading.set(false);

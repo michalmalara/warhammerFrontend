@@ -331,51 +331,44 @@
   display: grid;
   gap: 1.5rem;
   margin-top: 1.5rem;
+
+  .list__item {
+    display: inline;
+  }
+
+  .list__name {
+    display: inline;
+    font-weight: 800;
+  }
+
+  .list__desc {
+    display: inline;
+  }
+
+  .list__line {
+    display: inline;
+  }
+
+  .list__dash {
+    color: rgba(185, 157, 161, 0.9);
+  }
+
+  .list__descInline {
+    color: rgba(185, 157, 161, 1);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
 }
 
-.list__title {
-  margin: 0 0 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid rgba(57, 40, 43, 1);
-}
-
-.list__ul {
-  margin: 0;
-  padding-left: 1.15rem;
-  color: rgba(185, 157, 161, 1);
-  font-size: 0.875rem;
-  display: grid;
-  gap: 0.25rem;
-  list-style: none; /* usuń kropki */
-}
-
-/* Alternative skills/talents framing */
 .alt-box {
   border: 1px solid rgba(57, 40, 43, 1);
   background: rgba(0, 0, 0, 0.18);
   padding: 0.65rem 0.75rem;
   margin: 0.25rem 0 0.5rem;
-}
 
-.alt-box__label {
-  margin: 0 0 0.5rem;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(185, 157, 161, 0.9);
-}
-
-.alt-box__list {
-  margin: 0;
-  padding-left: 1.15rem;
-  display: grid;
-  gap: 0.25rem;
-  color: rgba(185, 157, 161, 1);
-  list-style: none; /* usuń kropki */
+  &__desc {
+    display: none;
+  }
 }
 
 .career__foot {
