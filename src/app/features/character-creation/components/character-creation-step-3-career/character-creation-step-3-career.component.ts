@@ -29,10 +29,6 @@ export class CharacterCreationStep3CareerComponent {
   readonly fallback = signal<boolean | null>(null);
   readonly candidates = signal<number | null>(null);
 
-  // Selections for alternative choices (keys are generated per-list index)
-  readonly skillSelections = signal<Record<string, string | null>>({});
-  readonly talentSelections = signal<Record<string, string | null>>({});
-
   // Race label from CharacterDataService
   readonly selectedRace = computed(() => this.charData.race() ?? 'human');
 
@@ -41,28 +37,8 @@ export class CharacterCreationStep3CareerComponent {
     return race.charAt(0).toUpperCase() + race.slice(1);
   });
 
-  // Ensure all required alternative choices are made before enabling accept
-  readonly requiredAlternativesSelected = computed(() => {
-    const skills = this.displaySkills();
-    for (let i = 0; i < skills.length; i++) {
-      const s = skills[i];
-      const alts = this.skillAlternatives(s) ?? [];
-      if (alts.length > 0) {
-        const sel = this.getSkillChoice(i);
-        if (!sel) return false;
-      }
-    }
-    const talents = this.displayTalents();
-    for (let j = 0; j < talents.length; j++) {
-      const t = talents[j];
-      const alts = this.talentAlternatives(t) ?? [];
-      if (alts.length > 0) {
-        const sel = this.getTalentChoice(j);
-        if (!sel) return false;
-      }
-    }
-    return true;
-  });
+  // Since skills/talents display was removed, there are no required alternative selections
+  readonly requiredAlternativesSelected = computed(() => true);
 
   // Czy w aktualnej profesji istnieje co najmniej jedna wybieralna cecha (nie jest "-")
   readonly hasSelectableCharacteristic = computed(() => {
@@ -75,7 +51,6 @@ export class CharacterCreationStep3CareerComponent {
 
   // Umożliwiamy akceptację tylko jeśli:
   // - mamy wylosowaną profesję,
-  // - wybrano wszystkie wymagane alternatywy (skills/talents),
   // - oraz jeśli profesja ma wybieralną cechę -> użytkownik musiał wybrać jedną cechę.
   readonly canAccept = computed(() => {
     if (!this.profession()) return false;
@@ -96,135 +71,6 @@ export class CharacterCreationStep3CareerComponent {
     const list = (p?.exitProfessions ?? []) as Array<any>;
     return list.map((x) => x?.name ?? String(x)).join(', ');
   });
-
-  readonly displaySkills = computed(() => {
-    const p = this.profession();
-    return (p?.skills ?? []) as Array<any>;
-  });
-
-  readonly displayTalents = computed(() => {
-    const p = this.profession();
-    return (p?.talents ?? []) as Array<any>;
-  });
-
-  skillName(item: any): string {
-    if (!item) return '';
-    return item.name ?? item.skill?.name ?? String(item);
-  }
-
-  skillAlternatives(item: any): string[] {
-    const alts = (item?.alternativeSkill ?? item?.alternative_skill ?? []) as Array<any>;
-    if (!Array.isArray(alts) || alts.length === 0) return [];
-    return alts
-      .map((x) => x?.skill?.name ?? '')
-      .filter((x) => typeof x === 'string' && x.trim().length > 0);
-  }
-
-  talentName(item: any): string {
-    return item?.talent?.name ?? '';
-  }
-
-  talentAlternatives(item: any): string[] {
-    const alts = (item?.alternativeTalent ?? item?.alternative_talent ?? []) as Array<any>;
-    if (!Array.isArray(alts) || alts.length === 0) return [];
-    return alts
-      .map((x) => x?.talent?.name ?? '')
-      .filter((x) => typeof x === 'string' && x.trim().length > 0);
-  }
-
-  // Skill/Talent text helpers
-  skillDescription(item: any): string {
-    const desc = item?.skill?.description ?? '';
-    return typeof desc === 'string' ? desc.trim() : '';
-  }
-
-  talentDescription(item: any): string {
-    const desc = item?.talent?.description ?? '';
-    return typeof desc === 'string' ? desc.trim() : '';
-  }
-
-  skillAllNames(item: any): string[] {
-    const main = this.skillName(item);
-    const alts = this.skillAlternatives(item) ?? [];
-    const list = [main, ...alts].filter((x) => typeof x === 'string' && x.trim().length > 0);
-    return list;
-  }
-
-  talentAllNames(item: any): string[] {
-    const main = this.talentName(item);
-    const alts = this.talentAlternatives(item) ?? [];
-    const list = [main, ...alts].filter((x) => typeof x === 'string' && x.trim().length > 0);
-    return list;
-  }
-
-  skillAlternativeDescription(item: any, alternativeName: string): string {
-    if (!item || !alternativeName) return '';
-
-    const mainName = this.skillName(item);
-    if (String(mainName).trim().toLowerCase() === String(alternativeName).trim().toLowerCase()) {
-      return this.skillDescription(item);
-    }
-
-    const alts = (item?.alternativeSkill ?? item?.alternative_skill ?? []) as Array<any>;
-    if (!Array.isArray(alts) || alts.length === 0) return '';
-
-    const found = alts.find((a) => {
-      const n = a?.skill?.name ?? '';
-      return String(n).trim().toLowerCase() === String(alternativeName).trim().toLowerCase();
-    });
-
-    const desc = found?.skill?.description ?? '';
-    return typeof desc === 'string' ? desc.trim() : '';
-  }
-
-  talentAlternativeDescription(item: any, alternativeName: string): string {
-    if (!item || !alternativeName) return '';
-
-    const mainName = this.talentName(item);
-    if (String(mainName).trim().toLowerCase() === String(alternativeName).trim().toLowerCase()) {
-      return this.talentDescription(item);
-    }
-
-    const alts = (item?.alternativeTalent ?? item?.alternative_talent ?? []) as Array<any>;
-    if (!Array.isArray(alts) || alts.length === 0) return '';
-
-    const found = alts.find((a) => {
-      const n = a?.talent?.name ?? '';
-      return String(n).trim().toLowerCase() === String(alternativeName).trim().toLowerCase();
-    });
-
-    const desc = found?.talent?.description ?? '';
-    return typeof desc === 'string' ? desc.trim() : '';
-  }
-
-  // Helper to build selection keys and manipulate selection state
-  private skillChoiceKey(index: number) {
-    return `s_${index}`;
-  }
-
-  private talentChoiceKey(index: number) {
-    return `t_${index}`;
-  }
-
-  getSkillChoice(index: number): string | null {
-    return this.skillSelections()[this.skillChoiceKey(index)] ?? null;
-  }
-
-  setSkillChoice(index: number, value: string | null) {
-    const cur = {...this.skillSelections()};
-    cur[this.skillChoiceKey(index)] = value;
-    this.skillSelections.set(cur);
-  }
-
-  getTalentChoice(index: number): string | null {
-    return this.talentSelections()[this.talentChoiceKey(index)] ?? null;
-  }
-
-  setTalentChoice(index: number, value: string | null) {
-    const cur = {...this.talentSelections()};
-    cur[this.talentChoiceKey(index)] = value;
-    this.talentSelections.set(cur);
-  }
 
   // --- START: New state for selectable characteristics (cechy) ---
   // Lists of characteristic headers so template can reference by index and name
@@ -343,9 +189,7 @@ export class CharacterCreationStep3CareerComponent {
   chooseFromList(p: Profession) {
     if (!p) return;
     this.profession.set(p);
-    // reset alternative selections and characteristic picks
-    this.skillSelections.set({});
-    this.talentSelections.set({});
+    // reset characteristic picks
     this.selectedCharacteristic.set(null);
     // Persist cleared selection
     this.charData.setSelectedCharacteristic(null);
@@ -364,9 +208,6 @@ export class CharacterCreationStep3CareerComponent {
     this.fallback.set(null);
     this.candidates.set(null);
 
-    // Clear previous selections
-    this.skillSelections.set({});
-    this.talentSelections.set({});
     // Reset characteristic selection
     this.selectedCharacteristic.set(null);
     // Persist cleared selection
@@ -422,74 +263,15 @@ export class CharacterCreationStep3CareerComponent {
     // Also persist selectedCharacteristic into CharacterDataService to keep global state
     this.charData.setSelectedCharacteristic(this.selectedCharacteristic());
 
-    // Build and persist chosen profession, skills and talents only when user accepts
+    // Persist chosen profession only when user accepts
     const chosen = this.profession();
     if (chosen) {
-      // Build skills list: for each profession skill, if it has alternatives use the user's selection,
-      // otherwise use the skill's name.
-      const finalSkills: any[] = [];
-      const displayedSkills = this.displaySkills();
-      for (let i = 0; i < displayedSkills.length; i++) {
-        const s = displayedSkills[i] as any;
-        // If this item wraps a skill object, prefer that
-        const mainSkill = s?.skill ?? s;
-        const alts = (s?.alternativeSkill ?? s?.alternative_skill ?? []) as Array<any>;
-        if (Array.isArray(alts) && alts.length > 0) {
-          const selName = this.getSkillChoice(i);
-          if (selName) {
-            // Find the alternative object whose name matches selName
-            const foundAlt = alts.find((a) => {
-              const n = a?.name ?? a?.skill?.name ?? (typeof a === 'string' ? a : String(a));
-              return String(n).trim().toLowerCase() === String(selName).trim().toLowerCase();
-            });
-            if (foundAlt) {
-              // alternative structure may be { id, skill } or { id, name }
-              const sk = foundAlt?.skill ?? {id: foundAlt.id, name: foundAlt.name};
-              finalSkills.push(sk);
-            } else {
-              // fallback: try to push mainSkill if available
-              if (mainSkill && mainSkill.id) finalSkills.push(mainSkill);
-            }
-          }
-        } else {
-          if (mainSkill && mainSkill.id) finalSkills.push(mainSkill);
-        }
-      }
-
-      // Build talents list similarly
-      const finalTalents: any[] = [];
-      const displayedTalents = this.displayTalents();
-      for (let j = 0; j < displayedTalents.length; j++) {
-        const t = displayedTalents[j] as any;
-        const mainTalent = t?.talent ?? t;
-        const alts = (t?.alternativeTalent ?? t?.alternative_talent ?? []) as Array<any>;
-        if (Array.isArray(alts) && alts.length > 0) {
-          const selName = this.getTalentChoice(j);
-          if (selName) {
-            const foundAlt = alts.find((a) => {
-              const n = a?.name ?? a?.talent?.name ?? (typeof a === 'string' ? a : String(a));
-              return String(n).trim().toLowerCase() === String(selName).trim().toLowerCase();
-            });
-            if (foundAlt) {
-              const tl = foundAlt?.talent ?? {id: foundAlt.id, name: foundAlt.name};
-              finalTalents.push(tl);
-            } else {
-              if (mainTalent && mainTalent.id) finalTalents.push(mainTalent);
-            }
-          }
-        } else {
-          if (mainTalent && mainTalent.id) finalTalents.push(mainTalent);
-        }
-      }
-
-      // Persist into shared CharacterDataService (store full objects)
       this.charData.setProfession(chosen);
-      // Type expectation: arrays of Skill/Talent
-      this.charData.setProfessionSkills(finalSkills as any);
-      this.charData.setProfessionTalents(finalTalents as any);
+      // clear any previously stored skills/talents (since UI no longer collects them here)
+      this.charData.setProfessionSkills([]);
+      this.charData.setProfessionTalents([]);
     }
 
-    // TODO: Persist chosen career to CharacterDataService / backend in later step.
     // For now we just move forward.
     if (!this.canAccept()) return;
     void this.router.navigate(['/character-create/step-4']);

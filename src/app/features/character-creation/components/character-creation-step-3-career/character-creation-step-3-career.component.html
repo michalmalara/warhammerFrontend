@@ -137,50 +137,6 @@
                 </div>
               </div>
 
-              <div class="lists">
-                @if (p.skills.length) {
-                  <div class="list">
-                    <h4 class="list__title" i18n="Heading@@cc.step3.skills">Skills</h4>
-                    <ul class="list__ul">
-                      @for (s of displaySkills(); track $index) {
-                        <li>
-                          @for (name of skillAllNames(s); track $index) {
-                            <span>{{ name }}</span> @if (s.description) {
-                              - {{ s.description }}
-                            }
-                            @if ($index < skillAllNames(s).length - 1) {
-                              <span> / </span>
-                            }
-                          }
-                          @if (skillDescription(s); as d) {
-                            <span class="list__dash"> - </span><span class="list__descInline">{{ d }}</span>
-                          }
-                        </li>
-                      }
-                    </ul>
-                  </div>
-                }
-                @if (p.talents.length) {
-                  <div class="list">
-                    <h4 class="list__title" i18n="Heading@@cc.step3.talents">Talents</h4>
-                    <ul class="list__ul">
-                      @for (t of displayTalents(); track $index) {
-                        <li>
-                          @for (name of talentAllNames(t); track $index) {
-                            <span>{{ name }}</span> @if (t.description; as d) {
-                              - {{ d }}
-                            }
-                            @if ($index < talentAllNames(t).length - 1) {
-                              <span> / </span>
-                            }
-                          }
-                        </li>
-                      }
-                    </ul>
-                  </div>
-                }
-              </div>
-
               @if (p.entryProfessions.length || p.exitProfessions.length) {
                 <div class="career__foot">
                   @if (p.entryProfessions.length) {
@@ -314,22 +270,6 @@
                         (click)="selectCharacteristicByCell('secondary', $index)">{{ v }}</span>
                     }
                   </div>
-                </div>
-              </div>
-
-              <div class="lists">
-                <div class="list">
-                  <h4 class="list__title">Skills</h4>
-                  <ul class="list__ul">
-                    <li>—</li>
-                  </ul>
-                </div>
-
-                <div class="list">
-                  <h4 class="list__title">Talents</h4>
-                  <ul class="list__ul">
-                    <li>—</li>
-                  </ul>
                 </div>
               </div>
 
