@@ -27,7 +27,11 @@
             @if (professionSkills().length) {
               <ul class="list">
                 @for (ps of professionSkills(); track ps.id) {
-                  <li class="cc-tile cc-tile--hover list__item">
+                  <li
+                    class="cc-tile cc-tile--hover list__item"
+                    [class.cc-selected]="selectedSkillIds().has(ps.id)"
+                    (click)="onProfessionSkillClick(ps)"
+                  >
                     <span class="pill">{{ ps.skill.associatedCharacteristic }}</span>
                     <span class="name">{{ ps.skill.name }}</span>
                     @if (ps.description || ps.skill.description) {
@@ -50,7 +54,7 @@
             @if (professionTalents().length) {
               <ul class="list">
                 @for (pt of professionTalents(); track pt.id) {
-                  <li class="cc-tile cc-tile--hover list__item">
+                  <li class="cc-tile cc-tile--hover list__item" [class.cc-selected]="selectedTalentIds().has(pt.id)">
                     <span class="name">{{ pt.talent.name }}</span>
                     @if (pt.description || pt.talent.description) {
                       <span class="desc">({{ pt.description || pt.talent.description }})</span>

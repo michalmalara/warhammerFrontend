@@ -37,10 +37,12 @@
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
 }
 
-.cc-tile--hover:hover {
-  transform: translateY(-2px);
+/* apply hover only for tiles that are NOT .cc-selected */
+.cc-tile--hover:not(.cc-selected):hover {
   border-color: rgba(189, 15, 44, 0.55);
+  transform: translateY(-2px);
   box-shadow: 0 10px 26px rgba(189, 15, 44, 0.08);
+  cursor: pointer;
 }
 
 .cc-tile__k {

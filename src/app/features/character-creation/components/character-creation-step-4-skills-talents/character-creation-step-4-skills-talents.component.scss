@@ -90,6 +90,15 @@
   color: rgba(255, 255, 255, 0.75);
 }
 
+/* Selected highlight: red border + subtle shadow */
+.cc-selected {
+  border: 1px solid #bd0f2c8c; /* match .cc-tile--hover:hover border-color */
+  box-shadow: 0 10px 26px #bd0f2c14; /* match .cc-tile--hover:hover shadow */
+  border-radius: 6px;
+  transition: box-shadow 160ms ease-in-out, transform 160ms ease-in-out;
+  transform-origin: center;
+}
+
 /* Stare hero/footer nie są już używane po ujednoliceniu do kroku 2. */
 .hero,
 .footer {
