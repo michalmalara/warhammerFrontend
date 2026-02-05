@@ -91,11 +91,47 @@ export class CharacterCreationStep4SkillsTalentsComponent {
     this.selectedProfessionSkills.set([...withoutAlternatives, profession]);
   }
 
+  onProfessionTalentClick(professionTalent: ProfessionTalent) {
+    const current = this.selectedProfessionTalents();
+    const isSelected = this.selectedTalentIds().has(professionTalent.id);
+
+    if (isSelected) {
+      this.selectedProfessionTalents.set(current.filter((t) => t.id !== professionTalent.id));
+      return;
+    }
+
+    const altIds: number[] = Array.isArray(professionTalent.alternativeTalent)
+      ? professionTalent.alternativeTalent.map((a) => a?.id).filter((id): id is number => typeof id === 'number')
+      : [];
+
+    const withoutAlternatives = altIds.length > 0
+      ? current.filter((t) => !altIds.includes(t.id))
+      : current;
+
+    this.selectedProfessionTalents.set([...withoutAlternatives, professionTalent]);
+  }
+
+  // Add aliases matching template bindings
+  onSkillTileClick(skill: ProfessionSkill) {
+    this.onProfessionSkillClick(skill);
+  }
+
+  onTalentTileClick(talent: ProfessionTalent) {
+    this.onProfessionTalentClick(talent);
+  }
+
   goPrev() {
     void this.router.navigate(['/character-create/step-3']);
   }
 
   goNext() {
+    // Save selected profession skills and talents into CharacterDataService before navigating
+    const skills = this.selectedProfessionSkills().map(ps => ps.skill);
+    const talents = this.selectedProfessionTalents().map(pt => pt.talent);
+
+    this.charData.setProfessionSkills(skills);
+    this.charData.setProfessionTalents(talents);
+
     void this.router.navigate(['/character-create/step-5']);
   }
 }

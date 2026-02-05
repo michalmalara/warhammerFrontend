@@ -30,7 +30,7 @@
                   <li
                     class="cc-tile cc-tile--hover list__item"
                     [class.cc-selected]="selectedSkillIds().has(ps.id)"
-                    (click)="onProfessionSkillClick(ps)"
+                    (click)="onSkillTileClick(ps)"
                   >
                     <span class="pill">{{ ps.skill.associatedCharacteristic }}</span>
                     <span class="name">{{ ps.skill.name }}</span>
@@ -54,7 +54,8 @@
             @if (professionTalents().length) {
               <ul class="list">
                 @for (pt of professionTalents(); track pt.id) {
-                  <li class="cc-tile cc-tile--hover list__item" [class.cc-selected]="selectedTalentIds().has(pt.id)">
+                  <li class="cc-tile cc-tile--hover list__item" [class.cc-selected]="selectedTalentIds().has(pt.id)"
+                      (click)="onTalentTileClick(pt)">
                     <span class="name">{{ pt.talent.name }}</span>
                     @if (pt.description || pt.talent.description) {
                       <span class="desc">({{ pt.description || pt.talent.description }})</span>
