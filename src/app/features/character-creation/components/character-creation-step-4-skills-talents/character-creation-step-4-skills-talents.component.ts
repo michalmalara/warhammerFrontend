@@ -25,6 +25,12 @@ export class CharacterCreationStep4SkillsTalentsComponent {
   readonly professionSkills = computed(() => this.profession()?.skills ?? []);
   readonly professionTalents = computed(() => this.profession()?.talents ?? []);
 
+  readonly raceSkills = computed(() => this.charData.raceSkills());
+  readonly raceTalents = computed(() => this.charData.raceTalents());
+
+  readonly raceSkillLinks = computed(() => this.charData.raceSkillLinks());
+  readonly raceTalentLinks = computed(() => this.charData.raceTalentLinks());
+
   readonly selectedProfessionSkills: WritableSignal<ProfessionSkill[]> = signal([]);
   readonly selectedProfessionTalents: WritableSignal<ProfessionTalent[]> = signal([]);
 

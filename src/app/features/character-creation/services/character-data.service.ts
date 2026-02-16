@@ -2,7 +2,15 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {DiceService} from '../../../shared/services/dice.service';
 import {type CharacterCreationBio, type CharacterRace, DEFAULT_STEP_1} from '../models/character-creation.models';
 import {RaceBaseService} from './race-bases.service';
-import type {Profession, Skill, Talent} from '../../professions/models/profession.models';
+import type {
+  Profession,
+  ProfessionSkill,
+  ProfessionTalent,
+  Skill,
+  Talent
+} from '../../professions/models/profession.models';
+import {RacePerksApiService} from "./race-perks-api.service";
+import {firstValueFrom} from "rxjs";
 
 export type PrimaryStatId = 'WS' | 'BS' | 'S' | 'T' | 'Ag' | 'Int' | 'WP' | 'Fel';
 
@@ -37,6 +45,7 @@ export class CharacterDataService {
   private readonly dice = inject(DiceService);
   // Inject RaceBaseService to provide race-dependent base values
   private readonly raceBases = inject(RaceBaseService);
+  private readonly racePerksApi = inject(RacePerksApiService);
 
   // Przechowywana (wylosowana / wybrana) profesja — dostępna dla innych kroków tworzenia postaci
   readonly profession = signal<Profession | null>(null);
@@ -45,6 +54,12 @@ export class CharacterDataService {
   // Przechowujemy pełne obiekty `Skill` i `Talent` (przydatne do dalszego zapisu na backend).
   readonly professionSkills = signal<Skill[]>([]);
   readonly professionTalents = signal<Talent[]>([]);
+
+  readonly raceSkillLinks = signal<ProfessionSkill[]>([]);
+  readonly raceTalentLinks = signal<ProfessionTalent[]>([]);
+
+  readonly raceSkills = computed(() => this.raceSkillLinks().map(l => l.skill));
+  readonly raceTalents = computed(() => this.raceTalentLinks().map(l => l.talent));
 
   // Zapisana (zaakceptowana) darmowa rozwiniecie wybranej cechy
   readonly freeAdvance = signal<FreeAdvance | null>(null);
@@ -101,9 +116,32 @@ export class CharacterDataService {
   // --- race (moved here) ---
   readonly race = signal<CharacterRace | null>(DEFAULT_STEP_1.race);
 
+  private loadRacePerks = async (race: CharacterRace | null) => {
+    if (!race) {
+      this.raceSkillLinks.set([]);
+      this.raceTalentLinks.set([]);
+      return;
+    }
+
+    try {
+      const [raceSkillLinks, raceTalentLinks] = await Promise.all([
+        firstValueFrom(this.racePerksApi.getRaceSkills(race)),
+        firstValueFrom(this.racePerksApi.getRaceTalents(race)),
+      ]);
+
+      this.raceSkillLinks.set(Array.isArray(raceSkillLinks) ? raceSkillLinks : []);
+      this.raceTalentLinks.set(Array.isArray(raceTalentLinks) ? raceTalentLinks : []);
+    } catch (e) {
+      console.warn("[CharacterDataService] Failed to load race perks", e);
+      this.raceSkillLinks.set([]);
+      this.raceTalentLinks.set([]);
+    }
+  };
+
   // helper API to update race from UI
   setRace(r: CharacterRace) {
     this.race.set(r);
+    void this.loadRacePerks(r);
     // When race changes update primary stat bases to race-specific defaults
     const bases = this.raceBases.getPrimaryBases(r);
     this.primaryStats.update(prev => prev.map(s => ({...s, base: bases[s.id]})));
