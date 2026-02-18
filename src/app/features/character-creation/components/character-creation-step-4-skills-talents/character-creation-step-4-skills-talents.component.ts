@@ -119,10 +119,12 @@ export class CharacterCreationStep4SkillsTalentsComponent {
 
   // Add aliases matching template bindings
   onSkillTileClick(skill: ProfessionSkill) {
+    if (skill.alternativeSkill.length === 0) return;
     this.onProfessionSkillClick(skill);
   }
 
   onTalentTileClick(talent: ProfessionTalent) {
+    if (talent.alternativeTalent.length === 0) return;
     this.onProfessionTalentClick(talent);
   }
 
