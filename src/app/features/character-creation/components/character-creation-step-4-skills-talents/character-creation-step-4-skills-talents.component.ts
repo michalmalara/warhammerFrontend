@@ -25,18 +25,32 @@ export class CharacterCreationStep4SkillsTalentsComponent {
   readonly professionSkills = computed(() => this.profession()?.skills ?? []);
   readonly professionTalents = computed(() => this.profession()?.talents ?? []);
 
-  readonly raceSkills = computed(() => this.charData.raceSkills());
-  readonly raceTalents = computed(() => this.charData.raceTalents());
-
   readonly raceSkillLinks = computed(() => this.charData.raceSkillLinks());
   readonly raceTalentLinks = computed(() => this.charData.raceTalentLinks());
 
-  readonly selectedProfessionSkills: WritableSignal<ProfessionSkill[]> = signal([]);
-  readonly selectedProfessionTalents: WritableSignal<ProfessionTalent[]> = signal([]);
+  private readonly hasNoAlternatives = (alternatives: unknown): boolean => {
+    if (!alternatives) return true;
+    return Array.isArray(alternatives) ? alternatives.length === 0 : true;
+  };
 
-  // Computed sets for quick membership checks in template
-  readonly selectedSkillIds = computed(() => new Set(this.selectedProfessionSkills().map((s) => s.id)));
-  readonly selectedTalentIds = computed(() => new Set(this.selectedProfessionTalents().map((t) => t.id)));
+  private readonly lockedRaceSkillIds = computed(() => {
+    const links = this.raceSkillLinks();
+    const locked = (Array.isArray(links) ? links : []).filter((s) => this.hasNoAlternatives(s?.alternativeSkill));
+    return new Set(locked.map((s) => s.id));
+  });
+
+  private readonly lockedRaceTalentIds = computed(() => {
+    const links = this.raceTalentLinks();
+    const locked = (Array.isArray(links) ? links : []).filter((t) => this.hasNoAlternatives(t?.alternativeTalent));
+    return new Set(locked.map((t) => t.id));
+  });
+
+  private readonly mergeUniqueById = <T extends { id: number }>(current: T[], toAdd: T[]): T[] => {
+    const map = new Map<number, T>();
+    for (const item of current ?? []) map.set(item.id, item);
+    for (const item of toAdd ?? []) map.set(item.id, item);
+    return Array.from(map.values());
+  };
 
   constructor() {
     effect(() => {
@@ -48,15 +62,34 @@ export class CharacterCreationStep4SkillsTalentsComponent {
       }
 
       const skills: ProfessionSkill[] = Array.isArray(prof.skills)
-        ? prof.skills.filter((s: ProfessionSkill) => !(s.alternativeSkill && s.alternativeSkill.length > 0))
+        ? prof.skills.filter((s) => !(s.alternativeSkill && s.alternativeSkill.length > 0))
         : [];
 
       const talents: ProfessionTalent[] = Array.isArray(prof.talents)
-        ? prof.talents.filter((t: ProfessionTalent) => !(t.alternativeTalent && t.alternativeTalent.length > 0))
+        ? prof.talents.filter((t) => !(t.alternativeTalent && t.alternativeTalent.length > 0))
         : [];
 
       this.selectedProfessionSkills.set(skills);
       this.selectedProfessionTalents.set(talents);
+    });
+
+    effect(() => {
+      const prof = this.profession();
+      if (!prof) return;
+
+      const raceSkillLinks = this.raceSkillLinks();
+      const raceTalentLinks = this.raceTalentLinks();
+
+      const raceSkillsToAutoSelect = (Array.isArray(raceSkillLinks) ? raceSkillLinks : []).filter((s) =>
+        this.hasNoAlternatives(s?.alternativeSkill),
+      );
+
+      const raceTalentsToAutoSelect = (Array.isArray(raceTalentLinks) ? raceTalentLinks : []).filter((t) =>
+        this.hasNoAlternatives(t?.alternativeTalent),
+      );
+
+      this.selectedProfessionSkills.update((current) => this.mergeUniqueById(current, raceSkillsToAutoSelect));
+      this.selectedProfessionTalents.update((current) => this.mergeUniqueById(current, raceTalentsToAutoSelect));
     });
   }
 
@@ -77,7 +110,15 @@ export class CharacterCreationStep4SkillsTalentsComponent {
     }
   });
 
+  readonly selectedProfessionSkills: WritableSignal<ProfessionSkill[]> = signal([]);
+  readonly selectedProfessionTalents: WritableSignal<ProfessionTalent[]> = signal([]);
+
+  // Computed sets for quick membership checks in template
+  readonly selectedSkillIds = computed(() => new Set(this.selectedProfessionSkills().map((s) => s.id)));
+  readonly selectedTalentIds = computed(() => new Set(this.selectedProfessionTalents().map((t) => t.id)));
+
   onProfessionSkillClick(profession: ProfessionSkill) {
+    if (this.lockedRaceSkillIds().has(profession.id)) return;
     const current = this.selectedProfessionSkills();
     const isSelected = this.selectedSkillIds().has(profession.id);
 
@@ -98,6 +139,7 @@ export class CharacterCreationStep4SkillsTalentsComponent {
   }
 
   onProfessionTalentClick(professionTalent: ProfessionTalent) {
+    if (this.lockedRaceTalentIds().has(professionTalent.id)) return;
     const current = this.selectedProfessionTalents();
     const isSelected = this.selectedTalentIds().has(professionTalent.id);
 
@@ -119,12 +161,14 @@ export class CharacterCreationStep4SkillsTalentsComponent {
 
   // Add aliases matching template bindings
   onSkillTileClick(skill: ProfessionSkill) {
-    if (skill.alternativeSkill.length === 0) return;
+    if (this.lockedRaceSkillIds().has(skill.id)) return;
+    if ((skill.alternativeSkill ?? []).length === 0) return;
     this.onProfessionSkillClick(skill);
   }
 
   onTalentTileClick(talent: ProfessionTalent) {
-    if (talent.alternativeTalent.length === 0) return;
+    if (this.lockedRaceTalentIds().has(talent.id)) return;
+    if ((talent.alternativeTalent ?? []).length === 0) return;
     this.onProfessionTalentClick(talent);
   }
 

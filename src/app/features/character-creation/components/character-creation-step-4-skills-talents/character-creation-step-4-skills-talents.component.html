@@ -25,7 +25,7 @@
 
           @if (raceSkillLinks().length) {
             <ul class="list">
-              @for (ps of raceSkillLinks(); track ps.skill.id) {
+              @for (ps of raceSkillLinks(); track ps.id) {
                 <li class="cc-tile list__item">
                   <span class="pill">{{ ps.skill.associatedCharacteristic }}</span>
                   <span class="name">{{ ps.skill.name }}</span>
@@ -48,7 +48,7 @@
 
           @if (raceTalentLinks().length) {
             <ul class="list">
-              @for (pt of raceTalentLinks(); track pt.talent.id) {
+              @for (pt of raceTalentLinks(); track pt.id) {
                 <li class="cc-tile list__item">
                   <span class="name">{{ pt.talent.name }}</span>
                   @if (pt.description || pt.talent.description) {
