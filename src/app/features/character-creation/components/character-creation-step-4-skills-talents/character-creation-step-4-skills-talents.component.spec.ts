@@ -29,4 +29,57 @@ describe('CharacterCreationStep4SkillsTalentsComponent', () => {
     const el: HTMLElement = fixture.nativeElement;
     expect(el.textContent).toContain('No career selected');
   });
+
+  it('should auto-select racial skills without alternatives', () => {
+    const fixture = TestBed.createComponent(CharacterCreationStep4SkillsTalentsComponent);
+    const charData = TestBed.inject(CharacterDataService);
+
+    charData.raceSkillLinks.set([
+      {id: 101, alternativeSkill: [], skill: {id: 1, name: 'A'} as any} as any,
+      {id: 102, alternativeSkill: [{id: 999}] as any, skill: {id: 2, name: 'B'} as any} as any,
+    ] as any);
+
+    charData.setProfession({
+      id: 1,
+      name: 'Test',
+      skills: [],
+      talents: [],
+    } as any);
+
+    fixture.detectChanges();
+
+    const selectedIds = fixture.componentInstance.selectedSkillIds();
+    expect(selectedIds.has(101)).toBeTrue();
+    expect(selectedIds.has(102)).toBeFalse();
+  });
+
+  it('should not duplicate auto-selected racial skills on re-run', () => {
+    const fixture = TestBed.createComponent(CharacterCreationStep4SkillsTalentsComponent);
+    const charData = TestBed.inject(CharacterDataService);
+
+    charData.raceSkillLinks.set([
+      {id: 201, alternativeSkill: [], skill: {id: 1, name: 'A'} as any} as any,
+    ] as any);
+
+    charData.setProfession({
+      id: 1,
+      name: 'Test',
+      skills: [],
+      talents: [],
+    } as any);
+
+    fixture.detectChanges();
+
+    const first = fixture.componentInstance.selectedProfessionSkills().filter((s) => s.id === 201).length;
+    expect(first).toBe(1);
+
+    charData.raceSkillLinks.set([
+      {id: 201, alternativeSkill: [], skill: {id: 1, name: 'A'} as any} as any,
+    ] as any);
+
+    fixture.detectChanges();
+
+    const second = fixture.componentInstance.selectedProfessionSkills().filter((s) => s.id === 201).length;
+    expect(second).toBe(1);
+  });
 });
