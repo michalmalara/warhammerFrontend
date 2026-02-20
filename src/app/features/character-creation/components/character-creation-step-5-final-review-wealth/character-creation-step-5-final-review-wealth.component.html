@@ -11,69 +11,6 @@
     </header>
 
     <div class="grid">
-      <section class="cc-card card--left">
-        <header class="card__header">
-          <h3 class="card__title">Final Review &amp; Provisioning</h3>
-          <p class="card__subtitle">Review your starting wealth and trappings before you commit the character.</p>
-        </header>
-
-        <div class="card__body">
-          <section class="cc-panel wealth">
-            <div class="wealth__copy">
-              <h3 class="wealth__title">Starting Wealth</h3>
-              <p class="wealth__desc">Roll 2d10 Gold Crowns (gc) to see what Sigmar has provided.</p>
-            </div>
-
-            <div class="wealth__actions">
-              <div class="wealth__current">
-                <span class="wealth__label">Current Gold</span>
-                @if (goldCrowns() !== null) {
-                  <span class="wealth__value">{{ goldCrowns() }} gc</span>
-                } @else {
-                  <span class="wealth__value">-- gc</span>
-                }
-              </div>
-
-              <button type="button" class="wealth__roll" (click)="rollForWealth()">
-                <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
-                Roll for Wealth
-              </button>
-            </div>
-          </section>
-
-          <section class="cc-panel trappings">
-            <div class="trappings__head">
-              <h3 class="trappings__title">
-                <mat-icon fontIcon="backpack"></mat-icon>
-                Starting Trappings
-              </h3>
-              <span class="trappings__meta">Inventory Limit: {{ trappings().length }}/25</span>
-            </div>
-
-            @if (trappings().length) {
-              <div class="trappings__grid" role="list">
-                @for (item of trappings(); track item) {
-                  <div class="trap" role="listitem">
-                    <div class="trap__icon">
-                      <mat-icon fontIcon="work"></mat-icon>
-                    </div>
-                    <div class="trap__body">
-                      <h4 class="trap__name">{{ item }}</h4>
-                      <p class="trap__desc">Starting item</p>
-                    </div>
-                    <span class="trap__enc">— enc</span>
-                  </div>
-                }
-              </div>
-            } @else {
-              <div class="empty" i18n="Empty message@@cc.final.trappings.empty">No trappings on the profession. Please
-                fill the "trappings" field on the profession.
-              </div>
-            }
-          </section>
-        </div>
-      </section>
-
       <aside class="cc-card card--right">
         <header class="card__header">
           <h3 class="card__title">Character Sheet</h3>
@@ -144,8 +81,13 @@
                 <h5 class="highlights-col__title">Skills</h5>
                 @if (skillsHighlights().length) {
                   <ul class="highlights">
-                    @for (s of skillsHighlights(); track s) {
-                      <li>• {{ s }}</li>
+                    @for (s of skillsHighlights(); track s.id) {
+                      <li>
+                        <span class="highlight__name">• {{ s.name }}</span>
+                        @if (s.description) {
+                          <span class="highlight__desc"> ({{ s.description }})</span>
+                        }
+                      </li>
                     }
                   </ul>
                 } @else {
@@ -157,8 +99,13 @@
                 <h5 class="highlights-col__title">Talents</h5>
                 @if (talentsHighlights().length) {
                   <ul class="highlights">
-                    @for (t of talentsHighlights(); track t) {
-                      <li>• {{ t }}</li>
+                    @for (t of talentsHighlights(); track t.id) {
+                      <li>
+                        <span class="highlight__name">• {{ t.name }}</span>
+                        @if (t.description) {
+                          <span class="highlight__desc"> ({{ t.description }})</span>
+                        }
+                      </li>
                     }
                   </ul>
                 } @else {
@@ -169,6 +116,69 @@
           </section>
         </div>
       </aside>
+
+      <section class="cc-card card--left">
+        <header class="card__header">
+          <h3 class="card__title">Final Review &amp; Provisioning</h3>
+          <p class="card__subtitle">Review your starting wealth and trappings before you commit the character.</p>
+        </header>
+
+        <div class="card__body">
+          <section class="cc-panel wealth">
+            <div class="wealth__copy">
+              <h3 class="wealth__title">Starting Wealth</h3>
+              <p class="wealth__desc">Roll 2d10 Gold Crowns (gc) to see what Sigmar has provided.</p>
+            </div>
+
+            <div class="wealth__actions">
+              <div class="wealth__current">
+                <span class="wealth__label">Current Gold</span>
+                @if (goldCrowns() !== null) {
+                  <span class="wealth__value">{{ goldCrowns() }} gc</span>
+                } @else {
+                  <span class="wealth__value">-- gc</span>
+                }
+              </div>
+
+              <button type="button" class="wealth__roll" (click)="rollForWealth()">
+                <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
+                Roll for Wealth
+              </button>
+            </div>
+          </section>
+
+          <section class="cc-panel trappings">
+            <div class="trappings__head">
+              <h3 class="trappings__title">
+                <mat-icon fontIcon="backpack"></mat-icon>
+                Starting Trappings
+              </h3>
+              <span class="trappings__meta">Inventory Limit: {{ trappings().length }}/25</span>
+            </div>
+
+            @if (trappings().length) {
+              <div class="trappings__grid" role="list">
+                @for (item of trappings(); track item) {
+                  <div class="trap" role="listitem">
+                    <div class="trap__icon">
+                      <mat-icon fontIcon="work"></mat-icon>
+                    </div>
+                    <div class="trap__body">
+                      <h4 class="trap__name">{{ item }}</h4>
+                      <p class="trap__desc">Starting item</p>
+                    </div>
+                    <span class="trap__enc">— enc</span>
+                  </div>
+                }
+              </div>
+            } @else {
+              <div class="empty" i18n="Empty message@@cc.final.trappings.empty">No trappings on the profession. Please
+                fill the "trappings" field on the profession.
+              </div>
+            }
+          </section>
+        </div>
+      </section>
     </div>
 
     <div class="cc-footer-nav">

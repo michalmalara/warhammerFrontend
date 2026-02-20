@@ -282,6 +282,17 @@
   list-style: none;
   font-style: italic;
   opacity: 0.92;
+  column-count: 2;
+  -webkit-column-count: 2;
+  column-gap: 12px;
+  -webkit-column-gap: 12px;
+}
+
+/* layout the two highlight columns (Skills | Talents) side by side */
+.highlights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 .empty {
@@ -290,9 +301,25 @@
   padding: 10px 0;
 }
 
+.highlight__name {
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.highlight__desc {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 12px;
+  opacity: 0.8;
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.85);
+  vertical-align: baseline;
+}
+
 @media (min-width: 1024px) {
   .grid {
-    grid-template-columns: 7fr 5fr;
+    grid-template-columns: 1fr; /* force two rows: one card per row even on wide screens */
+    grid-template-rows: auto auto;
     align-items: start;
   }
 
