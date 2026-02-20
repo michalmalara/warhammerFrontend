@@ -72,6 +72,21 @@ export class CharacterCreationStep5FinalReviewWealthComponent {
     }
   };
 
+  async goNextToSave() {
+    // Reset character-creation state before navigating away
+    this.charData.reset();
+    await this.router.navigate(['/characters']);
+  }
+
+  // Fallback: ensure reset when component is destroyed and user left the flow
+  ngOnDestroy() {
+    try {
+      this.charData.reset();
+    } catch (e) {
+      // swallow - cleanup best-effort
+    }
+  }
+
   get portraitUrlString(): string {
     return this.portraitUrl();
   }

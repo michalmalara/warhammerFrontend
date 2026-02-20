@@ -154,6 +154,37 @@ export class CharacterDataService {
     this.setFreeAdvance(null);
   }
 
+  // Reset all character-creation related state to defaults.
+  reset() {
+    this.profession.set(null);
+    this.professionSkills.set([]);
+    this.professionTalents.set([]);
+    this.raceSkillLinks.set([]);
+    this.raceTalentLinks.set([]);
+    this.race.set(DEFAULT_STEP_1.race);
+    this.freeAdvance.set(null);
+    this.primaryStats.set([
+      {id: 'WS', label: 'WS', fullName: 'Weapon Skill', base: 20, rolledStat: undefined, shallyasMercy: false},
+      {id: 'BS', label: 'BS', fullName: 'Ballistic Skill', base: 20, rolledStat: undefined, shallyasMercy: false},
+      {id: 'S', label: 'S', fullName: 'Strength', base: 20, rolledStat: undefined, shallyasMercy: false},
+      {id: 'T', label: 'T', fullName: 'Toughness', base: 20, rolledStat: undefined, shallyasMercy: false},
+      {id: 'Ag', label: 'Ag', fullName: 'Agility', base: 20, rolledStat: undefined, shallyasMercy: false},
+      {id: 'Int', label: 'Int', fullName: 'Intelligence', base: 20, rolledStat: undefined, shallyasMercy: false},
+      {id: 'WP', label: 'WP', fullName: 'Willpower', base: 20, rolledStat: undefined, shallyasMercy: false},
+      {id: 'Fel', label: 'Fel', fullName: 'Fellowship', base: 20, rolledStat: undefined, shallyasMercy: false},
+    ]);
+    this.secondaryStats.set({A: 1, W: 0, SB: 0, TB: 0, M: 5, Mag: 0, IP: 0, FP: 0});
+    this.lastRollDisplay.set('-');
+    this.isRolling.set(false);
+    this.bio.set(DEFAULT_STEP_1.bio);
+    this.goldCrowns.set(null);
+    this.selectedStat.set(null);
+    this.selectedCharacteristic.set(null);
+    // reset caches
+    this.lastMappedW = null;
+    this.lastComputedFP = null;
+  }
+
   // --- primary stats
   readonly primaryStats = signal<PrimaryStat[]>([
     {id: 'WS', label: 'WS', fullName: 'Weapon Skill', base: 20, rolledStat: undefined, shallyasMercy: false},

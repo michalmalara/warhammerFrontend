@@ -240,4 +240,23 @@ export class CharacterSaveService {
 
     await firstValueFrom(this.charactersApi.create(payload));
   };
+
+  // Reset internal state used during character creation/save flow. Kept defensive.
+  reset(): void {
+    try {
+      // If implementation stores any temporary state, clear it here.
+      // Use (this as any) to avoid strict typing issues for unknown fields.
+      const self: any = this as any;
+      if (self.isPending) self.isPending = false;
+      if (self.tempPayload) self.tempPayload = undefined;
+      if (typeof self.clearCache === 'function') {
+        try {
+          self.clearCache();
+        } catch (e) { /* best-effort */
+        }
+      }
+    } catch (e) {
+      // swallow - reset is best-effort
+    }
+  }
 }

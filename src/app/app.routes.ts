@@ -38,6 +38,7 @@ import {
 } from './features/character-creation/components/character-creation-step-5-final-review-wealth/character-creation-step-5-final-review-wealth.component';
 import {LoginComponent} from './features/auth/components/login/login.component';
 import {AUTH_GUARD} from './features/auth/guards/auth.guard';
+import {CharacterCreationExitGuard} from './features/character-creation/guards/character-creation-exit.guard';
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'characters'},
@@ -52,6 +53,7 @@ export const routes: Routes = [
     path: 'character-create',
     component: CharacterCreationShellComponent,
     canActivate: [AUTH_GUARD],
+    canDeactivate: [CharacterCreationExitGuard],
     children: [
       {path: '', pathMatch: 'full', redirectTo: 'step-1'},
       {path: 'step-1', component: CharacterCreationStep1BioRaceComponent},
