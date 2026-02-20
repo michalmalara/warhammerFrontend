@@ -40,11 +40,61 @@ export class CharacterCreationStep4SkillsTalentsComponent {
     return `${name}::${desc}`;
   };
 
+  readonly normalizeTalent = (pt: any): ProfessionTalent => {
+    if (!pt) return {talent: {id: undefined as any, name: '', description: ''}} as ProfessionTalent;
+    if (typeof pt === 'string') {
+      return {talent: {id: undefined as any, name: pt, description: ''}} as ProfessionTalent;
+    }
+    if (typeof pt === 'number') {
+      return {talent: {id: pt as any, name: '', description: ''}, id: pt} as ProfessionTalent;
+    }
+    const out: any = {...(pt ?? {})};
+    // accept nested talent data under either 'talent' or legacy 'skill' key
+    const talentObj = out.talent ?? out.skill ?? {};
+    const idFromNested = talentObj?.id ?? undefined;
+    const nameFromNested = talentObj?.name ?? undefined;
+    const nameFromTop = out.name ?? undefined;
+    const name = nameFromNested ?? nameFromTop ?? '';
+    const desc = out.description ?? talentObj?.description ?? '';
+    out.talent = {id: idFromNested, name, description: desc};
+    out.description = desc;
+    // keep top-level id for profession-talent link if present; otherwise prefer nested talent id
+    if (typeof out.id !== 'number' && typeof idFromNested === 'number') {
+      out.id = idFromNested;
+    }
+    return out as ProfessionTalent;
+  };
+
   readonly getTalentKey = (pt: ProfessionTalent | null | undefined): string => {
-    if (!pt) return '';
-    const name = pt.talent?.name ?? '';
-    const desc = (pt.description ?? pt.talent?.description ?? '') ?? '';
-    return `${name}::${desc}`;
+    const norm = this.normalizeTalent(pt as any);
+    const id = (norm.talent as any)?.id;
+    const name = norm.talent?.name ?? '';
+    const desc = (norm.description ?? norm.talent?.description ?? '') ?? '';
+    return typeof id === 'number' && Number.isFinite(id) ? `id:${id}` : `${name}::${desc}`;
+  };
+
+  // Compare two talent-like objects robustly regardless of whether they are link objects, nested, or simple values
+  private readonly talentEquals = (a: any, b: any): boolean => {
+    const na = this.normalizeTalent(a as any);
+    const nb = this.normalizeTalent(b as any);
+
+    const aTalentId = (na.talent as any)?.id;
+    const bTalentId = (nb.talent as any)?.id;
+    if (typeof aTalentId === 'number' && typeof bTalentId === 'number') return aTalentId === bTalentId;
+
+    const aTopId = (na as any)?.id;
+    const bTopId = (nb as any)?.id;
+    if (typeof aTopId === 'number' && typeof bTopId === 'number') return aTopId === bTopId;
+
+    const aName = (na.talent?.name ?? '').toString().trim().toLowerCase();
+    const bName = (nb.talent?.name ?? '').toString().trim().toLowerCase();
+    if (aName && bName && aName === bName) {
+      const aDesc = (na.description ?? na.talent?.description ?? '').toString().trim().toLowerCase();
+      const bDesc = (nb.description ?? nb.talent?.description ?? '').toString().trim().toLowerCase();
+      return aDesc === bDesc;
+    }
+
+    return false;
   };
 
   private readonly lockedRaceSkillKeys = computed(() => {
@@ -59,15 +109,23 @@ export class CharacterCreationStep4SkillsTalentsComponent {
     return new Set(locked.map((t) => this.getTalentKey(t as ProfessionTalent)));
   });
 
-  private readonly mergeUniqueByKey = <T>(current: T[], toAdd: T[], keyOf: (t: T) => string): T[] => {
-    const map = new Map<string, T>();
+  private readonly mergeUniqueByKey = <T extends { id?: number }>(current: T[], toAdd: T[]): T[] => {
+    const map = new Map<string | number, T>();
     for (const item of current ?? []) {
-      const k = keyOf(item as T);
-      if (k) map.set(k, item);
+      const id = (item as any)?.id;
+      if (typeof id === 'number') {
+        map.set(id, item);
+      } else {
+        map.set(JSON.stringify(item), item);
+      }
     }
     for (const item of toAdd ?? []) {
-      const k = keyOf(item as T);
-      if (k) map.set(k, item);
+      const id = (item as any)?.id;
+      if (typeof id === 'number') {
+        map.set(id, item);
+      } else {
+        map.set(JSON.stringify(item), item);
+      }
     }
     return Array.from(map.values());
   };
@@ -86,7 +144,7 @@ export class CharacterCreationStep4SkillsTalentsComponent {
         : [];
 
       const talents: ProfessionTalent[] = Array.isArray(prof.talents)
-        ? prof.talents.filter((t) => !(t.alternativeTalent && t.alternativeTalent.length > 0))
+        ? prof.talents.filter((t) => !(t.alternativeTalent && t.alternativeTalent.length > 0)).map(t => this.normalizeTalent(t as any))
         : [];
 
       this.selectedProfessionSkills.set(skills);
@@ -105,15 +163,13 @@ export class CharacterCreationStep4SkillsTalentsComponent {
         : [];
 
       const talents: ProfessionTalent[] = Array.isArray(raceTalentLinks)
-        ? raceTalentLinks.filter((t) => !(t.alternativeTalent && t.alternativeTalent.length > 0))
+        ? raceTalentLinks
+          .filter((t) => !(t.alternativeTalent && t.alternativeTalent.length > 0))
+          .map(t => this.normalizeTalent(t as any))
         : [];
 
-      console.log(skills, talents)
-
-      this.selectedProfessionSkills.update((current) => this.mergeUniqueByKey(current, skills as any, this.getSkillKey as any));
-      this.selectedProfessionTalents.update((current) => this.mergeUniqueByKey(current, talents as any, this.getTalentKey as any));
-
-      console.log(this.selectedProfessionSkills(), this.selectedProfessionTalents())
+      this.selectedProfessionSkills.update((current) => this.mergeUniqueByKey(current, skills as any));
+      this.selectedProfessionTalents.update((current) => this.mergeUniqueByKey(current, talents as any));
     });
   }
 
@@ -140,25 +196,25 @@ export class CharacterCreationStep4SkillsTalentsComponent {
   readonly selectedSkillIds = computed(() => new Set(this.selectedProfessionSkills().map((s) => this.getSkillKey(s))));
   readonly selectedTalentIds = computed(() => new Set(this.selectedProfessionTalents().map((t) => this.getTalentKey(t))));
 
-  onProfessionSkillClick(profession: ProfessionSkill) {
-    if (this.lockedRaceSkillKeys().has(this.getSkillKey(profession))) return;
+  onProfessionSkillClick(professionSkill: ProfessionSkill) {
+    if (this.lockedRaceSkillKeys().has(this.getSkillKey(professionSkill))) return;
     const current = this.selectedProfessionSkills();
-    const isSelected = this.selectedSkillIds().has(this.getSkillKey(profession));
+    const isSelected = this.selectedSkillIds().has(this.getSkillKey(professionSkill));
 
     if (isSelected) {
-      this.selectedProfessionSkills.set(current.filter((s) => this.getSkillKey(s) !== this.getSkillKey(profession)));
+      this.selectedProfessionSkills.set(current.filter((s) => this.getSkillKey(s) !== this.getSkillKey(professionSkill)));
       return;
     }
 
-    const altKeys: string[] = Array.isArray(profession.alternativeSkill)
-      ? profession.alternativeSkill.map((a) => `${a?.skill?.name ?? ''}::${a?.description ?? ''}`)
+    const altKeys: string[] = Array.isArray(professionSkill.alternativeSkill)
+      ? professionSkill.alternativeSkill.map((a) => this.getSkillKey(a as ProfessionSkill))
       : [];
 
     const withoutAlternatives = altKeys.length > 0
       ? current.filter((s) => !altKeys.includes(this.getSkillKey(s)))
       : current;
 
-    this.selectedProfessionSkills.set([...withoutAlternatives, profession]);
+    this.selectedProfessionSkills.set([...withoutAlternatives, professionSkill]);
   }
 
   onProfessionTalentClick(professionTalent: ProfessionTalent) {
@@ -171,18 +227,25 @@ export class CharacterCreationStep4SkillsTalentsComponent {
       return;
     }
 
-    const altKeys: string[] = Array.isArray(professionTalent.alternativeTalent)
-      ? professionTalent.alternativeTalent.map((a) => `${a?.talent?.name ?? ''}::${a?.description ?? ''}`)
-      : [];
+    // alternatives declared on the clicked talent
+    const declaredAlts: any[] = Array.isArray(professionTalent.alternativeTalent) ? professionTalent.alternativeTalent : [];
 
-    const withoutAlternatives = altKeys.length > 0
-      ? current.filter((t) => !altKeys.includes(this.getTalentKey(t)))
+    // other race links that list this talent as an alternative (mutual references)
+    const raceLinks = Array.isArray(this.raceTalentLinks()) ? this.raceTalentLinks() : [];
+    const mutualAlts: any[] = raceLinks
+      .filter((link) => Array.isArray(link.alternativeTalent) && link.alternativeTalent.some((a: any) => this.talentEquals(a, professionTalent)))
+      .map((l) => l as any);
+
+    const allRelatedAlts = [...declaredAlts, ...mutualAlts];
+
+    const withoutAlternatives = allRelatedAlts.length > 0
+      ? current.filter((t) => !allRelatedAlts.some((a) => this.talentEquals(a, t)))
       : current;
 
-    this.selectedProfessionTalents.set([...withoutAlternatives, professionTalent]);
+    const normalized = this.normalizeTalent(professionTalent as any);
+    this.selectedProfessionTalents.set([...withoutAlternatives, normalized]);
   }
 
-  // Add aliases matching template bindings
   onSkillTileClick(skill: ProfessionSkill) {
     if (this.lockedRaceSkillKeys().has(this.getSkillKey(skill))) return;
     if ((skill.alternativeSkill ?? []).length === 0) return;
