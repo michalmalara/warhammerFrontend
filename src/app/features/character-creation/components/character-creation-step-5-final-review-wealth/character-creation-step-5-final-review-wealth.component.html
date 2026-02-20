@@ -81,8 +81,21 @@
         </header>
 
         <div class="sheet">
-          <header class="sheet__header">
-            <div>
+          <header class="sheet__header sheet__header--horizontal">
+            <div class="sheet__left">
+              @if (portraitUrl()) {
+                <div class="sheet__portrait">
+                  <img [src]="portraitUrl()" alt="Portrait: {{ bio().name || 'Character' }}"
+                       i18n-alt="Portrait alt@@cc.portrait.alt"/>
+                </div>
+              } @else {
+                <div class="sheet__portrait sheet__portrait--placeholder" aria-hidden="true">
+                  <mat-icon aria-hidden="true">person</mat-icon>
+                </div>
+              }
+            </div>
+
+            <div class="sheet__right">
               <h2 class="sheet__name">{{ bio().name || '—' }}</h2>
               @if (profession(); as p) {
                 <p class="sheet__subtitle">{{ selectedRaceLabel() }} {{ p.name }}</p>
@@ -90,13 +103,6 @@
                 <p class="sheet__subtitle">{{ selectedRaceLabel() }} —</p>
               }
             </div>
-
-            @if (portraitUrl()) {
-              <div class="sheet__portrait">
-                <img [src]="portraitUrl()" [alt]="'Portrait: ' + (bio().name || 'Character')"
-                     i18n-attr.alt="Portrait alt@@cc.portrait.alt"/>
-              </div>
-            }
           </header>
 
           <div class="sheet__bio">
