@@ -42,9 +42,9 @@ type CharacterProfileCreateDto = {
   magicDevelopment?: number;
 };
 
-type CharacterSkillCreateDto = { skill: number; level?: number };
+type CharacterSkillCreateDto = { skill: number; level?: number; description?: string | null };
 
-type CharacterTalentCreateDto = { talent: number };
+type CharacterTalentCreateDto = { talent: number; description?: string | null };
 
 type CharacterProfessionCreateDto = { profession: number };
 
@@ -180,14 +180,21 @@ export class CharacterSaveService {
   };
 
   private readonly createSkillWrappers = async (): Promise<number[]> => {
-    const skills = this.charData.getProfessionSkills();
-    if (!skills.length) return [];
+    const links = this.charData.getProfessionSkills();
+    if (!links.length) return [];
 
     const path = `${CharacterSaveService.CHARACTER_SHEET_PREFIX}/skills/`;
 
     const ids: number[] = [];
-    for (const s of skills) {
-      const dto: CharacterSkillCreateDto = {skill: s.id, level: 0};
+    for (const l of links) {
+      const skillId = l.skill?.id;
+      if (typeof skillId !== "number") continue;
+
+      const dto: CharacterSkillCreateDto = {
+        skill: skillId,
+        level: 0,
+        description: l.description ?? l.skill?.description ?? null,
+      };
       const created = await firstValueFrom(this.crud.create<{ id: number }, CharacterSkillCreateDto>(path, dto));
       ids.push(created.id);
     }
@@ -195,14 +202,20 @@ export class CharacterSaveService {
   };
 
   private readonly createTalentWrappers = async (): Promise<number[]> => {
-    const talents = this.charData.getProfessionTalents();
-    if (!talents.length) return [];
+    const links = this.charData.getProfessionTalents();
+    if (!links.length) return [];
 
     const path = `${CharacterSaveService.CHARACTER_SHEET_PREFIX}/talents/`;
 
     const ids: number[] = [];
-    for (const t of talents) {
-      const dto: CharacterTalentCreateDto = {talent: t.id};
+    for (const l of links) {
+      const talentId = l.talent?.id;
+      if (typeof talentId !== "number") continue;
+
+      const dto: CharacterTalentCreateDto = {
+        talent: talentId,
+        description: l.description ?? l.talent?.description ?? null,
+      };
       const created = await firstValueFrom(this.crud.create<{ id: number }, CharacterTalentCreateDto>(path, dto));
       ids.push(created.id);
     }

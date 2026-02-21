@@ -39,8 +39,21 @@ export class CharacterCreationStep5FinalReviewWealthComponent {
   readonly primaryStats = computed(() => this.charData.primaryTotals());
   readonly secondaryStats = computed(() => this.charData.secondaryTotals());
 
-  readonly skillsHighlights = computed(() => this.charData.getProfessionSkills());
-  readonly talentsHighlights = computed(() => this.charData.getProfessionTalents());
+  readonly skillsHighlights = computed(() => {
+    return this.charData.getProfessionSkills().map((l) => ({
+      id: l.skill?.id,
+      name: l.skill?.name ?? "",
+      description: l.description ?? l.skill?.description ?? "",
+    }));
+  });
+
+  readonly talentsHighlights = computed(() => {
+    return this.charData.getProfessionTalents().map((l) => ({
+      id: l.talent?.id,
+      name: l.talent?.name ?? "",
+      description: l.description ?? l.talent?.description ?? "",
+    }));
+  });
 
   readonly highlights = computed(() => {
     return [...this.skillsHighlights(), ...this.talentsHighlights()].slice(0, 5);

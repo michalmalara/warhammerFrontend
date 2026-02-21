@@ -2,13 +2,7 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {DiceService} from '../../../shared/services/dice.service';
 import {type CharacterCreationBio, type CharacterRace, DEFAULT_STEP_1} from '../models/character-creation.models';
 import {RaceBaseService} from './race-bases.service';
-import type {
-  Profession,
-  ProfessionSkill,
-  ProfessionTalent,
-  Skill,
-  Talent
-} from '../../professions/models/profession.models';
+import type {Profession, ProfessionSkill, ProfessionTalent} from '../../professions/models/profession.models';
 import {RacePerksApiService} from "./race-perks-api.service";
 import {firstValueFrom} from "rxjs";
 
@@ -50,33 +44,29 @@ export class CharacterDataService {
   // Przechowywana (wylosowana / wybrana) profesja — dostępna dla innych kroków tworzenia postaci
   readonly profession = signal<Profession | null>(null);
 
-  // Wybrane umiejętności i talenty dla aktualnie zaakceptowanej profesji.
-  // Przechowujemy pełne obiekty `Skill` i `Talent` (przydatne do dalszego zapisu na backend).
-  readonly professionSkills = signal<Skill[]>([]);
-  readonly professionTalents = signal<Talent[]>([]);
+  // Wybrane umiejętności i talenty (linki) dla aktualnie zaakceptowanej profesji.
+  readonly professionSkills = signal<ProfessionSkill[]>([]);
+  readonly professionTalents = signal<ProfessionTalent[]>([]);
 
   readonly raceSkillLinks = signal<ProfessionSkill[]>([]);
   readonly raceTalentLinks = signal<ProfessionTalent[]>([]);
 
-  readonly raceSkills = computed(() => this.raceSkillLinks().map(l => l.skill));
-  readonly raceTalents = computed(() => this.raceTalentLinks().map(l => l.talent));
-
   // Zapisana (zaakceptowana) darmowa rozwiniecie wybranej cechy
   readonly freeAdvance = signal<FreeAdvance | null>(null);
 
-  setProfessionSkills(list: Skill[]) {
+  setProfessionSkills(list: ProfessionSkill[]) {
     this.professionSkills.set(list ?? []);
   }
 
-  getProfessionSkills(): Skill[] {
+  getProfessionSkills(): ProfessionSkill[] {
     return this.professionSkills();
   }
 
-  setProfessionTalents(list: Talent[]) {
+  setProfessionTalents(list: ProfessionTalent[]) {
     this.professionTalents.set(list ?? []);
   }
 
-  getProfessionTalents(): Talent[] {
+  getProfessionTalents(): ProfessionTalent[] {
     return this.professionTalents();
   }
 

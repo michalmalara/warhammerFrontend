@@ -263,9 +263,8 @@ export class CharacterCreationStep4SkillsTalentsComponent {
   }
 
   goNext() {
-    // Save selected profession skills and talents into CharacterDataService before navigating
-    const skills = this.selectedProfessionSkills().map(ps => ps.skill);
-    const talents = this.selectedProfessionTalents().map(pt => pt.talent);
+    const skills = this.selectedProfessionSkills();
+    const talents = this.selectedProfessionTalents();
 
     this.charData.setProfessionSkills(skills);
     this.charData.setProfessionTalents(talents);
