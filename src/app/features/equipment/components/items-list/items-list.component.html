@@ -1,0 +1,102 @@
+<section class="page">
+  <h2 class="sr-only" i18n="SR heading@@itemsList.srHeading">Items</h2>
+
+  <header class="headline">
+    <div class="headline-text">
+      <h1 class="title" i18n="Title@@itemsList.title">The Ledger of Useful Gear</h1>
+      <p class="subtitle" i18n="Subtitle@@itemsList.subtitle">
+        Browse general items and supplies. Add new entries as your campaign grows.
+      </p>
+    </div>
+  </header>
+
+  <section class="filters" aria-label="Search and filters" i18n-aria-label="Aria@@itemsList.filters.aria">
+    <div class="filters-row">
+      <mat-form-field class="search" appearance="fill">
+        <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+        <input
+          matInput
+          type="text"
+          [value]="query()"
+          (input)="onQueryInput(($any($event.target).value) ?? '')"
+          placeholder="Search items..."
+          i18n-placeholder="Placeholder@@itemsList.search.placeholder"
+          aria-label="Search items"
+          i18n-aria-label="Aria@@itemsList.search.aria"
+        />
+      </mat-form-field>
+    </div>
+
+    @if (items$ | async; as itemsForCount) {
+      @if (itemsForCount !== null) {
+        <div class="quick-filters">
+          <span class="count" i18n="Count label@@itemsList.count">
+            Showing {{ applyFilters(itemsForCount).length }} Items
+          </span>
+        </div>
+      }
+    }
+  </section>
+
+  @if (items$ | async; as items) {
+    @if (items === null) {
+      <p class="error" i18n="Error@@itemsList.error.loadFailed">Failed to load the items list.</p>
+    } @else if (items.length === 0) {
+      <p class="empty" i18n="Empty@@itemsList.empty.noItems">No items.</p>
+    } @else {
+      @if (applyFilters(items).length === 0) {
+        <p class="empty" i18n="Empty@@itemsList.empty.noResults">No results for the selected search.</p>
+      } @else {
+        <section class="skills-grid" aria-label="Items list" i18n-aria-label="Aria@@itemsList.grid.aria">
+          @for (i of applyFilters(items); track trackById($index, i)) {
+            <article class="skill-card" tabindex="0">
+              <div class="card-top">
+                <div class="titles">
+                  <h3 class="skill-name">{{ i.name }}</h3>
+                </div>
+
+                <div class="icon-badge" aria-hidden="true">
+                  <mat-icon fontIcon="inventory_2"></mat-icon>
+                </div>
+              </div>
+
+              @if (shortDescription(i.description); as desc) {
+                <p class="skill-desc">{{ desc }}</p>
+              } @else {
+                <p class="skill-desc muted" i18n="Fallback@@itemsList.item.noDescription">No description.</p>
+              }
+
+              <div class="card-bottom">
+                <div class="chip-rows">
+                  <mat-chip-set aria-label="Economy" i18n-aria-label="Aria@@itemsList.tags.economy.aria">
+                    <mat-chip class="chip chip-gold" i18n="Chip@@itemsList.chip.priceGc">GC {{ i.priceGc }}</mat-chip>
+                    <mat-chip class="chip chip-silver" i18n="Chip@@itemsList.chip.priceSs">SS {{ i.priceSs }}</mat-chip>
+                    <mat-chip class="chip chip-bronze" i18n="Chip@@itemsList.chip.priceBp">BP {{ i.priceBp }}</mat-chip>
+                    <mat-chip class="chip" i18n="Chip@@itemsList.chip.weight">W {{ i.weight }}</mat-chip>
+                  </mat-chip-set>
+                </div>
+              </div>
+            </article>
+          }
+        </section>
+      }
+    }
+  } @else {
+    <div class="loading">
+      <mat-spinner diameter="28"></mat-spinner>
+      <span i18n="Loading@@itemsList.loading">Loading…</span>
+    </div>
+  }
+
+  <a
+    class="fab"
+    mat-fab
+    color="primary"
+    [routerLink]="['/items/new']"
+    aria-label="Add item"
+    i18n-aria-label="Aria@@itemsList.fab.add.aria"
+  >
+    <mat-icon fontIcon="add"></mat-icon>
+  </a>
+</section>
+

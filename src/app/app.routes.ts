@@ -17,6 +17,8 @@ import {WeaponsListComponent} from './features/equipment/components/weapons-list
 import {WeaponCreateComponent} from './features/equipment/components/weapon-create/weapon-create.component';
 import {ArmorsListComponent} from './features/equipment/components/armors-list/armors-list.component';
 import {ArmorCreateComponent} from './features/equipment/components/armor-create/armor-create.component';
+import {ItemsListComponent} from './features/equipment/components/items-list/items-list.component';
+import {ItemCreateComponent} from './features/equipment/components/item-create/item-create.component';
 
 import {
   CharacterCreationShellComponent
@@ -95,6 +97,9 @@ export const routes: Routes = [
 
   {path: 'armors', component: ArmorsListComponent},
   {path: 'armors/new', component: ArmorCreateComponent},
+
+  {path: 'items', component: ItemsListComponent},
+  {path: 'items/new', component: ItemCreateComponent},
 
   {path: '**', redirectTo: 'characters'},
 ];

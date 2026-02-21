@@ -1,0 +1,103 @@
+<mat-card class="equipment-create">
+  <div class="page-heading">
+    <h1 class="page-title" i18n="Page title@@itemCreate.title">Item Creation Editor</h1>
+    <div class="page-divider" aria-hidden="true"></div>
+    <p class="page-subtitle" i18n="Page subtitle@@itemCreate.subtitle">
+      Add a new item entry to the inventory ledger.
+    </p>
+  </div>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="save()">
+    <mat-card-content class="content">
+      <div class="form-grid">
+        <div class="left">
+          <div class="row">
+            <div class="section-label">
+              <mat-icon class="section-icon" aria-hidden="true">edit_square</mat-icon>
+              <span i18n="Section label@@itemCreate.itemName.label">Item Name</span>
+            </div>
+            <mat-form-field appearance="outline" class="full">
+              <input
+                matInput
+                formControlName="name"
+                placeholder="e.g., Rope"
+                i18n-placeholder="Placeholder@@itemCreate.itemName.placeholder"
+                aria-label="Item name"
+                i18n-aria-label="Aria@@itemCreate.itemName.aria"
+              />
+              @if (form.controls.name.touched && form.controls.name.invalid) {
+                <mat-error i18n="Validation@@itemCreate.itemName.error">Required name (max 100 characters)</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="row stats-row">
+            <mat-form-field appearance="outline" class="stat field-gold">
+              <mat-label i18n="Label@@itemCreate.priceGc.label">Price (GC)</mat-label>
+              <input matInput type="number" formControlName="priceGc"/>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="stat field-silver">
+              <mat-label i18n="Label@@itemCreate.priceSs.label">Price (SS)</mat-label>
+              <input matInput type="number" formControlName="priceSs"/>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="stat field-bronze">
+              <mat-label i18n="Label@@itemCreate.priceBp.label">Price (BP)</mat-label>
+              <input matInput type="number" formControlName="priceBp"/>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="stat">
+              <mat-label i18n="Label@@itemCreate.weight.label">Weight</mat-label>
+              <input matInput type="number" formControlName="weight"/>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="section-label">
+            <mat-icon class="section-icon" aria-hidden="true">history_edu</mat-icon>
+            <span i18n="Section label@@itemCreate.description.label">Description</span>
+          </div>
+
+          <mat-form-field appearance="outline" class="full lore">
+            <textarea
+              matInput
+              rows="8"
+              formControlName="description"
+              placeholder="Describe the item and typical uses."
+              i18n-placeholder="Placeholder@@itemCreate.description.placeholder"
+              aria-label="Item description"
+              i18n-aria-label="Aria@@itemCreate.description.aria"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <div class="actions">
+      <app-wax-seal-button
+        variant="cancel"
+        icon="close"
+        label="Discard"
+        i18n-label="Action label@@itemCreate.actions.discard"
+        [routerLink]="['/items']"
+        ariaLabel="Discard"
+        i18n-ariaLabel="Aria@@itemCreate.actions.discard.aria"
+      ></app-wax-seal-button>
+
+      <app-wax-seal-button
+        variant="save"
+        icon="check"
+        label="Affix Seal"
+        i18n-label="Action label@@itemCreate.actions.save"
+        type="submit"
+        [loading]="isSaving"
+        [disabled]="isSaving"
+        ariaLabel="Affix seal"
+        i18n-ariaLabel="Aria@@itemCreate.actions.save.aria"
+      ></app-wax-seal-button>
+    </div>
+  </form>
+</mat-card>
+

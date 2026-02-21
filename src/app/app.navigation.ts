@@ -7,4 +7,5 @@ export const NAV_LINKS: NavLink[] = [
   {label: $localize`:Navigation@@nav.talents:Talents`, path: '/talents'},
   {label: $localize`:Navigation@@nav.weapons:Weapons`, path: '/weapons'},
   {label: $localize`:Navigation@@nav.armors:Armors`, path: '/armors'},
+  {label: $localize`:Navigation@@nav.items:Items`, path: '/items'},
 ];
