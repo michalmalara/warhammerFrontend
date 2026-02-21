@@ -804,16 +804,50 @@
         <mat-card-content>
           <h3 class="section-title" i18n="Section heading@@professionCreate.equipment.title">Equipment</h3>
           <div class="row">
-            <mat-form-field appearance="outline" class="full">
-              <mat-label i18n="Label@@professionCreate.equipment.label">Equipment</mat-label>
-              <textarea
-                matInput
-                rows="6"
-                formControlName="trappings"
-                aria-label="Equipment"
-                i18n-aria-label="Aria@@professionCreate.equipment.aria"
-              ></textarea>
-            </mat-form-field>
+            <div class="search-input">
+              <mat-form-field appearance="outline" class="full">
+                <mat-label i18n="Label@@professionCreate.equipment.search.label">Search equipment...</mat-label>
+                <input
+                  matInput
+                  [formControl]="equipmentSearchControl"
+                  [matAutocomplete]="equipmentAuto"
+                  aria-label="Search equipment"
+                  i18n-aria-label="Aria@@professionCreate.equipment.search.aria"
+                />
+
+                <mat-autocomplete #equipmentAuto="matAutocomplete" (optionSelected)="selectEquipment($event)">
+                  @for (o of equipmentOptions$ | async; track o?.id ?? o?.name ?? o) {
+                    <mat-option [value]="o">{{ o.name }}</mat-option>
+                  }
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <div class="tiles" aria-label="Equipment"
+                   i18n-aria-label="Aria@@professionCreate.equipment.list.aria">
+                @for (e of equipment.controls; track e; let i = $index) {
+                  <div class="tile tile--no-alternatives">
+                    <div class="tile__header">
+                      <div class="tile__title">{{ getEquipmentName(e.value) }}</div>
+                      <div class="tile__actions">
+                        <button
+                          mat-icon-button
+                          type="button"
+                          aria-label="Remove"
+                          i18n-aria-label="Aria@@professionCreate.equipment.remove.aria"
+                          (click)="removeEquipment(i)"
+                        >
+                          <mat-icon fontIcon="close"></mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                }
+
+                @if (!equipment.controls.length) {
+                  <div class="muted" i18n="Empty state@@professionCreate.equipment.empty">No equipment added yet.</div>
+                }
+              </div>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>

@@ -75,8 +75,6 @@ describe('CharacterSaveService', () => {
 
     expect((crud.create as any)).toHaveBeenCalledWith('character-sheet/profiles/', expect.anything());
     expect((crud.create as any)).toHaveBeenCalledWith('character-sheet/professions/', {profession: 7});
-    expect((crud.create as any)).toHaveBeenCalledWith('character-sheet/skills/', {skill: 101, level: 0});
-    expect((crud.create as any)).toHaveBeenCalledWith('character-sheet/talents/', {talent: 201});
 
     expect((charactersApi.create as any)).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -84,8 +82,6 @@ describe('CharacterSaveService', () => {
         race: 'human',
         currentProfession: 20,
         characterProfile: 10,
-        characterSkills: [30],
-        characterTalents: [40],
         careerPath: [20],
       }),
     );

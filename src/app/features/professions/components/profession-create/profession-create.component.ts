@@ -20,6 +20,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {catchError, debounceTime, distinctUntilChanged, finalize, map, of, startWith, switchMap} from 'rxjs';
 
 import {ProfessionsApiService} from '../../services/professions-api.service';
+import type {ProfessionEquipment} from '../../models/profession.models';
 import {CreateProfessionPayload, ProfessionSkill, ProfessionTalent} from '../../models/profession.models';
 import {SkillsApiService} from '../../../skills/services/skills-api.service';
 import {TalentsApiService} from '../../../talents/services/talents-api.service';
@@ -30,6 +31,8 @@ import {ProfessionTalentDialogComponent, type ProfessionTalentDialogResult} from
 import {ArmorsApiService} from '../../../equipment/services/armors-api.service';
 import {WeaponsApiService} from '../../../equipment/services/weapons-api.service';
 import {ProfessionEquipmentLinksApiService} from '../../services/profession-equipment-links-api.service';
+import {ItemsApiService} from '../../../equipment/services/items-api.service';
+import type {Item} from '../../../equipment/models/item.models';
 
 @Component({
   selector: 'app-profession-create',
@@ -68,6 +71,7 @@ export class ProfessionCreateComponent {
   private readonly armorsApi = inject(ArmorsApiService);
   private readonly weaponsApi = inject(WeaponsApiService);
   private readonly equipmentLinksApi = inject(ProfessionEquipmentLinksApiService);
+  private readonly itemsApi = inject(ItemsApiService);
 
   private static readonly MIN_AUTOCOMPLETE_CHARS = 3;
 
@@ -142,6 +146,22 @@ export class ProfessionCreateComponent {
       q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
         ? this.armorsApi.list().pipe(
           map((items) => items.filter((a) => a.name.toLowerCase().includes(q.toLowerCase()))),
+          catchError(() => of([]))
+        )
+        : of([])
+    )
+  );
+
+  readonly equipmentSearchControl = new FormControl('');
+  equipmentOptions$ = this.equipmentSearchControl.valueChanges.pipe(
+    startWith(''),
+    map((v) => (typeof v === 'string' ? v : '').toString().trim()),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((q) =>
+      q.length >= ProfessionCreateComponent.MIN_AUTOCOMPLETE_CHARS
+        ? this.itemsApi.list().pipe(
+          map((items) => items.filter((it) => it.name.toLowerCase().includes(q.toLowerCase()))),
           catchError(() => of([]))
         )
         : of([])
@@ -279,7 +299,8 @@ export class ProfessionCreateComponent {
 
     skills: this.fb.array<FormControl<any>>([]),
     talents: this.fb.array<FormControl<any>>([]),
-    trappings: ['', [Validators.maxLength(2000)]],
+
+    equipment: this.fb.array<FormControl<any>>([]),
 
     exitProfessions: this.fb.array<FormControl<any>>([]),
 
@@ -307,6 +328,10 @@ export class ProfessionCreateComponent {
 
   get armors(): FormArray<FormControl<any>> {
     return this.form.get('armors') as FormArray<FormControl<any>>;
+  }
+
+  get equipment(): FormArray<FormControl<any>> {
+    return this.form.get('equipment') as FormArray<FormControl<any>>;
   }
 
   save() {
@@ -350,8 +375,6 @@ export class ProfessionCreateComponent {
       woundsDevelopment: v.woundsDevelopment,
       movementDevelopment: v.movementDevelopment,
       magicDevelopment: v.magicDevelopment,
-
-      trappings: v.trappings,
     };
 
     // map skills/talents arrays to number[] of IDs (ProfessionSkill/ProfessionTalent)
@@ -386,6 +409,14 @@ export class ProfessionCreateComponent {
       }
     }
     if (armorIds.length) payload.armors = armorIds;
+
+    const equipmentIds: number[] = [];
+    for (const e of (v.equipment || [])) {
+      if (e && typeof e === 'object' && 'id' in e && typeof (e as any).id === 'number') {
+        equipmentIds.push((e as any).id);
+      }
+    }
+    if (equipmentIds.length) (payload as any).equipment = equipmentIds;
 
     // map exit professions: support objects with `id`, numeric strings, and numbers
     const exitIds: number[] = [];
@@ -990,6 +1021,10 @@ export class ProfessionCreateComponent {
     return (value as any)?.armor?.name ?? (value as any)?.name ?? '';
   }
 
+  getEquipmentName(value: unknown): string {
+    return (value as any)?.item?.name ?? (value as any)?.name ?? '';
+  }
+
   selectWeapon(event: MatAutocompleteSelectedEvent) {
     const opt = event.option.value as { id: number; name: string };
     if (!opt?.id) {
@@ -1085,4 +1120,64 @@ export class ProfessionCreateComponent {
       },
     });
   }
+
+  selectEquipment(event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as Item;
+    if (!opt?.id) {
+      this.equipmentSearchControl.setValue('');
+      return;
+    }
+
+    const existingItemIds = new Set<number>();
+    for (const ctrl of this.equipment.controls) {
+      const itemId = (ctrl.value as any)?.item?.id;
+      if (typeof itemId === 'number') existingItemIds.add(itemId);
+    }
+
+    if (existingItemIds.has(opt.id)) {
+      this.equipmentSearchControl.setValue('');
+      return;
+    }
+
+    this.equipmentLinksApi.createProfessionEquipment({item: opt.id}).subscribe({
+      next: (created: ProfessionEquipment) => {
+        this.equipment.push(new FormControl<ProfessionEquipment>(created));
+      },
+      error: () => {
+        this.snackBar.open(
+          $localize`:Snackbar@@profession.create.add.equipment.failed:Failed to add equipment to profession.`,
+          'OK',
+          {duration: 3000}
+        );
+      },
+    });
+
+    this.equipmentSearchControl.setValue('');
+  }
+
+  removeEquipment(index: number) {
+    if (index < 0 || index >= this.equipment.length) return;
+
+    const current = this.equipment.at(index)?.value as any;
+    const id = current?.id;
+
+    if (typeof id !== 'number') {
+      this.equipment.removeAt(index);
+      return;
+    }
+
+    this.equipmentLinksApi.deleteProfessionEquipment(id).subscribe({
+      next: () => {
+        this.equipment.removeAt(index);
+      },
+      error: () => {
+        this.snackBar.open(
+          $localize`:Snackbar@@profession.create.remove.equipment.failed:Failed to remove equipment from server.`,
+          'OK',
+          {duration: 3000}
+        );
+      },
+    });
+  }
 }
+

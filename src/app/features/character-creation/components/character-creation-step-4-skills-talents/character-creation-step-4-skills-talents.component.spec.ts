@@ -49,8 +49,8 @@ describe('CharacterCreationStep4SkillsTalentsComponent', () => {
     fixture.detectChanges();
 
     const selectedIds = fixture.componentInstance.selectedSkillIds();
-    expect(selectedIds.has(101)).toBeTrue();
-    expect(selectedIds.has(102)).toBeFalse();
+    expect(selectedIds.has('A::')).toBe(true);
+    expect(selectedIds.has('B::')).toBe(false);
   });
 
   it('should not duplicate auto-selected racial skills on re-run', () => {

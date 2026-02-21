@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 
 import {CrudApiService} from '../../../shared/services/crud-api.service';
-import type {ProfessionArmor, ProfessionWeapon} from '../models/profession.models';
+import type {ProfessionArmor, ProfessionEquipment, ProfessionWeapon} from '../models/profession.models';
 
 export type CreateProfessionWeaponPayload = {
   weapon: number;
@@ -11,12 +11,17 @@ export type CreateProfessionArmorPayload = {
   armor: number;
 };
 
+export type CreateProfessionEquipmentPayload = {
+  item: number;
+};
+
 @Injectable({providedIn: 'root'})
 export class ProfessionEquipmentLinksApiService {
   private readonly crud = inject(CrudApiService);
 
   private static readonly PROFESSION_WEAPONS_PATH = '/professions/professions-weapon/';
   private static readonly PROFESSION_ARMORS_PATH = '/professions/professions-armor/';
+  private static readonly PROFESSION_EQUIPMENT_PATH = '/professions/professions-equipment/';
 
   createProfessionWeapon(body: CreateProfessionWeaponPayload) {
     return this.crud.create<ProfessionWeapon, CreateProfessionWeaponPayload>(
@@ -38,5 +43,16 @@ export class ProfessionEquipmentLinksApiService {
 
   deleteProfessionArmor(id: number) {
     return this.crud.delete(ProfessionEquipmentLinksApiService.PROFESSION_ARMORS_PATH, id);
+  }
+
+  createProfessionEquipment(body: CreateProfessionEquipmentPayload) {
+    return this.crud.create<ProfessionEquipment, CreateProfessionEquipmentPayload>(
+      ProfessionEquipmentLinksApiService.PROFESSION_EQUIPMENT_PATH,
+      body
+    );
+  }
+
+  deleteProfessionEquipment(id: number) {
+    return this.crud.delete(ProfessionEquipmentLinksApiService.PROFESSION_EQUIPMENT_PATH, id);
   }
 }

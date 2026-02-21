@@ -34,6 +34,7 @@ import {ProfessionsApiService, type ProfessionUpsertPayload} from '../../service
 import type {
   Profession,
   ProfessionArmor,
+  ProfessionEquipment,
   ProfessionSkill,
   ProfessionTalent,
   ProfessionWeapon
@@ -50,6 +51,7 @@ import {
 import {ArmorsApiService} from '../../../equipment/services/armors-api.service';
 import {WeaponsApiService} from '../../../equipment/services/weapons-api.service';
 import {ProfessionEquipmentLinksApiService} from '../../services/profession-equipment-links-api.service';
+import {ItemsApiService} from '../../../equipment/services/items-api.service';
 
 @Component({
   selector: 'app-profession-edit',
@@ -87,6 +89,7 @@ export class ProfessionEditComponent {
   private readonly armorsApi = inject(ArmorsApiService);
   private readonly weaponsApi = inject(WeaponsApiService);
   private readonly equipmentLinksApi = inject(ProfessionEquipmentLinksApiService);
+  private readonly itemsApi = inject(ItemsApiService);
 
   private static readonly MIN_AUTOCOMPLETE_CHARS = 3;
 
@@ -200,6 +203,22 @@ export class ProfessionEditComponent {
     )
   );
 
+  readonly equipmentSearchControl = new FormControl('');
+  equipmentOptions$ = this.equipmentSearchControl.valueChanges.pipe(
+    startWith(''),
+    map((v) => (typeof v === 'string' ? v : '').toString().trim()),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((q) =>
+      q.length >= ProfessionEditComponent.MIN_AUTOCOMPLETE_CHARS
+        ? this.itemsApi.list().pipe(
+          map((items) => items.filter((it) => it.name.toLowerCase().includes(q.toLowerCase()))),
+          catchError(() => of([]))
+        )
+        : of([])
+    )
+  );
+
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(120)]],
     description: ['', [Validators.required, Validators.maxLength(2000)]],
@@ -220,7 +239,8 @@ export class ProfessionEditComponent {
 
     skills: this.fb.array([]),
     talents: this.fb.array([]),
-    trappings: ['', [Validators.maxLength(2000)]],
+
+    equipment: this.fb.array([]),
 
     exitProfessions: this.fb.array([]),
 
@@ -249,6 +269,10 @@ export class ProfessionEditComponent {
 
   get armors(): FormArray {
     return this.form.get('armors') as FormArray;
+  }
+
+  get equipment(): FormArray {
+    return this.form.get('equipment') as FormArray;
   }
 
   // alternatywy (search per-row)
@@ -418,8 +442,6 @@ export class ProfessionEditComponent {
       woundsDevelopment: v.woundsDevelopment,
       movementDevelopment: v.movementDevelopment,
       magicDevelopment: v.magicDevelopment,
-
-      trappings: v.trappings,
     };
 
     const skillsIds: number[] = [];
@@ -464,6 +486,14 @@ export class ProfessionEditComponent {
       }
     }
     if (armorIds.length) (payload as any).armors = armorIds;
+
+    const equipmentIds: number[] = [];
+    for (const e of (v.equipment || [])) {
+      if (e && typeof e === 'object' && 'id' in e && typeof (e as any).id === 'number') {
+        equipmentIds.push((e as any).id);
+      }
+    }
+    if (equipmentIds.length) (payload as any).equipment = equipmentIds;
 
     return payload;
   }
@@ -1024,6 +1054,10 @@ export class ProfessionEditComponent {
     return (value as any)?.armor?.name ?? (value as any)?.name ?? '';
   }
 
+  getEquipmentName(value: unknown): string {
+    return (value as any)?.item?.name ?? (value as any)?.name ?? '';
+  }
+
   private patchFromProfession(p: Profession) {
     this.form.patchValue({
       name: p.name,
@@ -1042,8 +1076,6 @@ export class ProfessionEditComponent {
       woundsDevelopment: p.woundsDevelopment,
       movementDevelopment: p.movementDevelopment,
       magicDevelopment: p.magicDevelopment,
-
-      trappings: (p as any).trappings ?? '',
 
       isAdvanced: (p.entryProfessions?.length ?? 0) > 0,
     });
@@ -1071,6 +1103,11 @@ export class ProfessionEditComponent {
     this.armors.clear();
     for (const a of ((p as any).armors ?? []) as ProfessionArmor[]) {
       this.armors.push(new FormControl<ProfessionArmor>(a));
+    }
+
+    this.equipment.clear();
+    for (const e of ((p as any).equipment ?? []) as ProfessionEquipment[]) {
+      this.equipment.push(new FormControl<ProfessionEquipment>(e));
     }
   }
 
@@ -1169,4 +1206,64 @@ export class ProfessionEditComponent {
       },
     });
   }
+
+  selectEquipment(event: MatAutocompleteSelectedEvent) {
+    const opt = event.option.value as { id: number; name?: string };
+    if (!opt?.id) {
+      this.equipmentSearchControl.setValue('');
+      return;
+    }
+
+    const existingItemIds = new Set<number>();
+    for (const ctrl of this.equipment.controls) {
+      const itemId = (ctrl.value as any)?.item?.id;
+      if (typeof itemId === 'number') existingItemIds.add(itemId);
+    }
+
+    if (existingItemIds.has(opt.id)) {
+      this.equipmentSearchControl.setValue('');
+      return;
+    }
+
+    this.equipmentLinksApi.createProfessionEquipment({item: opt.id}).subscribe({
+      next: (created: ProfessionEquipment) => {
+        this.equipment.push(new FormControl<ProfessionEquipment>(created));
+      },
+      error: () => {
+        this.snackBar.open(
+          $localize`:Snackbar@@profession.edit.add.equipment.failed:Failed to add equipment to profession.`,
+          'OK',
+          {duration: 3000}
+        );
+      },
+    });
+
+    this.equipmentSearchControl.setValue('');
+  }
+
+  removeEquipment(index: number) {
+    if (index < 0 || index >= this.equipment.length) return;
+
+    const current = this.equipment.at(index)?.value as any;
+    const id = current?.id;
+
+    if (typeof id !== 'number') {
+      this.equipment.removeAt(index);
+      return;
+    }
+
+    this.equipmentLinksApi.deleteProfessionEquipment(id).subscribe({
+      next: () => {
+        this.equipment.removeAt(index);
+      },
+      error: () => {
+        this.snackBar.open(
+          $localize`:Snackbar@@profession.edit.remove.equipment.failed:Failed to remove equipment from server.`,
+          'OK',
+          {duration: 3000}
+        );
+      },
+    });
+  }
 }
+
