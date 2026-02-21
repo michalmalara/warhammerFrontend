@@ -46,7 +46,12 @@ export class ArmorCreateComponent {
   readonly form = this.fb.nonNullable.group({
     name: this.fb.nonNullable.control('', [Validators.required, Validators.maxLength(100)]),
     location: this.fb.nonNullable.control('', [Validators.required, Validators.maxLength(100)]),
-    armorPoints: this.fb.nonNullable.control(0, [Validators.required]),
+    armorPoints: this.fb.nonNullable.control(0, [Validators.required, Validators.min(0)]),
+    description: this.fb.control<string | null>(null, [Validators.maxLength(2000)]),
+    priceGc: this.fb.nonNullable.control(0, [Validators.required, Validators.min(0)]),
+    priceSs: this.fb.nonNullable.control(0, [Validators.required, Validators.min(0)]),
+    priceBp: this.fb.nonNullable.control(0, [Validators.required, Validators.min(0)]),
+    weight: this.fb.nonNullable.control(0, [Validators.required, Validators.min(0)]),
   });
 
   save() {

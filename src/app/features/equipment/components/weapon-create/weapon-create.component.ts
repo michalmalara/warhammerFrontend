@@ -52,6 +52,10 @@ export class WeaponCreateComponent {
     reloadTime: this.fb.nonNullable.control(0, [Validators.required]),
     description: this.fb.control<string | null>(null, [Validators.maxLength(2000)]),
     traits: this.fb.control<string | null>(null, [Validators.maxLength(2000)]),
+    priceGc: this.fb.nonNullable.control(0, [Validators.required, Validators.min(0)]),
+    priceSs: this.fb.nonNullable.control(0, [Validators.required, Validators.min(0)]),
+    priceBp: this.fb.nonNullable.control(0, [Validators.required, Validators.min(0)]),
+    weight: this.fb.nonNullable.control(0, [Validators.required, Validators.min(0)]),
   });
 
   save() {

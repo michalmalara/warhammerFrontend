@@ -8,6 +8,10 @@ export interface Weapon {
   type: string;
   description: string | null;
   traits: string | null;
+  priceGc: number;
+  priceSs: number;
+  priceBp: number;
+  weight: number;
 }
 
 export type CreateWeaponPayload = Omit<Weapon, 'id'>;

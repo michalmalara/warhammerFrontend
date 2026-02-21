@@ -61,10 +61,27 @@
                 </div>
               </div>
 
+              @if (shortDescription(a.description); as desc) {
+                <p class="skill-desc">{{ desc }}</p>
+              } @else {
+                <p class="skill-desc muted" i18n="Fallback@@armorsList.armor.noDescription">No description.</p>
+              }
+
               <div class="card-bottom">
-                <mat-chip-set aria-label="Stats" i18n-aria-label="Aria@@armorsList.tags.aria">
-                  <mat-chip class="chip">AP {{ a.armorPoints }}</mat-chip>
-                </mat-chip-set>
+                <div class="chip-rows">
+                  <mat-chip-set aria-label="Stats" i18n-aria-label="Aria@@armorsList.tags.stats.aria">
+                    <mat-chip class="chip">AP {{ a.armorPoints }}</mat-chip>
+                  </mat-chip-set>
+
+                  <mat-chip-set aria-label="Economy" i18n-aria-label="Aria@@armorsList.tags.economy.aria">
+                    <mat-chip class="chip chip-gold" i18n="Chip@@armorsList.chip.priceGc">GC {{ a.priceGc }}</mat-chip>
+                    <mat-chip class="chip chip-silver" i18n="Chip@@armorsList.chip.priceSs">SS {{ a.priceSs }}
+                    </mat-chip>
+                    <mat-chip class="chip chip-bronze" i18n="Chip@@armorsList.chip.priceBp">BP {{ a.priceBp }}
+                    </mat-chip>
+                    <mat-chip class="chip" i18n="Chip@@armorsList.chip.weight">W {{ a.weight }}</mat-chip>
+                  </mat-chip-set>
+                </div>
 
                 <button
                   mat-icon-button

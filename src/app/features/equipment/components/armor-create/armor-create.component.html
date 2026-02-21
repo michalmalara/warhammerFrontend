@@ -57,6 +57,52 @@
             <input matInput type="number" formControlName="armorPoints"/>
           </mat-form-field>
         </div>
+
+        <div class="row">
+          <div class="section-label">
+            <mat-icon class="section-icon" aria-hidden="true">history_edu</mat-icon>
+            <span i18n="Section label@@armorCreate.description.label">Description</span>
+          </div>
+          <mat-form-field appearance="outline" class="full">
+            <textarea
+              matInput
+              rows="5"
+              formControlName="description"
+              placeholder="Describe the armor and how it is worn."
+              i18n-placeholder="Placeholder@@armorCreate.description.placeholder"
+              aria-label="Armor description"
+              i18n-aria-label="Aria@@armorCreate.description.aria"
+            ></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="outline" class="full field-gold">
+            <mat-label i18n="Label@@armorCreate.priceGc.label">Price (GC)</mat-label>
+            <input matInput type="number" formControlName="priceGc"/>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="outline" class="full field-silver">
+            <mat-label i18n="Label@@armorCreate.priceSs.label">Price (SS)</mat-label>
+            <input matInput type="number" formControlName="priceSs"/>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="outline" class="full field-bronze">
+            <mat-label i18n="Label@@armorCreate.priceBp.label">Price (BP)</mat-label>
+            <input matInput type="number" formControlName="priceBp"/>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="outline" class="full">
+            <mat-label i18n="Label@@armorCreate.weight.label">Weight</mat-label>
+            <input matInput type="number" formControlName="weight"/>
+          </mat-form-field>
+        </div>
       </div>
     </mat-card-content>
 

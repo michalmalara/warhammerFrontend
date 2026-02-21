@@ -68,12 +68,23 @@
               }
 
               <div class="card-bottom">
-                <mat-chip-set aria-label="Stats" i18n-aria-label="Aria@@weaponsList.tags.aria">
-                  <mat-chip class="chip">DMG {{ w.damage }}</mat-chip>
-                  <mat-chip class="chip">+{{ w.damageBonus }}</mat-chip>
-                  <mat-chip class="chip">RNG {{ w.range }}</mat-chip>
-                  <mat-chip class="chip">REL {{ w.reloadTime }}</mat-chip>
-                </mat-chip-set>
+                <div class="chip-rows">
+                  <mat-chip-set aria-label="Stats" i18n-aria-label="Aria@@weaponsList.tags.stats.aria">
+                    <mat-chip class="chip">DMG {{ w.damage }}</mat-chip>
+                    <mat-chip class="chip">+{{ w.damageBonus }}</mat-chip>
+                    <mat-chip class="chip">RNG {{ w.range }}</mat-chip>
+                    <mat-chip class="chip">REL {{ w.reloadTime }}</mat-chip>
+                  </mat-chip-set>
+
+                  <mat-chip-set aria-label="Economy" i18n-aria-label="Aria@@weaponsList.tags.economy.aria">
+                    <mat-chip class="chip chip-gold" i18n="Chip@@weaponsList.chip.priceGc">GC {{ w.priceGc }}</mat-chip>
+                    <mat-chip class="chip chip-silver" i18n="Chip@@weaponsList.chip.priceSs">SS {{ w.priceSs }}
+                    </mat-chip>
+                    <mat-chip class="chip chip-bronze" i18n="Chip@@weaponsList.chip.priceBp">BP {{ w.priceBp }}
+                    </mat-chip>
+                    <mat-chip class="chip" i18n="Chip@@weaponsList.chip.weight">W {{ w.weight }}</mat-chip>
+                  </mat-chip-set>
+                </div>
 
                 <button
                   mat-icon-button

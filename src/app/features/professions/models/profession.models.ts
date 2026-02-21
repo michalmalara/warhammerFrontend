@@ -55,6 +55,11 @@ export interface ProfessionArmor {
   armor: import('../../equipment/models/armor.models').Armor;
 }
 
+export interface ProfessionEquipment {
+  id: number;
+  item: import('../../equipment/models/item.models').Item;
+}
+
 /**
  * Model frontendowy (camelCase). Backend zwraca snake_case, ale interceptor mapuje do camelCase.
  */
@@ -85,6 +90,16 @@ export interface Profession {
 
   weapons?: ProfessionWeapon[];
   armors?: ProfessionArmor[];
+  equipment?: ProfessionEquipment[];
+
+  humanMinRoll?: number | null;
+  humanMaxRoll?: number | null;
+  dwarfMinRoll?: number | null;
+  dwarfMaxRoll?: number | null;
+  elfMinRoll?: number | null;
+  elfMaxRoll?: number | null;
+  halflingMinRoll?: number | null;
+  halflingMaxRoll?: number | null;
 
   trappings?: string;
 }
@@ -116,6 +131,16 @@ export interface CreateProfessionPayload {
 
   weapons?: number[]; // ProfessionWeapon IDs
   armors?: number[]; // ProfessionArmor IDs
+  equipment?: number[]; // ProfessionEquipment IDs
+
+  humanMinRoll?: number | null;
+  humanMaxRoll?: number | null;
+  dwarfMinRoll?: number | null;
+  dwarfMaxRoll?: number | null;
+  elfMinRoll?: number | null;
+  elfMaxRoll?: number | null;
+  halflingMinRoll?: number | null;
+  halflingMaxRoll?: number | null;
 
   trappings?: string;
 }

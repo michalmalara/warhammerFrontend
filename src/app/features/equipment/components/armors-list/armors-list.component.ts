@@ -117,4 +117,10 @@ export class ArmorsListComponent {
       });
     });
   }
+
+  shortDescription(desc: Armor['description']): string | null {
+    if (!desc) return null;
+    const s = String(desc).trim();
+    return s.length ? s : null;
+  }
 }

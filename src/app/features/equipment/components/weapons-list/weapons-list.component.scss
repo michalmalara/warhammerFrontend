@@ -262,6 +262,21 @@
   color: #fff !important;
 }
 
+:host ::ng-deep .mat-mdc-chip.chip-gold {
+  border-color: rgba(212, 175, 55, 0.6) !important;
+  color: rgba(212, 175, 55, 0.95) !important;
+}
+
+:host ::ng-deep .mat-mdc-chip.chip-silver {
+  border-color: rgba(192, 192, 192, 0.6) !important;
+  color: rgba(220, 220, 220, 0.95) !important;
+}
+
+:host ::ng-deep .mat-mdc-chip.chip-bronze {
+  border-color: rgba(205, 127, 50, 0.6) !important;
+  color: rgba(205, 127, 50, 0.95) !important;
+}
+
 .danger-icon-btn {
   color: rgba(255, 255, 255, 0.85) !important;
   transition: filter 160ms ease;
@@ -312,4 +327,10 @@
 
 .fab:active {
   transform: scale(0.98);
+}
+
+.chip-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

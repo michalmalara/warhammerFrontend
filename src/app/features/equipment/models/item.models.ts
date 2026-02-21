@@ -1,8 +1,6 @@
-export interface Armor {
+export interface Item {
   id: number;
   name: string;
-  location: string;
-  armorPoints: number;
   description?: string | null;
   priceGc: number;
   priceSs: number;
@@ -10,4 +8,4 @@ export interface Armor {
   weight: number;
 }
 
-export type CreateArmorPayload = Omit<Armor, 'id'>;
+export type CreateItemPayload = Omit<Item, 'id'>;

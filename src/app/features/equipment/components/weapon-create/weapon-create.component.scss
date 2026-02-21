@@ -1,4 +1,4 @@
-:host {
+ą:host {
   display: block;
   padding: 24px;
 }
@@ -138,4 +138,35 @@
   gap: 48px;
   margin: 42px 0 0;
   padding: 0;
+}
+
+i wagą w no
+.field-gold ::ng-deep .mdc-notched-outline__leading,
+.field-gold ::ng-deep .mdc-notched-outline__notch,
+.field-gold ::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(212, 175, 55, 0.55) !important;
+}
+
+.field-gold ::ng-deep .mat-mdc-floating-label {
+  color: rgba(212, 175, 55, 0.95) !important;
+}
+
+.field-silver ::ng-deep .mdc-notched-outline__leading,
+.field-silver ::ng-deep .mdc-notched-outline__notch,
+.field-silver ::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(192, 192, 192, 0.55) !important;
+}
+
+.field-silver ::ng-deep .mat-mdc-floating-label {
+  color: rgba(220, 220, 220, 0.95) !important;
+}
+
+.field-bronze ::ng-deep .mdc-notched-outline__leading,
+.field-bronze ::ng-deep .mdc-notched-outline__notch,
+.field-bronze ::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(205, 127, 50, 0.55) !important;
+}
+
+.field-bronze ::ng-deep .mat-mdc-floating-label {
+  color: rgba(205, 127, 50, 0.95) !important;
 }
