@@ -9,12 +9,6 @@
             <span class="badge" i18n="Profession type badge|Profession type@@profession.badge.type">{{ p.type }}</span>
           }
         </div>
-
-        @if (p.description) {
-          <p class="page__subtitle" i18n="Card subtitle|Short profession description@@profession.card.subtitle">
-            “{{ p.description }}”
-          </p>
-        }
       </div>
 
       <div class="page__heading-right">
@@ -186,8 +180,10 @@
           <h4 class="panel__subhead" i18n="Section heading|Skills heading@@profession.skills.title">Skills</h4>
           <mat-chip-set>
             @for (s of p.skills; track trackById($index, s)) {
-              <mat-chip>
-                {{ s.skill.name }}
+              <mat-chip [attr.title]="s.skill.description" [attr.aria-label]="s.skill.description">
+                {{ s.skill.name }} @if (s.description) {
+                ({{ s.description }})
+              }
               </mat-chip>
             }
           </mat-chip-set>
@@ -197,11 +193,25 @@
           <h4 class="panel__subhead" i18n="Section heading|Talents heading@@profession.talents.title">Talents</h4>
           <mat-chip-set>
             @for (t of p.talents; track trackById($index, t)) {
-              <mat-chip>
-                {{ t.talent.name }}
+              <mat-chip [attr.title]="t.talent.description" [attr.aria-label]="t.talent.description">
+                {{ t.talent.name }} @if (t.description) {
+                ({{ t.description }})
+              }
               </mat-chip>
             }
           </mat-chip-set>
+
+          @if (p.talents && p.talents.length) {
+            <div class="panel__list">
+              @for (t of p.talents; track trackById($index, t)) {
+                @if (t.talent.description && t.talent.description.trim()) {
+                  <p class="panel__item-desc">
+                    {{ t.talent.name }} ({{ t.description || t.talent.description }})
+                  </p>
+                }
+              }
+            </div>
+          }
         </div>
       </div>
     </section>
