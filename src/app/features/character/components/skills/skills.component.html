@@ -8,6 +8,13 @@
           <div class="percent">{{ displayPercent(s) }}%</div>
         </header>
 
+
+        @if (s.skill.description) {
+          <div class="description muted">{{ s.skill.description }}</div>
+        }
+        @if (s.description) {
+          <div class="description muted">{{ s.description }}</div>
+        }
         <div class="meta muted">{{ s.skill.characteristic }}</div>
 
         <div

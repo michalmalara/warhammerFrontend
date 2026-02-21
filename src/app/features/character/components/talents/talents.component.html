@@ -5,14 +5,14 @@
       @for (t of talents; track t.id) {
         <article class="talent-tile">
           <header class="tile-header">
-            <div class="name">{{ t.name }}</div>
+            <div class="name">{{ t.name }}</div> @if (t.description) {
+            <div class="description muted">{{ t.description }}</div>
+          }
           </header>
+
 
           <div class="meta muted" i18n="Meta label@@talents.meta">TALENT</div>
 
-          @if (t.description) {
-            <div class="description muted">{{ t.description }}</div>
-          }
         </article>
       }
     </div>

@@ -342,7 +342,9 @@ export class CharacterCardComponent {
           id: String(def.id),
           name: def.name,
           characteristic,
+          description: def.description ?? null,
         },
+        description: w.description ?? def.description ?? null,
         basePercent,
         taken: true,
         advPlus10,
@@ -363,7 +365,7 @@ export class CharacterCardComponent {
       const ui: Talent = {
         id: String(def.id),
         name: def.name,
-        description: def.description ?? '',
+        description: w.description ?? def.description ?? '',
       };
 
       return [ui];

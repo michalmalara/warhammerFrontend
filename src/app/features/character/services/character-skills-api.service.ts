@@ -7,6 +7,7 @@ export interface CharacterSkillDto {
   id: number;
   skill: number;
   level: number;
+  description?: string | null;
 }
 
 @Injectable({providedIn: 'root'})

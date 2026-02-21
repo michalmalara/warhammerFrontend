@@ -38,4 +38,5 @@ export class SkillsComponent {
     }
     this.skillsChange.emit(this.skills);
   }
+
 }

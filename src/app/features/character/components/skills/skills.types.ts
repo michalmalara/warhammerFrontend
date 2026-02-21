@@ -6,6 +6,7 @@ export interface SkillDefinition {
   id: string;
   name: string;
   characteristic: CharacteristicKey;
+  description?: string | null;
 }
 
 /**
@@ -15,6 +16,7 @@ export interface SkillDefinition {
 export interface CharacterSkill {
   id: string;
   skill: SkillDefinition;
+  description?: string | null;
   basePercent: number;
   taken: boolean;
   advPlus10: boolean;

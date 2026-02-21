@@ -6,6 +6,7 @@ import {CrudApiService} from '../../../shared/services/crud-api.service';
 export interface CharacterTalentDto {
   id: number;
   talent: number;
+  description?: string | null;
 }
 
 @Injectable({providedIn: 'root'})
