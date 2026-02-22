@@ -27,7 +27,7 @@ export class CharacterCreationStep5FinalReviewWealthComponent {
 
   readonly bio = computed(() => this.charData.bio());
   readonly goldCrowns = computed(() => this.charData.goldCrowns());
-  readonly trappings = computed(() => this.charData.startingTrappings());
+  readonly trappings = computed(() => this.charData.initialEquipmentLabels());
 
   readonly portraitUrl = computed(() => {
     const b = this.bio();
@@ -110,5 +110,9 @@ export class CharacterCreationStep5FinalReviewWealthComponent {
 
   get portraitUrlForImg(): string {
     return this.portraitUrl();
+  }
+
+  constructor() {
+    void this.charData.loadInitialEquipment();
   }
 }

@@ -5,6 +5,8 @@ import {RaceBaseService} from './race-bases.service';
 import type {Profession, ProfessionSkill, ProfessionTalent} from '../../professions/models/profession.models';
 import {RacePerksApiService} from "./race-perks-api.service";
 import {firstValueFrom} from "rxjs";
+import {InitialEquipmentApiService} from "../../equipment/services/initial-equipment-api.service";
+import type {Item} from "../../equipment/models/item.models";
 
 export type PrimaryStatId = 'WS' | 'BS' | 'S' | 'T' | 'Ag' | 'Int' | 'WP' | 'Fel';
 
@@ -40,6 +42,7 @@ export class CharacterDataService {
   // Inject RaceBaseService to provide race-dependent base values
   private readonly raceBases = inject(RaceBaseService);
   private readonly racePerksApi = inject(RacePerksApiService);
+  private readonly initialEquipmentApi = inject(InitialEquipmentApiService);
 
   // Przechowywana (wylosowana / wybrana) profesja — dostępna dla innych kroków tworzenia postaci
   readonly profession = signal<Profession | null>(null);
@@ -83,6 +86,7 @@ export class CharacterDataService {
    */
   setProfession(p: Profession | null) {
     this.profession.set(p);
+    void this.loadInitialEquipment();
   }
 
   /** Zwraca aktualnie zapisaną profesję. */
@@ -170,6 +174,7 @@ export class CharacterDataService {
     this.goldCrowns.set(null);
     this.selectedStat.set(null);
     this.selectedCharacteristic.set(null);
+    this.initialEquipmentItems.set(null);
     // reset caches
     this.lastMappedW = null;
     this.lastComputedFP = null;
@@ -235,6 +240,24 @@ export class CharacterDataService {
 
   // --- step 5: wealth & trappings ---
   readonly goldCrowns = signal<number | null>(null);
+
+  readonly initialEquipmentItems = signal<Item[] | null>(null);
+
+  loadInitialEquipment = async () => {
+    try {
+      const items = await firstValueFrom(this.initialEquipmentApi.getInitialEquipment());
+      this.initialEquipmentItems.set(Array.isArray(items) ? items : []);
+    } catch (e) {
+      console.warn("[CharacterDataService] Failed to load initial equipment", e);
+      this.initialEquipmentItems.set([]);
+    }
+  };
+
+  readonly initialEquipmentLabels = computed(() => {
+    const items = this.initialEquipmentItems();
+    if (items) return items.map(i => i?.name ?? "").map(s => s.trim()).filter(Boolean);
+    return this.startingTrappings();
+  });
 
   /** Rzut 2k10 na startowy majątek. Zwraca wynik 2..20 (deterministyczny przy seed). */
   rollWealth2d10 = (seed?: number): number => {

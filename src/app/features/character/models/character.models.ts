@@ -1,3 +1,9 @@
+export type CharacterEquipmentCreateDto = {
+  item: number;
+  quality?: number;
+  quantity?: number;
+};
+
 export type CharacterCreatePayload = {
   name: string;
   race: string;
@@ -14,7 +20,7 @@ export type CharacterCreatePayload = {
   eyes?: string | null;
   hair?: string | null;
   gender?: string | null;
-  equipment?: string | null;
+  equipment?: CharacterEquipmentCreateDto[];
   weapons?: number[]; // CharacterWeapon IDs
   armor?: number[]; // CharacterArmor IDs
   goldCrowns?: number;

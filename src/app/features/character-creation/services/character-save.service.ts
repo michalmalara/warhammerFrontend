@@ -224,7 +224,13 @@ export class CharacterSaveService {
 
   save = async (): Promise<void> => {
     const b = this.charData.bio();
-    const p = this.charData.getProfession() ?? {id: 0, trappings: ''};
+
+    const initialEquipment = this.charData.initialEquipmentItems?.() ?? null;
+    const equipmentPayload = (initialEquipment ?? []).map(i => ({
+      item: i.id,
+      quality: 0,
+      quantity: 1,
+    }));
 
     // 1) create dependent records
     const [characterProfileId, currentProfessionId, skillIds, talentIds] = await Promise.all([
@@ -244,7 +250,7 @@ export class CharacterSaveService {
       hair: b.hairColor,
       currentProfession: currentProfessionId,
       characterProfile: characterProfileId,
-      equipment: (p.trappings ?? '').trim(),
+      equipment: equipmentPayload,
       goldCrowns: this.charData.goldCrowns?.() ?? undefined,
       characterSkills: skillIds,
       characterTalents: talentIds,
