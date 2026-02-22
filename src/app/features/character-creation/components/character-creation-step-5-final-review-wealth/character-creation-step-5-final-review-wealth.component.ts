@@ -59,6 +59,20 @@ export class CharacterCreationStep5FinalReviewWealthComponent {
     return [...this.skillsHighlights(), ...this.talentsHighlights()].slice(0, 5);
   });
 
+  readonly weaponOptions = [
+    {id: "club", label: $localize`:Weapon label@@cc.final.weapon.club:Club`},
+    {id: "sword", label: $localize`:Weapon label@@cc.final.weapon.sword:Sword`},
+    {id: "axe", label: $localize`:Weapon label@@cc.final.weapon.axe:Axe`},
+    {id: "hammer", label: $localize`:Weapon label@@cc.final.weapon.hammer:Hammer`},
+  ] as const;
+
+  readonly selectedWeaponType = computed(() => this.charData.getStartingWeaponType());
+
+  readonly selectedWeaponLabel = computed(() => {
+    const t = this.selectedWeaponType();
+    return this.weaponOptions.find((o) => o.id === t)?.label ?? $localize`:Em dash@@cc.common.emDash:—`;
+  });
+
   rollForWealth = () => {
     this.charData.rollWealth2d10();
   };
@@ -115,4 +129,8 @@ export class CharacterCreationStep5FinalReviewWealthComponent {
   constructor() {
     void this.charData.loadInitialEquipment();
   }
+
+  selectWeaponType = (id: (typeof this.weaponOptions)[number]["id"]) => {
+    this.charData.setStartingWeaponType(id);
+  };
 }

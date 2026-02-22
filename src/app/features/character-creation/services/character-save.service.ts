@@ -5,6 +5,7 @@ import {CharacterDataService, type PrimaryStatId} from './character-data.service
 import {CrudApiService} from '../../../shared/services/crud-api.service';
 import {CharactersApiService} from '../../character/services/characters-api.service';
 import type {CharacterCreatePayload} from '../../character/models/character.models';
+import {WeaponsApiService} from '../../equipment/services/weapons-api.service';
 
 type CharacterProfileCreateDto = {
   weaponSkills: number;
@@ -48,6 +49,8 @@ type CharacterTalentCreateDto = { talent: number; description?: string | null };
 
 type CharacterProfessionCreateDto = { profession: number };
 
+type CharacterWeaponCreateDto = { weapon: number; ammunition?: number; quality?: number };
+
 /**
  * Orkiestruje zapis postaci do backendu korzystając z istniejących endpointów w `characterSheet/urls.py`.
  *
@@ -60,6 +63,7 @@ export class CharacterSaveService {
   private readonly charData = inject(CharacterDataService);
   private readonly crud = inject(CrudApiService);
   private readonly charactersApi = inject(CharactersApiService);
+  private readonly weaponsApi = inject(WeaponsApiService);
 
   private static readonly CHARACTER_SHEET_PREFIX = 'character-sheet';
 
@@ -222,6 +226,22 @@ export class CharacterSaveService {
     return ids;
   };
 
+  private readonly ensureStartingWeapon = async (): Promise<number | null> => {
+    const selected = this.charData.getStartingWeaponType();
+    if (!selected) return null;
+
+    const weapons = await firstValueFrom(this.weaponsApi.list());
+    const normalized = (s: string) => (s ?? "").trim().toLowerCase();
+
+    const match = (weapons ?? []).find(w => normalized(w.type) === normalized(selected));
+    if (!match) return null;
+
+    const path = `${CharacterSaveService.CHARACTER_SHEET_PREFIX}/weapons/`;
+    const dto: CharacterWeaponCreateDto = {weapon: match.id, ammunition: 0, quality: 0};
+    const created = await firstValueFrom(this.crud.create<{ id: number }, CharacterWeaponCreateDto>(path, dto));
+    return created.id;
+  };
+
   save = async (): Promise<void> => {
     const b = this.charData.bio();
 
@@ -231,6 +251,8 @@ export class CharacterSaveService {
       quality: 0,
       quantity: 1,
     }));
+
+    const startingWeaponId = await this.ensureStartingWeapon();
 
     // 1) create dependent records
     const [characterProfileId, currentProfessionId, skillIds, talentIds] = await Promise.all([
@@ -251,6 +273,7 @@ export class CharacterSaveService {
       currentProfession: currentProfessionId,
       characterProfile: characterProfileId,
       equipment: equipmentPayload,
+      weapons: startingWeaponId ? [startingWeaponId] : undefined,
       goldCrowns: this.charData.goldCrowns?.() ?? undefined,
       characterSkills: skillIds,
       characterTalents: talentIds,

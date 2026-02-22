@@ -36,6 +36,8 @@ export type FreeAdvance = {
   delta: number; // numeric increase (5 for primary, 1 for secondary)
 };
 
+export type StartingWeaponType = "club" | "sword" | "axe" | "hammer";
+
 @Injectable({providedIn: 'root'})
 export class CharacterDataService {
   private readonly dice = inject(DiceService);
@@ -56,6 +58,8 @@ export class CharacterDataService {
 
   // Zapisana (zaakceptowana) darmowa rozwiniecie wybranej cechy
   readonly freeAdvance = signal<FreeAdvance | null>(null);
+
+  readonly startingWeaponType = signal<StartingWeaponType | null>(null);
 
   setProfessionSkills(list: ProfessionSkill[]) {
     this.professionSkills.set(list ?? []);
@@ -80,6 +84,14 @@ export class CharacterDataService {
   getFreeAdvance(): FreeAdvance | null {
     return this.freeAdvance();
   }
+
+  setStartingWeaponType = (t: StartingWeaponType | null) => {
+    this.startingWeaponType.set(t);
+  };
+
+  getStartingWeaponType = (): StartingWeaponType | null => {
+    return this.startingWeaponType();
+  };
 
   /**
    * Ustawia aktualnie wybraną/wylosowaną profesję (może być null aby wyczyścić).
@@ -175,6 +187,7 @@ export class CharacterDataService {
     this.selectedStat.set(null);
     this.selectedCharacteristic.set(null);
     this.initialEquipmentItems.set(null);
+    this.startingWeaponType.set(null);
     // reset caches
     this.lastMappedW = null;
     this.lastComputedFP = null;

@@ -4,8 +4,8 @@
     <app-breadcrumbs [currentStep]="5" [selectedRaceLabel]="selectedRaceLabel()"></app-breadcrumbs>
 
     <header class="cc-heading cc-heading--left">
-      <h1 class="cc-title">The Final Reckoning</h1>
-      <p class="cc-subtitle">
+      <h1 class="cc-title" i18n="Heading@@cc.final.title">The Final Reckoning</h1>
+      <p class="cc-subtitle" i18n="Text@@cc.final.subtitle">
         Equip your adventurer and roll for starting wealth before entering the grim reality of the Old World.
       </p>
     </header>
@@ -13,8 +13,9 @@
     <div class="grid">
       <aside class="cc-card card--right">
         <header class="card__header">
-          <h3 class="card__title">Character Sheet</h3>
-          <p class="card__subtitle">Final preview before you enter the Old World.</p>
+          <h3 class="card__title" i18n="Card title@@cc.final.sheet.title">Character Sheet</h3>
+          <p class="card__subtitle" i18n="Card subtitle@@cc.final.sheet.subtitle">Final preview before you enter the Old
+            World.</p>
         </header>
 
         <div class="sheet">
@@ -22,8 +23,11 @@
             <div class="sheet__left">
               @if (portraitUrl()) {
                 <div class="sheet__portrait">
-                  <img [src]="portraitUrl()" alt="Portrait: {{ bio().name || 'Character' }}"
-                       i18n-alt="Portrait alt@@cc.portrait.alt"/>
+                  <img
+                    [src]="portraitUrl()"
+                    alt="Portrait: {{ bio().name || 'Character' }}"
+                    i18n-alt="Portrait alt@@cc.portrait.alt"
+                  />
                 </div>
               } @else {
                 <div class="sheet__portrait sheet__portrait--placeholder" aria-hidden="true">
@@ -43,14 +47,14 @@
           </header>
 
           <div class="sheet__bio">
-            <div>Age: {{ bio().age ?? '—' }}</div>
-            <div>Eyes: {{ bio().eyeColor || '—' }}</div>
-            <div>Hair: {{ bio().hairColor || '—' }}</div>
-            <div>Birthplace: —</div>
+            <div><span i18n="Label@@cc.final.sheet.bio.age">Age:</span> {{ bio().age ?? '—' }}</div>
+            <div><span i18n="Label@@cc.final.sheet.bio.eyes">Eyes:</span> {{ bio().eyeColor || '—' }}</div>
+            <div><span i18n="Label@@cc.final.sheet.bio.hair">Hair:</span> {{ bio().hairColor || '—' }}</div>
+            <div><span i18n="Label@@cc.final.sheet.bio.birthplace">Birthplace:</span> —</div>
           </div>
 
           <section class="sheet__section">
-            <h4 class="sheet__section-title">Main Profile</h4>
+            <h4 class="sheet__section-title" i18n="Section title@@cc.final.sheet.mainProfile">Main Profile</h4>
             <div class="stats">
               @for (s of primaryStats(); track s.id) {
                 <div class="stat">
@@ -62,7 +66,8 @@
           </section>
 
           <section class="sheet__section">
-            <h4 class="sheet__section-title">Secondary Profile</h4>
+            <h4 class="sheet__section-title" i18n="Section title@@cc.final.sheet.secondaryProfile">Secondary
+              Profile</h4>
             <div class="stats stats--secondary">
               @for (s of secondaryStats(); track s.id) {
                 <div class="stat stat--secondary">
@@ -74,11 +79,12 @@
           </section>
 
           <section class="sheet__section sheet__section--flex">
-            <h4 class="sheet__section-title">Skills &amp; Talents Highlights</h4>
+            <h4 class="sheet__section-title" i18n="Section title@@cc.final.sheet.highlights">Skills &amp; Talents
+              Highlights</h4>
 
             <div class="highlights-grid">
               <div class="highlights-col">
-                <h5 class="highlights-col__title">Skills</h5>
+                <h5 class="highlights-col__title" i18n="Section title@@cc.final.sheet.highlights.skills">Skills</h5>
                 @if (skillsHighlights().length) {
                   <ul class="highlights">
                     @for (s of skillsHighlights(); track s.id) {
@@ -96,7 +102,7 @@
               </div>
 
               <div class="highlights-col">
-                <h5 class="highlights-col__title">Talents</h5>
+                <h5 class="highlights-col__title" i18n="Section title@@cc.final.sheet.highlights.talents">Talents</h5>
                 @if (talentsHighlights().length) {
                   <ul class="highlights">
                     @for (t of talentsHighlights(); track t.id) {
@@ -119,20 +125,22 @@
 
       <section class="cc-card card--left">
         <header class="card__header">
-          <h3 class="card__title">Final Review &amp; Provisioning</h3>
-          <p class="card__subtitle">Review your starting wealth and trappings before you commit the character.</p>
+          <h3 class="card__title" i18n="Card title@@cc.final.review.title">Final Review &amp; Provisioning</h3>
+          <p class="card__subtitle" i18n="Card subtitle@@cc.final.review.subtitle">Review your starting wealth and
+            trappings before you commit the character.</p>
         </header>
 
         <div class="card__body">
           <section class="cc-panel wealth">
             <div class="wealth__copy">
-              <h3 class="wealth__title">Starting Wealth</h3>
-              <p class="wealth__desc">Roll 2d10 Gold Crowns (gc) to see what Sigmar has provided.</p>
+              <h3 class="wealth__title" i18n="Section title@@cc.final.wealth.title">Starting Wealth</h3>
+              <p class="wealth__desc" i18n="Text@@cc.final.wealth.desc">Roll 2d10 Gold Crowns (gc) to see what Sigmar
+                has provided.</p>
             </div>
 
             <div class="wealth__actions">
               <div class="wealth__current">
-                <span class="wealth__label">Current Gold</span>
+                <span class="wealth__label" i18n="Label@@cc.final.wealth.currentGold">Current Gold</span>
                 @if (goldCrowns() !== null) {
                   <span class="wealth__value">{{ goldCrowns() }} gc</span>
                 } @else {
@@ -140,7 +148,7 @@
                 }
               </div>
 
-              <button type="button" class="wealth__roll" (click)="rollForWealth()">
+              <button type="button" class="wealth__roll" (click)="rollForWealth()" i18n="Action@@cc.final.wealth.roll">
                 <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
                 Roll for Wealth
               </button>
@@ -151,9 +159,10 @@
             <div class="trappings__head">
               <h3 class="trappings__title">
                 <mat-icon fontIcon="backpack"></mat-icon>
-                Starting Trappings
+                <span i18n="Section title@@cc.final.trappings.title">Starting Trappings</span>
               </h3>
-              <span class="trappings__meta">Inventory Limit: {{ trappings().length }}/25</span>
+              <span class="trappings__meta"
+                    i18n="Meta@@cc.final.trappings.inventoryLimit">Inventory Limit: {{ trappings().length }}/25</span>
             </div>
 
             @if (trappings().length) {
@@ -167,7 +176,7 @@
                       <h4 class="trap__name">{{ item }}</h4>
                       <p class="trap__desc">Starting item</p>
                     </div>
-                    <span class="trap__enc">— enc</span>
+                    <span class="trap__enc">—</span>
                   </div>
                 }
               </div>
@@ -176,6 +185,39 @@
                 fill the "trappings" field on the profession.
               </div>
             }
+          </section>
+
+          <section class="cc-panel">
+            <div class="trappings__head">
+              <h3 class="trappings__title" i18n="Section title@@cc.final.weaponChoice.title">Starting Weapon</h3>
+              <span class="trappings__meta"
+                    i18n="Meta@@cc.final.weaponChoice.selected">Selected: {{ selectedWeaponLabel() }}</span>
+            </div>
+
+            <div class="trappings__grid" role="list">
+              @for (w of weaponOptions; track w.id) {
+                <button
+                  type="button"
+                  class="trap"
+                  role="listitem"
+                  (click)="selectWeaponType(w.id)"
+                  [attr.aria-pressed]="selectedWeaponType() === w.id"
+                >
+                  <div class="trap__icon">
+                    <mat-icon fontIcon="sports_martial_arts"></mat-icon>
+                  </div>
+                  <div class="trap__body">
+                    <h4 class="trap__name">{{ w.label }}</h4>
+                    <p class="trap__desc" i18n="Desc@@cc.final.weaponChoice.desc">Choose one weapon type.</p>
+                  </div>
+                  @if (selectedWeaponType() === w.id) {
+                    <span class="trap__enc" i18n="Selected badge@@cc.final.weaponChoice.badge">Selected</span>
+                  } @else {
+                    <span class="trap__enc">—</span>
+                  }
+                </button>
+              }
+            </div>
           </section>
         </div>
       </section>
@@ -186,7 +228,9 @@
         variant="cancel"
         icon="arrow_back"
         label="Previous Step"
+        i18n-label="Action label@@cc.final.actions.prev"
         ariaLabel="Previous Step"
+        i18n-ariaLabel="Aria@@cc.final.actions.prev.aria"
         type="button"
         (clicked)="goPrev()"
       ></app-wax-seal-button>
@@ -196,7 +240,9 @@
           variant="save"
           icon="verified"
           label="Commit Character"
+          i18n-label="Action@@cc.final.actions.commit"
           ariaLabel="Commit Character"
+          i18n-ariaLabel="Aria@@cc.final.actions.commit.aria"
           type="button"
           (clicked)="commitCharacter()"
           [disabled]="isSaving()"
