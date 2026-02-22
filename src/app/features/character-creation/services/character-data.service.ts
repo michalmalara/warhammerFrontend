@@ -7,6 +7,8 @@ import {RacePerksApiService} from "./race-perks-api.service";
 import {firstValueFrom} from "rxjs";
 import {InitialEquipmentApiService} from "../../equipment/services/initial-equipment-api.service";
 import type {Item} from "../../equipment/models/item.models";
+import type {Weapon} from "../../equipment/models/weapon.models";
+import {InitialWeaponApiService} from "../../equipment/services/initial-weapon-api.service";
 
 export type PrimaryStatId = 'WS' | 'BS' | 'S' | 'T' | 'Ag' | 'Int' | 'WP' | 'Fel';
 
@@ -45,6 +47,7 @@ export class CharacterDataService {
   private readonly raceBases = inject(RaceBaseService);
   private readonly racePerksApi = inject(RacePerksApiService);
   private readonly initialEquipmentApi = inject(InitialEquipmentApiService);
+  private readonly initialWeaponApi = inject(InitialWeaponApiService);
 
   // Przechowywana (wylosowana / wybrana) profesja — dostępna dla innych kroków tworzenia postaci
   readonly profession = signal<Profession | null>(null);
@@ -60,6 +63,7 @@ export class CharacterDataService {
   readonly freeAdvance = signal<FreeAdvance | null>(null);
 
   readonly startingWeaponType = signal<StartingWeaponType | null>(null);
+  readonly startingWeapon = signal<Weapon | null>(null);
 
   setProfessionSkills(list: ProfessionSkill[]) {
     this.professionSkills.set(list ?? []);
@@ -91,6 +95,14 @@ export class CharacterDataService {
 
   getStartingWeaponType = (): StartingWeaponType | null => {
     return this.startingWeaponType();
+  };
+
+  setStartingWeapon = (weapon: Weapon | null) => {
+    this.startingWeapon.set(weapon);
+  };
+
+  getStartingWeapon = (): Weapon | null => {
+    return this.startingWeapon();
   };
 
   /**
@@ -188,6 +200,7 @@ export class CharacterDataService {
     this.selectedCharacteristic.set(null);
     this.initialEquipmentItems.set(null);
     this.startingWeaponType.set(null);
+    this.startingWeapon.set(null);
     // reset caches
     this.lastMappedW = null;
     this.lastComputedFP = null;
@@ -569,4 +582,14 @@ export class CharacterDataService {
   get primaryStatsHasMercy(): boolean {
     return this.primaryStats().some(s => s.shallyasMercy);
   }
+
+  loadInitialWeapon = async (): Promise<void> => {
+    try {
+      const w = await firstValueFrom(this.initialWeaponApi.getInitialWeapon());
+      this.startingWeapon.set(w ?? null);
+    } catch (e) {
+      console.warn("[CharacterDataService] Failed to load initial weapon", e);
+      this.startingWeapon.set(null);
+    }
+  };
 }

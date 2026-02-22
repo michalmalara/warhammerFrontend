@@ -66,6 +66,8 @@ export class CharacterCreationStep5FinalReviewWealthComponent {
     {id: "hammer", label: $localize`:Weapon label@@cc.final.weapon.hammer:Hammer`},
   ] as const;
 
+  readonly startingWeapon = computed(() => this.charData.getStartingWeapon());
+
   readonly selectedWeaponType = computed(() => this.charData.getStartingWeaponType());
 
   readonly selectedWeaponLabel = computed(() => {
@@ -128,9 +130,23 @@ export class CharacterCreationStep5FinalReviewWealthComponent {
 
   constructor() {
     void this.charData.loadInitialEquipment();
+    void this.charData.loadInitialWeapon();
   }
 
-  selectWeaponType = (id: (typeof this.weaponOptions)[number]["id"]) => {
+  selectWeaponType = async (id: (typeof this.weaponOptions)[number]["id"]) => {
     this.charData.setStartingWeaponType(id);
+
+    const baseWeapon = this.startingWeapon();
+    if (!baseWeapon) {
+      await this.charData.loadInitialWeapon();
+    }
+
+    const currentWeapon = this.charData.getStartingWeapon();
+    if (!currentWeapon) return;
+
+    this.charData.setStartingWeapon({
+      ...currentWeapon,
+      description: this.weaponOptions.find((o) => o.id === id)?.label ?? null
+    });
   };
 }
