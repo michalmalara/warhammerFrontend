@@ -10,6 +10,14 @@ import type {Item} from "../../equipment/models/item.models";
 import type {Weapon} from "../../equipment/models/weapon.models";
 import {InitialWeaponApiService} from "../../equipment/services/initial-weapon-api.service";
 
+export type CharacterWeapon = {
+  id: number;
+  weapon: Weapon;
+  ammunition: number;
+  quality: number;
+  description: string | null;
+};
+
 export type PrimaryStatId = 'WS' | 'BS' | 'S' | 'T' | 'Ag' | 'Int' | 'WP' | 'Fel';
 
 export type PrimaryStat = {
@@ -63,7 +71,7 @@ export class CharacterDataService {
   readonly freeAdvance = signal<FreeAdvance | null>(null);
 
   readonly startingWeaponType = signal<StartingWeaponType | null>(null);
-  readonly startingWeapon = signal<Weapon | null>(null);
+  readonly startingWeapon = signal<CharacterWeapon | null>(null);
 
   setProfessionSkills(list: ProfessionSkill[]) {
     this.professionSkills.set(list ?? []);
@@ -97,11 +105,11 @@ export class CharacterDataService {
     return this.startingWeaponType();
   };
 
-  setStartingWeapon = (weapon: Weapon | null) => {
+  setStartingWeapon = (weapon: CharacterWeapon | null) => {
     this.startingWeapon.set(weapon);
   };
 
-  getStartingWeapon = (): Weapon | null => {
+  getStartingWeapon = (): CharacterWeapon | null => {
     return this.startingWeapon();
   };
 
@@ -586,7 +594,18 @@ export class CharacterDataService {
   loadInitialWeapon = async (): Promise<void> => {
     try {
       const w = await firstValueFrom(this.initialWeaponApi.getInitialWeapon());
-      this.startingWeapon.set(w ?? null);
+      if (!w) {
+        this.startingWeapon.set(null);
+        return;
+      }
+      const cw: CharacterWeapon = {
+        id: 0,
+        weapon: w,
+        ammunition: 0,
+        quality: 0,
+        description: null,
+      };
+      this.startingWeapon.set(cw);
     } catch (e) {
       console.warn("[CharacterDataService] Failed to load initial weapon", e);
       this.startingWeapon.set(null);

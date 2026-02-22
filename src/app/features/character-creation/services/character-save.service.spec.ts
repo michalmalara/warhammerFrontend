@@ -39,6 +39,7 @@ describe('CharacterSaveService', () => {
       getProfessionSkills: () => [{id: 101, name: 'Skill A'}],
       getProfessionTalents: () => [{id: 201, name: 'Talent A'}],
       getSelectedCharacteristic: () => null,
+      getStartingWeapon: () => null,
       primaryTotals: () => [
         {id: 'WS', value: 30},
         {id: 'BS', value: 31},

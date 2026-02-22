@@ -228,12 +228,15 @@ export class CharacterSaveService {
 
   private readonly ensureStartingWeapon = async (): Promise<number | null> => {
     const baseWeapon = this.charData.getStartingWeapon();
-    if (!baseWeapon?.id) return null;
+    if (!baseWeapon) return null;
+
+    const weaponId = baseWeapon.weapon?.id;
+    if (typeof weaponId !== "number") return null;
 
     const path = `${CharacterSaveService.CHARACTER_SHEET_PREFIX}/weapons/`;
 
     const description = baseWeapon.description ?? null;
-    const dto: any = {weapon: baseWeapon.id, ammunition: 0, quality: 0, description};
+    const dto: any = {weapon: weaponId, ammunition: 0, quality: 0, description};
 
     const created = await firstValueFrom(this.crud.create<{ id: number }, any>(path, dto));
     return created.id;
