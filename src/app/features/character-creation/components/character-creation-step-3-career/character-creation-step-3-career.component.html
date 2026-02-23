@@ -18,27 +18,31 @@
             <button class="roll__button" type="button" (click)="drawCareer()" [disabled]="isLoading()">
               <span class="roll__buttonInner">
                 <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
-                Roll for Career
+                <span i18n="Button@@cc.step3.rollForCareer">Roll for Career</span>
               </span>
               <span class="roll__hover"></span>
             </button>
 
             <div class="careerWrap__controlsInner">
-              <div style="margin-top:0.6rem;">
-                <button class="roll__button roll__button--list" type="button" (click)="loadEligible()"
-                        [disabled]="isLoading()">
+              <div class="careerWrap__listSpacing">
+                <button
+                  class="roll__button roll__button--list"
+                  type="button"
+                  (click)="loadEligible()"
+                  [disabled]="isLoading()"
+                >
                   <span class="roll__buttonInner">
                     <mat-icon class="dice__icon wax-icon" aria-hidden="true">list</mat-icon>
-                    Choose from list
+                    <span i18n="Button@@cc.step3.chooseFromList">Choose from list</span>
                   </span>
                 </button>
 
-                <!-- Selection panel (shows when isSelecting === true) - kept here so it appears directly under the button -->
                 @if (isSelecting()) {
                   <div class="eligiblePanel">
                     <header class="eligiblePanel__head">
-                      <h4 i18n="Heading@@cc.chooseFor">Choose a profession for: {{ selectedRaceLabel() }}</h4>
-                      <small i18n="Count@@cc.availableCount">{{ eligibleCount() }} available</small>
+                      <h4 i18n="Heading@@cc.step3.chooseProfessionForRace">Choose a profession
+                        for: {{ selectedRaceLabel() }}</h4>
+                      <small i18n="Count@@cc.step3.availableCount">{{ eligibleCount() }} available</small>
                     </header>
 
                     @if (eligibleList().length) {
@@ -52,13 +56,14 @@
                         }
                       </ul>
                     } @else {
-                      <div class="eligiblePanel__empty" i18n="Empty@@cc.noEligible">No professions available for this
-                        race.
+                      <div class="eligiblePanel__empty" i18n="Empty@@cc.step3.noEligibleProfessions">
+                        No professions available for this race.
                       </div>
                     }
 
                     <div class="eligiblePanel__actions">
-                      <button type="button" class="roll__button" (click)="cancelSelection()" i18n="Button@@cc.cancel">
+                      <button type="button" class="roll__button" (click)="cancelSelection()"
+                              i18n="Button@@cc.step3.cancel">
                         Cancel
                       </button>
                     </div>
@@ -67,37 +72,35 @@
               </div>
             </div>
           </div>
-
-          <!-- duplicate panel removed: only panel under the button remains -->
         </aside>
 
         <section class="career cc-card">
           <div class="career__accent"></div>
 
-          <!-- Nazwa profesji przeniesiona nad tabelę -->
-
           <div class="career__grid">
-
-            <!-- Right Column: Stats and Skills -->
             <div class="career__right">
               <header class="career__header">
                 <h3 class="art__title">{{ p.name }}</h3>
               </header>
 
               <div class="section">
-                <h4 class="section__title">
+                <h4 class="section__title" i18n="Heading@@cc.step3.advanceScheme">
                   <mat-icon class="section__titleIcon" fontIcon="military_tech"></mat-icon>
                   Advance Scheme
                 </h4>
 
-                <p class="section__hint">Choose a characteristic for a free advance</p>
+                <p class="section__hint" i18n="Text@@cc.step3.chooseCharacteristicHint">Choose a characteristic for a
+                  free advance</p>
 
-                <!-- Placeholder grid (mockup-like). Jeśli backend doda advance scheme, podmienimy dane. -->
-                <div class="adv" role="grid" aria-label="Advance Scheme">
+                <div class="adv" role="grid" aria-label="Advance Scheme"
+                     i18n-aria-label="Aria@@cc.step3.advanceSchemeAria">
                   <div class="adv__head">
                     @for (h of primaryCharacteristicHeaders; track h) {
-                      <span (click)="selectCharacteristic(h)"
-                            [class.adv__selected]="isCharacteristicSelected(h)" role="columnheader">{{ h }}</span>
+                      <span
+                        (click)="selectCharacteristic(h)"
+                        [class.adv__selected]="isCharacteristicSelected(h)"
+                        role="columnheader"
+                      >{{ h }}</span>
                     }
                   </div>
                   <div class="adv__row">
@@ -111,13 +114,17 @@
                         [attr.tabindex]="isCharacteristicSelectable('primary', $index) ? 0 : null"
                         [attr.aria-pressed]="isCharacteristicSelectable('primary', $index) ? isCharacteristicSelectedByCell('primary', $index) : null"
                         [attr.aria-disabled]="isCharacteristicSelectable('primary', $index) ? null : true"
-                        (click)="selectCharacteristicByCell('primary', $index)">{{ v }}</span>
+                        (click)="selectCharacteristicByCell('primary', $index)"
+                      >{{ v }}</span>
                     }
                   </div>
                   <div class="adv__head adv__head--mt">
                     @for (h of secondaryCharacteristicHeaders; track h) {
-                      <span (click)="selectCharacteristic(h)"
-                            [class.adv__selected]="isCharacteristicSelected(h)" role="columnheader">{{ h }}</span>
+                      <span
+                        (click)="selectCharacteristic(h)"
+                        [class.adv__selected]="isCharacteristicSelected(h)"
+                        role="columnheader"
+                      >{{ h }}</span>
                     }
                   </div>
                   <div class="adv__row">
@@ -131,12 +138,14 @@
                         [attr.tabindex]="isCharacteristicSelectable('secondary', $index) ? 0 : null"
                         [attr.aria-pressed]="isCharacteristicSelectable('secondary', $index) ? isCharacteristicSelectedByCell('secondary', $index) : null"
                         [attr.aria-disabled]="isCharacteristicSelectable('secondary', $index) ? null : true"
-                        (click)="selectCharacteristicByCell('secondary', $index)">{{ v }}</span>
+                        (click)="selectCharacteristicByCell('secondary', $index)"
+                      >{{ v }}</span>
                     }
                   </div>
                 </div>
 
-                <div class="skills" aria-label="Profession skills">
+                <div class="skills" aria-label="Profession skills"
+                     i18n-aria-label="Aria@@cc.step3.professionSkillsAria">
                   <h4 class="section__title" i18n="Heading@@cc.step3.skills">
                     <mat-icon class="section__titleIcon" fontIcon="psychology"></mat-icon>
                     Skills
@@ -148,9 +157,7 @@
                         @if (!isSkillDisplayed(ps.id)) {
                           <li class="skills__item">
                             <div class="skills__row">
-                            <span class="skills__name">
-                              {{ ps.skill.name }}
-                            </span>
+                              <span class="skills__name">{{ ps.skill.name }}</span>
                               @if (ps.description || ps.skill.description) {
                                 <span class="skills__descInline">({{ ps.description || ps.skill.description }})</span>
                               }
@@ -165,7 +172,6 @@
                                 }
                               }
                             </div>
-
                           </li>
                         }
                       }
@@ -175,7 +181,8 @@
                   }
                 </div>
 
-                <div class="skills" aria-label="Profession talents">
+                <div class="skills" aria-label="Profession talents"
+                     i18n-aria-label="Aria@@cc.step3.professionTalentsAria">
                   <h4 class="section__title" i18n="Heading@@cc.step3.talents">
                     <mat-icon class="section__titleIcon" fontIcon="auto_awesome"></mat-icon>
                     Talents
@@ -187,9 +194,7 @@
                         @if (!isTalentDisplayed(pt.id)) {
                           <li class="skills__item">
                             <div class="skills__row">
-                            <span class="skills__name">
-                              {{ pt.talent.name }}
-                            </span>
+                              <span class="skills__name">{{ pt.talent.name }}</span>
                               @if (pt.description || pt.talent.description) {
                                 <span class="skills__descInline">({{ pt.description || pt.talent.description }})</span>
                               }
@@ -204,7 +209,6 @@
                                 }
                               }
                             </div>
-
                           </li>
                         }
                       }
@@ -219,13 +223,13 @@
                 <div class="career__foot">
                   @if (p.entryProfessions.length) {
                     <span>
-                      Entry:
+                      <span i18n="Label@@cc.step3.entry">Entry:</span>
                       {{ entryText() }}
                     </span>
                   }
                   @if (p.exitProfessions.length) {
                     <span>
-                      Exit:
+                      <span i18n="Label@@cc.step3.exit">Exit:</span>
                       {{ exitText() }}
                     </span>
                   }
@@ -236,35 +240,37 @@
         </section>
       </section>
     } @else {
-      <!-- Placeholder when no profession is drawn yet (now matches drawn card layout) -->
       <section class="careerWrap">
         <aside class="careerWrap__controls">
           <div class="careerWrap__controlsInner">
             <button class="roll__button" type="button" (click)="drawCareer()" [disabled]="isLoading()">
               <span class="roll__buttonInner">
                 <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
-                Roll for Career
+                <span i18n="Button@@cc.step3.rollForCareer">Roll for Career</span>
               </span>
               <span class="roll__hover"></span>
             </button>
 
-            <!-- Also allow choosing from list in placeholder state -->
             <div class="careerWrap__controlsInner">
-              <div style="margin-top:0.6rem;">
-                <button class="roll__button roll__button--list" type="button" (click)="loadEligible()"
-                        [disabled]="isLoading()">
+              <div class="careerWrap__listSpacing">
+                <button
+                  class="roll__button roll__button--list"
+                  type="button"
+                  (click)="loadEligible()"
+                  [disabled]="isLoading()"
+                >
                   <span class="roll__buttonInner">
                     <mat-icon class="dice__icon wax-icon" aria-hidden="true">list</mat-icon>
-                    Choose from list
+                    <span i18n="Button@@cc.step3.chooseFromList">Choose from list</span>
                   </span>
                 </button>
 
-                <!-- Selection panel (shows when isSelecting === true) - kept here in placeholder branch -->
                 @if (isSelecting()) {
                   <div class="eligiblePanel">
                     <header class="eligiblePanel__head">
-                      <h4 i18n="Heading@@cc.chooseFor">Choose a profession for: {{ selectedRaceLabel() }}</h4>
-                      <small i18n="Count@@cc.availableCount">{{ eligibleCount() }} available</small>
+                      <h4 i18n="Heading@@cc.step3.chooseProfessionForRace">Choose a profession
+                        for: {{ selectedRaceLabel() }}</h4>
+                      <small i18n="Count@@cc.step3.availableCount">{{ eligibleCount() }} available</small>
                     </header>
 
                     @if (eligibleList().length) {
@@ -278,13 +284,14 @@
                         }
                       </ul>
                     } @else {
-                      <div class="eligiblePanel__empty" i18n="Empty@@cc.noEligiblePlaceholder">No professions available
-                        for this race.
+                      <div class="eligiblePanel__empty" i18n="Empty@@cc.step3.noEligibleProfessions">
+                        No professions available for this race.
                       </div>
                     }
 
                     <div class="eligiblePanel__actions">
-                      <button type="button" class="roll__button" (click)="cancelSelection()" i18n="Button@@cc.cancel">
+                      <button type="button" class="roll__button" (click)="cancelSelection()"
+                              i18n="Button@@cc.step3.cancel">
                         Cancel
                       </button>
                     </div>
@@ -293,33 +300,31 @@
               </div>
             </div>
           </div>
-
-          <!-- duplicate panel removed: only panel under the button remains -->
         </aside>
 
         <section class="career career--placeholder cc-card">
           <div class="career__accent"></div>
-
-          <!-- Tytuł placeholdera przeniesiony nad tabelę, tak jak w wylosowanej karcie -->
           <div class="career__grid">
-
-            <!-- Right Column: placeholder shows same sections as real card but with placeholder values -->
             <div class="career__right">
               <header class="career__header">
-                <h3 class="art__title">Unknown Career</h3>
+                <h3 class="art__title" i18n="Heading@@cc.step3.unknownCareer">Unknown Career</h3>
               </header>
 
               <div class="section">
-                <h4 class="section__title">
+                <h4 class="section__title" i18n="Heading@@cc.step3.advanceScheme">
                   <mat-icon class="section__titleIcon" fontIcon="military_tech"></mat-icon>
                   Advance Scheme
                 </h4>
 
-                <div class="adv" role="grid" aria-label="Advance Scheme">
+                <div class="adv" role="grid" aria-label="Advance Scheme"
+                     i18n-aria-label="Aria@@cc.step3.advanceSchemeAria">
                   <div class="adv__head">
                     @for (h of primaryCharacteristicHeaders; track h) {
-                      <span (click)="selectCharacteristic(h)"
-                            [class.adv__selected]="isCharacteristicSelected(h)" role="columnheader">{{ h }}</span>
+                      <span
+                        (click)="selectCharacteristic(h)"
+                        [class.adv__selected]="isCharacteristicSelected(h)"
+                        role="columnheader"
+                      >{{ h }}</span>
                     }
                   </div>
                   <div class="adv__row">
@@ -329,13 +334,17 @@
                         [class.adv__primary]="v !== '-'"
                         [class.adv__selectable]="v !== '-'"
                         [class.adv__cellSelected]="isCharacteristicSelectedByCell('primary', $index)"
-                        (click)="selectCharacteristicByCell('primary', $index)">{{ v }}</span>
+                        (click)="selectCharacteristicByCell('primary', $index)"
+                      >{{ v }}</span>
                     }
                   </div>
                   <div class="adv__head adv__head--mt">
                     @for (h of secondaryCharacteristicHeaders; track h) {
-                      <span (click)="selectCharacteristic(h)"
-                            [class.adv__selected]="isCharacteristicSelected(h)" role="columnheader">{{ h }}</span>
+                      <span
+                        (click)="selectCharacteristic(h)"
+                        [class.adv__selected]="isCharacteristicSelected(h)"
+                        role="columnheader"
+                      >{{ h }}</span>
                     }
                   </div>
                   <div class="adv__row">
@@ -345,15 +354,16 @@
                         [class.adv__primary]="v !== '-'"
                         [class.adv__selectable]="v !== '-'"
                         [class.adv__cellSelected]="isCharacteristicSelectedByCell('secondary', $index)"
-                        (click)="selectCharacteristicByCell('secondary', $index)">{{ v }}</span>
+                        (click)="selectCharacteristicByCell('secondary', $index)"
+                      >{{ v }}</span>
                     }
                   </div>
                 </div>
               </div>
 
               <div class="career__foot">
-                <span>Entry: —</span>
-                <span>Exit: —</span>
+                <span i18n="Label@@cc.step3.entryPlaceholder">Entry: —</span>
+                <span i18n="Label@@cc.step3.exitPlaceholder">Exit: —</span>
               </div>
             </div>
 

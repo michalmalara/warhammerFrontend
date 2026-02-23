@@ -191,29 +191,27 @@
                             }
                           </div>
                         </div>
-                      }
-
-                      @if (isAltSkillPickerVisible(i)) {
-                        <div class="tile__section">
-                          <mat-form-field appearance="outline" class="full field--spaced">
-                            <mat-label i18n="Label@@profession.create.addAlternativeSkill.label">Add alternative skill
-                              (from already added)
-                            </mat-label>
-                            <select
-                              matNativeControl
-                              (change)="addAlternativeSkillFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
-                            >
-                              <option value="" selected disabled i18n="Placeholder@@profession.create.choose">Choose...
-                              </option>
-                              @for (ss of skills.controls; track ss; let si = $index) {
-                                @if (si !== i) {
-                                  <option [value]="ss.value?.id">{{ ss.value?.skill?.name }}</option>
-                                }
+                      } @if (isAltSkillPickerVisible(i)) {
+                      <div class="tile__section">
+                        <mat-form-field appearance="outline" class="full field--spaced">
+                          <mat-label i18n="Label@@profession.create.addAlternativeSkill.label">Add alternative skill
+                            (from already added)
+                          </mat-label>
+                          <select
+                            matNativeControl
+                            (change)="addAlternativeSkillFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
+                          >
+                            <option value="" selected disabled i18n="Placeholder@@profession.create.choose">Choose...
+                            </option>
+                            @for (ss of skills.controls; track ss; let si = $index) {
+                              @if (si !== i) {
+                                <option [value]="ss.value?.id">{{ ss.value?.skill?.name }}</option>
                               }
-                            </select>
-                          </mat-form-field>
-                        </div>
-                      }
+                            }
+                          </select>
+                        </mat-form-field>
+                      </div>
+                    }
                     </div>
                   }
                 }
@@ -306,29 +304,27 @@
                             }
                           </div>
                         </div>
-                      }
-
-                      @if (isAltTalentPickerVisible(i)) {
-                        <div class="tile__section">
-                          <mat-form-field appearance="outline" class="full field--spaced">
-                            <mat-label i18n="Label@@profession.create.addAlternativeTalent.label">Add alternative talent
-                              (from already added)
-                            </mat-label>
-                            <select
-                              matNativeControl
-                              (change)="addAlternativeTalentFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
-                            >
-                              <option value="" selected disabled i18n="Placeholder@@profession.create.choose">Choose...
-                              </option>
-                              @for (tt of talents.controls; track tt; let ti = $index) {
-                                @if (ti !== i) {
-                                  <option [value]="tt.value?.id">{{ tt.value?.talent?.name }}</option>
-                                }
+                      } @if (isAltTalentPickerVisible(i)) {
+                      <div class="tile__section">
+                        <mat-form-field appearance="outline" class="full field--spaced">
+                          <mat-label i18n="Label@@profession.create.addAlternativeTalent.label">Add alternative talent
+                            (from already added)
+                          </mat-label>
+                          <select
+                            matNativeControl
+                            (change)="addAlternativeTalentFromExisting(i, parseNumberValue($any($event.target).valueAsNumber ?? $any($event.target).value)); $any($event.target).value = ''"
+                          >
+                            <option value="" selected disabled i18n="Placeholder@@profession.create.choose">Choose...
+                            </option>
+                            @for (tt of talents.controls; track tt; let ti = $index) {
+                              @if (ti !== i) {
+                                <option [value]="tt.value?.id">{{ tt.value?.talent?.name }}</option>
                               }
-                            </select>
-                          </mat-form-field>
-                        </div>
-                      }
+                            }
+                          </select>
+                        </mat-form-field>
+                      </div>
+                    }
                     </div>
                   }
                 }
@@ -695,6 +691,127 @@
         </mat-card-content>
       </mat-card>
 
+      @if (!form.controls.isAdvanced.value) {
+        <mat-card class="character-card card">
+          <mat-card-content>
+            <h3
+              class="section-title"
+              i18n="Section heading|Roll ranges heading@@profession.create.rollRanges.title"
+            >Roll ranges (basic professions only)</h3>
+
+            <div class="grid">
+              <div class="stat-control">
+                <label i18n="Label@@profession.create.rollRanges.human">Human (min / max)</label>
+                <div class="row">
+                  <mat-form-field appearance="outline" class="full">
+                    <mat-label i18n="Label@@profession.create.rollRanges.human.min">Min</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="humanMinRoll"
+                      aria-label="Human min roll"
+                      i18n-aria-label="ARIA@@profession.create.rollRanges.human.min.aria"
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="full">
+                    <mat-label i18n="Label@@profession.create.rollRanges.human.max">Max</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="humanMaxRoll"
+                      aria-label="Human max roll"
+                      i18n-aria-label="ARIA@@profession.create.rollRanges.human.max.aria"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="stat-control">
+                <label i18n="Label@@profession.create.rollRanges.dwarf">Dwarf (min / max)</label>
+                <div class="row">
+                  <mat-form-field appearance="outline" class="full">
+                    <mat-label i18n="Label@@profession.create.rollRanges.dwarf.min">Min</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="dwarfMinRoll"
+                      aria-label="Dwarf min roll"
+                      i18n-aria-label="ARIA@@profession.create.rollRanges.dwarf.min.aria"
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="full">
+                    <mat-label i18n="Label@@profession.create.rollRanges.dwarf.max">Max</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="dwarfMaxRoll"
+                      aria-label="Dwarf max roll"
+                      i18n-aria-label="ARIA@@profession.create.rollRanges.dwarf.max.aria"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="stat-control">
+                <label i18n="Label@@profession.create.rollRanges.elf">Elf (min / max)</label>
+                <div class="row">
+                  <mat-form-field appearance="outline" class="full">
+                    <mat-label i18n="Label@@profession.create.rollRanges.elf.min">Min</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="elfMinRoll"
+                      aria-label="Elf min roll"
+                      i18n-aria-label="ARIA@@profession.create.rollRanges.elf.min.aria"
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="full">
+                    <mat-label i18n="Label@@profession.create.rollRanges.elf.max">Max</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="elfMaxRoll"
+                      aria-label="Elf max roll"
+                      i18n-aria-label="ARIA@@profession.create.rollRanges.elf.max.aria"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="stat-control">
+                <label i18n="Label@@profession.create.rollRanges.halfling">Halfling (min / max)</label>
+                <div class="row">
+                  <mat-form-field appearance="outline" class="full">
+                    <mat-label i18n="Label@@profession.create.rollRanges.halfling.min">Min</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="halflingMinRoll"
+                      aria-label="Halfling min roll"
+                      i18n-aria-label="ARIA@@profession.create.rollRanges.halfling.min.aria"
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="full">
+                    <mat-label i18n="Label@@profession.create.rollRanges.halfling.max">Max</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="halflingMaxRoll"
+                      aria-label="Halfling max roll"
+                      i18n-aria-label="ARIA@@profession.create.rollRanges.halfling.max.aria"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+
       <mat-card class="character-card card">
         <mat-card-content>
           <h3 class="section-title" i18n="Section heading@@professionCreate.requiredEquipment.title">Required
@@ -841,11 +958,9 @@
                       </div>
                     </div>
                   </div>
-                }
-
-                @if (!equipment.controls.length) {
-                  <div class="muted" i18n="Empty state@@professionCreate.equipment.empty">No equipment added yet.</div>
-                }
+                } @if (!equipment.controls.length) {
+                <div class="muted" i18n="Empty state@@professionCreate.equipment.empty">No equipment added yet.</div>
+              }
               </div>
             </div>
           </div>

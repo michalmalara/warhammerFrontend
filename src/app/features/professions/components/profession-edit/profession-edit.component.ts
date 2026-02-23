@@ -249,6 +249,15 @@ export class ProfessionEditComponent {
 
     // create template używa tego pola do toggle; w trybie edycji nie mapujemy na backend
     isAdvanced: false,
+
+    humanMinRoll: this.fb.control<number | null>(null),
+    humanMaxRoll: this.fb.control<number | null>(null),
+    dwarfMinRoll: this.fb.control<number | null>(null),
+    dwarfMaxRoll: this.fb.control<number | null>(null),
+    elfMinRoll: this.fb.control<number | null>(null),
+    elfMaxRoll: this.fb.control<number | null>(null),
+    halflingMinRoll: this.fb.control<number | null>(null),
+    halflingMaxRoll: this.fb.control<number | null>(null),
   });
 
   get skills(): FormArray {
@@ -494,6 +503,18 @@ export class ProfessionEditComponent {
       }
     }
     if (equipmentIds.length) (payload as any).equipment = equipmentIds;
+
+    // Dodanie pól min/max roll do payloadu tylko dla profesji podstawowej (isAdvanced=false)
+    if (!v.isAdvanced) {
+      payload.humanMinRoll = v.humanMinRoll;
+      payload.humanMaxRoll = v.humanMaxRoll;
+      payload.dwarfMinRoll = v.dwarfMinRoll;
+      payload.dwarfMaxRoll = v.dwarfMaxRoll;
+      payload.elfMinRoll = v.elfMinRoll;
+      payload.elfMaxRoll = v.elfMaxRoll;
+      payload.halflingMinRoll = v.halflingMinRoll;
+      payload.halflingMaxRoll = v.halflingMaxRoll;
+    }
 
     return payload;
   }
@@ -1059,6 +1080,8 @@ export class ProfessionEditComponent {
   }
 
   private patchFromProfession(p: Profession) {
+    const isAdvanced = (p.entryProfessions?.length ?? 0) > 0;
+
     this.form.patchValue({
       name: p.name,
       description: p.description,
@@ -1077,7 +1100,7 @@ export class ProfessionEditComponent {
       movementDevelopment: p.movementDevelopment,
       magicDevelopment: p.magicDevelopment,
 
-      isAdvanced: (p.entryProfessions?.length ?? 0) > 0,
+      isAdvanced,
     });
 
     this.skills.clear();
@@ -1108,6 +1131,20 @@ export class ProfessionEditComponent {
     this.equipment.clear();
     for (const e of ((p as any).equipment ?? []) as ProfessionEquipment[]) {
       this.equipment.push(new FormControl<ProfessionEquipment>(e));
+    }
+
+    // Ustawienie wartości min/max roll dla rasy tylko dla profesji podstawowej (isAdvanced=false)
+    if (!isAdvanced) {
+      this.form.patchValue({
+        humanMinRoll: p.humanMinRoll,
+        humanMaxRoll: p.humanMaxRoll,
+        dwarfMinRoll: p.dwarfMinRoll,
+        dwarfMaxRoll: p.dwarfMaxRoll,
+        elfMinRoll: p.elfMinRoll,
+        elfMaxRoll: p.elfMaxRoll,
+        halflingMinRoll: p.halflingMinRoll,
+        halflingMaxRoll: p.halflingMaxRoll,
+      });
     }
   }
 

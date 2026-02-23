@@ -308,6 +308,15 @@ export class ProfessionCreateComponent {
     armors: this.fb.array<FormControl<any>>([]),
 
     isAdvanced: false,
+
+    humanMinRoll: this.fb.control<number | null>(null),
+    humanMaxRoll: this.fb.control<number | null>(null),
+    dwarfMinRoll: this.fb.control<number | null>(null),
+    dwarfMaxRoll: this.fb.control<number | null>(null),
+    elfMinRoll: this.fb.control<number | null>(null),
+    elfMaxRoll: this.fb.control<number | null>(null),
+    halflingMinRoll: this.fb.control<number | null>(null),
+    halflingMaxRoll: this.fb.control<number | null>(null),
   });
 
   get skills(): FormArray<FormControl<any>> {
@@ -376,6 +385,17 @@ export class ProfessionCreateComponent {
       movementDevelopment: v.movementDevelopment,
       magicDevelopment: v.magicDevelopment,
     };
+
+    if (!v.isAdvanced) {
+      payload.humanMinRoll = v.humanMinRoll;
+      payload.humanMaxRoll = v.humanMaxRoll;
+      payload.dwarfMinRoll = v.dwarfMinRoll;
+      payload.dwarfMaxRoll = v.dwarfMaxRoll;
+      payload.elfMinRoll = v.elfMinRoll;
+      payload.elfMaxRoll = v.elfMaxRoll;
+      payload.halflingMinRoll = v.halflingMinRoll;
+      payload.halflingMaxRoll = v.halflingMaxRoll;
+    }
 
     // map skills/talents arrays to number[] of IDs (ProfessionSkill/ProfessionTalent)
     const skillsIds: number[] = [];
