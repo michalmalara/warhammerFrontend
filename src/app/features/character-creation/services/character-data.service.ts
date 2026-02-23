@@ -20,12 +20,15 @@ export type CharacterWeapon = {
 
 export type PrimaryStatId = 'WS' | 'BS' | 'S' | 'T' | 'Ag' | 'Int' | 'WP' | 'Fel';
 
+export type PrimaryStatsMode = "roll" | "manual";
+
 export type PrimaryStat = {
   id: PrimaryStatId;
   label: string;
   fullName: string;
   base: number;
   rolledStat?: number;
+  manualDelta?: number;
   shallyasMercy?: boolean;
 };
 
@@ -190,14 +193,78 @@ export class CharacterDataService {
     this.race.set(DEFAULT_STEP_1.race);
     this.freeAdvance.set(null);
     this.primaryStats.set([
-      {id: 'WS', label: 'WS', fullName: 'Weapon Skill', base: 20, rolledStat: undefined, shallyasMercy: false},
-      {id: 'BS', label: 'BS', fullName: 'Ballistic Skill', base: 20, rolledStat: undefined, shallyasMercy: false},
-      {id: 'S', label: 'S', fullName: 'Strength', base: 20, rolledStat: undefined, shallyasMercy: false},
-      {id: 'T', label: 'T', fullName: 'Toughness', base: 20, rolledStat: undefined, shallyasMercy: false},
-      {id: 'Ag', label: 'Ag', fullName: 'Agility', base: 20, rolledStat: undefined, shallyasMercy: false},
-      {id: 'Int', label: 'Int', fullName: 'Intelligence', base: 20, rolledStat: undefined, shallyasMercy: false},
-      {id: 'WP', label: 'WP', fullName: 'Willpower', base: 20, rolledStat: undefined, shallyasMercy: false},
-      {id: 'Fel', label: 'Fel', fullName: 'Fellowship', base: 20, rolledStat: undefined, shallyasMercy: false},
+      {
+        id: 'WS',
+        label: 'WS',
+        fullName: 'Weapon Skill',
+        base: 20,
+        rolledStat: undefined,
+        manualDelta: 0,
+        shallyasMercy: false
+      },
+      {
+        id: 'BS',
+        label: 'BS',
+        fullName: 'Ballistic Skill',
+        base: 20,
+        rolledStat: undefined,
+        manualDelta: 0,
+        shallyasMercy: false
+      },
+      {
+        id: 'S',
+        label: 'S',
+        fullName: 'Strength',
+        base: 20,
+        rolledStat: undefined,
+        manualDelta: 0,
+        shallyasMercy: false
+      },
+      {
+        id: 'T',
+        label: 'T',
+        fullName: 'Toughness',
+        base: 20,
+        rolledStat: undefined,
+        manualDelta: 0,
+        shallyasMercy: false
+      },
+      {
+        id: 'Ag',
+        label: 'Ag',
+        fullName: 'Agility',
+        base: 20,
+        rolledStat: undefined,
+        manualDelta: 0,
+        shallyasMercy: false
+      },
+      {
+        id: 'Int',
+        label: 'Int',
+        fullName: 'Intelligence',
+        base: 20,
+        rolledStat: undefined,
+        manualDelta: 0,
+        shallyasMercy: false
+      },
+      {
+        id: 'WP',
+        label: 'WP',
+        fullName: 'Willpower',
+        base: 20,
+        rolledStat: undefined,
+        manualDelta: 0,
+        shallyasMercy: false
+      },
+      {
+        id: 'Fel',
+        label: 'Fel',
+        fullName: 'Fellowship',
+        base: 20,
+        rolledStat: undefined,
+        manualDelta: 0,
+        shallyasMercy: false
+      },
     ]);
     this.secondaryStats.set({A: 1, W: 0, SB: 0, TB: 0, M: 5, Mag: 0, IP: 0, FP: 0});
     this.lastRollDisplay.set('-');
@@ -216,14 +283,54 @@ export class CharacterDataService {
 
   // --- primary stats
   readonly primaryStats = signal<PrimaryStat[]>([
-    {id: 'WS', label: 'WS', fullName: 'Weapon Skill', base: 20, rolledStat: undefined, shallyasMercy: false},
-    {id: 'BS', label: 'BS', fullName: 'Ballistic Skill', base: 20, rolledStat: undefined, shallyasMercy: false},
-    {id: 'S', label: 'S', fullName: 'Strength', base: 20, rolledStat: undefined, shallyasMercy: false},
-    {id: 'T', label: 'T', fullName: 'Toughness', base: 20, rolledStat: undefined, shallyasMercy: false},
-    {id: 'Ag', label: 'Ag', fullName: 'Agility', base: 20, rolledStat: undefined, shallyasMercy: false},
-    {id: 'Int', label: 'Int', fullName: 'Intelligence', base: 20, rolledStat: undefined, shallyasMercy: false},
-    {id: 'WP', label: 'WP', fullName: 'Willpower', base: 20, rolledStat: undefined, shallyasMercy: false},
-    {id: 'Fel', label: 'Fel', fullName: 'Fellowship', base: 20, rolledStat: undefined, shallyasMercy: false},
+    {
+      id: 'WS',
+      label: 'WS',
+      fullName: 'Weapon Skill',
+      base: 20,
+      rolledStat: undefined,
+      manualDelta: 0,
+      shallyasMercy: false
+    },
+    {
+      id: 'BS',
+      label: 'BS',
+      fullName: 'Ballistic Skill',
+      base: 20,
+      rolledStat: undefined,
+      manualDelta: 0,
+      shallyasMercy: false
+    },
+    {id: 'S', label: 'S', fullName: 'Strength', base: 20, rolledStat: undefined, manualDelta: 0, shallyasMercy: false},
+    {id: 'T', label: 'T', fullName: 'Toughness', base: 20, rolledStat: undefined, manualDelta: 0, shallyasMercy: false},
+    {id: 'Ag', label: 'Ag', fullName: 'Agility', base: 20, rolledStat: undefined, manualDelta: 0, shallyasMercy: false},
+    {
+      id: 'Int',
+      label: 'Int',
+      fullName: 'Intelligence',
+      base: 20,
+      rolledStat: undefined,
+      manualDelta: 0,
+      shallyasMercy: false
+    },
+    {
+      id: 'WP',
+      label: 'WP',
+      fullName: 'Willpower',
+      base: 20,
+      rolledStat: undefined,
+      manualDelta: 0,
+      shallyasMercy: false
+    },
+    {
+      id: 'Fel',
+      label: 'Fel',
+      fullName: 'Fellowship',
+      base: 20,
+      rolledStat: undefined,
+      manualDelta: 0,
+      shallyasMercy: false
+    },
   ]);
 
   // selected primary stat for UI (click / toggle)
@@ -351,25 +458,114 @@ export class CharacterDataService {
 
   // computed: lowest rolledStat across primaryStats (undefined if none)
   readonly lowestRollTotal = computed(() => {
+    if (this.primaryStatsMode() !== "roll") return undefined as number | undefined;
     const arr = this.primaryStats();
     const totals = arr.map(s => s.rolledStat).filter((t): t is number => typeof t === 'number');
     if (totals.length === 0) return undefined as number | undefined;
     return Math.min(...totals);
   });
 
-  // Helper: get primary stat total by id = base + (shallyasMercy ? 11 : rolledStat)
+  // Helper: get primary stat total by id
   getStat(id: PrimaryStatId): number {
     const arr = this.primaryStats();
     const found = arr.find(s => s.id === id);
     if (!found) return 0;
-    const base = found.base;
-    if (found.shallyasMercy) return base + 11;
-    const rolled = typeof found.rolledStat === 'number' ? found.rolledStat : 0;
-    return base + rolled;
+    return found.base + this.getEffectiveDelta(found);
+  }
+
+  readonly primaryStatsMode = signal<PrimaryStatsMode>("roll");
+
+  readonly manualPoolTotal = computed(() => {
+    const baseMap = this.raceBases.getPrimaryBases(this.race());
+    const ids: PrimaryStatId[] = ["WS", "BS", "S", "T", "Ag", "Int", "WP", "Fel"];
+
+    return ids.reduce((sum, id) => {
+      const base = baseMap[id] ?? 20;
+      return sum + Math.max(0, 41 - base);
+    }, 0);
+  });
+
+  readonly manualPoolUsed = computed(() => {
+    const arr = this.primaryStats();
+    return arr.reduce((sum, s) => sum + (typeof s.manualDelta === "number" ? s.manualDelta : 0), 0);
+  });
+
+  readonly manualPoolRemaining = computed(() => this.manualPoolTotal() - this.manualPoolUsed());
+
+  readonly manualIsValid = computed(() => {
+    if (this.primaryStatsMode() !== "manual") return true;
+
+    const remaining = this.manualPoolRemaining();
+    if (remaining !== 0) return false;
+
+    const baseMap = this.raceBases.getPrimaryBases(this.race());
+
+    return this.primaryStats().every(s => {
+      const base = baseMap[s.id] ?? s.base;
+      const delta = typeof s.manualDelta === "number" ? s.manualDelta : 0;
+      const total = base + delta;
+      return Number.isFinite(delta) && delta >= 0 && total >= base && total <= 40;
+    });
+  });
+
+  readonly primaryStatsReady = computed(() => {
+    if (this.primaryStatsMode() === "manual") return this.manualIsValid();
+    return this.primaryStats().every(s => typeof s.rolledStat === "number");
+  });
+
+  setPrimaryStatsMode = (mode: PrimaryStatsMode) => {
+    this.primaryStatsMode.set(mode);
+
+    if (mode === "manual") {
+      this.primaryStats.update(prev => prev.map(s => ({
+        ...s,
+        manualDelta: typeof s.manualDelta === "number" ? s.manualDelta : 0
+      })));
+      this.deriveSecondaries();
+    }
+  };
+
+  resetManualAllocation = () => {
+    this.primaryStats.update(prev => prev.map(s => ({...s, manualDelta: 0})));
+    this.deriveSecondaries();
+  };
+
+  setManualDelta = (id: PrimaryStatId, delta: number) => {
+    if (this.primaryStatsMode() !== "manual") return;
+
+    const safeDelta = Number.isFinite(delta) ? Math.max(0, Math.floor(delta)) : 0;
+    const baseMap = this.raceBases.getPrimaryBases(this.race());
+
+    this.primaryStats.update(prev => {
+      return prev.map(s => {
+        if (s.id !== id) return s;
+        const base = baseMap[s.id] ?? s.base;
+        const maxDelta = Math.max(0, 40 - base);
+        return {...s, manualDelta: Math.min(safeDelta, maxDelta)};
+      });
+    });
+
+    this.deriveSecondaries();
+  };
+
+  adjustManualDelta = (id: PrimaryStatId, step: number) => {
+    if (this.primaryStatsMode() !== "manual") return;
+    const current = this.primaryStats().find(s => s.id === id);
+    const cur = typeof current?.manualDelta === "number" ? current.manualDelta : 0;
+    this.setManualDelta(id, cur + step);
+  };
+
+  private getEffectiveDelta(s: PrimaryStat): number {
+    if (s.shallyasMercy) return 11;
+    if (this.primaryStatsMode() === "manual") return typeof s.manualDelta === "number" ? s.manualDelta : 0;
+    return typeof s.rolledStat === "number" ? s.rolledStat : 0;
   }
 
   // Public: wywołaj przy kliknięciu przycisku. Opcjonalnie pass seed for deterministic tests.
   onRollDice(seed?: number) {
+    if (this.primaryStatsMode() !== "roll") {
+      this.setPrimaryStatsMode("roll");
+    }
     if (this.isRolling()) return;
     this.isRolling.set(true);
 
@@ -513,8 +709,8 @@ export class CharacterDataService {
     const sStat = arr.find(s => s.id === 'S');
     const tStat = arr.find(s => s.id === 'T');
 
-    const sTotal = sStat ? (sStat.base + (sStat.shallyasMercy ? 11 : (typeof sStat.rolledStat === 'number' ? sStat.rolledStat : 0))) : 0;
-    const tTotal = tStat ? (tStat.base + (tStat.shallyasMercy ? 11 : (typeof tStat.rolledStat === 'number' ? tStat.rolledStat : 0))) : 0;
+    const sTotal = sStat ? (sStat.base + this.getEffectiveDelta(sStat)) : 0;
+    const tTotal = tStat ? (tStat.base + this.getEffectiveDelta(tStat)) : 0;
 
     const SB = Math.floor(sTotal / 10);
     const TB = Math.floor(tTotal / 10);
@@ -567,12 +763,16 @@ export class CharacterDataService {
 
   // Expose button state for Mercy UI (variant, label, disabled) as getters so template can read them
   get mercyVariant(): 'save' | 'cancel' {
+    if (this.primaryStatsMode() === "manual") return 'cancel';
+
     const hasMercy = this.primaryStats().some(s => s.shallyasMercy);
     if (hasMercy) return 'save';
     return this.selectedStat() ? 'save' : 'cancel';
   }
 
   get mercyLabel(): string {
+    if (this.primaryStatsMode() === "manual") return "Unavailable in manual mode";
+
     const hasMercy = this.primaryStats().some(s => s.shallyasMercy);
     if (hasMercy) {
       const stat = this.primaryStats().find(s => s.shallyasMercy);
@@ -582,6 +782,8 @@ export class CharacterDataService {
   }
 
   get mercyDisabled(): boolean {
+    if (this.primaryStatsMode() === "manual") return true;
+
     const hasMercy = this.primaryStats().some(s => s.shallyasMercy);
     return hasMercy || !this.selectedStat();
   }

@@ -13,23 +13,60 @@
     <section class="attr-layout">
       <aside class="attr-sidebar">
         <div class="panel">
-          <h3 class="panel__title">The Dice of Fate</h3>
+          <h3 class="panel__title">Primary Characteristics</h3>
 
-          <button class="dice" type="button" (click)="onRollDice()" [disabled]="isRolling">
-            <div class="dice__left">
-              <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
-              <div class="dice__hint">Roll 2d10</div>
-            </div>
-            <div class="dice__sep" aria-hidden="true"></div>
-            <div class="dice__right">
-              <div class="dice__num">{{ lastRollDisplay }}</div>
-            </div>
-          </button>
+          <div class="mode-toggle" role="group" aria-label="Primary characteristics mode">
+            <button
+              class="mode-toggle__btn"
+              type="button"
+              [class.is-active]="primaryStatsMode() === 'roll'"
+              (click)="setMode('roll')"
+            >
+              Roll
+            </button>
+            <button
+              class="mode-toggle__btn"
+              type="button"
+              [class.is-active]="primaryStatsMode() === 'manual'"
+              (click)="setMode('manual')"
+            >
+              Manual
+            </button>
+          </div>
 
-          <p class="panel__desc">
-            Clicking will generate rolls for all Primary Characteristics. Secondary stats will be derived
-            automatically.
-          </p>
+          @if (primaryStatsMode() === 'roll') {
+            <button class="dice" type="button" (click)="onRollDice()" [disabled]="isRolling">
+              <div class="dice__left">
+                <mat-icon class="dice__icon wax-icon" aria-hidden="true" svgIcon="d10"></mat-icon>
+                <div class="dice__hint">Roll 2d10</div>
+              </div>
+              <div class="dice__sep" aria-hidden="true"></div>
+              <div class="dice__right">
+                <div class="dice__num">{{ lastRollDisplay }}</div>
+              </div>
+            </button>
+
+            <p class="panel__desc">
+              Clicking will generate rolls for all Primary Characteristics. Secondary stats will be derived
+              automatically.
+            </p>
+          } @else {
+            <div class="manual-panel">
+              <div class="manual-panel__row">
+                <div class="manual-panel__k">Points</div>
+                <div class="manual-panel__v">{{ manualPoolUsed() }} / {{ manualPoolTotal() }}</div>
+              </div>
+              <div class="manual-panel__row">
+                <div class="manual-panel__k">Remaining</div>
+                <div class="manual-panel__v" [class.is-bad]="manualPoolRemaining() !== 0">{{ manualPoolRemaining() }}
+                </div>
+              </div>
+              <button class="manual-panel__reset" type="button" (click)="resetManual()">Reset allocation</button>
+              @if (!manualIsValid()) {
+                <p class="manual-panel__hint">You must allocate all remaining points before continuing.</p>
+              }
+            </div>
+          }
         </div>
 
         <div class="mercy">
@@ -69,23 +106,41 @@
               (keydown.enter)="onSelectPrimary(s.id)"
               (keydown.space)="$event.preventDefault(); onSelectPrimary(s.id)"
               [attr.aria-pressed]="selectedStat() === s.id"
-              [class.stat-card--low]="lowestRollTotal() !== undefined && s.rolledStat === lowestRollTotal()"
-              [class.stat-card--hi]="(s.base + (s.shallyasMercy ? 11 : (s.rolledStat ?? 0))) >= 18"
+              [class.stat-card--low]="primaryStatsMode() === 'roll' && lowestRollTotal() !== undefined && s.rolledStat === lowestRollTotal()"
+              [class.stat-card--hi]="(s.base + (s.shallyasMercy ? 11 : (primaryStatsMode() === 'manual' ? (s.manualDelta ?? 0) : (s.rolledStat ?? 0)))) >= 18"
               [class.stat-card--selected]="selectedStat() === s.id"
             >
               <div class="stat-card__abbr">{{ s.label }}</div>
               <div class="stat-card__row">
-                <!-- Wyświetl finalną wartość: jeśli mercy -> base + 11, w przeciwnym razie base + rolled -->
-                <div class="stat-card__value">{{ s.base + (s.shallyasMercy ? 11 : (s.rolledStat ?? 0)) }}
+                <div class="stat-card__value">
+                  {{ s.base + (s.shallyasMercy ? 11 : (primaryStatsMode() === 'manual' ? (s.manualDelta ?? 0) : (s.rolledStat ?? 0))) }}
                 </div>
-                <!-- Delta: pokaż tylko wylosowaną wartość (lub '-' jeśli brak rolla). is-hi używa finalnej wartości -->
-                <div class="stat-card__delta"
-                     [class.is-hi]="(s.base + (s.shallyasMercy ? 11 : (s.rolledStat ?? 0))) >= 18">
-                  {{ (s.rolledStat ?? 0) === 0 ? '-' : ((s.rolledStat ?? 0) > 0 ? '+' + (s.rolledStat ?? 0) : (s.rolledStat ?? 0)) }}
+                <div
+                  class="stat-card__delta"
+                  [class.is-hi]="(s.base + (s.shallyasMercy ? 11 : (primaryStatsMode() === 'manual' ? (s.manualDelta ?? 0) : (s.rolledStat ?? 0)))) >= 18"
+                >
+                  @if (primaryStatsMode() === 'manual') {
+                    {{ (s.manualDelta ?? 0) === 0 ? '-' : ('+' + (s.manualDelta ?? 0)) }}
+                  } @else {
+                    {{ (s.rolledStat ?? 0) === 0 ? '-' : ((s.rolledStat ?? 0) > 0 ? '+' + (s.rolledStat ?? 0) : (s.rolledStat ?? 0)) }}
+                  }
                 </div>
               </div>
+
+              @if (primaryStatsMode() === 'manual') {
+                <div class="stat-card__controls" (click)="$event.stopPropagation()">
+                  <button class="stat-card__ctrl" type="button" (click)="dec(s.id)"
+                          [disabled]="(s.manualDelta ?? 0) <= 0">-
+                  </button>
+                  <div class="stat-card__ctrlv">{{ s.manualDelta ?? 0 }}</div>
+                  <button class="stat-card__ctrl" type="button" (click)="inc(s.id)"
+                          [disabled]="manualPoolRemaining() <= 0">+
+                  </button>
+                </div>
+              }
+
               <div class="stat-card__name">{{ s.fullName }}</div>
-              @if (lowestRollTotal() !== undefined && s.rolledStat === lowestRollTotal()) {
+              @if (primaryStatsMode() === 'roll' && lowestRollTotal() !== undefined && s.rolledStat === lowestRollTotal()) {
                 <div class="stat-card__badge">LOW ROLL</div>
               }
               @if (s.shallyasMercy) {
@@ -143,8 +198,14 @@
                            (click)="goPrev()"></app-wax-seal-button>
 
       <div class="cc-footer-nav__right">
-        <app-wax-seal-button variant="save" icon="arrow_forward" ariaLabel="Confirm Attributes" type="button"
-                             (click)="goNext()"></app-wax-seal-button>
+        <app-wax-seal-button
+          variant="save"
+          icon="arrow_forward"
+          ariaLabel="Confirm Attributes"
+          type="button"
+          [disabled]="!primaryStatsReady()"
+          (click)="goNext()"
+        ></app-wax-seal-button>
       </div>
     </div>
   </main>

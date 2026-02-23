@@ -50,7 +50,31 @@ export class CharacterCreationStep2AttributesComponent {
     void this.router.navigate(['/character-create/step-1']);
   }
 
+  readonly primaryStatsMode = this.charData.primaryStatsMode;
+  readonly manualPoolTotal = this.charData.manualPoolTotal;
+  readonly manualPoolUsed = this.charData.manualPoolUsed;
+  readonly manualPoolRemaining = this.charData.manualPoolRemaining;
+  readonly manualIsValid = this.charData.manualIsValid;
+  readonly primaryStatsReady = this.charData.primaryStatsReady;
+
+  setMode(mode: 'roll' | 'manual') {
+    this.charData.setPrimaryStatsMode(mode);
+  }
+
+  resetManual() {
+    this.charData.resetManualAllocation();
+  }
+
+  inc(id: PrimaryStatId) {
+    this.charData.adjustManualDelta(id, 1);
+  }
+
+  dec(id: PrimaryStatId) {
+    this.charData.adjustManualDelta(id, -1);
+  }
+
   goNext() {
+    if (!this.primaryStatsReady()) return;
     void this.router.navigate(['/character-create/step-3']);
   }
 
