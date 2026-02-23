@@ -76,6 +76,16 @@ export class CharacterDataService {
   readonly startingWeaponType = signal<StartingWeaponType | null>(null);
   readonly startingWeapon = signal<CharacterWeapon | null>(null);
 
+  readonly isPlayersCharacter = signal<boolean>(true);
+
+  getIsPlayersCharacter(): boolean {
+    return this.isPlayersCharacter();
+  }
+
+  setIsPlayersCharacter(value: boolean): void {
+    this.isPlayersCharacter.set(!!value);
+  }
+
   setProfessionSkills(list: ProfessionSkill[]) {
     this.professionSkills.set(list ?? []);
   }
@@ -276,6 +286,7 @@ export class CharacterDataService {
     this.initialEquipmentItems.set(null);
     this.startingWeaponType.set(null);
     this.startingWeapon.set(null);
+    this.isPlayersCharacter.set(false);
     // reset caches
     this.lastMappedW = null;
     this.lastComputedFP = null;

@@ -242,6 +242,20 @@ export class CharacterSaveService {
     return created.id;
   };
 
+  private readonly resolveIsPlayersCharacter = (): boolean => {
+    const anyCharData: any = this.charData as any;
+    if (typeof anyCharData.getIsPlayersCharacter === "function") return !!anyCharData.getIsPlayersCharacter();
+    if (typeof anyCharData.isPlayersCharacter === "function") return !!anyCharData.isPlayersCharacter();
+    if (anyCharData.isPlayersCharacter && typeof anyCharData.isPlayersCharacter === "object" && typeof anyCharData.isPlayersCharacter.set === "function") {
+      try {
+        return !!anyCharData.isPlayersCharacter();
+      } catch {
+        return false;
+      }
+    }
+    return false;
+  };
+
   save = async (): Promise<void> => {
     const b = this.charData.bio();
 
@@ -266,6 +280,7 @@ export class CharacterSaveService {
     const payload: CharacterCreatePayload = {
       name: (b.name || 'Unnamed').trim(),
       race: (this.charData.race() ?? 'human') as string,
+      isPC: this.charData.isPlayersCharacter(),
       gender: b.gender,
       age: b.age,
       eyes: b.eyeColor,

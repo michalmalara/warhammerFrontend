@@ -14,6 +14,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatRippleModule} from '@angular/material/core';
 import {CharacterDataService} from '../../services/character-data.service';
 import {NameService} from '../../../common/services/name.service';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 type RaceCard = {
   id: CharacterRace;
@@ -39,6 +41,8 @@ type RaceCard = {
     MatInputModule,
     MatSelectModule,
     MatRippleModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
   ],
   templateUrl: './character-creation-step-1-bio-race.component.html',
   styleUrls: ['./character-creation-step-1-bio-race.component.scss'],
@@ -48,6 +52,7 @@ export class CharacterCreationStep1BioRaceComponent {
   private readonly router = inject(Router);
   private readonly charData = inject(CharacterDataService);
   private readonly nameService = inject(NameService);
+  private readonly snackBar = inject(MatSnackBar);
 
   readonly races: RaceCard[] = [
     {
@@ -85,6 +90,7 @@ export class CharacterCreationStep1BioRaceComponent {
   readonly form = this.fb.nonNullable.group({
     name: this.fb.nonNullable.control('', [Validators.required, Validators.maxLength(80)]),
     gender: this.fb.nonNullable.control<'male' | 'female' | 'other'>('male', [Validators.required]),
+    isPlayersCharacter: this.fb.nonNullable.control(true),
     age: this.fb.control<number | null>(null, [Validators.min(1), Validators.max(500)]),
     starSign: this.fb.nonNullable.control('The Drummer', [Validators.required]),
     eyeColor: this.fb.nonNullable.control('Hazel', [Validators.required]),
@@ -97,6 +103,7 @@ export class CharacterCreationStep1BioRaceComponent {
     effect(() => {
       const bio = this.charData.bio();
       this.form.patchValue(bio, {emitEvent: false});
+      this.form.controls.isPlayersCharacter.setValue(this.charData.getIsPlayersCharacter(), {emitEvent: false});
     });
 
     this.form.valueChanges.subscribe((value) => {
@@ -109,6 +116,7 @@ export class CharacterCreationStep1BioRaceComponent {
         hairColor: value.hairColor ?? 'Ash Blonde',
         physicalMarkings: value.physicalMarkings ?? '',
       });
+      this.charData.setIsPlayersCharacter(!!value.isPlayersCharacter);
     });
   }
 
@@ -116,9 +124,17 @@ export class CharacterCreationStep1BioRaceComponent {
   onDrawRandomName(): void {
     const race = this.charData.race();
     const gender = this.form.controls.gender.value;
-    if (!race || !gender) return;
 
-    this.nameService.getRandomName(race, gender).subscribe(res => {
+    if (!race || !gender) {
+      this.snackBar.open(
+        $localize`:Snack bar@@characterCreate.step1.snack.selectRaceAndGender:Select a race and a gender before drawing a name`,
+        'OK',
+        {duration: 3000},
+      );
+      return;
+    }
+
+    this.nameService.getRandomName(race, gender).subscribe((res) => {
       const full = `${res.firstName}${res.lastName ? ' ' + res.lastName : ''}`;
       this.form.controls.name.setValue(full);
     });

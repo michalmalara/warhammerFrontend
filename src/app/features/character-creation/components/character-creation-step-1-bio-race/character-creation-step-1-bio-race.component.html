@@ -64,6 +64,14 @@
             <mat-hint align="start">Character's given name</mat-hint>
           </mat-form-field>
 
+          <mat-checkbox
+            class="ledger__field ledger__checkbox"
+            formControlName="isPlayersCharacter"
+            i18n="@@characterCreation.step1.isPlayersCharacter|Checkbox to mark a character as a player character"
+          >
+            Is Player’s Character
+          </mat-checkbox>
+
           <mat-form-field class="ledger__field" appearance="outline">
             <mat-label>Gender</mat-label>
             <mat-select id="cc-gender" formControlName="gender">

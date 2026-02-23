@@ -388,6 +388,42 @@
   .mat-mdc-option:hover {
     background: rgba(189, 15, 44, 0.18) !important;
   }
+
+  .ledger__checkbox {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    background: transparent;
+  }
+
+  .ledger__checkbox .mdc-form-field > label {
+    color: rgba(226, 209, 210, 1);
+    font-size: 1.1rem;
+    font-style: italic;
+  }
+
+  .ledger__checkbox .mdc-checkbox__background {
+    border-color: rgba(185, 157, 161, 0.85);
+  }
+
+  .ledger__checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background,
+  .ledger__checkbox.mat-mdc-checkbox-indeterminate .mdc-checkbox__background {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  .ledger__checkbox .mat-mdc-checkbox-ripple .mat-ripple-element {
+    background-color: rgba(189, 15, 44, 0.18);
+  }
+
+  .ledger__checkbox .mdc-checkbox__checkmark {
+    color: #fff;
+  }
+
+  .ledger__checkbox:hover {
+    background: transparent;
+  }
 }
 
 .ledger__row2 {
