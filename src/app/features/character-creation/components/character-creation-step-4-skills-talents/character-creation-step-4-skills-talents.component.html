@@ -32,6 +32,9 @@
                 >
                   <span class="pill">{{ ps.skill.associatedCharacteristic }}</span>
                   <span class="name">{{ ps.skill.name }}</span>
+                  @if (skillPickCounts().get(getSkillKey(ps)) === 2) {
+                    <span class="bonus" i18n="Label@@cc.step4.skillBonus">+10</span>
+                  }
                   @if (ps.description || ps.skill.description) {
                     <span class="desc">({{ ps.description || ps.skill.description }})</span>
                   }
@@ -56,6 +59,9 @@
                     [class.cc-selected]="selectedTalentIds().has(getTalentKey(pt))"
                     (click)="onTalentTileClick(pt)">
                   <span class="name">{{ pt.talent.name }}</span>
+                  @if (talentPickCounts().get(getTalentKey(pt)) === 2) {
+                    <span class="bonus" i18n="Label@@cc.step4.talentBonus">+10</span>
+                  }
                   @if (pt.description || pt.talent.description) {
                     <span class="desc">({{ pt.description || pt.talent.description }})</span>
                   }
@@ -93,6 +99,9 @@
                   >
                     <span class="pill">{{ ps.skill.associatedCharacteristic }}</span>
                     <span class="name">{{ ps.skill.name }}</span>
+                    @if (skillPickCounts().get(getSkillKey(ps)) === 2) {
+                      <span class="bonus" i18n="Label@@cc.step4.skillBonus">+10</span>
+                    }
                     @if (ps.description || ps.skill.description) {
                       <span class="desc">({{ ps.description || ps.skill.description }})</span>
                     }
@@ -117,6 +126,9 @@
                       [class.cc-selected]="selectedTalentIds().has(getTalentKey(pt))"
                       (click)="onTalentTileClick(pt)">
                     <span class="name">{{ pt.talent.name }}</span>
+                    @if (talentPickCounts().get(getTalentKey(pt)) === 2) {
+                      <span class="bonus" i18n="Label@@cc.step4.talentBonus">+10</span>
+                    }
                     @if (pt.description || pt.talent.description) {
                       <span class="desc">({{ pt.description || pt.talent.description }})</span>
                     }
