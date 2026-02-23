@@ -102,7 +102,7 @@ export class ProfessionsListComponent {
   }
 
   getProfessionTierLabel(p: Profession): 'Basic' | 'Advanced' {
-    return (p.entryProfessions?.length ?? 0) > 0 ? 'Advanced' : 'Basic';
+    return p.type === 'basic' ? 'Advanced' : 'Basic';
   }
 
   isDeleting(p: Profession): boolean {

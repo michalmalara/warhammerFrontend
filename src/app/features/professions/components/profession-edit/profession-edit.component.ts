@@ -1080,7 +1080,7 @@ export class ProfessionEditComponent {
   }
 
   private patchFromProfession(p: Profession) {
-    const isAdvanced = (p.entryProfessions?.length ?? 0) > 0;
+    const isAdvanced = p.type === 'advanced';
 
     this.form.patchValue({
       name: p.name,
